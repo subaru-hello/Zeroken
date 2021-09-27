@@ -81,3 +81,6 @@
 [https://i.gyazo.com/6c330e2338448ef9a739102308fcb947.png](https://i.gyazo.com/6c330e2338448ef9a739102308fcb947.png)
 
 (参考文献: 公益社団法人アルコール健康医学協会)
+
+### **画面遷移図**
+https://www.figma.com/file/ydWLVuN6KiEXfVYLmAkwmo/Preliquo?node-id=0%3A1
