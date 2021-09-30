@@ -84,3 +84,6 @@
 
 ### **画面遷移図**
 https://www.figma.com/file/ydWLVuN6KiEXfVYLmAkwmo/Preliquo?node-id=0%3A1
+
+### **ER図**
+https://drive.google.com/file/d/1yXKUqnfb8uAoJaz1q5C9eHzP4EbwNp2Q/view?usp=sharing
