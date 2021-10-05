@@ -13,8 +13,8 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
+  username:  <%= ENV['PRELIQUO_USER_NAME'] %>
+  password: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
   socket: /tmp/mysql.sock
 
 development:
@@ -51,5 +51,5 @@ test:
 production:
   <<: *default
   database: Preliquo_production
-  username: Preliquo
+  username: <%= ENV['PRELIQUO_USER_NAME'] %>
   password: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
