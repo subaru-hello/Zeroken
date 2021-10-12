@@ -28,6 +28,10 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   # Code check
+  gem 'brakeman', require: false
+  gem 'bullet'
+  gem 'bundler-audit', require: false
+  gem 'rails_best_practices', require: false
   gem 'rubocop', '~> 1.10', require: false
   gem 'rubocop-performance'
   gem 'rubocop-rails'
