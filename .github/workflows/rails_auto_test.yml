@@ -33,23 +33,23 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-build-test:
-  name: auto build-test
-  needs: prepare
-  runs-on: ubuntu-latest
-  timeout-minutes: 10
-  services:
-      mysql:
-      image: mysql:5.7
-      ports:
-        - 3306:3306
-      env:
-        MYSQL_ROOT_PASSWORD:
-        MYSQL_DATABASE: preliquo
-        MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
-        MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
-        MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+  build-test:
+    name: auto build-test
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+        mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD:
+          MYSQL_DATABASE: preliquo
+          MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
+          MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
   steps:
     - name: Check out repository code
