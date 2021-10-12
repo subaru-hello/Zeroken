@@ -1,0 +1,9 @@
+ test:
+    adapter: postgresql
+    encoding: unicode
+    database: preliquo
+    pool: 5
+    username: <%= ENV['PRELIQUO_USER_NAME'] %>
+    password: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
+    host: localhost
+    port: 3306

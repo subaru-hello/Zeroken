@@ -1,17 +1,86 @@
-name: GitHub Actions Demo
-on: [push]
+name: auto_test_and_deploy
+on: 
+  pull_request:
+    branches:
+      - main
+env:
+  RAILS_ENV: test
+  MYSQL_USER: mysql
+  MYSQL_PASSWORD: mysql
+  MYSQL_HOST: localhost
+  MYSQL_PORT: 3306
 jobs:
-  Explore-GitHub-Actions:
+  prepare:
+    name: prepare
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+  build-test:
+    name: auto build-test
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+        mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD:
+          MYSQL_DATABASE: preliquo
+          MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
+          MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+
+      - name: Prepare Ruby and Gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.6
+          bundler-cache: true
+
+      - name: Prepare Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+          cache: 'yarn'
+      - name: yarn
+        run: yarn --frozen-lockfile
+
+      - name: Setup database
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+      # Check vulnerability
+      - name: Run Breakman
+        run: |
+          bundle exec bundler-audit --update
+          bundle exec brakeman -q -w2
+      # Run Linter
+      - name: Run Rubocop
+        run: |
+          bundle exec rubocop --parallel
+      - name: Run ESLint
+        run: |
+          yarn run lint
+      # Run RSpec (added later)
+
+  deploy:
+    name: auto deploy to heroku
+    needs: [prepare, build-test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "preliquo"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          # TODO: add a route for health check
+          healthcheck: "https://preliquo.herokuapp.com" 
