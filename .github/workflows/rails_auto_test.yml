@@ -14,26 +14,8 @@ jobs:
     name: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
-  build-test:
-    name: auto build-test
-    needs: prepare
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    services:
-        mysql:
-        image: mysql:5.7
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD:
-          MYSQL_DATABASE: preliquo
-          MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
-          MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
-
     steps:
+      # Checkout and install dependencies
       - name: Check out repository code
         uses: actions/checkout@v2
 
@@ -51,24 +33,60 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      - name: Setup database
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:migrate
-      # Check vulnerability
-      - name: Run Breakman
-        run: |
-          bundle exec bundler-audit --update
-          bundle exec brakeman -q -w2
-      # Run Linter
-      - name: Run Rubocop
-        run: |
-          bundle exec rubocop --parallel
-      - name: Run ESLint
-        run: |
-          yarn run lint
-      # Run RSpec (added later)
+build-test:
+  name: auto build-test
+  needs: prepare
+  runs-on: ubuntu-latest
+  timeout-minutes: 10
+  services:
+      mysql:
+      image: mysql:5.7
+      ports:
+        - 3306:3306
+      env:
+        MYSQL_ROOT_PASSWORD:
+        MYSQL_DATABASE: preliquo
+        MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
+        MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
+        MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Prepare Ruby and Gems
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.6
+        bundler-cache: true
+
+    - name: Prepare Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.x'
+        cache: 'yarn'
+    - name: yarn
+      run: yarn --frozen-lockfile
+
+    - name: Setup database
+      run: |
+        cp config/database.yml.ci config/database.yml
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+    # Check vulnerability
+    - name: Run Breakman
+      run: |
+        bundle exec bundler-audit --update
+        bundle exec brakeman -q -w2
+    # Run Linter
+    - name: Run Rubocop
+      run: |
+        bundle exec rubocop --parallel
+    - name: Run ESLint
+      run: |
+        yarn run lint
+    # Run RSpec (added later)
 
   deploy:
     name: auto deploy to heroku
