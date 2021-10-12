@@ -39,6 +39,10 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
+  # test
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 4.0.2'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -52,6 +56,11 @@ group :development do
   gem 'spring'
 
   gem 'foreman'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'webdrivers', '~> 4.0', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
