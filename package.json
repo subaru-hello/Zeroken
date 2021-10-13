@@ -29,5 +29,8 @@
     "sass": "~1.32",
     "sass-loader": "^12.1.0",
     "webpack-dev-server": "^3"
+  },
+  "scripts": {
+    "fmt": "prettier --write **/*.{js,json,md,html,vue}"
   }
 }
