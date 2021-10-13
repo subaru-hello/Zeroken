@@ -132,7 +132,7 @@ GEM
     msgpack (1.4.2)
     mysql2 (0.5.3)
     nio4r (2.5.8)
-    nokogiri (1.12.5-x86_64-darwin)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     parser (3.0.2.0)
@@ -295,6 +295,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-18
+  x86_64-linux
 
 DEPENDENCIES
   better_errors
@@ -332,7 +333,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.6.7p197
 
 BUNDLED WITH
-   2.2.21
+   2.2.29
