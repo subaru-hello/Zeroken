@@ -86,7 +86,7 @@ jobs:
           bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
-          q
+          bundle exec rubocop --parallel
       # Run RSpec (added later)
 
   # deploy:
