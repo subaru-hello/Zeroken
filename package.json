@@ -5,9 +5,11 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@mdi/font": "^6.2.95",
     "@rails/actioncable": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
+    "eslint-config-prettier": "^8.3.0",
     "material-design-icons-iconfont": "^6.1.0",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
@@ -15,8 +17,7 @@
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.5.9",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "@mdi/font": "^6.2.95"
+    "webpack-cli": "^3.3.12"
   },
   "version": "0.1.0",
   "devDependencies": {
