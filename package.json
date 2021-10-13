@@ -10,6 +10,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
     "eslint-config-prettier": "^8.3.0",
+    "eslint": "^8.0.0",
     "material-design-icons-iconfont": "^6.1.0",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
@@ -22,7 +23,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "deepmerge": "^4.2.2",
-    "eslint": "^8.0.0",
     "sass": "~1.32",
     "sass-loader": "^12.1.0",
     "webpack-dev-server": "^3"
