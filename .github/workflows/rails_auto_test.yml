@@ -26,7 +26,6 @@ jobs:
           bundler-cache: true
       - name: Setup Database
         run: |
-          ./bin/rails db:create RAILS_ENV=development
           mysql.server restart
         env:
           RAILS_ENV: test
