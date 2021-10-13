@@ -28,7 +28,6 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
-          cp config/database.yml.ci config/database.yml
           gem install bundler
           ./bin/rails db:create
           ./bin/rails db:migrate
@@ -75,9 +74,8 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
-          mysql.server start
-          cp config/database.yml.ci config/database.yml
           gem install bundler
+          mysql.server start
           ./bin/rails db:create
           ./bin/rails db:migrate
       # Check vulnerabilit
