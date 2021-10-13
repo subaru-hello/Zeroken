@@ -31,8 +31,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: root
-        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
-
+     
       - name: Prepare Node
         uses: actions/setup-node@v2
         with:
