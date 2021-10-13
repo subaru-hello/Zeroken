@@ -22,7 +22,7 @@ jobs:
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.6
+          ruby-version: 2.6.7
           bundler-cache: true
 
       - name: Prepare Node
@@ -40,14 +40,13 @@ jobs:
     timeout-minutes: 10
     services:
         mysql:
-         image: mysql:5.7
+         image: mysql:5.6
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD:
           MYSQL_DATABASE: preliquo
-          MYSQL_USER: <%= ENV['PRELIQUO_USER_NAME'] %>
-          MYSQL_PASSWORD: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
+          MYSQL_USER:  <%= ENV.fetch("MYSQL_USERNAME") %>
+          MYSQL_PASSWORD: <%= ENV.fetch("MYSQL_PASSWORD") %>
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
@@ -58,7 +57,7 @@ jobs:
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.6
+          ruby-version: 2.6.7
           bundler-cache: true
 
       - name: Prepare Node
