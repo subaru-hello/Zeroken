@@ -26,7 +26,7 @@ jobs:
           bundler-cache: true
       - name: Setup Database
         run: |
-          ./bin/rails rake db:create RAILS_ENV=development
+          ./bin/rails db:create RAILS_ENV=development
         env:
           RAILS_ENV: test
      
