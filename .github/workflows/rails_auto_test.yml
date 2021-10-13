@@ -72,19 +72,19 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      # - name: Setup database
-      #   env:
-      #     RAILS_ENV: test
-      #   run: |
-      #     mysql.server start
-      #     gem install bundler
-      #     ./bin/rails db:create
-      #     ./bin/rails db:migrate
-      # Check vulnerabilit
-      - name: Run Breakman
+      - name: Setup Database
         run: |
-          bundle exec bundler-audit --update
-          bundle exec brakeman -q -w2
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create db:schema:load
+      - name: run Brakeman and bundler-audit
+        run: |
+          bundle exec brakeman -A
+          bundle exec bundler-audit
+      - name: run Prettier and ESLint
+        run: |
+          yarn eslint-config-prettier  app/frontend/**/{*.js,*.vue}
+          yarn prettier --check app/frontend
+          yarn eslint  --max-warnings=0 app/frontend/**/{*.js,*.vue}
       # Run Linter
       - name: Run Rubocop
         run: |
