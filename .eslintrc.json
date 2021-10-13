@@ -1,0 +1,28 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:vue/essential",
+        "standard",
+        "eslint:recommended",
+        "plugin:vue/base",
+        "plugin:vue/strongly-recommended",
+        "plugin:vue/recommended",
+        "prettier",
+        "prettier/vue"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 13,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "prettier",
+        "vue"
+    ],       
+    "rules": {
+        "prettier/prettier": "error",
+        "vue/attribute-hyphenation": ["warn", "never"]
+    }
+}
