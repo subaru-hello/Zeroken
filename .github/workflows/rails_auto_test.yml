@@ -27,6 +27,11 @@ jobs:
       - name: Setup Database
         env:
           RAILS_ENV: test
+        run: |
+          cp config/database.yml.ci config/database.yml
+          gem install bundler
+          ./bin/rails db:create
+          ./bin/rails db:migrate
      
       - name: Prepare Node
         uses: actions/setup-node@v2
