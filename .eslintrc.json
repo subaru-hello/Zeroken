@@ -9,7 +9,7 @@
         "plugin:vue/base",
         "plugin:vue/strongly-recommended",
         "plugin:vue/recommended",
-        "prettier",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": 13,
