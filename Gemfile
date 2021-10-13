@@ -29,12 +29,12 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
+  gem 'prettier'
   gem 'rails_best_practices', require: false
   gem 'rubocop', '~> 1.10', require: false
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
-  gem 'prettier'
   # debug
   gem 'better_errors'
   gem 'binding_of_caller'
