@@ -76,16 +76,17 @@ jobs:
       #   run: |
       #     cp config/database.yml.ci config/database.yml
       #     bundle exec rails db:create db:schema:load
-      - name: run Brakeman and bundler-audit
-        run: |
-          bundle exec brakeman -A
-          bundle exec bundler-audit
+      # Run Linter
       - name: run Prettier and ESLint
         run: |
           yarn eslint-config-prettier  app/frontend/**/{*.js,*.vue}
           yarn prettier --check app/frontend
           yarn eslint  --max-warnings=0 app/frontend/**/{*.js,*.vue}
-      # Run Linter
+     
+      - name: Run Breakman
+        run: |
+          bundle exec bundler-audit --update
+          bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
           bundle exec rubocop --parallel
