@@ -2,8 +2,8 @@ test:
   adapter: mysql2
   encoding: utf8
   collation: utf8_general_ci
-  username: testuser
-  password: testpassword
-  host: 127.0.0.1
+  username: root
+  password: password
+  host: localhost
   database: preliquo_db_1 
   reconnect: false

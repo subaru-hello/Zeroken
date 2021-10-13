@@ -80,7 +80,7 @@ jobs:
           gem install bundler
           ./bin/rails db:create
           ./bin/rails db:migrate
-      # Check vulnerability
+      # Check vulnerabilit
       - name: Run Breakman
         run: |
           bundle exec bundler-audit --update
