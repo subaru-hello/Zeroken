@@ -44,10 +44,8 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_DATABASE: preliquo
           MYSQL_USER:  <%= ENV.fetch("MYSQL_USERNAME") %>
           MYSQL_PASSWORD: <%= ENV.fetch("MYSQL_PASSWORD") %>
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     steps:
