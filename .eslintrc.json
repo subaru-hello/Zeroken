@@ -18,11 +18,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        "prettier",
-        "vue"
+        "prettier"
     ],       
     "rules": {
         "prettier/prettier": "error",
-        "vue/attribute-hyphenation": ["warn", "never"]
+        "vue/attribute-hyphenation": ["warn", "never"],
+        "no-extra-parens": "warn",
+        "no-multi-spaces":"error",
+        "no-multiple-empty-lines": "error",
+        "no-mixed-spaces-and-tabs": "warn",
+        "no-trailing-spaces": "error",
+        "no-var": "error",
+        "quotes": ["warn", "single"],
+        "semi": "error"
     }
 }
