@@ -26,11 +26,9 @@ jobs:
           bundler-cache: true
       - name: Setup Database
         run: |
-          sudo systemctl start mysql
-          bundle exec rake db:create RAILS_ENV=development
+          ./bin/rails rake db:create RAILS_ENV=development
         env:
-          MYSQL_ROOT_PASSWORD: adminpassword
-          MYSQL_DATABASE: root
+          RAILS_ENV: test
      
       - name: Prepare Node
         uses: actions/setup-node@v2
@@ -75,8 +73,9 @@ jobs:
           RAILS_ENV: test
         run: |
           cp config/database.yml.ci config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          gem install bundler
+          ./bin/rails db:create
+          ./bin/rails db:migrate
       # Check vulnerability
       - name: Run Breakman
         run: |
