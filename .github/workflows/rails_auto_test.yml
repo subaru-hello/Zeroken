@@ -89,9 +89,6 @@ jobs:
       - name: Run Rubocop
         run: |
           bundle exec rubocop --parallel
-      - name: Run ESLint
-        run: |
-          yarn run lint
       # Run RSpec (added later)
 
   deploy:
