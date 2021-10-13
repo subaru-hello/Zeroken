@@ -29,6 +29,7 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
+  gem 'prettier'
   gem 'rails_best_practices', require: false
   gem 'rubocop', '~> 1.10', require: false
   gem 'rubocop-performance'

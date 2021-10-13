@@ -1,26 +1,25 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import TopIndex from "../pages/top/index";
-import TaskIndex from "../pages/task/index";
+import TopIndex from '../pages/top/index';
+import TaskIndex from '../pages/task/index';
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
+  mode: 'history',
   routes: [
     {
-      path: "/",
+      path: '/',
       component: TopIndex,
-      name: "TopIndex",
-
+      name: 'TopIndex',
     },
     {
-      path: "/tasks",
+      path: '/tasks',
       component: TaskIndex,
-      name: "TaskIndex",
+      name: 'TaskIndex',
     },
   ],
-})
+});
 
-export default router
+export default router;

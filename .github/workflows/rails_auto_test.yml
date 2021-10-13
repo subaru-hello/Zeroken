@@ -5,8 +5,8 @@ on:
       - main
 env:
   RAILS_ENV: test
-  MYSQL_USER: ${MYSQL_USER}
-  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  MYSQL_USER: <%= ENV["DB_USERNAME"] %>
+  MYSQL_PASSWORD: <%= ENV["DB_PASSWORD"] %>
   MYSQL_HOST: ${DATABASE_HOST}
   MYSQL_PORT: 3306
 jobs:
@@ -36,7 +36,7 @@ jobs:
       - name: Prepare Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
           cache: 'yarn'
       - name: yarn
         run: yarn --frozen-lockfile
@@ -67,28 +67,26 @@ jobs:
       - name: Prepare Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
           cache: 'yarn'
       - name: yarn
         run: yarn --frozen-lockfile
 
-      # - name: Setup database
-      #   env:
-      #     RAILS_ENV: test
+      # - name: Setup Database
       #   run: |
-      #     mysql.server start
-      #     gem install bundler
-      #     ./bin/rails db:create
-      #     ./bin/rails db:migrate
-      # Check vulnerabilit
+      #     cp config/database.yml.ci config/database.yml
+      #     bundle exec rails db:create db:schema:load
+      # Run Linter
+      - name: run Prettier and ESLint
+        run: |
+          yarn run fmt
       - name: Run Breakman
         run: |
           bundle exec bundler-audit --update
           bundle exec brakeman -q -w2
-      # Run Linter
       - name: Run Rubocop
         run: |
-          bundle exec rubocop --parallel
+          bundle exec rubocop -A
       # Run RSpec (added later)
 
   # deploy:
