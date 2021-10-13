@@ -29,7 +29,7 @@ jobs:
           sudo systemctl start mysql
           bundle exec rake db:create RAILS_ENV=development
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: adminpassword
           MYSQL_DATABASE: root
      
       - name: Prepare Node
@@ -46,8 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
-        mysql:
-         image: mysql:5.6
+      mysql:
+          image: mysql:5.6
         ports:
           - 3306:3306
         env:
