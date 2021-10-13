@@ -75,6 +75,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
+          docker run -itd -e MYSQL_ROOT_PASSWORD="password"  -p 3306:3306 mysql:latest
           cp config/database.yml.ci config/database.yml
           gem install bundler
           ./bin/rails db:create
