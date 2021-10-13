@@ -1,20 +1,19 @@
-import Vue from 'vue'
-import App from '../App'
-import router from '../router'
-import vuetify from "../plugins/vuetify"
-
+import Vue from 'vue';
+import App from '../App';
+import router from '../router';
+import vuetify from '../plugins/vuetify';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
     vuetify,
-    render: h => h(App)
-  }).$mount()
-  
-  document.body.appendChild(app.$el)
+    render: (h) => h(App),
+  }).$mount();
 
-  console.log(app)
-})
+  document.body.appendChild(app.$el);
+
+  console.log(app);
+});
 
 // The above code uses Vue without the compiler, which means you cannot
 // use Vue to target elements in your existing html templates. You would
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //   {{message}}
 //   <app></app>
 // </div>
-
 
 // import Vue from 'vue/dist/vue.esm'
 // import App from '../app.vue'
