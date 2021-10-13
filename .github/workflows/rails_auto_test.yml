@@ -5,9 +5,9 @@ on:
       - main
 env:
   RAILS_ENV: test
-  MYSQL_USER: mysql
-  MYSQL_PASSWORD: mysql
-  MYSQL_HOST: localhost
+  MYSQL_USER: ${MYSQL_USER}
+  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  MYSQL_HOST: ${DATABASE_HOST}
   MYSQL_PORT: 3306
 jobs:
   prepare:
