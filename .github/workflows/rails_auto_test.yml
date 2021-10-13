@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # Checkout and install dependencies
+      # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
 
