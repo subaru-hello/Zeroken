@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', require: false
+  gem 'prettier'
   # debug
   gem 'better_errors'
   gem 'binding_of_caller'
