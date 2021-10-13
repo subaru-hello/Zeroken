@@ -1,9 +1,9 @@
- test:
-    adapter: postgresql
-    encoding: unicode
-    database: preliquo
-    pool: 5
-    username: <%= ENV['PRELIQUO_USER_NAME'] %>
-    password: <%= ENV['PRELIQUO_DATABASE_PASSWORD'] %>
-    host: localhost
-    port: 3306
+test:
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_general_ci
+  username: testuser
+  password: testpassword
+  host: 127.0.0.1
+  database: preliquo_db_1 
+  reconnect: false
