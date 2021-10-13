@@ -45,13 +45,13 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    services:
-      mysql:
-        image: mysql:5.6
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    # services:
+    #   mysql:
+    #     image: mysql:5.6
+    #     ports:
+    #       - 3306:3306
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -70,14 +70,14 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      - name: Setup database
-        env:
-          RAILS_ENV: test
-        run: |
-          gem install bundler
-          mysql.server start
-          ./bin/rails db:create
-          ./bin/rails db:migrate
+      # - name: Setup database
+      #   env:
+      #     RAILS_ENV: test
+      #   run: |
+      #     mysql.server start
+      #     gem install bundler
+      #     ./bin/rails db:create
+      #     ./bin/rails db:migrate
       # Check vulnerabilit
       - name: Run Breakman
         run: |
