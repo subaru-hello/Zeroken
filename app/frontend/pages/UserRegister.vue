@@ -25,6 +25,7 @@
             type="text"
             label="ニックネーム"
             >
+            </ValidationProvider>
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|isUnique:email|max:50"
