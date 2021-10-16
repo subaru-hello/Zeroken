@@ -1,13 +1,11 @@
 import Vue from 'vue';
 import App from '../App';
 import router from '../router';
-import { axiosInstance } from '../plugins/axios'
-import * as VeeValidate from '../plugins/vee-validate'
+import axiosInstance from '../plugins/axios';
+import * as VeeValidate from '../plugins/vee-validate';
 import vuetify from '../plugins/vuetify';
 
-
 Vue.prototype.$axios = axiosInstance;
-
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
