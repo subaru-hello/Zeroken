@@ -61,7 +61,7 @@
                 :appendIcon="showPasswordConfirmation ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPasswordConfirmation ? 'text' : 'password'"
                 @click:append="handleShowPasswordConfirmation"
-                label="ニックネーム"
+                label="パスワード(確認用)"
               />
             </ValidationProvider>
           </v-card-text>

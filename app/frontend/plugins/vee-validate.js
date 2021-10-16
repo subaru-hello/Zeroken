@@ -33,4 +33,3 @@ extend('isUnique', {
   },
   message: '{_value_}は既に使われています',
 });
-export default vee-validate;
