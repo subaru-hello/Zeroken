@@ -26,7 +26,7 @@ RSpec.describe User, type: :model do
 
   describe 'メールアドレスが適当な場合' do
     context 'パスワードが適当な場合' do
-    valid_passwords = %w[password fooBAR baz1234 123456]
+    valid_passwords = %w[password fooBAR baz1234 32156]
     it  'フォーマットバリデーションを通過する' do
       valid_passwords.each do |password|
           user.password = password
