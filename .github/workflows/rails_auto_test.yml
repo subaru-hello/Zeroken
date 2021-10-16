@@ -79,7 +79,9 @@ jobs:
       # Run Linter
       - name: run Prettier and ESLint
         run: |
+          yarn eslint-config-prettier app/frontend/**/{*.js,*.vue}
           yarn run fmt
+          yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       - name: Run Breakman
         run: |
           bundle exec bundler-audit --update
