@@ -6,11 +6,11 @@ class User < ApplicationRecord
   VALID_PASSWORD_FORMAT = /\A\w+\z/i
 
 
-  validates :password, length: { minimum: 6 }, if: -> { new_or_changes_password }
-  validates :password, confirmation: true,format: { with: VALID_PASSWORD_FORMAT } if: -> { new_or_changes_password }
+  validates :password, length: { minimum: 6 }, if: :new_or_changes_password 
+  validates :password, confirmation: true, format: { with: VALID_PASSWORD_FORMAT }, if: :new_or_changes_password 
   validates :password_confirmation,
             presence: true,
-            if: -> { new_or_changes_password }
+            if: :new_or_changes_password 
 
   validates :nickname, presence: true, uniqueness: true, length: { maximum: 10 }
 

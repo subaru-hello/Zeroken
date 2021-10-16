@@ -24,7 +24,7 @@
             :mode="blur"
             type="text"
             label="ニックネーム"
-            >
+            />
             </ValidationProvider>
             <ValidationProvider
               v-slot="{ errors }"
@@ -38,7 +38,7 @@
             :mode="blur"
             type="email"
             label="メールアドレス"
-            >
+            />
             </ValidationProvider>
             <ValidationProvider
               v-slot="{ errors }"
@@ -54,7 +54,7 @@
             :type="showPassword ? 'text' : 'password' "
             label="パスワード"
             @click:append="handleShowPassword"
-            >
+            />
             </ValidationProvider>
             <ValidationProvider
               v-slot="{ errors }"
@@ -69,13 +69,13 @@
             :type="showPasswordConfirmation ? 'text' : 'password'"
             @click:append="handleShowPasswordConfirmation"
             label="ニックネーム"
-            >
+            />
             </ValidationProvider>
             </v-card-text>
             <v-card-actions class="d-flex justify-center">
               <v-btn 
                 color="normal"
-              >
+              />
               戻る
               <v-btn
               color="primary"
