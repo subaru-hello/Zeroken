@@ -36,7 +36,7 @@
             <ValidationProvider
               v-slot="{ errors }"
               :rules="{ required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i }"
-              v-id="password"
+              vid="password"
               name="パスワード"
             >
               <v-text-field
