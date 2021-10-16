@@ -92,7 +92,7 @@ jobs:
       #      bundle exec rspec
   # deploy:
   #   name: auto deploy to heroku
-  #   needs: [prepare, build-test]
+  #   needs: [prepare, build-test
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 10
   #   steps:
