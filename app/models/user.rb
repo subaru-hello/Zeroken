@@ -2,7 +2,7 @@ class User < ApplicationRecord
   before_save :change_email_to_lowercase
   authenticates_with_sorcery!
 
-  VALID_EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   VALID_PASSWORD_FORMAT = /\A\w+\z/i.freeze
 
   validates :password, length: { minimum: 6 }, if: :new_or_changes_password
@@ -23,7 +23,7 @@ class User < ApplicationRecord
               maximum: 50
             },
             format: {
-              with: VALID_EMAIL_FORMAT
+              with: VALID_EMAIL_REGEX
             }
 
   private
