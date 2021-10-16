@@ -26,7 +26,7 @@ RSpec.describe User, type: :model do
 
   describe 'メールアドレスが適当な場合' do
     context 'パスワードが適当な場合' do
-    valid_passwords = %w[password fooBAR baz1234 32156]
+    valid_passwords = %w[password fooBAR baz1234 123536]
     it  'フォーマットバリデーションを通過する' do
       valid_passwords.each do |password|
           user.password = password
@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'パスワードが不適当な場合' do
-   invalid_passwords =%w[パスワード  barr..barr __//foo @#_fvd@]
+   invalid_passwords =%w[パスワード  barr..barr __//foo @#_fvd@ 12356]
    it 'フォーマットバリデーションを通過しない' do
      invalid_passwords.each do |passwords|
       user.password = passwords
