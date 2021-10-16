@@ -75,8 +75,9 @@
             <v-card-actions class="d-flex justify-center">
               <v-btn 
                 color="normal"
-              />
+              >
               戻る
+              </v-btn>
               <v-btn
               color="primary"
               xLarge
@@ -85,6 +86,7 @@
               >
               登録する
               </v-btn>
+              </v-card-actions>
               </ValidationObserver>
       </v-card>
     </v-col>
