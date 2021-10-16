@@ -8,13 +8,13 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|isUnique:nickname|max:10"
+              :mode="blur"
               name="ニックネーム"
             >
               <v-text-field
                 id="user-nickname"
                 v-model="user.nickname"
                 :errorMessages="errors"
-                :mode="blur"
                 type="text"
                 label="ニックネーム"
               />
@@ -22,13 +22,13 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|isUnique:email|max:50"
+              :mode="blur"
               name="メールアドレス"
             >
               <v-text-field
                 id="user-email"
                 v-model="user.email"
                 :errorMessages="errors"
-                :mode="blur"
                 type="email"
                 label="メールアドレス"
               />
@@ -43,7 +43,7 @@
                 id="user-password"
                 v-model="user.password"
                 :errorMessages="errors"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :appendIcon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPassword ? 'text' : 'password'"
                 label="パスワード"
                 @click:append="handleShowPassword"
@@ -60,14 +60,14 @@
                 :errorMessages="errors"
                 :appendIcon="showPasswordConfirmation ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPasswordConfirmation ? 'text' : 'password'"
-                @click:append="handleShowPasswordConfirmation"
                 label="パスワード(確認用)"
+                @click:append="handleShowPasswordConfirmation"
               />
             </ValidationProvider>
           </v-card-text>
           <v-card-actions class="d-flex justify-center">
             <v-btn color="normal"> 戻る </v-btn>
-            <v-btn color="primary" xLarge :disabled="invalid" @click="handleSubmit(registerUser)">
+            <v-btn color="primary" xLarge  @click="handleSubmit(registerUser)">
               登録する
             </v-btn>
           </v-card-actions>
