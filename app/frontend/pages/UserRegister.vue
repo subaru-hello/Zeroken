@@ -8,7 +8,7 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|isUnique:nickname|max:10"
-              :mode="blur"
+              mode="blur"
               name="ニックネーム"
             >
               <v-text-field
@@ -22,7 +22,7 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|isUnique:email|max:50"
-              :mode="blur"
+              mode="blur"
               name="メールアドレス"
             >
               <v-text-field
@@ -93,7 +93,7 @@ export default {
   methods: {
     registerUser() {
       this.$axios
-        .post('user', { user: this.user }) //$axiosを通して非同期post。data内のuserをuserに入れて'user'でpostしている
+        .post('users', { user: this.user }) //$axiosを通して非同期post。data内のuserをuserに入れてusersコントローラーのpostアクションを実行している
         .then(() => alert('新規登録に成功しました')) //成功処理
         .catch((error) => console.log(error)); //失敗処理
     },
