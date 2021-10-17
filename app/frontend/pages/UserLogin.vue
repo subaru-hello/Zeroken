@@ -3,7 +3,7 @@
         <v-col cols="12" sm="10" md="8" lg="6">
             <div class="text-h3 text-center">ログイン</div>
             <v-card ref="form">
-                <ValidationObserver v-sot="{ handleSubmit }">
+                <ValidationObserver v-slot="{ handleSubmit }">
                 <v-card-text>
                   <ValidationProvider 
                     v-slot="{ errors }"
