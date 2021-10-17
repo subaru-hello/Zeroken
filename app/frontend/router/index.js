@@ -2,9 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import UserRegister from '../pages/UserRegister';
-import TopIndex from '../pages/top/index';
-import TaskIndex from '../pages/task/index';
-
+import PreliquoTop from '../pages/PreliquoTop';
+import UserLogin from '../pages/UserLogin.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -12,13 +11,13 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: TopIndex,
-      name: 'TopIndex',
+      component: PreliquoTop,
+      name: 'PreliquoTop',
     },
     {
-      path: '/tasks',
-      component: TaskIndex,
-      name: 'TaskIndex',
+      path: '/login',
+      component: UserLogin,
+      name: 'UserLogin',
     },
     {
       path: '/register',

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from '../App';
+import store from '../store/index'
 import router from '../router';
 import axiosInstance from '../plugins/axios';
 import * as VeeValidate from '../plugins/vee-validate';
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
     vuetify,
+    store,
     VeeValidate,
     render: (h) => h(App),
   }).$mount();

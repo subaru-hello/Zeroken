@@ -1,5 +1,5 @@
 module Api
-  class ValidationController < ApplicationController
+  class ValidationsController < ApplicationController
     def unique
       result =
         if User.where(nickname: params[:nickname]).or(User.where(email: params[:email])).exists?
