@@ -29,7 +29,7 @@ extend('isUnique', {
   params: ['column'],
   async validate(value, { column }) {
     let response = await axios.get('validations/unique', { params: { [column]: value } });
-    return response.data === 'unique';
+    return response.data != 'unique';
   },
   message: '{_value_}は既に使われています',
 });
