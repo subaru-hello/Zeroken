@@ -36,7 +36,7 @@ jobs:
       - name: Prepare Node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
           cache: 'yarn'
       - name: yarn
         run: yarn --frozen-lockfile
@@ -67,7 +67,7 @@ jobs:
       - name: Prepare Node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
           cache: 'yarn'
       - name: yarn
         run: yarn --frozen-lockfile
