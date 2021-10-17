@@ -8,7 +8,13 @@ module Api
         head 400
       end
     end
-
+    def tell_on
+      if current_user
+        json_string = UserSerializer.new(current_user).serializable_hash.to_json
+        render json: json_string
+      else
+        render json: nil
+      end
     private
 
     def set_user
