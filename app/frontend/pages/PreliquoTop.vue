@@ -1,18 +1,27 @@
 <template>
      <div>
          <p>酒ジュールを提供します</p>
-         <p v-if="!!authUser">ログインしています</p>
-    </div>
+         <div v-if="!!authUser">
+             ログインしています</div>
+         <v-btn color="error" @click="logoutUser">削除</v-btn>
+         <p>{{ authUser }}</p>
+     </div>
 </template>  
 
  <script>
-    import { mapGetters } from 'vuex';
+    import { mapActions,mapGetters } from 'vuex';
     export default {
         data(){
             return {};
         },
+        created() {
+            this.fetchAuthUser();
+        },
         computed: {
             ...mapGetters('users', ['authUser']),
+        },
+        methods: {
+            ...mapActions('users', ['fetchAuthUser', 'logoutUser']),
         },
     };
   </script>
