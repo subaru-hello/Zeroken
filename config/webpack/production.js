@@ -3,7 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 const environment = require('./environment')
 const customConfig = {
     resolve: {
-      fallback: {
+      alias: {
         dgram: false,
         fs: false,
         net: false,
@@ -17,6 +17,6 @@ const customConfig = {
   environment.config.delete('node.net')
   environment.config.delete('node.tls')
   environment.config.delete('node.child_process')
-  environment.config.delete('fallback')
+
   environment.config.merge(customConfig);
 module.exports = environment.toWebpackConfig()
