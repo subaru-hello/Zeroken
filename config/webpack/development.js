@@ -1,7 +1,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const environment = require('./environment')
-  
+const { environment,customConfig }  = require('./environment')
+
   environment.config.delete('node.dgram')
   environment.config.delete('node.fs')
   environment.config.delete('node.net')
