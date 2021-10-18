@@ -1,16 +1,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const environment = require('./environment')
-const customConfig = {
-    resolve: {
-      alias: {
-
-        fs: false,
-        net: false,
-        tls: false
-      }
-    }
-  };
   
   environment.config.delete('node.dgram')
   environment.config.delete('node.fs')
