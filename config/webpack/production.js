@@ -3,7 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 const environment = require('./environment')
 const customConfig = {
     resolve: {
-      fallback: {
+      fallbacks: {
         dgram: false,
         fs: false,
         net: false,
