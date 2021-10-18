@@ -17,6 +17,6 @@ const customConfig = {
   environment.config.delete('node.net')
   environment.config.delete('node.tls')
   environment.config.delete('node.child_process')
-  
+  environment.config.delete('fallback')
   environment.config.merge(customConfig);
 module.exports = environment.toWebpackConfig()
