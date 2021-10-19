@@ -2,7 +2,7 @@
   "name": "preliquo",
   "private": true,
   "engines": {
-    "node": "14.17.0"
+    "node": "12.22.6"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",

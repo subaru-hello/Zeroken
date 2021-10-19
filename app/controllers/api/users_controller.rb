@@ -3,9 +3,9 @@ module Api
     def create
       user = User.new(set_user)
       if user.save
-        head 200
+        head :ok
       else
-        head 400
+        head :bad_request
       end
     end
 
