@@ -8,6 +8,14 @@ const customConfig = {
         tls: false,
         child_process: false
       }
+    },
+    module:{
+      rules:[
+        {
+          test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+          use: 'file-loader?name=assets/[name].[hash].[ext]'
+        }
+      ]
     }
   };
   
