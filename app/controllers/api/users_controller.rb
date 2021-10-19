@@ -3,9 +3,9 @@ module Api
     def create
       user = User.new(set_user)
       if user.save
-        head 200
+        head :ok
       else
-        head 400
+        head :bad_request
       end
     end
 
@@ -17,6 +17,7 @@ module Api
         render json: nil
       end
     end
+
     private
 
     def set_user
