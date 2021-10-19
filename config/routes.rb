@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'home#index'
+  # root to: 'home#index'
   namespace :api, format: 'json' do
     resources :users , only: %i[ create ] do
       get 'tell_on', on: :collection
