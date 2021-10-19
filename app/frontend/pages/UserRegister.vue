@@ -67,9 +67,7 @@
           </v-card-text>
           <v-card-actions class="d-flex justify-center">
             <v-btn color="normal"> 戻る </v-btn>
-            <v-btn color="primary" xLarge  @click="handleSubmit(registerUser)">
-              登録する
-            </v-btn>
+            <v-btn color="primary" xLarge @click="handleSubmit(registerUser)"> 登録する </v-btn>
           </v-card-actions>
         </ValidationObserver>
       </v-card>
@@ -77,7 +75,7 @@
   </v-row>
 </template>
 <script>
-import router from '../router/index'
+import router from '../router/index';
 export default {
   data() {
     return {
@@ -95,9 +93,8 @@ export default {
     registerUser() {
       this.$axios
         .post('users', { user: this.user }) //$axiosを通して非同期post。data内のuserをuserに入れてusersコントローラーのpostアクションを実行している
-        .then(() => alert('新規登録に成功しました')) //成功処理
-        router.push({ name: 'UserLogin' })
-        .catch((error) => console.log(error)); //失敗処理
+        .then(() => alert('新規登録に成功しました')); //成功処理
+      router.push({ name: 'UserLogin' }).catch((error) => console.log(error)); //失敗処理
     },
     handleShowPassword() {
       this.showPassword = !this.showPassword;
