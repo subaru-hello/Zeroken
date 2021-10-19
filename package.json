@@ -33,7 +33,7 @@
   "devDependencies": {
     "deepmerge": "^4.2.2",
     "sass": "^1.43.2",
-    "sass-loader": "^12.1.0",
+    "sass-loader": "^10",
     "webpack-dev-server": "^3"
   },
   "scripts": {
