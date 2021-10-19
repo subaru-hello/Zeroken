@@ -1,6 +1,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
-
-const { environment,customConfig }  = require('./environment')
+const { environment } = require('@rails/webpacker')
+const { customConfig }  = require('./environment')
   environment.config.delete('node.dgram')
   environment.config.delete('node.fs')
   environment.config.delete('node.net')
