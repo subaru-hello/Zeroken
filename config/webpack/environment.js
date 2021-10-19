@@ -1,7 +1,7 @@
 const { environment } = require('@rails/webpacker')
 const customConfig = {
     resolve: {
-      fallback: {
+        fallback: {
         dgram: false,
         fs: false,
         net: false,
