@@ -17,6 +17,7 @@ module Api
         render json: nil
       end
     end
+
     private
 
     def set_user

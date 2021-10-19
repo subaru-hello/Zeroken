@@ -1,5 +1,5 @@
 const { environment } = require('@rails/webpacker')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 
 const customConfig = {
     resolve: {
@@ -16,18 +16,10 @@ const customConfig = {
         {
           test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
           use: 'file-loader?name=assets/[name].[hash].[ext]'
-        },
-        {
-          test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, "css-loader"]
         }
       ]
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: "[name].css"
-      })
-    ]
+   
   };
   
   environment.config.delete('node.dgram')
