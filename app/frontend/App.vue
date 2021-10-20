@@ -8,8 +8,8 @@
   </v-app>
 </template>
 <script>
-import  TheFooter  from './components/global/TheFooter';
-import  TheHeader  from './components/global/TheHeader';
+import TheFooter from './components/global/TheFooter';
+import TheHeader from './components/global/TheHeader';
 
 export default {
   components: {

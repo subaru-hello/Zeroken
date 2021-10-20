@@ -131,8 +131,7 @@ export default {
       this.$axios
         .post('users', { user: this.user }) //$axiosを通して非同期post。data内のuserをuserに入れてusersコントローラーのpostアクションを実行している
         .then(() => alert('新規登録に成功しました')); //成功処理
-      router.push({ name: 'UserLogin' })
-      　.catch((error) => console.log(error)); //失敗処理
+      router.push({ name: 'UserLogin' }).catch((error) => console.log(error)); //失敗処理
     },
     handleShowPassword() {
       this.showPassword = !this.showPassword;

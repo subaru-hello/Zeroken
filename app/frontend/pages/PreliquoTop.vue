@@ -1,17 +1,15 @@
 <template>
-     <div>
-         <p>酒ジュールを提供します</p>
-         <div v-if="!!authUser">
-             ログインしています</div>
-         <p>{{ authUser }}</p>
-     </div>
-</template>  
-
+  <div>
+    <p>酒ジュールを提供します</p>
+    <div v-if="!!authUser">ログインしています</div>
+    <p>{{ authUser }}</p>
+  </div>
+</template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    name: "PreliquoTop",
+  name: 'PreliquoTop',
   data() {
     return {};
   },
