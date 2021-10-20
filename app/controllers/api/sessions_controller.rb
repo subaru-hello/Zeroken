@@ -12,8 +12,7 @@ module Api
 
     def destroy
       logout
-      head 200
-
+      head :ok
     end
   end
 end
