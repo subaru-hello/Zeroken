@@ -1,17 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import Analyze from '../pages/Analyze';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
-import UserLogin from '../pages/UserLogin.vue';
+import UserLogin from '../pages/UserLogin';
 Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/api',
       component: PreliquoTop,
+      alias: '/',
       name: 'PreliquoTop',
     },
     {
@@ -23,6 +25,11 @@ const router = new Router({
       path: '/register',
       component: UserRegister,
       name: 'UserRegister',
+    },
+    {
+      path: '/analyze',
+      component: Analyze,
+      name: 'Analyze',
     },
   ],
 });
