@@ -2,7 +2,7 @@
     <div>
         <v-app-bar flat color="grey lighten-5">
             <v-toolbar-title>
-                <router-link class="router-link text-h4" style="color: #d32f2f"
+                <router-link class="router-link text-h4" style="color: #6EA4CA"
                 :to="{ name: 'PreliquoTop' }">
                 PRELIQUO
                 </router-link>
@@ -12,6 +12,10 @@
         <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutUser">
           ログアウト
         </v-btn>
+        <router-link class="router-link text"
+                :to="{ name: 'Analyze' }">
+                酒ケジュールを作成する
+                </router-link>
       </template>
         <template v-else>
         <v-btn :to="{ name: 'UserRegister' }" text rounded plain :ripple="{ center: true }" x-large>
