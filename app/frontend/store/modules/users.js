@@ -20,8 +20,8 @@ const actions = {
       .post('sessions', user) //createアクション実行
       .then((res) => {
         commit('setAuthUser', res.data);
+        // alert('ログインに成功しました');
         router.push({ name: 'PreliquoTop' });
-        alert('ログインに成功しました');
       })
       .catch((err) => console.log(err));
   },
