@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Analyze from '../pages/Analyze'
+import Analyze from '../pages/Analyze';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
 import UserLogin from '../pages/UserLogin';
@@ -31,7 +31,6 @@ const router = new Router({
       component: Analyze,
       name: 'Analyze',
     },
-   
   ],
 });
 
