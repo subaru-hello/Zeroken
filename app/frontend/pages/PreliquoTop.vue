@@ -57,7 +57,7 @@ export default {
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
   },
-    created() {
+  created() {
     this.fetchAuthUser();
   },
 };
