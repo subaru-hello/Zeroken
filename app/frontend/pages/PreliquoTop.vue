@@ -51,13 +51,13 @@ export default {
       ],
     };
   },
-  created() {
-    this.fetchAuthUser();
-  },
   computed: {
     ...mapGetters('users', ['authUser']),
   },
-  methods: {
+  created() {
+    this.fetchAuthUser();
+  },
+   methods: {
     ...mapActions('users', ['fetchAuthUser']),
   },
 };
