@@ -54,11 +54,11 @@ export default {
   computed: {
     ...mapGetters('users', ['authUser']),
   },
-  methods: {
-    ...mapActions('users', ['fetchAuthUser']),
-  },
   created() {
     this.fetchAuthUser();
+  },
+   methods: {
+    ...mapActions('users', ['fetchAuthUser']),
   },
 };
 </script>
