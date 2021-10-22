@@ -98,7 +98,7 @@
                 style="color: white"
                 color="red accent-2"
                 xLarge
-                @click="handleSubmit(createUser)"
+                @click="handleSubmit(registerUser)"
               >
                 <v-icon class="mr-1">mdi-email</v-icon>
                 メールアドレスで登録
