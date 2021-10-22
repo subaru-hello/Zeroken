@@ -51,14 +51,14 @@ export default {
       ],
     };
   },
-  created() {
-    this.fetchAuthUser();
-  },
   computed: {
     ...mapGetters('users', ['authUser']),
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
+  },
+    created() {
+    this.fetchAuthUser();
   },
 };
 </script>
