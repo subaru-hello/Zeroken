@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto">
+  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top">
     <v-col>
       <v-row justify="center" align-content="center">
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+// import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'PreliquoTop',
   data() {
@@ -51,14 +51,14 @@ export default {
       ],
     };
   },
-  computed: {
-    ...mapGetters('users', ['authUser']),
-  },
-  created() {
-    this.fetchAuthUser();
-  },
-   methods: {
-    ...mapActions('users', ['fetchAuthUser']),
-  },
+//   computed: {
+//     ...mapGetters('users', ['authUser']),
+//   },
+//   created() {
+//     this.fetchAuthUser();
+//   },
+//    methods: {
+//     ...mapActions('users', ['fetchAuthUser']),
+//   },
 };
 </script>
