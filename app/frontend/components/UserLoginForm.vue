@@ -11,7 +11,7 @@
           mode="blur"
           :rules="{ required: true, email: true, max: 50 }"
         >
-       <v-text-field
+          <v-text-field
             id="user-email"
             label="メールアドレス"
             type="email"
@@ -26,7 +26,7 @@
           vid="password"
           :rules="{ required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i }"
         >
-            <v-text-field
+          <v-text-field
             id="user-password"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPassword ? 'text' : 'password'"
@@ -38,7 +38,7 @@
           />
         </ValidationProvider>
       </v-card-text>
-        <v-card-actions class="d-flex justify-center pb-8">
+      <v-card-actions class="d-flex justify-center pb-8">
         <v-btn
           class="px-4"
           style="color: white"
@@ -49,7 +49,7 @@
           <v-icon class="mr-1">mdi-email</v-icon>
           メールアドレスでログイン
         </v-btn>
-        </v-card-actions>
+      </v-card-actions>
     </ValidationObserver>
   </v-card>
 </template>

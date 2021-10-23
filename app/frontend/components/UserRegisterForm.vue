@@ -8,7 +8,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           mode="blur"
-          :rules="{ required: true,max: 10 }"
+          :rules="{ required: true, max: 10 }"
           name="ニックネーム"
         >
           <v-text-field
@@ -30,9 +30,9 @@
             id="user-email"
             type="email"
             label="メールアドレス"
-            :value = "email"
+            :value="email"
             :error-messages="errors"
-            @input="$emit('update:email',$event)"
+            @input="$emit('update:email', $event)"
           />
         </ValidationProvider>
         <ValidationProvider
@@ -49,7 +49,7 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPassword ? 'text' : 'password'"
             @click:append="handleShowPassword"
-            @input="$emit('update:password',$event)"
+            @input="$emit('update:password', $event)"
           />
         </ValidationProvider>
         <ValidationProvider
@@ -85,43 +85,43 @@
   </v-card>
 </template>
 <script>
-export default{
-  props:{
-    nickname:{
+export default {
+  props: {
+    nickname: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
-    email:{
+    email: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
-    password:{
+    password: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
-    password_confirmation:{
+    password_confirmation: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
   },
-  data(){
-    return{
+  data() {
+    return {
       showPassword: false,
       showPasswordConfirmation: false,
     };
   },
   methods: {
-    handleShowPassword(){
-      this.showPassword =  !this.showPassword;
+    handleShowPassword() {
+      this.showPassword = !this.showPassword;
     },
-    handleShowPasswordConfirmation(){ 
-      this.showPasswordConfirmation= !this.showPasswordConfirmation;
+    handleShowPasswordConfirmation() {
+      this.showPasswordConfirmation = !this.showPasswordConfirmation;
     },
-    handleCreateUser(){
+    handleCreateUser() {
       this.$emit('create-user');
     },
   },

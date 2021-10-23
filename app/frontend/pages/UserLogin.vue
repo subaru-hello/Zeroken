@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <div>
-       <v-snackbar v-model="snackbar" top absolute outlined color="error" timeout="2000">
+      <v-snackbar v-model="snackbar" top absolute outlined color="error" timeout="2000">
         {{ text }}
       </v-snackbar>
-      </div>
+    </div>
     <v-row class="mb-10">
       <v-col class="pt-10">
         <h3 class="text-h4 mb-4 font-weight-black">ログイン</h3>
@@ -30,8 +30,8 @@
       <v-col class="d-flex justify-center align-center" cols="12" sm="2" md="2" lg="2" xl="2">
         <p>または</p>
       </v-col>
-      <v-col cols="12" sm="5" md="5" lg="5" xl="5" >
-          <UserLoginForm v-bind.sync="user" @login-user="loginFunction" />
+      <v-col cols="12" sm="5" md="5" lg="5" xl="5">
+        <UserLoginForm v-bind.sync="user" @login-user="loginFunction" />
       </v-col>
     </v-row>
   </v-container>
@@ -57,16 +57,16 @@ export default {
   methods: {
     ...mapActions('users', ['loginUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
-    loginFunction(){
-      this.loginUser(this.user).then((user)=>{
-        if(user){
+    loginFunction() {
+      this.loginUser(this.user).then((user) => {
+        if (user) {
           this.$router.push({ name: 'PreliquoTop' });
           this.fetchSnackbarData({
             msg: 'ログインしました',
             color: 'success',
             isShow: true,
           });
-        }else{
+        } else {
           this.fetchSnackbarData({
             msg: 'ログインに失敗しました',
             color: 'error',
@@ -74,7 +74,7 @@ export default {
           });
         }
       });
-    }
+    },
   },
 };
 </script>

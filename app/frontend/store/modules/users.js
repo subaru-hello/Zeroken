@@ -10,44 +10,42 @@ const getters = {
 const mutations = {
   setAuthUser(state, user) {
     state.authUser = user;
-  },};
+  },
+};
 
 const actions = {
   async registerUser({ commit }, user) {
-    try{
+    try {
       const userResponse = await axios.post('users', { user: user });
       //axiosを通して非同期post。data内のuserをuserに入れてstore/module/index.jsのpost通信をしている。
-        commit('setAuthUser', userResponse.data)
-        //mutationのsetAuthUserにコミットしている。axiosのレスポンスデータをsetAuthUserに渡している。
-        return userResponse.data;
-        //userResponse.dataを取得している。
-    } catch(err){
-        console.log(err)
-        return nil;
-    };
+      commit('setAuthUser', userResponse.data);
+      //mutationのsetAuthUserにコミットしている。axiosのレスポンスデータをsetAuthUserに渡している。
+      return userResponse.data;
+      //userResponse.dataを取得している。
+    } catch (err) {
+      console.log(err);
+      return nil;
+    }
   },
-  async loginUser({ commit },  user) {
-    try{
-      const userResponse = await axios.post('sessions', user);//createアクション実行
+  async loginUser({ commit }, user) {
+    try {
+      const userResponse = await axios.post('sessions', user); //createアクション実行
       commit('setAuthUser', userResponse.data);
       return userResponse.data;
-    } 
-    catch(err){
+    } catch (err) {
       console.log(err);
       return null;
     }
   },
   async logoutUser({ commit }) {
-   try{
-    const res = await axios.delete('sessions'); //destroyアクション実行
-    commit('setAuthUser', null);
-    return res;
-       } 
-    catch(err){ 
-    console.log(err);
-    return null;
-      } 
-     
+    try {
+      const res = await axios.delete('sessions'); //destroyアクション実行
+      commit('setAuthUser', null);
+      return res;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   },
   async fetchAuthUser({ commit, state }) {
     if (state.authUser) return state.authUser;

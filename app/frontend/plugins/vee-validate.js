@@ -35,5 +35,4 @@ extend('isUnique', {
       return '{_value_}は既に使われています';
     }
   },
-
 });

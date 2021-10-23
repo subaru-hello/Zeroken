@@ -34,24 +34,24 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import FirstGreeting from '../components/FirstGreeting'
+import FirstGreeting from '../components/FirstGreeting';
 export default {
   name: 'PreliquoTop',
   components: {
-      FirstGreeting,
+    FirstGreeting,
   },
-  beforeRouteEnter(to, from, next){
-      if (from.name === 'UserRegister')
-      next((self)=>{
-          self.fetchAuthUser().then((authUser) => {
-              if (authUser) return (self.isVisibleFirstGreeting = true);
-          });
+  beforeRouteEnter(to, from, next) {
+    if (from.name === 'UserRegister')
+      next((self) => {
+        self.fetchAuthUser().then((authUser) => {
+          if (authUser) return (self.isVisibleFirstGreeting = true);
+        });
       });
-      else next()
+    else next();
   },
   data() {
     return {
-        isVisibleFirstGreeting: false,
+      isVisibleFirstGreeting: false,
       items: [
         {
           title: '飲み会の前にお酒の強さを診断',
@@ -67,20 +67,21 @@ export default {
           //  img: require('@/assets/images/liquor.svg'),
         },
       ],
-      }},
-      computed: {
+    };
+  },
+  computed: {
     ...mapGetters('users', ['authUser']),
   },
   created() {
     this.fetchAuthUser();
   },
-//   computed: {
-//     ...mapGetters('users', ['authUser']),
-//   },
-//   created() {
-//     this.fetchAuthUser();
-//   },
-   methods: {
+  //   computed: {
+  //     ...mapGetters('users', ['authUser']),
+  //   },
+  //   created() {
+  //     this.fetchAuthUser();
+  //   },
+  methods: {
     ...mapActions('users', ['fetchAuthUser']),
   },
 };
