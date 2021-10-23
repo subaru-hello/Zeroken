@@ -2,6 +2,7 @@
   <v-app id="app">
     <TheHeader />
     <v-main>
+      <TheSnackBar />
       <router-view />
     </v-main>
     <TheFooter />
@@ -10,11 +11,13 @@
 <script>
 import TheFooter from './components/global/TheFooter';
 import TheHeader from './components/global/TheHeader';
+import TheSnackBar from './components/global/TheSnackBar';
 
 export default {
   components: {
     TheHeader,
     TheFooter,
+    TheSnackBar,
   },
 };
 </script>

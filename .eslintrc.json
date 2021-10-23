@@ -19,6 +19,7 @@
   "rules": {
     "prettier/prettier": "error",
     "vue/attribute-hyphenation": ["warn", "never"],
+    "vue/prop-name-casing": ["warn", "snake_case"],
     "no-var": "error",
     "quotes": ["warn", "single"]
   }

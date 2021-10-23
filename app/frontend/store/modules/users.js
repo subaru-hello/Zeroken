@@ -1,5 +1,4 @@
 import axios from '../../plugins/axios';
-import router from '../../router/index';
 const state = {
   authUser: null,
 };
@@ -15,29 +14,43 @@ const mutations = {
 };
 
 const actions = {
-  loginUser({ commit }, user) {
-    axios
-      .post('sessions', user) //createアクション実行
-      .then((res) => {
-        commit('setAuthUser', res.data);
-        // alert('ログインに成功しました');
-        router.push({ name: 'PreliquoTop' });
-      })
-      .catch((err) => console.log(err));
+  async registerUser({ commit }, user) {
+    try {
+      const userResponse = await axios.post('users', { user: user });
+      //axiosを通して非同期post。data内のuserをuserに入れてstore/module/index.jsのpost通信をしている。
+      commit('setAuthUser', userResponse.data);
+      //mutationのsetAuthUserにコミットしている。axiosのレスポンスデータをsetAuthUserに渡している。
+      return userResponse.data;
+      //userResponse.dataを取得している。
+    } catch (err) {
+      console.log(err);
+      return nil;
+    }
   },
-  logoutUser({ commit }) {
-    axios
-      .delete('sessions') //destroyアクション実行
-      .then(() => {
-        commit('setAuthUser', null);
-        alert('ログアウトしました');
-      })
-      .catch(() => alert('ログアウトに失敗しました'));
+  async loginUser({ commit }, user) {
+    try {
+      const userResponse = await axios.post('sessions', user); //createアクション実行
+      commit('setAuthUser', userResponse.data);
+      return userResponse.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  },
+  async logoutUser({ commit }) {
+    try {
+      const res = await axios.delete('sessions'); //destroyアクション実行
+      commit('setAuthUser', null);
+      return res;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   },
   async fetchAuthUser({ commit, state }) {
     if (state.authUser) return state.authUser;
     const userResponse = await axios.get('users/tell_on');
-    // if (!userResponse) return null;
+    if (!userResponse) return null;
     commit('setAuthUser', userResponse.data);
     return userResponse.data;
   },

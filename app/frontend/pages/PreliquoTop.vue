@@ -1,5 +1,9 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto">
+  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top">
+    <FirstGreeting
+      :dialog="isVisibleFirstGreeting"
+      @close-dialog="isVisibleFirstGreeting = false"
+    />
     <v-col>
       <v-row justify="center" align-content="center">
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
@@ -30,10 +34,24 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import FirstGreeting from '../components/FirstGreeting';
 export default {
   name: 'PreliquoTop',
+  components: {
+    FirstGreeting,
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.name === 'UserRegister')
+      next((self) => {
+        self.fetchAuthUser().then((authUser) => {
+          if (authUser) return (self.isVisibleFirstGreeting = true);
+        });
+      });
+    else next();
+  },
   data() {
     return {
+      isVisibleFirstGreeting: false,
       items: [
         {
           title: '飲み会の前にお酒の強さを診断',
@@ -57,7 +75,13 @@ export default {
   created() {
     this.fetchAuthUser();
   },
-   methods: {
+  //   computed: {
+  //     ...mapGetters('users', ['authUser']),
+  //   },
+  //   created() {
+  //     this.fetchAuthUser();
+  //   },
+  methods: {
     ...mapActions('users', ['fetchAuthUser']),
   },
 };
