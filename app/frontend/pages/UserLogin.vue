@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <div>
+       <v-snackbar v-model="snackbar" top absolute outlined color="error" timeout="2000">
+        {{ text }}
+      </v-snackbar>
+      </div>
     <v-row class="mb-10">
       <v-col class="pt-10">
         <h3 class="text-h4 mb-4 font-weight-black">ログイン</h3>
@@ -25,58 +30,8 @@
       <v-col class="d-flex justify-center align-center" cols="12" sm="2" md="2" lg="2" xl="2">
         <p>または</p>
       </v-col>
-      <v-col cols="12" sm="5" md="5" lg="5" xl="5">
-        <v-card>
-          <p class="text-h6 pt-8 px-8 text-center font-weight-black">
-            Preliquoアカウントで<br class="br-sp" />ログイン
-          </p>
-          <ValidationObserver v-slot="{ handleSubmit }">
-            <v-card-text class="px-8">
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required|email|max:50"
-                mode="blur"
-                name="メールアドレス"
-              >
-                <v-text-field
-                  id="user-email"
-                  v-model="user.email"
-                  :errorMessages="errors"
-                  type="email"
-                  label="メールアドレス"
-                />
-              </ValidationProvider>
-              <ValidationProvider
-                v-slot="{ errors }"
-                :rules="{ required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i }"
-                vid="password"
-                name="パスワード"
-              >
-                <v-text-field
-                  id="user-password"
-                  v-model="user.password"
-                  :errorMessages="errors"
-                  :appendIcon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword ? 'text' : 'password'"
-                  label="パスワード"
-                  @click:append="handleShowPassword"
-                />
-              </ValidationProvider>
-            </v-card-text>
-            <v-card-actions class="d-flex justify-center pb-8">
-              <v-btn
-                class="px-4"
-                style="color: white"
-                color="red accent-2"
-                x-large
-                @click="handleSubmit(handleLogin)"
-              >
-                <v-icon class="mr-1">mdi-email</v-icon>
-                メールアドレスでログイン
-              </v-btn>
-            </v-card-actions>
-          </ValidationObserver>
-        </v-card>
+      <v-col cols="12" sm="5" md="5" lg="5" xl="5" >
+          <UserLoginForm v-bind.sync="user" @login-user="loginFunction" />
       </v-col>
     </v-row>
   </v-container>
@@ -84,24 +39,42 @@
 
 <script>
 import { mapActions } from 'vuex';
+import UserLoginForm from '../components/UserLoginForm';
 export default {
+  components: {
+    UserLoginForm,
+  },
   data() {
     return {
       user: {
         email: '',
         password: '',
       },
-      showPassword: false,
+      snackbar: false,
+      text: '',
     };
   },
   methods: {
     ...mapActions('users', ['loginUser']),
-    handleShowPassword() {
-      this.showPassword = !this.showPassword;
-    },
-    handleLogin() {
-      this.loginUser(this.user);
-    },
+    ...mapActions('snackbar', ['fetchSnackbarData']),
+    loginFunction(){
+      this.loginUser(this.user).then((user)=>{
+        if(user){
+          this.$router.push({ name: 'PreliquoTop' });
+          this.fetchSnackbarData({
+            msg: 'ログインしました',
+            color: 'success',
+            isShow: true,
+          });
+        }else{
+          this.fetchSnackbarData({
+            msg: 'ログインに失敗しました',
+            color: 'error',
+            isShow: true,
+          });
+        }
+      });
+    }
   },
 };
 </script>
