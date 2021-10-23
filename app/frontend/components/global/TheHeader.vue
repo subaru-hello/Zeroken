@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar flat color="grey lighten-5">
+        <v-app-bar flat color="grey lighten-5" id="page-header">
             <v-toolbar-title>
                 <router-link class="router-link text-h4" style="color: #6EA4CA"
                 :to="{ name: 'PreliquoTop' }">
@@ -9,7 +9,9 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
                  <template v-if="!!authUser">
-        <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutUser">
+                     <v-btn text>マイページ</v-btn>
+                     <v-btn text>呑んべえ一覧</v-btn>
+        <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutFunction" id="logput_btn">
           ログアウト
         </v-btn>
         <router-link class="router-link text"
@@ -46,6 +48,25 @@ export default {
     },
     methods: {
         ...mapActions('users', ['logoutUser']),
+        ...mapActions('snackbar', ['fetchSnackbarData']),
+    logoutFunction() {
+      this.logoutUser().then((res) => {
+        if (res) {
+          this.$router.go({ path: this.$router.currentRoute.path });
+          this.fetchSnackbarData({
+            msg: 'ログアウトしました',
+            color: 'success',
+            isShow: true,
+          });
+        } else {
+          this.fetchSnackbarData({
+            msg: 'ログアウトに失敗しました',
+            color: 'error',
+            isShow: true,
+          });
+        }
+      });
+    },
     },
 }
 </script>
