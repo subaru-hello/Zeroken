@@ -11,9 +11,8 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/api',
+      path: '/',
       component: PreliquoTop,
-      alias: '/',
       name: 'PreliquoTop',
     },
     {
