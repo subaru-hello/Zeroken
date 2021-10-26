@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   namespace :api, format: 'json' do
     
-    resources :users , only: %i[ create ] do
+    resources :users , only: %i[ create index ] do
       get 'tell_on', on: :collection
     end
     resource :sessions, only: %i[ create destroy ]

@@ -29,10 +29,25 @@
         </v-col>
       </v-row>
     </v-col>
+    <table>
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>nickname</th>
+          <th>email</th>
+        </tr>
+        <tr v-for="e in users" :key="e.id">
+          <td>{{ e.id }}</td>
+          <td>{{ e.nickname }}</td>
+          <td>{{ e.email }}</td>
+        </tr>
+      </tbody>
+    </table>
   </v-container>
 </template>
 
 <script>
+import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 export default {
@@ -52,6 +67,7 @@ export default {
   data() {
     return {
       isVisibleFirstGreeting: false,
+      users: [],
       items: [
         {
           title: '飲み会の前にお酒の強さを診断',
@@ -68,6 +84,9 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    axios.get('/users').then((response) => (this.users = response.data));
   },
   computed: {
     ...mapGetters('users', ['authUser']),
