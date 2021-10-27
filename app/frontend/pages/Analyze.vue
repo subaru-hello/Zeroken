@@ -10,7 +10,7 @@
         md="12"
         lg="12"
       >
-        <v-card class="mx-auto my-5"  outlined tile height="150">
+        <v-card class="mx-auto my-5" outlined tile height="150">
           <v-card-title class="headline" style="margin: 0% 40%; width: 50%">
             Q{{ question.num }}.
             {{ question.title }}
@@ -20,7 +20,7 @@
             <v-layout justify-center>
               <v-card-title :id="'q-' + question.num">
                 <v-container>
-                       <p class="text-center mx-auto py-3" style="font-size: 26px">
+                  <p class="text-center mx-auto py-3" style="font-size: 26px">
                     あなたの回答： {{ question.answer }}
                   </p>
                   <v-radio-group :id="'q-' + question.num" mandatory row>
@@ -51,16 +51,16 @@
                       v-on:click="clickScroll"
                       label="3: 全くない"
                     ></v-radio>
-                  </v-radio-group>             
+                  </v-radio-group>
                 </v-container>
               </v-card-title>
             </v-layout>
           </v-col>
         </v-card>
       </v-col>
-     <v-col cols="4" xs="4" sm="2" md="2" lg="1">
+      <v-col cols="4" xs="4" sm="2" md="2" lg="1">
         <v-btn
-          style="font-size: 30px; margin-top: 50px;"
+          style="font-size: 30px; margin-top: 50px"
           x-large
           :disabled="isVisible"
           :ripple="{ center: false, class: 'gray--text' }"
@@ -348,21 +348,19 @@ export default {
       // S 血中アルコール濃度 mg/ml＝
       //人それぞれある。度数が高いものを飲まないと酔わないという人もいる。（逆に、低いものなら何杯でもいけるという人もいる。)
       //Ａ（アルコール量ｇ20）／B 体重ｋｇ×2/3✖/1000（0.70アルコール体内分布係数）
-    // = 15.6/体重(x)　＝血中濃度（y)
-    //例えば70kgの場合、血中濃度は0.22になり、下戸だと酩酊になる。
+      // = 15.6/体重(x)　＝血中濃度（y)
+      //例えば70kgの場合、血中濃度は0.22になり、下戸だと酩酊になる。
       //S　血中アルコール濃度を求める
       //A アルコール量を求める
       //a: 酒の量(mL) × b: 度数または% / 100 × 比重 = 純アルコール量(g)
       //500(mL) × 0.05 × 0.8 = 20(g)
       //Alcoholモデル(polimorphism)(ハイボール、焼酎ロック、ビール、日本酒、ウィスキー、ワイン、缶チューハイ)
-     
-     
-     //title:string ビール
+
+      //title:string ビール
       //percentages:integer　0.05
       //amounts:integer 350
       //pure_alcohol_intake 14
       //description 最初はやっぱりビールでしょ
-    
 
       //title:string 缶チューハイ(スト缶一本)
       //percentages:integer　0.08

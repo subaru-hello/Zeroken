@@ -1,4 +1,3 @@
 class Api::AlcoholOrderController < ApplicationController
-  def index
-  end
+  def index; end
 end
