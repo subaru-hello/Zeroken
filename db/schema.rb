@@ -10,17 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_234246) do
+ActiveRecord::Schema.define(version: 2021_10_26_092517) do
+
+  create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "analyze_id"
+    t.integer "alcohol_order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["analyze_id"], name: "index_alcohol_orders_on_analyze_id"
+  end
+
+  create_table "alcohols", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "alcohol_order_id"
+    t.integer "alcohol_types"
+    t.string "title"
+    t.integer "alcohol_percentage"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["alcohol_order_id"], name: "index_alcohols_on_alcohol_order_id"
+    t.index ["alcohol_types"], name: "index_alcohols_on_alcohol_types"
+  end
+
+  create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "total_points"
+    t.integer "drunk_types", default: 0, null: false
+    t.integer "resistance_types", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_analyzes_on_user_id"
+  end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "nickname"
     t.string "email", null: false
     t.string "crypted_password"
     t.string "salt"
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
+  add_foreign_key "analyzes", "users"
 end
