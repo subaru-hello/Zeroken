@@ -11,8 +11,8 @@
           <h1 class="text-center" style="font-size: 50px">Preliquo</h1>
         </v-col>
         <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
-          <v-card class="mx-auto" light>
-            <v-card-text>
+          <!-- <v-card class="mx-auto" light>
+            <v-card-text> -->
               <p class="text-center" style="font-size: 25px">
                 {{ item.title }}
               </p>
@@ -24,8 +24,8 @@
               class="white--text align-top"
               height="auto"
             /> -->
-            </v-card-text>
-          </v-card>
+            <!-- </v-card-text>
+          </v-card> -->
         </v-col>
       </v-row>
     </v-col>
