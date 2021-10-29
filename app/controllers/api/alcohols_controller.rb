@@ -3,12 +3,17 @@ class Api::AlcoholsController < ApplicationController
     Alcohol.new
   end
   def create
-    alcohol = Alcohol.new
+     alcohol = Alcohol.build(alcohol_params)
+    if alcohol.save
+        render json: alcohol, status: :created
+      else
+        render json: alcohol.errors.full_messages, status: :bad_request
+      end
   end
 
   private
 
-  def set_analyze
+  def alcohol_params
     params
       .require(:alcohol)
       .permit(:alcohol_types, :alcohol_percentage, :description, :title, :description)

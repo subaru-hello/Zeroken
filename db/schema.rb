@@ -22,14 +22,18 @@ ActiveRecord::Schema.define(version: 2021_10_26_092517) do
 
   create_table "alcohols", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "alcohol_order_id"
-    t.integer "alcohol_types"
-    t.string "title"
+    t.string "name"
+    t.integer "type"
+    t.string "alcoholable_type"
+    t.bigint "alcoholable_id"
     t.integer "alcohol_percentage"
+    t.integer "alcohol_amount"
+    t.integer "pure_alcohol_intake"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["alcohol_order_id"], name: "index_alcohols_on_alcohol_order_id"
-    t.index ["alcohol_types"], name: "index_alcohols_on_alcohol_types"
+    t.index ["alcoholable_type", "alcoholable_id"], name: "index_alcohols_on_alcoholable"
   end
 
   create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|

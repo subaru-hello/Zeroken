@@ -2,13 +2,30 @@ class Api::AnalyzesController < ApplicationController
   def new
     Analyze.new
   end
+  def index
+    analyzes = Analyze.all
+    render json: analyzes
+  end
+
   def create
-    analyze = Analyze.new
+    analyze = current_user.analyzes.build(analyze_params)
+    if analyze.save
+        render json: analyze, status: :created
+        json_string = AnalyzeSerializer.new(analyze).serializable_hash.to_json
+        render json: json_string
+      else
+        render json: analyze.errors.full_messages, status: :bad_request
+      end
   end
 
   private
 
-  def set_analyze
+  def analyze_params
     params.require(:analyze).permit(:total_points, :drunk_types, :resistance_types)
   end
+  def set_analyze
+    @analyze = Analyze.find(params[:id])
+  end
+
+  
 end
