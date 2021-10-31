@@ -5,27 +5,22 @@ class Sake < Alcohol
   # moduleで定義されているメソッドをオーバーライドする
 
   def name
-    return '日本酒'
-    raise NotImplementedError
+    '日本酒'
   end
 
   def description
-    return 'とりあえずビール'
-    raise NotImplementedError
+    'とりあえず日本酒'
   end
 
   def alcohol_percentage
-    return 5
-    raise NotImplementedError
+    5
   end
 
   def alcohol_amount
-    return 350
-    raise NotImplementedError
+    350
   end
 
   def pure_alcohol_intake
-    return 14
-    raise NotImplementedError
+    14
   end
 end

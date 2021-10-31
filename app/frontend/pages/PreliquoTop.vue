@@ -88,12 +88,13 @@ export default {
       ],
     };
   },
-  mounted() {
-    axios.get('/users').then((response) => (this.users = response.data));
-  },
   computed: {
     ...mapGetters('users', ['authUser']),
   },
+  mounted() {
+    axios.get('/users').then((response) => (this.users = response.data));
+  },
+
   created() {
     this.fetchAuthUser();
   },

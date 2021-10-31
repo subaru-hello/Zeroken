@@ -87,8 +87,7 @@
 </template>
 
 <script>
-import Router from '../router/index';
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {

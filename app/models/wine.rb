@@ -5,27 +5,22 @@ class Wine < Alcohol
   # moduleで定義されているメソッドをオーバーライドする
 
   def name
-    return 'ワイン'
-    raise NotImplementedError
+    'ワイン'
   end
 
-  def descrAlcoholiption
-    return ''
-    raise NotImplementedError
+  def description
+    'とりあえずワイン'
   end
 
   def alcohol_percentage
-    return 5
-    raise NotImplementedError
+    5
   end
 
   def alcohol_amount
-    return 350
-    raise NotImplementedError
+    350
   end
 
   def pure_alcohol_intake
-    return 14
-    raise NotImplementedError
+    14
   end
 end

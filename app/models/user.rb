@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   before_save :change_email_to_lowercase
   authenticates_with_sorcery!
-  has_many :analyzes
+  has_many :analyzes, dependent: :destroy
   enum role: { guest: 0, member: 1 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   VALID_PASSWORD_FORMAT = /\A\w+\z/i.freeze
