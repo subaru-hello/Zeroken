@@ -7,8 +7,9 @@ Rails.application.routes.draw do
     end
     resource :sessions, only: %i[ create destroy ]
     resource :alcohols, only: %i[ create index ]
+
     resource :analyzes
-    get 'validation/unique', to: 'validations#unique'
+  get 'validation/unique', to: 'validations#unique'
   end
 end
   get "*path", to: "home#index"

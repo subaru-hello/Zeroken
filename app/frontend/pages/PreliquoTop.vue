@@ -13,10 +13,12 @@
         <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
           <!-- <v-card class="mx-auto" light>
             <v-card-text> -->
+
           <p class="text-center" style="font-size: 25px">
             {{ item.title }}
           </p>
           <!-- <hr>
+
             <v-img
               :src="item.img"
               width="100%"
@@ -25,6 +27,7 @@
               height="auto"
             /> -->
           <!-- </v-card-text>
+
           </v-card> -->
         </v-col>
       </v-row>
