@@ -40,10 +40,15 @@ const actions = {
       })
       .catch((err) => console.log(err.response));
   },
-  createAnalyze({ commit }, analyze) {
-    return axios.post('analyzes', analyze).then((res) => {
-      commit('addAnalyze', res.data);
-    });
+  async createAnalyze({ commit }, analyze) {
+    try {
+      const analyzeResponse = await axios.post('analyzes', { analyze: analyze });
+      commit('setAnalyze', analyzeResponse.data);
+      return analyzeResponse.data;
+    } catch (err) {
+      console.log(err);
+      return nil;
+    }
   },
 };
 
