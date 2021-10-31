@@ -1,4 +1,4 @@
-module Api
+module Api::V1
   class SessionsController < ApplicationController
     before_action :require_login, only: :destroy
     def create
