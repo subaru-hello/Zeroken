@@ -19,7 +19,6 @@
 
 <script>
 import axios from '../plugins/axios';
-import { mapActions, mapGetters, mapState } from 'vuex';
 export default {
   data: function () {
     return {
@@ -49,13 +48,11 @@ export default {
     },
   },
   methods: {
-    // ...mapState('analyze',['analyzes']),
     createAnalyze: function () {
       axios
         .post('/api/v1/analyzes', this.analyze)
         .then((response) => {
           response.data;
-          //   this.$router.push({ name: 'PreliquaTop', params: { id: e.id } });
         })
         .catch((error) => {
           console.error(error);
