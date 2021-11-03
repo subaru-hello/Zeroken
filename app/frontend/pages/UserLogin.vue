@@ -58,10 +58,14 @@ export default {
     ...mapActions('users', ['loginUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     loginFunction() {
+      //loginUserにdata()のuserを渡している。
       this.loginUser(this.user).then((user) => {
         if (user) {
+          //帰ってきたuserが正しければ、{}の中を実行
           this.$router.push({ name: 'PreliquoTop' });
+          //preliquoTopに遷移
           this.fetchSnackbarData({
+            //snackbarのmutationにアクセスし、それぞれの値を洗濯
             msg: 'ログインしました',
             color: 'success',
             isShow: true,

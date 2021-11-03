@@ -9,7 +9,7 @@
         早速酒ケジュールを作っちゃおう！
       </v-card-text>
       <v-card-actions class="d-flex justify-space-around pb-8">
-        <v-btn style="color: white" color="red accent-2" x-large :to="{ name: 'Analyze' }">
+        <v-btn style="color: white" class="deep-orange lighten-2" x-large :to="{ name: 'Analyze' }">
           酒ジュール診断ページへ
         </v-btn>
         <v-btn x-large @click.stop="$emit('close-dialog')"> あとで </v-btn>

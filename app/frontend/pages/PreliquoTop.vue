@@ -11,12 +11,14 @@
           <h1 class="text-center" style="font-size: 50px">Preliquo</h1>
         </v-col>
         <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
-          <v-card class="mx-auto" light>
-            <v-card-text>
-              <p class="text-center" style="font-size: 25px">
-                {{ item.title }}
-              </p>
-              <!-- <hr>
+          <!-- <v-card class="mx-auto" light>
+            <v-card-text> -->
+
+          <p class="text-center" style="font-size: 25px">
+            {{ item.title }}
+          </p>
+          <!-- <hr>
+
             <v-img
               :src="item.img"
               width="100%"
@@ -24,15 +26,31 @@
               class="white--text align-top"
               height="auto"
             /> -->
-            </v-card-text>
-          </v-card>
+          <!-- </v-card-text>
+
+          </v-card> -->
         </v-col>
       </v-row>
     </v-col>
+    <table>
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>nickname</th>
+          <th>email</th>
+        </tr>
+        <tr v-for="e in users" :key="e.id">
+          <td>{{ e.id }}</td>
+          <td>{{ e.nickname }}</td>
+          <td>{{ e.email }}</td>
+        </tr>
+      </tbody>
+    </table>
   </v-container>
 </template>
 
 <script>
+import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 export default {
@@ -52,6 +70,7 @@ export default {
   data() {
     return {
       isVisibleFirstGreeting: false,
+      users: [],
       items: [
         {
           title: '飲み会の前にお酒の強さを診断',
@@ -72,6 +91,10 @@ export default {
   computed: {
     ...mapGetters('users', ['authUser']),
   },
+  mounted() {
+    axios.get('/users').then((response) => (this.users = response.data));
+  },
+
   created() {
     this.fetchAuthUser();
   },
