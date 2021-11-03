@@ -45,17 +45,8 @@ export default {
   data: function () {
     return {};
   },
-  methods: {
-    Sakenotuyosa() {
-      const yourSakeStrongness = this.analyzes.total_points;
-      if (yourSakeStrongness > 0) {
-        return '下戸';
-      } else if (yourSakeStrongness === 0) {
-        return '普通';
-      } else {
-        return '酒豪';
-      }
-    },
+  created() {
+    this.fetchAnalyzes;
   },
   computed: {
     ...mapActions('analyze', ['fetchAnalyzes']),
@@ -69,9 +60,18 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
-  },
-  created() {
-    this.fetchAnalyzes;
+    methods: {
+      Sakenotuyosa() {
+        const yourSakeStrongness = this.analyzes.total_points;
+        if (yourSakeStrongness > 0) {
+          return '下戸';
+        } else if (yourSakeStrongness === 0) {
+          return '普通';
+        } else {
+          return '酒豪';
+        }
+      },
+    },
   },
 };
 </script>

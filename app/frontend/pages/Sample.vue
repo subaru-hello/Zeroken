@@ -102,6 +102,9 @@ export default {
       return require('../src/img/beer.svg');
     },
   },
+  created() {
+    this.fetchAnalyze;
+  },
   methods: {
     ...mapActions(['fetchAnalyze']),
     ...mapActions(['createAnalyze']),
@@ -123,9 +126,6 @@ export default {
     //       }
     //     });
     // },
-  },
-  created() {
-    this.fetchAnalyze;
   },
 };
 </script>

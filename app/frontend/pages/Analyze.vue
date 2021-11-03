@@ -38,7 +38,6 @@
                       light
                       :ripple="{ center: false, class: 'gray--text' }"
                       @click="countAnswer(question.num, 1)"
-                      v-on:click="clickScroll"
                       label="1: いつもある"
                     ></v-radio>
                     <v-radio
