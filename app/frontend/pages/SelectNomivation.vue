@@ -57,6 +57,7 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
+  },
     created() {
       this.fetchAnalyzes;
     },
@@ -73,7 +74,6 @@ export default {
         }
       },
     },
-  },
 };
 </script>
 <style scoped>
