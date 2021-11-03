@@ -103,8 +103,8 @@
       <span></span>未回答の項目があります。
     </p>
     <template v-if="show">
-      <v-container>
-        <v-row justify="center" align-content="center">
+      <v-container justify="center" align-content="center">
+        <v-row >
           <v-col cols="12" xs="12" sm="12" md="12" lg="12">
             <table>
               <tbody>
@@ -120,11 +120,12 @@
               飲み会へのモチベーションを聞かせてよ😏
             </h1>
           </v-col>
-          <v-dialog v-model="dialog" width="500">
-            <template #activator="{ on, attrs }">
+          <v-dialog v-model="dialog" width="500" justify="center"
+                align-content="center">
+            <template #activator="{ on, attrs }" >
+            
               <v-col
-                justify="center"
-                align-content="center"
+           
                 @click="setShuchedule()"
                 style="font-size: 30px"
                 x-large
@@ -136,8 +137,7 @@
                 <img :src="imgSrc" width="150" height="100" />
               </v-col>
               <v-col
-                justify="center"
-                align-content="center"
+  
                 @click="setShuchedule()"
                 style="font-size: 30px"
                 x-large
@@ -150,8 +150,7 @@
               </v-col>
 
               <v-col
-                justify="center"
-                align-content="center"
+             
                 @click="setShuchedule()"
                 style="font-size: 30px"
                 x-large
@@ -162,7 +161,6 @@
                 <p style="font-size: 32px; text-decoration: none; text-color: black">しっぽり</p>
                 <img :src="drinkSrc" width="150" height="100" />
               </v-col>
-
               <transition name="modal">
                 <modal v-if="showModal" @close="showModal = false">
                   <div class="modal-mask">
@@ -417,7 +415,7 @@ export default {
         .then(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve(window.scrollBy(0, 500));
+              resolve(window.scrollBy(0, 300));
               reject(console.log('実行に失敗しました'));
             }, 10);
           });
