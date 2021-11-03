@@ -2,6 +2,7 @@
   "name": "preliquo",
   "private": true,
   "dependencies": {
+    "@bit/joshk.vue-spinners-css.facebook-loader": "^1.1.5",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/vue-fontawesome": "^2.0.2",

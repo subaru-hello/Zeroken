@@ -880,6 +880,24 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@bit/joshk.vue-spinners-css.facebook-loader@^1.1.5":
+  version "1.1.5"
+  resolved "https://node.bit.dev/joshk.vue-spinners-css.facebook-loader/-/joshk.vue-spinners-css.facebook-loader-1.1.5.tgz#7b08d1873d9a952a64ce2e973454810d5fc01226"
+  integrity sha1-ewjRhz2alSpkzi6XNFSBDV/AEiY=
+  dependencies:
+    "@bit/joshk.vue-spinners-css.helpers.calc-property-value" "1.1.5"
+    "@bit/joshk.vue-spinners-css.helpers.validate-duration" "1.1.5"
+
+"@bit/joshk.vue-spinners-css.helpers.calc-property-value@1.1.5":
+  version "1.1.5"
+  resolved "https://node.bit.dev/joshk.vue-spinners-css.helpers.calc-property-value/-/joshk.vue-spinners-css.helpers.calc-property-value-1.1.5.tgz#f5a37c1d188e0d53c30d5d078111da2f7039b4d4"
+  integrity sha1-9aN8HRiODVPDDV0HgRHaL3A5tNQ=
+
+"@bit/joshk.vue-spinners-css.helpers.validate-duration@1.1.5":
+  version "1.1.5"
+  resolved "https://node.bit.dev/joshk.vue-spinners-css.helpers.validate-duration/-/joshk.vue-spinners-css.helpers.validate-duration-1.1.5.tgz#9fc00291e25cdc6cc98192465881a96e8d4958de"
+  integrity sha1-n8ACkeJc3GzJgZJGWIGpbo1JWN4=
+
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
@@ -945,6 +963,11 @@
   version "6.3.95"
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-6.3.95.tgz#5e22e0626ec652028a19aa541a20b28280399dd9"
   integrity sha512-bbvnF7rNX9aMn7PeqDCa8ZQTPxEqerZeXo/lQQxE84Ka/7UrFcqvOO3XXVLtrCCtyA6uIqiG4oYFRPVJqv247Q==
+
+"@mdi/js@^6.4.95":
+  version "6.4.95"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-6.4.95.tgz#3ba2c04b702f1f7b71c41d5c86d2849868c866c8"
+  integrity sha512-b1/P//1D2KOzta8YRGyoSLGsAlWyUHfxzVBhV4e/ppnjM4DfBgay/vWz7Eg5Ee80JZ4zsQz8h54X+KOahtBk5Q==
 
 "@npmcli/fs@^1.0.0":
   version "1.0.0"
