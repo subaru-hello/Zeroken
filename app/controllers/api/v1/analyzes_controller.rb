@@ -1,6 +1,7 @@
 module Api
   module V1
     class AnalyzesController < ApplicationController
+      before_action :set_analyze, only: %i[show update]
       def new
         Analyze.new
       end
@@ -11,8 +12,7 @@ module Api
       end
 
       def show
-        @analyzes = Analyze.all
-        render json: @analyzes
+        render json: @analyze
       end
 
       def create
@@ -23,6 +23,14 @@ module Api
           #   render json: json_string
         else
           render json: @analyze.errors.full_messages, status: :bad_request
+        end
+      end
+
+      def update
+        if @analyze.update(analyze_params)
+          render json: @analyze
+        else
+          render json: @analyze.errors, status: :bad_request
         end
       end
 
