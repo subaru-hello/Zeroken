@@ -37,7 +37,10 @@
                       fab
                       light
                       :ripple="{ center: false, class: 'gray--text' }"
-                      @click="countAnswer(question.num, 1)"
+                      @click="
+                        clickScroll($event);
+                        countAnswer(question.num, 1);
+                      "
                       label="1: いつもある"
                     ></v-radio>
                     <v-radio
@@ -45,8 +48,10 @@
                       fab
                       light
                       :ripple="{ center: false, class: 'gray--text' }"
-                      @click="countAnswer(question.num, 2)"
-                      v-on:click="clickScroll"
+                      @click="
+                        clickScroll($event);
+                        countAnswer(question.num, 2);
+                      "
                       label="2: 時々ある"
                     ></v-radio>
                     <v-radio
@@ -54,8 +59,10 @@
                       fab
                       light
                       :ripple="{ center: false, class: 'gray--text' }"
-                      @click="countAnswer(question.num, 3)"
-                      v-on:click="clickScroll"
+                      @click="
+                        clickScroll($event);
+                        countAnswer(question.num, 3);
+                      "
                       label="3: 全くない"
                     ></v-radio>
                   </v-radio-group>
@@ -360,6 +367,7 @@ export default {
         // #1
 
         resolve(this.createAnalyze(updAnalyze));
+        reject(console.log('実行に失敗しました'));
       });
       promise
         .then(() => {
@@ -367,6 +375,7 @@ export default {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve((this.showModal = true));
+              reject(console.log('実行に失敗しました'));
             }, 1000);
           });
         })
@@ -375,6 +384,7 @@ export default {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve(this.$router.push('/sample'));
+              reject(console.log('実行に失敗しました'));
             }, 3500);
           });
         })
@@ -399,9 +409,24 @@ export default {
       window.scrollTo(0, window.pageYOffset + targetArea.top);
     },
     clickScrollNext() {
-      //  const targetArea = e.currentTarget.getBoundingClientRect();
-      this.show = !this.show;
-      window.scrollBy(0, 500);
+      let promise = new Promise((resolve, reject) => {
+        resolve((this.show = !this.show));
+        reject(console.log('実行に失敗しました'));
+      });
+      promise
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(window.scrollBy(0, 500));
+              reject(console.log('実行に失敗しました'));
+            }, 10);
+          });
+        })
+        .catch(() => {
+          // エラーハンドリング
+          console.error('Something wrong!');
+        });
+      return promise;
     },
     // moveToNomivation() {
     //   this.$router.push({ name: 'SelectNomivation' });

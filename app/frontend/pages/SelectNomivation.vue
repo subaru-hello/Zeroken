@@ -45,9 +45,6 @@ export default {
   data: function () {
     return {};
   },
-  created() {
-    this.fetchAnalyzes;
-  },
   computed: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapGetters('analyze', ['analyzes']),
@@ -60,6 +57,10 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
+    created() {
+      this.fetchAnalyzes;
+    },
+
     methods: {
       Sakenotuyosa() {
         const yourSakeStrongness = this.analyzes.total_points;
