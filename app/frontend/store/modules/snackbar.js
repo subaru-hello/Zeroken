@@ -3,7 +3,7 @@ const state = {
   data: { msg: '', color: '', isShow: '' },
 };
 const getters = {
-  //データにアクセスするための場所を提供する。
+  //データにアクセスするための場所を提供する。snackbarDataという関数を用意
   snackbarData: (state) => state.data,
 };
 const mutations = {

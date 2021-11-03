@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import users from './modules/users';
+import analyze from './modules/analyze';
 import snackbar from './modules/snackbar';
 import question from './modules/question';
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     users,
     snackbar,
     question,
+    analyze,
   },
 });
