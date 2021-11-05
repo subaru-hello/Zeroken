@@ -14,33 +14,30 @@ ActiveRecord::Schema.define(version: 2021_10_26_092517) do
 
   create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "analyze_id"
-    t.integer "alcohol_order"
+    t.bigint "alcohol_id"
+    t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["alcohol_id"], name: "index_alcohol_orders_on_alcohol_id"
     t.index ["analyze_id"], name: "index_alcohol_orders_on_analyze_id"
   end
 
   create_table "alcohols", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "alcohol_order_id"
     t.string "name"
     t.integer "type"
-    t.string "alcoholable_type"
-    t.bigint "alcoholable_id"
     t.integer "alcohol_percentage"
     t.integer "alcohol_amount"
     t.integer "pure_alcohol_intake"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["alcohol_order_id"], name: "index_alcohols_on_alcohol_order_id"
-    t.index ["alcoholable_type", "alcoholable_id"], name: "index_alcohols_on_alcoholable"
   end
 
   create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "total_points"
-    t.integer "drunk_types", default: 0, null: false
-    t.integer "resistance_types", default: 0, null: false
+    t.integer "sake_strongness_types", default: 0, null: false
+    t.integer "next_nomivation_types", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_analyzes_on_user_id"
