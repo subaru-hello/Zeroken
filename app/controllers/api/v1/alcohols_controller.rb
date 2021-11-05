@@ -19,7 +19,7 @@ module Api
       def alcohol_params
         params
           .require(:alcohol)
-          .permit(:alcohol_types, :alcohol_percentage, :description, :title, :description)
+          .permit(:type, :alcohol_percentage, :alcohol_amount, :name, :description)
       end
     end
   end
