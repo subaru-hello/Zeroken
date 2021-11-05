@@ -1,0 +1,12 @@
+/.github
+/.bundle
+
+.prettierrc.json
+babel.config.js
+README.md
+
+/config/*
+/public/*
+/log/*
+/tmp/*
+/vendor/*
