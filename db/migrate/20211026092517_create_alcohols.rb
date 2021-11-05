@@ -2,7 +2,6 @@ class CreateAlcohols < ActiveRecord::Migration[6.1]
   def change
     create_table :alcohols do |t|
       t.string :name
-      t.integer :type
       t.integer :alcohol_percentage
       t.integer :alcohol_amount
       t.integer :pure_alcohol_intake

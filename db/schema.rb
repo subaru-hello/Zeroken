@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2021_10_26_092517) do
 
   create_table "alcohols", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
-    t.integer "type"
     t.integer "alcohol_percentage"
     t.integer "alcohol_amount"
     t.integer "pure_alcohol_intake"
