@@ -75,8 +75,11 @@ export default {
         return '酒豪';
       }
     },
+    //Todo
+    //JSONの取得ができていない。sake_strongness_typesの状態に応じて描画内容を変える。
     Sake() {
       const currentAnalyze = this.analyzes;
+      const yourAnalyze = currentAnalyze[currentAnalyze.length - 1];
       //    if (currentAnalyze[currentAnalyze.length -1] === 'weak') {
       //   return '下戸';
       // } else if (currentAnalyze[currentAnalyze.length -1]=== 'normal') {
@@ -84,7 +87,7 @@ export default {
       // } else {
       //   return '酒豪';
       // }
-      return currentAnalyze[0];
+      return yourAnalyze;
     },
     imgSrc() {
       return require('../src/img/liquor.svg');

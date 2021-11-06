@@ -155,7 +155,7 @@
                 <img :src="drinkSrc" width="150" height="100" />
               </v-col>
               <transition name="modal">
-                <modal v-if="showModal" @close="showModal = false">
+                <div v-if="showModal" @close="showModal = false">
                   <div class="modal-mask">
                     <div class="modal-wrapper">
                       <div class="modal-container">
@@ -163,13 +163,13 @@
                           <slot name="body">
                             <FacebookLoader />
 
-                            <p style="font-size: 32px">診断中だよ😋</p>
+                            <p style="font-size: 32px">酒ケジュール作成中...</p>
                           </slot>
                         </div>
                       </div>
                     </div>
                   </div>
-                </modal>
+                </div>
               </transition>
             </template>
           </v-dialog>
@@ -258,9 +258,9 @@ export default {
         answerThirteenth;
       let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
       currentAnalyzes.total_points = sumResult;
-      currentAnalyzes.resistance_types = AlcoholStrongness;
+      currentAnalyzes.sake_strongness_types = AlcoholStrongness;
 
-      return currentAnalyzes.resistance_types;
+      return currentAnalyzes.sake_strongness_types;
     },
     Sakenotuyosa() {
       const yourSakeStrongness = this.analyzes.total_points;
@@ -384,7 +384,7 @@ export default {
           // #3
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve(this.$router.push('/sample'));
+              resolve(this.$router.push('/result'));
               reject(console.log());
             }, 3200);
           });
@@ -419,9 +419,6 @@ export default {
         });
       return promise;
     },
-    // moveToNomivation() {
-    //   this.$router.push({ name: 'SelectNomivation' });
-    // },
   },
 };
 </script>
