@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 2021_10_26_092517) do
     t.index ["analyze_id"], name: "index_alcohol_orders_on_analyze_id"
   end
 
-  create_table "alcohols", charset: "utf8mb4", force: :cascade do |t|
-    t.string "name"
+  create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name", limit: 191
     t.integer "alcohol_percentage"
     t.integer "alcohol_amount"
     t.integer "pure_alcohol_intake"
@@ -42,11 +42,11 @@ ActiveRecord::Schema.define(version: 2021_10_26_092517) do
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
-    t.string "nickname"
-    t.string "email", null: false
-    t.string "crypted_password"
-    t.string "salt"
+  create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "nickname", limit: 191
+    t.string "email", limit: 191, null: false
+    t.string "crypted_password", limit: 191
+    t.string "salt", limit: 191
     t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
