@@ -22,10 +22,15 @@ gem 'jbuilder', '~> 2.7'
 # serializer
 gem 'jsonapi-serializer'
 # authentication
-gem 'seed-fu'
 gem 'sorcery'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# set initial datas
+gem 'seed-fu'
+# upload images
+gem 'carrierwave'
+# edit uploaded images
+gem 'mini_magick'
 
 group :development, :test do
   gem 'dotenv-rails'
