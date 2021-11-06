@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ Sake }}</p>
     <h1 class="text-center" style="font-size: 50px">
       あなたは
       <p class="text-center" style="font-size: 50px">
@@ -42,52 +43,51 @@
         </v-container>
       </v-card>
     </v-layout>
-
-    <!-- <table>
-    <tbody>
-      <tr>
-        <th>TotalPoints</th>
-        <th>次の飲み会への気分</th>
-        <th>お酒の強さ</th>
-      </tr>
-      <tr v-for="a in analyze" :key="a.id">
-        <td>{{ a.total_points }}</td>
-        <td>{{ a.drunk_types }}</td>
-        <td>{{ a.resistance_types }}</td>
-        <td>{{ Sakenotuyosa }}</td>
-        <td>{{ sumTotalPoints }}</td>
-      </tr>
-    </tbody>
-  </table> -->
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import axios from '../plugins/axios';
 export default {
   data: function () {
     return {
-      analyze: {
-        total_points: '',
-        drunk_types: '',
-        resistance_types: '',
-      },
+      analyzes: [],
+      users: [],
       errors: '',
     };
   },
-  mounted() {},
+  mounted() {
+    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+    axios.get('/analyzes').then((analyzeResponse) => (this.analyzes = analyzeResponse.data));
+  },
   computed: {
+    // ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('users', ['authUser']),
     Sakenotuyosa() {
-      if (this.analyze.total_points > 0) {
+      const currentAnalyze = this.analyzes;
+      const yourAnalyze = currentAnalyze[currentAnalyze.length - 1];
+      if (yourAnalyze === 'weak') {
         return '下戸';
-      } else if (this.analyze.total_points === 0) {
+      } else if (yourAnalyze === 'normal') {
         return '普通';
       } else {
         return '酒豪';
       }
     },
-    sumTotalPoints() {
-      return this.analyze.total_points;
+    //Todo
+    //JSONの取得ができていない。sake_strongness_typesの状態に応じて描画内容を変える。
+    Sake() {
+      const currentAnalyze = this.analyzes;
+      const yourAnalyze = currentAnalyze[currentAnalyze.length - 1];
+      //    if (currentAnalyze[currentAnalyze.length -1] === 'weak') {
+      //   return '下戸';
+      // } else if (currentAnalyze[currentAnalyze.length -1]=== 'normal') {
+      //   return '普通';
+      // } else {
+      //   return '酒豪';
+      // }
+      return yourAnalyze;
     },
     imgSrc() {
       return require('../src/img/liquor.svg');
@@ -103,29 +103,13 @@ export default {
     },
   },
   created() {
-    this.fetchAnalyze;
+    this.fetchAnalyzes();
+    this.fetchAuthUser();
   },
   methods: {
-    ...mapActions(['fetchAnalyze']),
-    ...mapActions(['createAnalyze']),
-
-    onSubmit(e) {
-      e.preventDefault();
-      this.createAnalyze(this.analyze);
-    },
-    // createAnalyze: function () {
-    //   axios
-    //     .post('/analyzes', this.analyze)
-    //     .then((response) => {
-    //       response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       if (error.response.data && error.response.data.errors) {
-    //         this.errors = error.response.data.errors;
-    //       }
-    //     });
-    // },
+    ...mapActions('analyze', ['fetchAnalyzes']),
+    ...mapActions('analyze', ['createAnalyze']),
+    ...mapActions('users', ['fetchAuthUser']),
   },
 };
 </script>

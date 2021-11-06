@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Analyze from '../pages/Analyze';
-import Sample from '../pages/Sample';
+import Result from '../pages/Result';
 import SelectNomivation from '../pages/SelectNomivation';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
@@ -39,9 +39,9 @@ const router = new Router({
       name: 'SelectNomivation',
     },
     {
-      path: '/sample',
-      component: Sample,
-      name: 'Sample',
+      path: '/result',
+      component: Result,
+      name: 'Result',
     },
   ],
 });

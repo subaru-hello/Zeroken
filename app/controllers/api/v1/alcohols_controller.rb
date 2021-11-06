@@ -5,12 +5,17 @@ module Api
         Alcohol.new
       end
 
+      def index
+        @alcohols = Alcohol.all
+        render json: @alcohols
+      end
+
       def create
-        alcohol = Alcohol.build(alcohol_params)
+        @alcohol = Alcohol.build(alcohol_params)
         if alcohol.save
-          render json: alcohol, status: :created
+          render json: @alcohol, status: :created
         else
-          render json: alcohol.errors.full_messages, status: :bad_request
+          render json: @alcohol.errors.full_messages, status: :bad_request
         end
       end
 
@@ -19,7 +24,7 @@ module Api
       def alcohol_params
         params
           .require(:alcohol)
-          .permit(:alcohol_types, :alcohol_percentage, :description, :title, :description)
+          .permit(:type, :alcohol_percentage, :alcohol_amount, :name, :description, :pure_alcohol_intake)
       end
     end
   end

@@ -2,9 +2,9 @@ import axios from '../../plugins/axios';
 const state = {
   analyzes: [
     {
-      total_points: '',
-      drunk_types: '',
-      resistance_types: '',
+      total_points: [],
+      drunk_types: [],
+      resistance_types: [],
     },
   ],
 };
@@ -21,17 +21,21 @@ const mutations = {
       //①dataのtotal_pointsをcomputedで変化させる必要がある。sumResult= this.total_points
       total_points: analyzes.total_points,
       //②this.resistance_types = (sumResult < 0 ) ? 0 : (sumResult === 0) ? 1 : 2。これをリアクティブに算出し、resistance_typesに格納する。
-      resistance_types: analyzes.resistance_types,
+      sake_strongness_types: analyzes.sake_strongness_types,
       //３つの写真の中から選択してもらう。ページ遷移する必要がない。
       //<tempalate v-if resistance_types === 0>のように、これを三つ作る。
       //３つの写真がisVisibleになるようにし、診断ボタンを押したらそこにポインターが移動するようにする。
       //写真を押したときに、drunk_typesの値が自動で選択されるようにする。
-      drunk_types: analyzes.drunk_types,
+      next_nomivation_types: analyzes.next_nomivation_types,
       //
     };
   },
   addAnalyze: (state, analyze) => {
-    state.analyzes.push(analyze);
+    const analyzeArray = [];
+    analyzeArray.push(analyze.total_points);
+    analyzeArray.push(analyze.sake_strongness_types);
+    analyzeArray.push(analyze.next_nomivation_types);
+    state.analyzes = analyzeArray;
   },
   updateAnalyze: (state, updAnalyze) => {
     const index = state.analyzes.findIndex((analyze) => analyze.id === updAnalyze.id);
@@ -52,10 +56,10 @@ const actions = {
     const responseAnalyze = axios
       .get('analyzes')
 
-      .then((res) => {
-        commit('setAnalyze', res.data);
+      .then((responseAnalyze) => {
+        commit('setAnalyze', responseAnalyze.data);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => console.log(err.responseAnalyze));
   },
   async createAnalyze({ commit }, analyze) {
     try {

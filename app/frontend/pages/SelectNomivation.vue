@@ -16,7 +16,7 @@
           次の飲み会ではどのくらい酔う予定ですか？
         </h1>
       </v-col>
-      <router-link class="router-link" :to="{ name: 'Sample' }">
+      <!-- <router-link class="router-link" :to="{ name: 'Sample' }">
         <v-col justify="center" class="nomivation" align-content="center">
           <p style="font-size: 32px; text-decoration: none; text-color: black">酩酊</p>
           <img :src="imgSrc" width="150" height="100" />
@@ -33,7 +33,7 @@
           <p style="font-size: 32px; text-decoration: none; text-color: black">しっぽり</p>
           <img :src="drinkSrc" width="150" height="100" />
         </v-col>
-      </router-link>
+      </router-link> -->
     </v-row>
   </v-container>
 </template>
@@ -58,22 +58,22 @@ export default {
       return require('../src/img/drink.svg');
     },
   },
-    created() {
-      this.fetchAnalyzes;
-    },
+  created() {
+    this.fetchAnalyzes;
+  },
 
-    methods: {
-      Sakenotuyosa() {
-        const yourSakeStrongness = this.analyzes.total_points;
-        if (yourSakeStrongness > 0) {
-          return '下戸';
-        } else if (yourSakeStrongness === 0) {
-          return '普通';
-        } else {
-          return '酒豪';
-        }
-      },
+  methods: {
+    Sakenotuyosa() {
+      const yourSakeStrongness = this.analyzes.total_points;
+      if (yourSakeStrongness > 0) {
+        return '下戸';
+      } else if (yourSakeStrongness === 0) {
+        return '普通';
+      } else {
+        return '酒豪';
+      }
     },
+  },
 };
 </script>
 <style scoped>

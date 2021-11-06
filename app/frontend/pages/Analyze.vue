@@ -104,7 +104,7 @@
     </p>
     <template v-if="show">
       <v-container justify="center" align-content="center">
-        <v-row >
+        <v-row>
           <v-col cols="12" xs="12" sm="12" md="12" lg="12">
             <table>
               <tbody>
@@ -116,18 +116,13 @@
                 </tr>
               </tbody>
             </table>
-            <h1 class="text-center" style="font-size: 50px">
-              飲み会へのモチベーションを聞かせてよ😏
-            </h1>
+            <h1 class="text-center" style="font-size: 50px">飲み会へのモチベーションを選択</h1>
           </v-col>
-          <v-dialog v-model="dialog" width="500" justify="center"
-                align-content="center">
-            <template #activator="{ on, attrs }" >
-            
+          <v-dialog v-model="dialog" width="500" justify="center" align-content="center">
+            <template #activator="{ on, attrs }">
               <v-col
-           
                 @click="setShuchedule()"
-                style="font-size: 30px"
+                style="font-size: 30px; margin-left: 20px"
                 x-large
                 :ripple="{ center: false, class: 'gray--text' }"
                 v-bind="attrs"
@@ -137,7 +132,6 @@
                 <img :src="imgSrc" width="150" height="100" />
               </v-col>
               <v-col
-  
                 @click="setShuchedule()"
                 style="font-size: 30px"
                 x-large
@@ -150,7 +144,6 @@
               </v-col>
 
               <v-col
-             
                 @click="setShuchedule()"
                 style="font-size: 30px"
                 x-large
@@ -162,21 +155,21 @@
                 <img :src="drinkSrc" width="150" height="100" />
               </v-col>
               <transition name="modal">
-                <modal v-if="showModal" @close="showModal = false">
+                <div v-if="showModal" @close="showModal = false">
                   <div class="modal-mask">
                     <div class="modal-wrapper">
                       <div class="modal-container">
-                        <div class="modal-body">
-                          <slot name="body" align-content="center">
+                        <div class="modal-body" align-content="center">
+                          <slot name="body">
                             <FacebookLoader />
 
-                            <p style="font-size: 32px">診断中だよ😋</p>
+                            <p style="font-size: 32px">酒ケジュール作成中...</p>
                           </slot>
                         </div>
                       </div>
                     </div>
                   </div>
-                </modal>
+                </div>
               </transition>
             </template>
           </v-dialog>
@@ -187,6 +180,7 @@
 </template>
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
+import axios from '../plugins/axios';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   data() {
@@ -197,6 +191,7 @@ export default {
       dialog: false,
       show: false,
       showModal: false,
+      users: [],
     };
   },
   components: {
@@ -205,6 +200,7 @@ export default {
   computed: {
     ...mapGetters('question', ['questions']),
     ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('users', ['authUser']),
     imgSrc() {
       return require('../src/img/liquor.svg');
     },
@@ -262,9 +258,9 @@ export default {
         answerThirteenth;
       let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
       currentAnalyzes.total_points = sumResult;
-      currentAnalyzes.resistance_types = AlcoholStrongness;
+      currentAnalyzes.sake_strongness_types = AlcoholStrongness;
 
-      return currentAnalyzes.resistance_types;
+      return currentAnalyzes.sake_strongness_types;
     },
     Sakenotuyosa() {
       const yourSakeStrongness = this.analyzes.total_points;
@@ -277,8 +273,12 @@ export default {
       }
     },
   },
+  created() {
+    this.fetchAuthUser();
+  },
   watch: {},
   mounted() {
+    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     //与えられた関数によって実装されたテストに合格したすべての配列からなる新しい配列を生成する
     //未回答以外の値数を算出
@@ -300,7 +300,8 @@ export default {
     //同期処理を記述する
     ...mapMutations('question', ['updateAnswer']),
     ...mapMutations('analyze', ['addAnalyze']),
-    ...mapActions(['analyze', 'createAnalyze']),
+    ...mapActions('analyze', ['createAnalyze']),
+    ...mapActions('users', ['fetchAuthUser']),
     scrollTop() {
       window.scrollTo({
         top: 0,
@@ -355,17 +356,19 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
-      const updAnalyze = {
-        total_points: sumResult,
-        resistance_types: AlcoholStrongness,
-        drunk_types: 0,
-      };
+      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0; //2: 酒豪, 1: 普通. 0: 下戸
+      let Nomivation = 0;
+
       let promise = new Promise((resolve, reject) => {
         // #1
+        const updAnalyze = {
+          total_points: sumResult,
+          sake_strongness_types: AlcoholStrongness,
+          next_nomivation_types: Nomivation,
+        };
 
         resolve(this.createAnalyze(updAnalyze));
-        reject(console.log('実行に失敗しました'));
+        reject();
       });
       promise
         .then(() => {
@@ -373,7 +376,7 @@ export default {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve((this.showModal = true));
-              reject(console.log('実行に失敗しました'));
+              reject();
             }, 1000);
           });
         })
@@ -381,26 +384,16 @@ export default {
           // #3
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve(this.$router.push('/sample'));
-              reject(console.log('実行に失敗しました'));
-            }, 3500);
+              resolve(this.$router.push('/result'));
+              reject(console.log());
+            }, 3200);
           });
         })
-        //.then((msg) => { // #4
-        //   console.log('#4')
-        //   console.log(msg)
-        // })
         .catch(() => {
           // エラーハンドリング
           console.error('Something wrong!');
         });
       return promise;
-      // try {
-      //   await this.createAnalyze(updAnalyze);
-      //   // this.dialog = false;
-      //   setTimeout(this.$router.push('/sample'), 3000);
-      // } catch {
-      //   alert('データの取得に失敗しました');
     },
     clickScroll(e) {
       const targetArea = e.currentTarget.getBoundingClientRect();
@@ -409,14 +402,14 @@ export default {
     clickScrollNext() {
       let promise = new Promise((resolve, reject) => {
         resolve((this.show = !this.show));
-        reject(console.log('実行に失敗しました'));
+        reject();
       });
       promise
         .then(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve(window.scrollBy(0, 300));
-              reject(console.log('実行に失敗しました'));
+              resolve(window.scrollBy(0, 500));
+              reject();
             }, 10);
           });
         })
@@ -426,9 +419,6 @@ export default {
         });
       return promise;
     },
-    // moveToNomivation() {
-    //   this.$router.push({ name: 'SelectNomivation' });
-    // },
   },
 };
 </script>
