@@ -54,6 +54,17 @@ const actions = {
     commit('setAuthUser', userResponse.data);
     return userResponse.data;
   },
+
+  async updateAuthUser({ commit }, user) {
+    try {
+      const res = await axios.patch(`profile/${state.authUser.id}`, { user: user });
+      commit('setAuthUser', res.data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  },
 };
 
 export default {
