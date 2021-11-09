@@ -25,14 +25,15 @@ module Api
           render json: nil
         end
       end
+
       def me
         render json: current_user, methods: [:avatar_url]
       end
-    
+
       private
 
       def params_user
-        params.require(:user).permit(:nickname, :email, :password, :password_confirmation,:avatar)
+        params.require(:user).permit(:nickname, :email, :password, :password_confirmation, :avatar)
       end
     end
   end
