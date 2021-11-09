@@ -3,8 +3,8 @@ class CreateAnalyzes < ActiveRecord::Migration[6.1]
     create_table :analyzes do |t|
       t.references :user, foreign_key: true
       t.integer :total_points
-      t.integer :sake_strongness_types, null: false, default: 0
-      t.integer :next_nomivation_types, null: false, default: 0
+      t.integer :sake_strongness_types, default: 0
+      t.integer :next_nomivation_types, default: 0
       t.timestamps
     end
   end

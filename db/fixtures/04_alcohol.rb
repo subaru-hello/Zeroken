@@ -22,26 +22,26 @@ Alcohol.seed do |s|
         s.alcohol_percentage = 8,
         s.alcohol_amount = 350,
         s.pure_alcohol_intake = 22,
+        s.description = "コスパ良く酔える"
+        end
+
+    Alcohol.seed do |s|
+        s.id = 4,
+        s.name = "ハイボール",
+        s.alcohol_percentage = 8,
+        s.alcohol_amount = 350,
+        s.pure_alcohol_intake = 22,
         s.description = "酒はやっぱり8%っしょ！"
         end
 
-    # Alcohol.seed do |s|
-    #     s.id = 4,
-    #     s.name = "ハイボール",
-    #     s.alcohol_percentage = 8,
-    #     s.alcohol_amount = 350,
-    #     s.pure_alcohol_intake = 22,
-    #     s.description = "酒はやっぱり8%っしょ！"
-    #     end
-
-    # Alcohol.seed do |s|
-    #     s.id = 5,
-    #     s.name = "日本酒",
-    #     s.alcohol_percentage = 12,
-    #     s.alcohol_amount = 180,
-    #     s.pure_alcohol_intake = 14,
-    #     s.description = "日本人は日本酒ですね"
-    #     end
+    Alcohol.seed do |s|
+        s.id = 5,
+        s.name = "日本酒",
+        s.alcohol_percentage = 12,
+        s.alcohol_amount = 180,
+        s.pure_alcohol_intake = 14,
+        s.description = "日本人は日本酒ですね"
+        end
 
     # Alcohol.seed do |s|
     #     s.id = 6,
