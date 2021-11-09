@@ -73,7 +73,7 @@
           </v-layout>
         </v-col>
       </v-col>
-      <p>{{ createSchedule }}</p>
+      <!-- <p>{{ createSchedule }}</p> -->
 
       <v-col cols="4" xs="4" sm="2" md="2" lg="1">
         <v-btn
@@ -211,57 +211,57 @@ export default {
       return require('../src/img/drink.svg');
     },
 
-    createSchedule() {
-      var currentAnalyzes = this.analyzes;
-      var trueAnswers = this.questions;
-      const answer0 = trueAnswers[0]['answer'];
-      const answer1 = trueAnswers[1]['answer'];
-      const answer2 = trueAnswers[2]['answer'];
-      const answer3 = trueAnswers[3]['answer'];
-      const answer4 = trueAnswers[4]['answer'];
-      const answer5 = trueAnswers[5]['answer'];
-      const answer6 = trueAnswers[6]['answer'];
-      const answer7 = trueAnswers[7]['answer'];
-      const answer8 = trueAnswers[8]['answer'];
-      const answer9 = trueAnswers[9]['answer'];
-      const answer10 = trueAnswers[10]['answer'];
-      const answer11 = trueAnswers[11]['answer'];
-      const answer12 = trueAnswers[12]['answer'];
+    // createSchedule() {
+    //   var currentAnalyzes = this.analyzes;
+    //   var trueAnswers = this.questions;
+    //   const answer0 = trueAnswers[0]['answer'];
+    //   const answer1 = trueAnswers[1]['answer'];
+    //   const answer2 = trueAnswers[2]['answer'];
+    //   const answer3 = trueAnswers[3]['answer'];
+    //   const answer4 = trueAnswers[4]['answer'];
+    //   const answer5 = trueAnswers[5]['answer'];
+    //   const answer6 = trueAnswers[6]['answer'];
+    //   const answer7 = trueAnswers[7]['answer'];
+    //   const answer8 = trueAnswers[8]['answer'];
+    //   const answer9 = trueAnswers[9]['answer'];
+    //   const answer10 = trueAnswers[10]['answer'];
+    //   const answer11 = trueAnswers[11]['answer'];
+    //   const answer12 = trueAnswers[12]['answer'];
 
-      let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
-      let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
-      let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
-      let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
-      let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
-      let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
-      let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
-      let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
-      let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
-      let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
-      let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
-      let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
-      let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
+    //   let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
+    //   let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
+    //   let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
+    //   let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
+    //   let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
+    //   let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
+    //   let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
+    //   let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
+    //   let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
+    //   let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
+    //   let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
+    //   let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
+    //   let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
 
-      const sumResult =
-        answerFirst +
-        answerSecond +
-        answerThird +
-        answerForth +
-        answerFifth +
-        answerSixth +
-        answerSeventh +
-        answerEighth +
-        answerNinth +
-        answerTenth +
-        answerEleventh +
-        answerTwelvth +
-        answerThirteenth;
-      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
-      currentAnalyzes.total_points = sumResult;
-      currentAnalyzes.sake_strongness_types = AlcoholStrongness;
+    //   const sumResult =
+    //     answerFirst +
+    //     answerSecond +
+    //     answerThird +
+    //     answerForth +
+    //     answerFifth +
+    //     answerSixth +
+    //     answerSeventh +
+    //     answerEighth +
+    //     answerNinth +
+    //     answerTenth +
+    //     answerEleventh +
+    //     answerTwelvth +
+    //     answerThirteenth;
+    //   let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
+    //   currentAnalyzes.total_points = sumResult;
+    //   currentAnalyzes.sake_strongness_types = AlcoholStrongness;
 
-      return currentAnalyzes.sake_strongness_types;
-    },
+    //   return currentAnalyzes.sake_strongness_types;
+    // },
     Sakenotuyosa() {
       const yourSakeStrongness = this.analyzes.total_points;
       if (yourSakeStrongness < 0) {
@@ -276,7 +276,6 @@ export default {
   created() {
     this.fetchAuthUser();
   },
-  watch: {},
   mounted() {
     axios.get('/users').then((userResponse) => (this.users = userResponse.data));
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
