@@ -1,14 +1,11 @@
 import axios from '../../plugins/axios';
-const state = {
-  analyzes: [
-    {
-      total_points: [],
-      drunk_types: [],
-      resistance_types: [],
-    },
-  ],
-};
-
+const state = () => ({
+  analyzes: {
+    total_points: [],
+    sake_strongness_types: [],
+    next_nomivation_types: [],
+  },
+});
 const getters = {
   analyzes: (state) => state.analyzes,
 };
@@ -46,20 +43,16 @@ const mutations = {
 };
 
 const actions = {
-  //mutationの値を変更できる唯一のメソッド。
-  //非同期処理を司る
-  fetchAnalyzeData({ commit }, analyzes) {
-    commit('setAnalyze', analyzes);
-  },
   async fetchAnalyzes({ commit }) {
-    //analyzeをsetする
-    const responseAnalyze = axios
-      .get('analyzes')
+    try {
+      const responseAnalyze = await axios.get('analyzes');
 
-      .then((responseAnalyze) => {
-        commit('setAnalyze', responseAnalyze.data);
-      })
-      .catch((err) => console.log(err.responseAnalyze));
+      commit('setAnalyze', responseAnalyze.data);
+      return responseAnalyze.data;
+    } catch (err) {
+      console.log(err);
+      return nil;
+    }
   },
   async createAnalyze({ commit }, analyze) {
     try {
