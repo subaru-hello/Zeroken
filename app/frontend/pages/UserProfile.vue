@@ -37,7 +37,7 @@
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
               :isShow.sync="editProfileDialogDisplayed"
-              @updateProfile="update"
+              @updateProfiles="updateProfiles"
               @changeDialog="changeProfileToPassword"
               @closeDialog="closeEditProfileDialog"
             />
@@ -93,14 +93,14 @@ export default {
       return require('../src/img/default_profile.png');
     },
     whuAreYou() {
-      const currentUserData = this.authUserEdit;
+      const currentUserData = this.authUser['data']['id'];
       return currentUserData;
     },
     currentUser() {
       const currentUserData = this.authUser['data']['attributes'];
       const authUserData = {
         nickname: currentUserData['nickname'],
-        emamil: currentUserData['email'],
+        email: currentUserData['email'],
         // password: currentUserData["password"],
         // password_confirmation: currentUserData["password_confirmation"],
         avatar: currentUserData['avatar'],
@@ -114,12 +114,19 @@ export default {
   },
   created() {
     this.fetchAuthUser();
-    this.authUserEdit = this.authUser;
+    const authUserData = {
+      nickname: this.authUser.nickname,
+      email: this.authUser.email,
+      // password: currentUserData["password"],
+      // password_confirmation: currentUserData["password_confirmation"],
+      avatar: this.authUser.avatar,
+    };
+    this.authUserEdit = authUserData;
   },
   methods: {
     ...mapActions('users', ['updateAuthUser']),
     ...mapActions('users', ['fetchAuthUser']),
-    ...mapActions('snackbars', ['fetchSnackbarData']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
     displayProfileEditDialog() {
       // this.initAuthUserEdit();
       this.handleShowEditProfile();
@@ -170,31 +177,31 @@ export default {
       });
     },
     //Todo Update処理をaxiosで実行するためにはどうすればいいか。
-    update() {
-      const formData = new FormData();
-      formData.append('user[nickname]', this.authUser.nickname);
-      if (this.uploadAvatar) formData.append('user[avatar]', this.uploadAvatar);
+    // update() {
+    //   const formData = new FormData();
+    //   formData.append('user[nickname]', this.authUser.nickname);
+    //   if (this.uploadAvatar) formData.append('user[avatar]', this.uploadAvatar);
 
-      try {
-        this.updateAuthUser(formData);
-        this.handleShowEditProfile();
-        this.fetchSnackbarData({
-          msg: 'プロフィールを更新しました',
-          color: 'success',
-          isShow: true,
-        });
+    //   try {
+    //     this.updateAuthUser(formData);
+    //     this.handleShowEditProfile();
+    //     this.fetchSnackbarData({
+    //       msg: 'プロフィールを更新しました',
+    //       color: 'success',
+    //       isShow: true,
+    //     });
 
-        this.$router.push({ name: 'PreliquoTop' });
-      } catch {
-        this.fetchSnackbarData({
-          msg: 'プロフィールを更新できませんでした',
-          color: 'error',
-          isShow: true,
-        });
-      }
-    },
+    //     this.$router.push({ name: 'PreliquoTop' });
+    //   } catch {
+    //     this.fetchSnackbarData({
+    //       msg: 'プロフィールを更新できませんでした',
+    //       color: 'error',
+    //       isShow: true,
+    //     });
+    //   }
+    // },
     updatePassword() {
-      this.axios
+      axios
         .patch(`profile/password`, {
           password: this.password,
           password_confirmation: this.password_confirmation,
@@ -214,6 +221,31 @@ export default {
             isShow: true,
           });
           console.log(err);
+        });
+    },
+    updateProfiles() {
+      const authUserId = this.authUser['data']['id'];
+      axios
+        .patch(`profile/${authUserId}`, {
+          nickname: this.authUser.nickname,
+          email: this.authUser.email,
+        })
+        .then(() => {
+          this.handleShowEditProfile();
+          this.fetchSnackbarData({
+            msg: 'プロフィールを更新しました',
+            color: 'success',
+            isShow: true,
+          });
+
+          this.$router.push({ name: 'PreliquoTop' });
+        })
+        .catch((err) => {
+          this.fetchSnackbarData({
+            msg: 'プロフィールを更新できませんでした',
+            color: 'error',
+            isShow: true,
+          });
         });
     },
     //Todo authUserEditにavatarを追加する
