@@ -16,7 +16,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # 画像サイズのバリデーション(https://github.com/carrierwaveuploader/carrierwave/wiki/How-to%3A-Validate-image-file-size)
   def size_range
-    0.byte..10.megabytes
+    (0.byte)..(10.megabytes)
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

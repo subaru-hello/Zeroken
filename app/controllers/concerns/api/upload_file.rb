@@ -1,5 +1,5 @@
 module Api
-module  UploadFile
+  module UploadFile
     extend ActiveSupport::Concern
 
     def uploadedfile_create(encode_data)
@@ -36,5 +36,5 @@ module  UploadFile
         file
       end
     end
-end
+  end
 end
