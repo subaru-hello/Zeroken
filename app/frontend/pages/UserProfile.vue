@@ -7,17 +7,17 @@
             <v-sheet id="profile-sheet" class="py-6 px-10 text-center" elevation="1">
               <h3 class="text-h6 font-weight-black mb-8">マイプロフィール</h3>
               <v-avatar class="or-avatar mb-5" size="200">
-                <img :src="currentUser.avatar" />
+                <img :src="sakeSrc" width="150" height="100" />
               </v-avatar>
               <div class="text-left mb-6">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
-                  <div>{{currentUser.nickname}}</div>
+                  <div>{{ currentUser.nickname }}</div>
                 </div>
                 <v-divider class="mb-6" />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                  <div>{{currentUser.email}}</div>
+                  <div>{{ currentUser.email }}</div>
                 </div>
                 <v-divider class="mb-6" />
               </div>
@@ -31,15 +31,18 @@
               </p>
             </v-sheet>
             <!-- プロフィール編集フォーム -->
+            <!-- @updateProfile="update"がユーザーの情報を更新するハンドラ。 -->
+            <!-- v-bind.sync="authUserEdit"で子に現在のユーザー情報を私エイル。 -->
             <ProfileEditForm
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
               :isShow.sync="editProfileDialogDisplayed"
-              @updateProfile="updateProfile"
+              @updateProfile="update"
               @changeDialog="changeProfileToPassword"
               @closeDialog="closeEditProfileDialog"
             />
             <!-- パスワード編集フォーム -->
+            <!-- @updatePassword="updatePassword"でパスワードの更新を行なっている。 -->
             <PasswordEditForm
               v-if="editPasswordActed"
               :password.sync="password"
@@ -51,9 +54,13 @@
             />
           </v-col>
         </v-row>
+        <v-col>
+          <h3 class="text-h6 font-weight-black mb-8 mx-auto">酒ケジュール一覧</h3>
+          <v-date-picker full-width class="mt-4"></v-date-picker>
+        </v-col>
       </v-col>
     </v-row>
-    <div>{{whuAreYou}}</div>
+    <div>{{ whuAreYou }}</div>
   </v-container>
 </template>
 
@@ -62,7 +69,7 @@ import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
-import Jimp from 'jimp/es';
+// import Jimp from 'jimp/es';
 export default {
   components: {
     ProfileEditForm,
@@ -71,7 +78,7 @@ export default {
   data() {
     return {
       users: [],
-      authUserEdit:{},
+      authUserEdit: {},
       password: '',
       password_confirmation: '',
       editProfileActed: false,
@@ -82,36 +89,39 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
-    whuAreYou(){
-      const currentUserData =  this.authUserEdit;
-      return currentUserData
+    sakeSrc() {
+      return require('../src/img/default_profile.png');
     },
-    currentUser(){
-      const currentUserData =  this.authUser["data"]["attributes"];
+    whuAreYou() {
+      const currentUserData = this.authUserEdit;
+      return currentUserData;
+    },
+    currentUser() {
+      const currentUserData = this.authUser['data']['attributes'];
       const authUserData = {
-        nickname: currentUserData["nickname"],
-        emamil: currentUserData["email"],
+        nickname: currentUserData['nickname'],
+        emamil: currentUserData['email'],
         // password: currentUserData["password"],
         // password_confirmation: currentUserData["password_confirmation"],
-        avatar: currentUserData["avatar"],
-      }
-      this.editAuthUser = authUserData;
-      return currentUserData;
-    }
+        avatar: currentUserData['avatar'],
+      };
+      this.authUserEdit = authUserData;
+      return authUserData;
+    },
   },
-    mounted() {
+  mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
   },
   created() {
-    this.authUserEdit = this.authUser;
     this.fetchAuthUser();
+    this.authUserEdit = this.authUser;
   },
   methods: {
     ...mapActions('users', ['updateAuthUser']),
-     ...mapActions('users', ['fetchAuthUser']),
+    ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('snackbars', ['fetchSnackbarData']),
     displayProfileEditDialog() {
-      this.initAuthUserEdit();
+      // this.initAuthUserEdit();
       this.handleShowEditProfile();
       this.editProfileActed = true;
     },
@@ -160,6 +170,29 @@ export default {
       });
     },
     //Todo Update処理をaxiosで実行するためにはどうすればいいか。
+    update() {
+      const formData = new FormData();
+      formData.append('user[nickname]', this.authUser.nickname);
+      if (this.uploadAvatar) formData.append('user[avatar]', this.uploadAvatar);
+
+      try {
+        this.updateAuthUser(formData);
+        this.handleShowEditProfile();
+        this.fetchSnackbarData({
+          msg: 'プロフィールを更新しました',
+          color: 'success',
+          isShow: true,
+        });
+
+        this.$router.push({ name: 'PreliquoTop' });
+      } catch {
+        this.fetchSnackbarData({
+          msg: 'プロフィールを更新できませんでした',
+          color: 'error',
+          isShow: true,
+        });
+      }
+    },
     updatePassword() {
       this.axios
         .patch(`profile/password`, {
@@ -190,7 +223,7 @@ export default {
       // base64でencodeしてないとサーバー側でdecodeする際にerror
       Jimp.read(this.authUserEdit.avatar).then((image) => {
         image.getBase64(Jimp.MIME_PNG, (err, src) => {
-          this.authUserEdit.avatar = src;
+          return (this.authUserEdit.avatar = src);
         });
       });
     },

@@ -20,11 +20,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   def size_range
-    0.byte..10.megabytes
+    (0.byte)..(10.megabytes)
   end
 
-  def default_url(*args)
-    '/images/' + [version_name, 'default_avatar.png'].compact.join('_')
+  # Provide a default URL as a default if there hasn't been a file uploaded:
+  def default_url
+    'default_profile.png'
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
