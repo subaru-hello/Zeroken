@@ -1,7 +1,11 @@
 <template>
     <div>
+     
         <v-app-bar  style="background-color: #165e83;" id="page-header">
+          
             <v-toolbar-title>
+          
+      
                 <router-link class="router-link text-h4" style="color: #6EA4CA"
                 :to="{ name: 'PreliquoTop' }">
                 PRELIQUO
@@ -9,7 +13,20 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
                  <template v-if="!!authUser">
-                     <v-btn text style="color: #6EA4CA">マイページ</v-btn>
+                     <!-- <v-btn text style="color: #6EA4CA" :to="{ name: 'UserProfile' }">マイページ</v-btn> -->
+                   
+            <img
+              :src="authUser.avatar_url"
+              class="rounded avatar-image"
+            >
+      
+            <router-link
+              :to="{ name: 'UserProfile' }"
+             text style="color: #6EA4CA"
+            >
+              プロフィール
+            </router-link>
+    
                      <v-btn text style="color: #6EA4CA">呑んべえ一覧</v-btn>
                      <v-btn text style="color: #6EA4CA">用語集</v-btn>
         <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutFunction" id="logput_btn" style="color: white">
@@ -47,9 +64,18 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
+    data: () => ({
+      drawer: false,
+      group: null,
+    }),
     name: "TheHeader",
     computed: {
         ...mapGetters('users', ['authUser']),
+    },
+    watch: {
+      group(){
+        this.drawer = false
+      },
     },
     methods: {
         ...mapActions('users', ['logoutUser']),
