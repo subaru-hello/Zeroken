@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top">
+  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top" class="izakaya">
     <FirstGreeting
       :dialog="isVisibleFirstGreeting"
       @close-dialog="isVisibleFirstGreeting = false"
@@ -7,10 +7,13 @@
     <v-col>
       <v-row justify="center" align-content="center">
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-          <h1 class="text-center" style="font-size: 20px">飲み会の前にお酒の強さを診断</h1>
-          <h1 class="text-center" style="font-size: 20px">あなたに最適な酒ケジュールを</h1>
+          <!-- <h1 class="text-center" style="font-size: 20px">飲み会の前にお酒の強さを診断</h1>
+          <h1 class="text-center" style="font-size: 20px">あなたに最適な酒ケジュールを</h1> -->
           <h1 class="text-center" style="font-size: 50px">Preliquo</h1>
         </v-col>
+        <router-link class="router-link text" :to="{ name: 'Analyze' }" style="color: #6ea4ca">
+          とりあえず酒ケジュールを作成する
+        </router-link>
         <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
           <!-- <v-card class="mx-auto" light>
             <v-card-text> -->
@@ -56,7 +59,7 @@ import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 export default {
   name: 'PreliquoTop',
-  users: [],
+
   components: {
     FirstGreeting,
   },
@@ -72,6 +75,7 @@ export default {
   data() {
     return {
       isVisibleFirstGreeting: false,
+      users: [],
       items: [
         {
           title: '飲み会の前にお酒の強さを診断',
@@ -104,3 +108,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.izakaya {
+  width: 100%;
+  background-image: url(../../assets/images/Izakaya.jpeg);
+}
+</style>
