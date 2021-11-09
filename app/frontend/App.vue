@@ -42,4 +42,7 @@ export default {
 .router-link {
   text-decoration: none;
 }
+.or-avatar {
+  border: solid;
+}
 </style>

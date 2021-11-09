@@ -1,25 +1,29 @@
-class Api::V1::ProfilesController < ApplicationController
-    before_action :require_login
-  
-    def update
-      if current_user.update(user_params)
-        json_string = UserSerializer.new(current_user).serializable_hash
-        render json: json_string, methods: [:avatar_url]
-      else
-        head 400
+module Api
+  module V1
+    class ProfilesController < ApplicationController
+      before_action :require_login
+
+      def update
+        if current_user.update(user_params)
+          json_string = UserSerializer.new(current_user).serializable_hash
+          render json: json_string, methods: [:avatar_url]
+        else
+          head :bad_request
+        end
       end
-    end
+      end
 
-    def password
-      current_user.password_confirmation = params[:data][:password_confirmation]
-      current_user.change_password(params[:data][:password]) ? head(200) : head(400)
-    end
+      def password
+        current_user.password_confirmation = params[:password_confirmation]
+        current_user.change_password(params[:password]) ? head(:ok) : head(:bad_request)
+      end
 
-    private
+      private
 
-    def user_params
-      params[:data][:user][:avatar] = uploadedfile_create(params[:data][:user][:avatar])
-      params.require(:user).permit(:nickname, :email, :avatar)
+      def user_params
+        params[:data][:user][:avatar] = uploadedfile_create(params[:data][:user][:avatar])
+        params.require(:user).permit(:nickname, :email, :avatar, :password, :password_confirmation)
+      end
     end
   end
 end
