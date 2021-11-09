@@ -1,7 +1,11 @@
 <template>
     <div>
-        <v-app-bar flat color="grey lighten-5" id="page-header">
+     
+        <v-app-bar  style="background-color: #165e83;" id="page-header">
+          
             <v-toolbar-title>
+          
+      
                 <router-link class="router-link text-h4" style="color: #6EA4CA"
                 :to="{ name: 'PreliquoTop' }">
                 PRELIQUO
@@ -9,28 +13,46 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
                  <template v-if="!!authUser">
-                     <v-btn text>マイページ</v-btn>
-                     <v-btn text>呑んべえ一覧</v-btn>
-        <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutFunction" id="logput_btn">
+                     <!-- <v-btn text style="color: #6EA4CA" :to="{ name: 'UserProfile' }">マイページ</v-btn> -->
+                   
+            <img
+              :src="authUser.avatar_url"
+              class="rounded avatar-image"
+            >
+      
+            <router-link
+              :to="{ name: 'UserProfile' }"
+             text style="color: #6EA4CA"
+            >
+              プロフィール
+            </router-link>
+    
+                     <v-btn text style="color: #6EA4CA">呑んべえ一覧</v-btn>
+                     <v-btn text style="color: #6EA4CA">用語集</v-btn>
+        <v-btn text rounded plain :ripple="{ center: true }" x-large @click="logoutFunction" id="logput_btn" style="color: white">
           ログアウト
         </v-btn>
         <router-link class="router-link text"
-                :to="{ name: 'Analyze' }">
+                :to="{ name: 'Analyze' }"
+                style="color: #6EA4CA"
+                >
                 酒ケジュールを作成する
                 </router-link>
       </template>
         <template v-else>
-        <v-btn :to="{ name: 'UserRegister' }" text rounded plain :ripple="{ center: true }" x-large>
+        <v-btn :to="{ name: 'UserRegister' }" text rounded :ripple="{ center: true }" x-large style="color: white">
           新規登録
         </v-btn>
+          <v-btn text style="color: white">用語集</v-btn>
         <v-btn
           class="hidden-sm-and-down"
           :to="{ name: 'UserLogin' }"
           text
           rounded
-          plain
+          
           :ripple="{ center: true }"
           x-large
+          style="color: white"
         >
           ログイン
         </v-btn>
@@ -42,9 +64,18 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
+    data: () => ({
+      drawer: false,
+      group: null,
+    }),
     name: "TheHeader",
     computed: {
         ...mapGetters('users', ['authUser']),
+    },
+    watch: {
+      group(){
+        this.drawer = false
+      },
     },
     methods: {
         ...mapActions('users', ['logoutUser']),

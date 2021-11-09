@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   before_save :change_email_to_lowercase
   authenticates_with_sorcery!
-
+  has_many :analyzes, dependent: :destroy
+  has_one_attached :avatar
+  enum role: { guest: 0, member: 1 }
+  mount_uploader :avatar, AvatarUploader
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   VALID_PASSWORD_FORMAT = /\A\w+\z/i.freeze
 
@@ -25,6 +28,9 @@ class User < ApplicationRecord
             format: {
               with: VALID_EMAIL_REGEX
             }
+  def avatar_url
+    Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) if avatar.attached?
+  end
 
   private
 

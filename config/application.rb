@@ -5,9 +5,9 @@ require "rails"
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
-# require "active_storage/engine"
+require "active_storage/engine"
 require "action_controller/railtie"
-# require "action_mailer/railtie"
+require "action_mailer/railtie"
 # require "action_mailbox/engine"
 # require "action_text/engine"
 require "action_view/railtie"
@@ -48,6 +48,9 @@ module Preliquo
     config.generators.system_tests = nil
     config.i18n.available_locales = :ja
     config.i18n.default_locale = :ja
+     #　#　以下の記述を追記する(設定必須)
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
     config.time_zone = "Asia/Tokyo"
     config.active_record.default_timezone = :local
     #https://github.com/jsonapi-serializer/jsonapi-serializer/pull/141
