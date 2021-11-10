@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_030244) do
     t.string "email", limit: 191, null: false
     t.string "crypted_password", limit: 191
     t.string "salt", limit: 191
-    t.integer "role", default: 0, null: false
+    t.integer "role", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
