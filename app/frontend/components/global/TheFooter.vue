@@ -14,7 +14,7 @@ export default {
 name: "TheFooter",
   data() {
     return {
-      links: ['Preliquoについて', '利用規約', 'お問い合わせ'],
+      links: ['ZEROKENについて', '利用規約', 'お問い合わせ'],
     };
   },
 };

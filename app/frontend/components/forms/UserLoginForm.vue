@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <div class="text-h6 pt-8 px-8 text-center font-weight-black">
-      Preliquoで<br class="br-sp" />ログイン
+      既にアカウントをお持ちの方<br class="br-sp" />ログイン
     </div>
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-card-text class="px-8">
