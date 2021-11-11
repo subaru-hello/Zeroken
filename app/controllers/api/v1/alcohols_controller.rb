@@ -6,8 +6,12 @@ module Api
       end
 
       def index
-        @alcohols = Alcohol.all
-        render json: @alcohols
+        @weak_alcohols = Alcohol.all.random_weak.order(id: "DESC")
+        @strong_alcohols = Alcohol.all.random_strong.order(id: "DESC")
+        respond_to do |format|
+          format.json  { render :json => {:weak_alcohols => @weak_alcohols , 
+                                          :strong_alcohols => @strong_alcohols}}
+        end
       end
 
       def create

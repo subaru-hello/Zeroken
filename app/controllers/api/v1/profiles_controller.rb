@@ -11,7 +11,6 @@ module Api
           head :bad_request
         end
       end
-      end
 
       def password
         current_user.password_confirmation = params[:password_confirmation]
