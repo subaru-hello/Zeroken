@@ -34,7 +34,7 @@
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[3].name }}　
+              {{ data[3].name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
@@ -56,7 +56,7 @@
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[1].name }}　
+              {{ data[1].name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
@@ -78,7 +78,7 @@
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[0].name }}　
+              {{ data[0].name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>

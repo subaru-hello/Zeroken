@@ -233,8 +233,6 @@ export default {
         });
     },
     updateProfiles() {
-      const authUserName = this.authUser['data']['nickname'];
-      const authUserEmail = this.authUser['data']['nickname'];
       axios
         .patch('profile', {
           nickname: this.authUser.nickname,
@@ -256,19 +254,20 @@ export default {
             color: 'error',
             isShow: true,
           });
+           console.log(err);
         });
     },
     //Todo authUserEditにavatarを追加する
 
-    initAuthUserEdit() {
-      this.authUserEdit = this.authUser;
-      // base64でencodeしてないとサーバー側でdecodeする際にerror
-      Jimp.read(this.authUserEdit.avatar).then((image) => {
-        image.getBase64(Jimp.MIME_PNG, (err, src) => {
-          return (this.authUserEdit.avatar = src);
-        });
-      });
-    },
+    // initAuthUserEdit() {
+    //   this.authUserEdit = this.authUser;
+    //   // base64でencodeしてないとサーバー側でdecodeする際にerror
+    //   Jimp.read(this.authUserEdit.avatar).then((image) => {
+    //     image.getBase64(Jimp.MIME_PNG, (err, src) => {
+    //       return (this.authUserEdit.avatar = src);
+    //     });
+    //   });
+    // },
   },
 };
 </script>
