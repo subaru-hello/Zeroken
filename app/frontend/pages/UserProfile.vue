@@ -19,12 +19,12 @@
               <div class="text-left mb-6">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
-                  <div>{{ currentUser.nickname }}</div>
+                  <div>{{ authUser.data.attributes.nickname }}</div>
                 </div>
                 <v-divider class="mb-6" />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                  <div>{{ currentUser.email }}</div>
+                  <div>{{  authUser.data.attributes.email}}</div>
                 </div>
                 <v-divider class="mb-6" />
               </div>
@@ -102,20 +102,8 @@ export default {
       return require('../src/img/default_profile.png');
     },
     whuAreYou() {
-      const currentUserData = this.authUser['data']['id'];
+      const currentUserData = this.authUserEdit;
       return currentUserData;
-    },
-    currentUser() {
-      const currentUserData = this.authUser['data']['attributes'];
-      const authUserData = {
-        nickname: currentUserData['nickname'],
-        email: currentUserData['email'],
-        // password: currentUserData["password"],
-        // password_confirmation: currentUserData["password_confirmation"],
-        avatar: currentUserData['avatar'],
-      };
-      this.authUserEdit = authUserData;
-      return authUserData;
     },
   },
   mounted() {
@@ -124,11 +112,11 @@ export default {
   created() {
     this.fetchAuthUser();
     const authUserData = {
-      nickname: this.authUser.nickname,
-      email: this.authUser.email,
+      nickname: authUser.data.attributes.nickname,
+      email: this.data.attributes.email,
       // password: currentUserData["password"],
       // password_confirmation: currentUserData["password_confirmation"],
-      avatar: this.authUser.avatar,
+      avatar: this.data.attributes.avatar,
     };
     this.authUserEdit = authUserData;
   },
@@ -185,30 +173,6 @@ export default {
         }
       });
     },
-    //Todo Update処理をaxiosで実行するためにはどうすればいいか。
-    // update() {
-    //   const formData = new FormData();
-    //   formData.append('user[nickname]', this.authUser.nickname);
-    //   if (this.uploadAvatar) formData.append('user[avatar]', this.uploadAvatar);
-
-    //   try {
-    //     this.updateAuthUser(formData);
-    //     this.handleShowEditProfile();
-    //     this.fetchSnackbarData({
-    //       msg: 'プロフィールを更新しました',
-    //       color: 'success',
-    //       isShow: true,
-    //     });
-
-    //     this.$router.push({ name: 'PreliquoTop' });
-    //   } catch {
-    //     this.fetchSnackbarData({
-    //       msg: 'プロフィールを更新できませんでした',
-    //       color: 'error',
-    //       isShow: true,
-    //     });
-    //   }
-    // },
     updatePassword() {
       axios
         .patch(`profile/password`, {
@@ -235,8 +199,8 @@ export default {
     updateProfiles() {
       axios
         .patch('profile', {
-          nickname: this.authUser.nickname,
-          email: this.authUser.email,
+          nickname: this.authUser.data.attributes.nickname,
+          email: this.authUser.data.attributes.email,
         })
         .then(() => {
           this.handleShowEditProfile();

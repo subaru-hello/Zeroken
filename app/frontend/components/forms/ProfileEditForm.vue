@@ -124,8 +124,8 @@ export default {
   methods: {
         update() {
       const formData = new FormData()
-      formData.append("user[nickname]", this.authUser.nickname)
-      if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
+      formData.append("user[nickname]", this.authUserEdit.nickname)
+      formData.append("user[email]", this.authUserEdit.email)
 
       try {
         this.updateAuthUser(formData)
@@ -166,7 +166,8 @@ export default {
     },
     hideErrorMessage() {
       // バリデーション失敗後だと、エラーメッセージが残ってしまう為
-      this.fileForm.$ref.reset();
+      const obj = this.fileForm
+      this.obj =''
       this.fileErrorDisplayed = false;
     },
   },

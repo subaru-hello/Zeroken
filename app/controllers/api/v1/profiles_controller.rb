@@ -12,6 +12,10 @@ module Api
         end
       end
 
+      def edit
+        @user = User.find(current_user.id)
+        render json: @user
+      end
       def password
         current_user.password_confirmation = params[:password_confirmation]
         current_user.change_password(params[:password]) ? head(:ok) : head(:bad_request)

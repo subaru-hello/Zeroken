@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
     resource :sessions, only: %i[ create destroy ]
     resources :alcohols
-    resource :profile, only: %i[update] do
+    resource :profile, only: %i[update edit] do
       patch 'password', on: :member
     end
     resources :analyzes
