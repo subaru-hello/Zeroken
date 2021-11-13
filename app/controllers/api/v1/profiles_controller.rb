@@ -6,7 +6,7 @@ module Api
       def update
         if current_user.update(user_params)
           json_string = UserSerializer.new(current_user).serializable_hash
-          render json: json_string, methods: [:avatar_url]
+          render json: json_string
         else
           head :bad_request
         end
@@ -20,8 +20,8 @@ module Api
       private
 
       def user_params
-        params[:data][:user][:avatar] = uploadedfile_create(params[:data][:user][:avatar])
-        params.require(:user).permit(:nickname, :email, :avatar, :password, :password_confirmation)
+        # params[:data][:user][:avatar] = uploadedfile_create(params[:data][:user][:avatar])
+        params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
       end
     end
   end
