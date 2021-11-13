@@ -75,7 +75,6 @@ const getters = {
 const mutations = {
   updateAnswer(state, { indexNum, updAnswer }) {
     const index = state.questions.findIndex((question) => question.num === indexNum);
-    //配列内の指定されたテスト関数を満たす最初の要素の位置を返す
     state.questions[index].answer = updAnswer;
   },
 };
