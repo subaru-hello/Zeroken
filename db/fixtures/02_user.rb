@@ -6,6 +6,7 @@
         s.password = 'aaaaaaa'
         s.password_confirmation = 'aaaaaaa'
         s.avatar = Rails.root.join("db/fixtures/images/sample.png").open
+        s.role = 0
         end
     
     

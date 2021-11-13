@@ -149,52 +149,9 @@ export default {
       handleUpdateProfiles() {
       this.$emit('updateProfiles');
     },
-    //  updateProfiles() {
-    //   axios
-    //     .patch(`profile/id`, {
-    //       nickname: this.authUser.nickname,
-    //       email: this.authUser.email,
-    //     })
-    //     .then(() => {
-    //     this.handleShowEditProfile();
-    //     this.fetchSnackbarData({
-    //       msg: 'プロフィールを更新しました',
-    //       color: 'success',
-    //       isShow: true,
-    //     });
-        
-    //     this.$router.push({ name: 'PreliquoTop' });})
-    //     .catch((err) => {
-    //  this.fetchSnackbarData({
-    //       msg: 'プロフィールを更新できませんでした',
-    //       color: 'error',
-    //       isShow: true,
-    //     });
-    //     });
-    // },
     actionInputFile() {
       document.querySelector('#user-avatar').click();
     },
-    // async handleAvatarChange(value) {
-    //   const result = await this.$refs.fileForm.validate(value);
-    //   if (result.valid) {
-    //     this.hideErrorMessage();
-    //     const imageURL = URL.createObjectURL(value);
-    //     Jimp.read(imageURL)
-    //       .then((image) => {
-    //         image.cover(300, 300).getBase64(Jimp.MIME_PNG, (err, src) => {
-    //         return  this.$emit('update:avatar', src);
-    //         });
-    //      return    URL.revokeObjectURL(imageURL);
-    //       })
-    //       .catch((error) => {
-    //         alert('アップロードに失敗しました');
-    //         console.log(error);
-    //       });
-    //   } else {
-    //    return  this.fileErrorDisplayed = true;
-    //   }
-    // },
     handleUpdateProfile() {
       this.hideErrorMessage();
       this.$emit('updateProfile');
@@ -209,7 +166,7 @@ export default {
     },
     hideErrorMessage() {
       // バリデーション失敗後だと、エラーメッセージが残ってしまう為
-      this.fileForm.reset();
+      this.fileForm.$ref.reset();
       this.fileErrorDisplayed = false;
     },
   },

@@ -37,7 +37,7 @@ module Api
       private
 
       def analyze_params
-        params.require(:analyze).permit(:total_points, :sake_strongness_types, :next_nomivation_types)
+        params.require(:analyze).permit(:total_points, :sake_strongness_types, :next_nomivation_types, :description)
       end
 
       def set_analyze

@@ -1,49 +1,89 @@
 <template>
   <div>
-    <!-- <p>{{ Sake}}</p>
-    <p>{{ alcoholsData }}</p> -->
-    <h1 class="text-center" style="font-size: 50px">
-      あなたは
-      <p class="text-center" style="font-size: 50px">
-        {{ Sakenotuyosa.sake_strongness_types }} <img :src="beerSrc" width="150" height="100" />
-      </p>
-      酩酊に向けた酒ケジュール
-    </h1>
+    <div class="text-center" style="font-size: 50px">
+      <p>あなたの酒テータス</p>
+      <v-card>
+        酒の強さ:
+        <v-card-title class="mx-auto" style="font-size: 50px">
+          {{ analyzes[analyzes.length - 1]['sake_strongness_types'] }}
+          <img :src="beerSrc" width="150" height="100" />
+        </v-card-title>
+        <v-card-subtitle style="font-size: 26px">
+          {{ analyzes[analyzes.length - 1]['description'] }}のようです。</v-card-subtitle
+        >
+      </v-card>
+      <p>{{ analyzes[analyzes.length - 1]['next_nomivation_types'] }} になりたいあなたへ</p>
+    </div>
+    <!-- <v-btn class="justify-center"> 結果を保存する</v-btn> -->
     <v-layout>
       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="5000" id="form">
         <v-card-title style="width: 100%" class="headline justify-center">
           酒ケジュール
         </v-card-title>
-        <v-container class="d-flex flex-row mb-6">
-          <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="500" id="form">
+        <v-container
+          class="d-flex flex-row mb-6"
+          v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'"
+        >
+          <v-card
+            class="text-center mx-auto my-5 form"
+            elevation="2"
+            shaped
+            width="500"
+            id="form"
+            v-for="data in alcohols"
+            :key="data.id"
+          >
             <v-card-title style="width: 100%" class="headline justify-center">
-              1st.{{ alcoholsData.name }}
+              {{ data[3].name }}　
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
-            <v-card-text>{{ alcoholsData.description }}</v-card-text>
+            <v-card-text>
+              {{ data[3].description }}
+            </v-card-text>
           </v-card>
-          <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="500" id="form">
+        </v-container>
+        <v-container
+          class="d-flex flex-row mb-6"
+          v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'"
+        >
+          <v-card
+            class="text-center mx-auto my-5 form"
+            elevation="2"
+            shaped
+            width="500"
+            id="form"
+            v-for="data in alcohols"
+            :key="data.id"
+          >
             <v-card-title style="width: 100%" class="headline justify-center">
-              2nd.{{ alcoholsD.name }}
+              {{ data[1].name }}　
             </v-card-title>
-            <img :src="sakeSrc" width="150" height="100" />
-            <v-card-text>{{ alcoholsD.description }}</v-card-text>
+            <img :src="beerSrc" width="150" height="100" />
+            <v-card-text>
+              {{ data[1].description }}
+            </v-card-text>
           </v-card>
-          <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="500" id="form">
+        </v-container>
+        <v-container
+          class="d-flex flex-row mb-6"
+          v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'weak'"
+        >
+          <v-card
+            class="text-center mx-auto my-5 form"
+            elevation="2"
+            shaped
+            width="500"
+            id="form"
+            v-for="data in alcohols"
+            :key="data.id"
+          >
             <v-card-title style="width: 100%" class="headline justify-center">
-              3rd. {{ alcoholsDa.name }}
+              {{ data[0].name }}　
             </v-card-title>
-
-            <img :src="imgSrc" width="150" height="100" />
-            <v-card-text>{{ alcoholsDa.description }}</v-card-text>
-          </v-card>
-          <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="500" id="form">
-            <v-card-title style="width: 100%" class="headline justify-center">
-              4th {{ alcoholsDat.name }}
-            </v-card-title>
-
-            <img :src="imgSrc" width="150" height="100" />
-            <v-card-text>{{ alcoholsDat.description }}</v-card-text>
+            <img :src="beerSrc" width="150" height="100" />
+            <v-card-text>
+              {{ data[0].description }}
+            </v-card-text>
           </v-card>
         </v-container>
       </v-card>
@@ -58,62 +98,17 @@ export default {
   data: function () {
     return {
       alcohols: [],
-      analyzes: [],
+      analyze: [],
       users: [],
       errors: '',
     };
   },
   mounted() {
-    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
-    axios.get('/analyzes').then((analyzeResponse) => (this.analyzes = analyzeResponse.data));
   },
   computed: {
-    // ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
-    alcoholsData() {
-      const alcoholList = this.alcohols;
-      return alcoholList[0];
-    },
-    alcoholsDat() {
-      const alcoholList = this.alcohols;
-      return alcoholList[1];
-    },
-    alcoholsDa() {
-      const alcoholList = this.alcohols;
-      return alcoholList[2];
-    },
-    alcoholsD() {
-      const alcoholList = this.alcohols;
-      return alcoholList[2];
-    },
-    Sakenotuyosa() {
-      const currentAnalyze = this.analyzes;
-      const yourAnalyze = currentAnalyze[currentAnalyze.length - 1];
-      // if (yourAnalyze === 'weak') {
-      //   return '下戸';
-      // } else if (yourAnalyze === 'normal') {
-      //   return '普通';
-      // } else {
-      //   return '酒豪';
-      // }
-      return yourAnalyze;
-    },
-    //Todo
-    //JSONの取得ができていない。sake_strongness_typesの状態に応じて描画内容を変える。
-    Sake() {
-      const currentAnalyze = this.analyzes[0];
-      // const yourAnalyze = currentAnalyze["sake_strongness_types"];
-      //    if (currentAnalyze[currentAnalyze.length -1] === 'flesh') {
-      //   return 'しっぽり';
-      // } else if (currentAnalyze[currentAnalyze.length -1]=== 'tipsy') {
-      //   return 'ほろ酔い';
-      // } else {
-      //   return '酩酊';
-      // }
-      return currentAnalyze;
-      // return yourAnalyze;
-    },
     imgSrc() {
       return require('../src/img/liquor.svg');
     },
@@ -127,11 +122,14 @@ export default {
       return require('../src/img/beer.svg');
     },
   },
+  updated() {},
   created() {
+    this.fetchAnalyzes();
     this.fetchAuthUser();
+    this.analyze = this.fetchAnalyzes;
   },
   methods: {
-    ...mapActions('analyze', ['createAnalyze']),
+    ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapActions('users', ['fetchAuthUser']),
   },
 };

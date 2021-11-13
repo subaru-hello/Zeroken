@@ -25,6 +25,8 @@ gem 'jsonapi-serializer'
 gem 'sorcery'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# help to translate enum from ja to en
+gem 'enum_help'
 # set initial datas
 gem 'seed-fu'
 # upload images

@@ -110,6 +110,8 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
+    enum_help (0.0.17)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     erubis (2.7.0)
     factory_bot (6.2.0)
@@ -357,6 +359,7 @@ DEPENDENCIES
   capybara
   carrierwave
   dotenv-rails
+  enum_help
   factory_bot_rails
   foreman
   jbuilder (~> 2.7)

@@ -1,11 +1,18 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
-          <v-col cols="12" sm="8" class="pt-16">
+          <v-col
+            cols="12"
+            sm="8"
+            class="pt-16 d-flex justify-space-between mb-6"
+            :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'"
+            flat
+            tile
+          >
             <v-sheet id="profile-sheet" class="py-6 px-10 text-center" elevation="1">
-              <h3 class="text-h6 font-weight-black mb-8">マイプロフィール</h3>
+              <h3 class="text-h6 font-weight-black mb-8">プロフィール</h3>
               <v-avatar class="or-avatar mb-5" size="200">
                 <img :src="sakeSrc" width="150" height="100" />
               </v-avatar>
@@ -30,6 +37,11 @@
                 <a @click.stop="displayPasswordEditDialog"> こちら </a>
               </p>
             </v-sheet>
+            <div style="margin-left: 10%">
+              <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+
+              <v-date-picker full-width class="mt-4"></v-date-picker>
+            </div>
             <!-- プロフィール編集フォーム -->
             <!-- @updateProfile="update"がユーザーの情報を更新するハンドラ。 -->
             <!-- v-bind.sync="authUserEdit"で子に現在のユーザー情報を私エイル。 -->
@@ -54,10 +66,7 @@
             />
           </v-col>
         </v-row>
-        <v-col>
-          <h3 class="text-h6 font-weight-black mb-8 mx-auto">酒ケジュール一覧</h3>
-          <v-date-picker full-width class="mt-4"></v-date-picker>
-        </v-col>
+        <v-col> </v-col>
       </v-col>
     </v-row>
     <div>{{ whuAreYou }}</div>
@@ -224,9 +233,10 @@ export default {
         });
     },
     updateProfiles() {
-      const authUserId = this.authUser['data']['id'];
+      const authUserName = this.authUser['data']['nickname'];
+      const authUserEmail = this.authUser['data']['nickname'];
       axios
-        .patch(`profile/${authUserId}`, {
+        .patch('profile', {
           nickname: this.authUser.nickname,
           email: this.authUser.email,
         })
