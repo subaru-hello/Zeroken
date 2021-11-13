@@ -103,9 +103,7 @@ export default {
       errors: '',
     };
   },
-  mounted() {
-    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
-  },
+
   computed: {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
@@ -121,6 +119,9 @@ export default {
     beerSrc() {
       return require('../src/img/beer.svg');
     },
+  },
+    mounted() {
+    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
   },
   updated() {},
   created() {
