@@ -5,7 +5,6 @@ import Analyze from '../pages/Analyze';
 import Result from '../pages/Result';
 import SelectNomivation from '../pages/SelectNomivation';
 import UserProfile from '../pages/UserProfile.vue';
-import Profile from '../pages/Profile.vue';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
 import UserLogin from '../pages/UserLogin';
@@ -34,6 +33,7 @@ const router = new Router({
       path: '/analyze',
       component: Analyze,
       name: 'Analyze',
+      meta: { requireAuth: true },
     },
     {
       path: '/profile',
@@ -41,12 +41,6 @@ const router = new Router({
       name: 'UserProfile',
       meta: { requireAuth: true },
       props: true,
-    },
-    {
-      path: '/profiles',
-      component: Profile,
-      name: 'Profile',
-      meta: { requiredAuth: true },
     },
     {
       path: '/nomivation',
@@ -57,6 +51,7 @@ const router = new Router({
       path: '/result',
       component: Result,
       name: 'Result',
+      meta: { requireAuth: true },
     },
   ],
 });

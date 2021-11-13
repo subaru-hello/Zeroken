@@ -112,11 +112,11 @@ export default {
   created() {
     this.fetchAuthUser();
     const authUserData = {
-      nickname: authUser.data.attributes.nickname,
-      email: this.data.attributes.email,
+      nickname: this.authUser.data.attributes.nickname,
+      email: this.authUser.data.attributes.email,
       // password: currentUserData["password"],
       // password_confirmation: currentUserData["password_confirmation"],
-      avatar: this.data.attributes.avatar,
+      avatar: this.authUser.data.attributes.avatar,
     };
     this.authUserEdit = authUserData;
   },
