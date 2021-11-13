@@ -1,8 +1,18 @@
 ---
 ja:
+  enums:
+    analyze:
+      sake_strongness_types:
+        weak: 下戸
+        normal: 普通
+        strong: 酒豪
+      next_nomivation_types:
+        flesh: 爽快
+        tipsy: ほろ酔い
+        heavy_drunk: 酩酊
   activerecord:
     analyze:
-      
+
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
