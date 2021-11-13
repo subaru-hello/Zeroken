@@ -1,10 +1,32 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto" id="izakaya">
+  <v-container fill-height fluid>
     <FirstGreeting
       :dialog="isVisibleFirstGreeting"
       @close-dialog="isVisibleFirstGreeting = false"
     />
 
+    <v-row align-content="center">
+      <v-spacer />
+      <img :src="imgSrc" class="img" width="150" height="100" />
+      <v-col class="text-right align-self-center" cols="6">
+        <p class="text-h2 bold">ゼロケン</p>
+        <p class="text-h5 mb-12 font-weight-bold d-sm-block text-no-wrap service-description">
+          {{ title }}<br />{{ text }}
+        </p>
+        <v-spacer />
+        <!-- 開始ボタン -->
+        <div>
+          <v-btn class="mb-8" color="primary" x-large dark @click="loginFunction()">
+            さっそく酒ケジュールを作る
+          </v-btn>
+        </div>
+      </v-col>
+
+      <v-spacer />
+    </v-row>
+  </v-container>
+  <!-- <v-container style="max-width: 1030px; margin: 0 auto" id="izakaya">
+ 
     <v-col >
       <v-row justify="center" align-content="center" >
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
@@ -20,11 +42,10 @@
             </v-card-text>
           </v-col>
         </v-card>
-        <v-btn @click="loginFunction()"> さっそく酒ケジュールを作る</v-btn>
-
+      
       </v-row>
     </v-col>
-  </v-container>
+  </v-container> -->
 </template>
 
 <script>
@@ -38,12 +59,9 @@ export default {
       isVisibleFirstGreeting: false,
       // users: [],
       tab: null,
-      items: {
-        title: [ 'あなたにとっての0軒目'],
- text: ['最適なお酒の飲む順番を提供します'],
-        
-      },
-     
+      dialog: false,
+      title: 'あなたにとっての0軒目',
+      text: '華金に向けてお酒の強さを診断しましょう',
     };
   },
   components: {
@@ -60,6 +78,12 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
+    izakayaSrc() {
+      return require('../src/img/Izakaya_4.jpeg');
+    },
+    imgSrc() {
+      return require('../src/img/drunkman.svg');
+    },
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
@@ -72,6 +96,7 @@ export default {
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('users', ['loginGuestUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+
     loginFunction() {
       this.loginGuestUser(this.user).then((user) => {
         if (user) {
@@ -92,5 +117,8 @@ export default {
 #izakaya {
   width: 500px;
   background-image: url(../../assets/images/Izakaya.jpeg);
+}
+.img {
+  transform: scale(2, 2);
 }
 </style>
