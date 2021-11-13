@@ -13,12 +13,12 @@
                 <div class="text-left mb-6">
                   <div>
                     <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
-                    <div>{{ currentUser.nickname }}</div>
+                    <div>{{ user.nickname }}</div>
                   </div>
                   <v-divider class="mb-6" />
                   <div>
                     <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                    <div>{{ currentUser.email }}</div>
+                    <div>{{ user.email }}</div>
                   </div>
                   <v-divider class="mb-6" />
                 </div>
@@ -94,10 +94,6 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
-    currentUser() {
-      const currentUse = this.user;
-      return currentUse;
-    },
   },
   created() {
     this.user = Object.assign({}, this.authUser);
