@@ -1,55 +1,29 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top" class="izakaya">
+  <v-container style="max-width: 1030px; margin: 0 auto" id="izakaya">
     <FirstGreeting
       :dialog="isVisibleFirstGreeting"
       @close-dialog="isVisibleFirstGreeting = false"
     />
-    <v-col>
-      <v-row justify="center" align-content="center">
+
+    <v-col >
+      <v-row justify="center" align-content="center" >
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-          <!-- <h1 class="text-center" style="font-size: 20px">飲み会の前にお酒の強さを診断</h1>
-          <h1 class="text-center" style="font-size: 20px">あなたに最適な酒ケジュールを</h1> -->
-          <h1 class="text-center" style="font-size: 50px">Preliquo</h1>
+          <h1 class="text-center" style="font-size: 50px" >ゼロケン</h1>
         </v-col>
-        <router-link class="router-link text" :to="{ name: 'Analyze' }" style="color: #6ea4ca">
-          とりあえず酒ケジュールを作成する
-        </router-link>
-        <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
-          <!-- <v-card class="mx-auto" light>
-            <v-card-text> -->
+        <v-card v-for="item in items" :key="item.id" >
+          <v-col>
+            <v-card-title>
+              {{item.title}}
+            </v-card-title>
+            <v-card-text style="font-size: 25px">
+              {{ item.text }}
+            </v-card-text>
+          </v-col>
+        </v-card>
+        <v-btn @click="loginFunction()"> さっそく酒ケジュールを作る</v-btn>
 
-          <p class="text-center" style="font-size: 25px">
-            {{ item.title }}
-          </p>
-          <!-- <hr>
-
-            <v-img
-              :src="item.img"
-              width="100%"
-              max-width="100%"
-              class="white--text align-top"
-              height="auto"
-            /> -->
-          <!-- </v-card-text>
-
-          </v-card> -->
-        </v-col>
       </v-row>
     </v-col>
-    <table>
-      <tbody>
-        <tr>
-          <th>ID</th>
-          <th>nickname</th>
-          <th>email</th>
-        </tr>
-        <tr v-for="e in users" :key="e.id">
-          <td>{{ e.id }}</td>
-          <td>{{ e.nickname }}</td>
-          <td>{{ e.email }}</td>
-        </tr>
-      </tbody>
-    </table>
   </v-container>
 </template>
 
@@ -59,7 +33,19 @@ import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 export default {
   name: 'PreliquoTop',
-
+  data() {
+    return {
+      isVisibleFirstGreeting: false,
+      // users: [],
+      tab: null,
+      items: {
+        title: [ 'あなたにとっての0軒目'],
+ text: ['最適なお酒の飲む順番を提供します'],
+        
+      },
+     
+    };
+  },
   components: {
     FirstGreeting,
   },
@@ -71,27 +57,6 @@ export default {
         });
       });
     else next();
-  },
-  data() {
-    return {
-      isVisibleFirstGreeting: false,
-      users: [],
-      items: [
-        {
-          title: '飲み会の前にお酒の強さを診断',
-          //   img: require('@/assets/images/liquor.svg') ,
-        },
-
-        {
-          title: '飲み会で飲むお酒の順番を提供',
-          // img: require('@/assets/images/liquor.svg'),
-        },
-        {
-          title: '不本意なアルハラを予防します',
-          //  img: require('@/assets/images/liquor.svg'),
-        },
-      ],
-    };
   },
   computed: {
     ...mapGetters('users', ['authUser']),
@@ -105,12 +70,27 @@ export default {
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
+    ...mapActions('users', ['loginGuestUser']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
+    loginFunction() {
+      this.loginGuestUser(this.user).then((user) => {
+        if (user) {
+          this.$router.push({ name: 'Analyze' });
+        } else {
+          this.fetchSnackbarData({
+            msg: 'ログインに失敗しました',
+            color: 'error',
+            isShow: true,
+          });
+        }
+      });
+    },
   },
 };
 </script>
 <style scoped>
-.izakaya {
-  width: 100%;
+#izakaya {
+  width: 500px;
   background-image: url(../../assets/images/Izakaya.jpeg);
 }
 </style>
