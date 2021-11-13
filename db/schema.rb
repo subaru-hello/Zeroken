@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_030244) do
+ActiveRecord::Schema.define(version: 2021_11_13_093921) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_030244) do
 
   create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
-    t.integer "alcohol_percentage"
+    t.float "alcohol_percentage"
     t.integer "alcohol_amount"
     t.integer "pure_alcohol_intake"
     t.text "description"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_030244) do
     t.integer "next_nomivation_types", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
