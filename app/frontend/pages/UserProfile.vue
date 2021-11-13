@@ -198,7 +198,7 @@ export default {
     },
     updateProfiles() {
       axios
-        .patch('profile', {
+        .patch('profile/edit', {
           nickname: this.authUser.data.attributes.nickname,
           email: this.authUser.data.attributes.email,
         })
