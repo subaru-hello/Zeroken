@@ -5,12 +5,24 @@ import router from '../router';
 import axiosInstance from '../plugins/axios';
 import * as VeeValidate from '../plugins/vee-validate';
 import vuetify from '../plugins/vuetify';
+import VueI18n from 'vue-i18n';
+
+Vue.use(VueI18n);
+
+const i18n = new VueI18n({
+  locale: 'ja', // ← ここを「en」に切り替えれば英語になる
+  fallbackLocale: 'ja',
+  messages: {
+    ja: require('../components/locales/ja.json'),
+  },
+});
 
 Vue.prototype.$axios = axiosInstance;
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
+    i18n,
     vuetify,
     store,
     VeeValidate,
