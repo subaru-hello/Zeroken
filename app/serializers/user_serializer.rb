@@ -3,4 +3,8 @@ class UserSerializer
   set_type :user
   attributes :nickname, :email
   has_many :analyzes
+
+  # attribute :avatar do |object|
+  #   object.avatar.url
+  # end
 end

@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <div class="text-h6 pt-8 px-8 text-center font-weight-black">
-      Preliquoで<br class="br-sp" />ログイン
+      既にアカウントをお持ちの方<br class="br-sp" />ログイン
     </div>
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-card-text class="px-8">
@@ -9,7 +9,7 @@
           v-slot="{ errors }"
           name="メールアドレス"
           mode="blur"
-          :rules="{ required: true, email: true, max: 50 }"
+          :rules="rules.email"
         >
           <v-text-field
             id="user-email"
@@ -24,7 +24,8 @@
           v-slot="{ errors }"
           name="パスワード"
           vid="password"
-          :rules="{ required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i }"
+          mode="blur"
+          :rules="rules.password"
         >
           <v-text-field
             id="user-password"
@@ -67,8 +68,13 @@ export default {
     },
   },
   data() {
-    return {
+  return {
+      rules: {
+        email: { required: true, email: true, max: 50 },
+        password: { required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i },
+      },
       showPassword: false,
+
     };
   },
   methods: {

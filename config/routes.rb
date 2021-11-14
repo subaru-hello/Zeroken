@@ -7,10 +7,16 @@ Rails.application.routes.draw do
     end
     resource :sessions, only: %i[ create destroy ]
     resources :alcohols
-
+    resource :profile, only: %i[update edit] do
+      patch 'password', on: :member
+    end
     resources :analyzes
+    post 'guest_login', to: 'sessions#guest_login'
   get 'validation/unique', to: 'validations#unique'
   end
 end
-  get "*path", to: "home#index"
+  get "*path", to: "home#index", constraints: lambda { |req|
+    # 'rails/active_storage'が含まれているパスはリダイレクト対象外にする
+    req.path.exclude? 'rails/active_storage'
+  }
 end

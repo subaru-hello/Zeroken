@@ -7,7 +7,7 @@ module Api
       end
 
       def create
-        user = User.new(set_user)
+        user = User.new(params_user)
         if user.save
           auto_login(user)
           json_string = UserSerializer.new(user).serializable_hash.to_json
@@ -26,10 +26,14 @@ module Api
         end
       end
 
+      def me
+        render json: current_user, methods: [:avatar_url]
+      end
+
       private
 
-      def set_user
-        params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
+      def params_user
+        params.require(:user).permit(:nickname, :email, :password, :password_confirmation, :avatar)
       end
     end
   end

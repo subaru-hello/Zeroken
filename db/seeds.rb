@@ -5,14 +5,4 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(
-    email: 'test@example.com',
-    nickname: 'テスト太郎',
-    password: 'aaaaaa',
-    password_confirmation: 'aaaaaa'
- )
-Analyze.create!(
-    total_points: 1,
-    sake_strongness_types: 'strong',
-    next_nomivation_types: 'tipsy'
- )
+SeedFu.seed

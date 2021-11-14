@@ -8,7 +8,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           mode="blur"
-          :rules="{ required: true, max: 10 }"
+          :rules="rules.nickname"
           name="ニックネーム"
         >
           <v-text-field
@@ -22,7 +22,7 @@
         </ValidationProvider>
         <ValidationProvider
           v-slot="{ errors }"
-          :rules="{ required: true, email: true, max: 50 }"
+          :rules="rules.email"
           mode="blur"
           name="メールアドレス"
         >
@@ -39,7 +39,7 @@
           v-slot="{ errors }"
           vid="password"
           name="パスワード"
-          :rules="{ required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i }"
+          :rules="rules.password"
         >
           <v-text-field
             id="user-password"
@@ -54,7 +54,7 @@
         </ValidationProvider>
         <ValidationProvider
           v-slot="{ errors }"
-          :rules="{ required: true, confirmed: 'password' }"
+          :rules="rules.confirmation"
           name="パスワード(確認用)"
         >
           <v-text-field
@@ -90,26 +90,34 @@ export default {
     nickname: {
       type: String,
       required: true,
-      default: '',
+      // default: '',
     },
     email: {
       type: String,
       required: true,
-      default: '',
+      // default: '',
     },
     password: {
       type: String,
       required: true,
-      default: '',
+      // default: '',
     },
     password_confirmation: {
       type: String,
       required: true,
-      default: '',
+      // default: '',
     },
   },
   data() {
+      },
+  data() {
     return {
+      rules: {
+        nickname: { required: true, isUnique: 'nickname', max: 10 },
+        email: { required: true, email: true, isUnique: 'email', max: 50 },
+        password: { required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i },
+        confirmation: { required: true, confirmed: 'password' },
+      },
       showPassword: false,
       showPasswordConfirmation: false,
     };

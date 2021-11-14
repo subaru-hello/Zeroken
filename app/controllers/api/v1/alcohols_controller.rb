@@ -6,8 +6,17 @@ module Api
       end
 
       def index
-        @alcohols = Alcohol.all
-        render json: @alcohols
+        @semi_weaks = Alcohol.all.semi_weak.selected.sort_by { |a| a[:alcohol_percentage] }
+        @weaks = Alcohol.all.weak.selected.sort_by { |a| a[:alcohol_percentage] }
+        @semi_strongs = Alcohol.all.semi_strong.selected.sort_by { |a| a[:alcohol_percentage] }
+        @strongs = Alcohol.all.strong.selected.sort_by { |a| a[:alcohol_percentage] }
+
+        respond_to do |format|
+          format.json do
+            render json: { first_orders: @semi_weaks, second_orders:  @weaks, third_orders:  @semi_strongs,
+                           forth_orders: @strongs }
+          end
+        end
       end
 
       def create

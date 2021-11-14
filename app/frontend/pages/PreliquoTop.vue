@@ -1,53 +1,51 @@
 <template>
-  <v-container style="max-width: 1030px; margin: 0 auto" id="preliquo-top">
+  <v-container fill-height fluid>
     <FirstGreeting
       :dialog="isVisibleFirstGreeting"
       @close-dialog="isVisibleFirstGreeting = false"
     />
-    <v-col>
-      <v-row justify="center" align-content="center">
+
+    <v-row align-content="center">
+      <v-spacer />
+      <img :src="imgSrc" class="img" width="150" height="100" />
+      <v-col class="text-right align-self-center" cols="6">
+        <p class="text-h2 bold">ゼロケン</p>
+        <p class="text-h5 mb-12 font-weight-bold d-sm-block text-no-wrap service-description">
+          {{ title }}<br />{{ text }}
+        </p>
+        <v-spacer />
+        <!-- 開始ボタン -->
+        <div>
+          <v-btn class="mb-8" color="primary" x-large dark @click="loginFunction()">
+            さっそく酒ケジュールを作る
+          </v-btn>
+        </div>
+      </v-col>
+
+      <v-spacer />
+    </v-row>
+  </v-container>
+  <!-- <v-container style="max-width: 1030px; margin: 0 auto" id="izakaya">
+ 
+    <v-col >
+      <v-row justify="center" align-content="center" >
         <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-          <h1 class="text-center" style="font-size: 20px">飲み会の前にお酒の強さを診断</h1>
-          <h1 class="text-center" style="font-size: 20px">あなたに最適な酒ケジュールを</h1>
-          <h1 class="text-center" style="font-size: 50px">Preliquo</h1>
+          <h1 class="text-center" style="font-size: 50px" >ゼロケン</h1>
         </v-col>
-        <v-col v-for="item in items" :key="item.title" cols="12" xs="12" sm="8" md="4" lg="4">
-          <!-- <v-card class="mx-auto" light>
-            <v-card-text> -->
-
-          <p class="text-center" style="font-size: 25px">
-            {{ item.title }}
-          </p>
-          <!-- <hr>
-
-            <v-img
-              :src="item.img"
-              width="100%"
-              max-width="100%"
-              class="white--text align-top"
-              height="auto"
-            /> -->
-          <!-- </v-card-text>
-
-          </v-card> -->
-        </v-col>
+        <v-card v-for="item in items" :key="item.id" >
+          <v-col>
+            <v-card-title>
+              {{item.title}}
+            </v-card-title>
+            <v-card-text style="font-size: 25px">
+              {{ item.text }}
+            </v-card-text>
+          </v-col>
+        </v-card>
+      
       </v-row>
     </v-col>
-    <table>
-      <tbody>
-        <tr>
-          <th>ID</th>
-          <th>nickname</th>
-          <th>email</th>
-        </tr>
-        <tr v-for="e in users" :key="e.id">
-          <td>{{ e.id }}</td>
-          <td>{{ e.nickname }}</td>
-          <td>{{ e.email }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </v-container>
+  </v-container> -->
 </template>
 
 <script>
@@ -56,7 +54,16 @@ import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 export default {
   name: 'PreliquoTop',
-  users: [],
+  data() {
+    return {
+      isVisibleFirstGreeting: false,
+      // users: [],
+      tab: null,
+      dialog: false,
+      title: 'あなたにとっての0軒目',
+      text: '華金に向けてお酒の強さを診断しましょう',
+    };
+  },
   components: {
     FirstGreeting,
   },
@@ -69,28 +76,14 @@ export default {
       });
     else next();
   },
-  data() {
-    return {
-      isVisibleFirstGreeting: false,
-      items: [
-        {
-          title: '飲み会の前にお酒の強さを診断',
-          //   img: require('@/assets/images/liquor.svg') ,
-        },
-
-        {
-          title: '飲み会で飲むお酒の順番を提供',
-          // img: require('@/assets/images/liquor.svg'),
-        },
-        {
-          title: '不本意なアルハラを予防します',
-          //  img: require('@/assets/images/liquor.svg'),
-        },
-      ],
-    };
-  },
   computed: {
     ...mapGetters('users', ['authUser']),
+    izakayaSrc() {
+      return require('../src/img/Izakaya_4.jpeg');
+    },
+    imgSrc() {
+      return require('../src/img/drunkman.svg');
+    },
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
@@ -101,6 +94,31 @@ export default {
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
+    ...mapActions('users', ['loginGuestUser']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
+
+    loginFunction() {
+      this.loginGuestUser(this.user).then((user) => {
+        if (user) {
+          this.$router.push({ name: 'Analyze' });
+        } else {
+          this.fetchSnackbarData({
+            msg: 'ログインに失敗しました',
+            color: 'error',
+            isShow: true,
+          });
+        }
+      });
+    },
   },
 };
 </script>
+<style scoped>
+#izakaya {
+  width: 500px;
+  background-image: url(../../assets/images/Izakaya.jpeg);
+}
+.img {
+  transform: scale(2, 2);
+}
+</style>

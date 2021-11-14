@@ -73,7 +73,6 @@
           </v-layout>
         </v-col>
       </v-col>
-      <p>{{ createSchedule }}</p>
 
       <v-col cols="4" xs="4" sm="2" md="2" lg="1">
         <v-btn
@@ -104,76 +103,106 @@
     </p>
     <template v-if="show">
       <v-container justify="center" align-content="center">
-        <v-row>
-          <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Step 2</th>
-                </tr>
-                <tr>
-                  飲みベーション選択画面
-                </tr>
-              </tbody>
-            </table>
-            <h1 class="text-center" style="font-size: 50px">飲み会へのモチベーションを選択</h1>
-          </v-col>
-          <v-dialog v-model="dialog" width="500" justify="center" align-content="center">
-            <template #activator="{ on, attrs }">
-              <v-col
-                @click="setShuchedule()"
-                style="font-size: 30px; margin-left: 20px"
-                x-large
-                :ripple="{ center: false, class: 'gray--text' }"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <p style="font-size: 32px; text-decoration: none; text-color: black">酩酊</p>
-                <img :src="imgSrc" width="150" height="100" />
-              </v-col>
-              <v-col
-                @click="setShuchedule()"
-                style="font-size: 30px"
-                x-large
-                :ripple="{ center: false, class: 'gray--text' }"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <p style="font-size: 32px; text-decoration: none; text-color: black">ほろ酔い</p>
-                <img :src="sakeSrc" width="150" height="100" />
-              </v-col>
+        <v-layout justify-center>
+          <v-row justify-center>
+            <v-col cols="12" xs="12" sm="12" md="12" lg="12">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Step 2</th>
+                  </tr>
+                  <tr>
+                    飲みベーション選択画面
+                  </tr>
+                </tbody>
+              </table>
+              <h1 class="text-center" style="font-size: 50px">飲み会へのモチベーションを選択</h1>
 
-              <v-col
-                @click="setShuchedule()"
-                style="font-size: 30px"
-                x-large
-                :ripple="{ center: false, class: 'gray--text' }"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <p style="font-size: 32px; text-decoration: none; text-color: black">しっぽり</p>
-                <img :src="drinkSrc" width="150" height="100" />
-              </v-col>
-              <transition name="modal">
-                <div v-if="showModal" @close="showModal = false">
-                  <div class="modal-mask">
-                    <div class="modal-wrapper">
-                      <div class="modal-container">
-                        <div class="modal-body" align-content="center">
-                          <slot name="body">
-                            <FacebookLoader />
+              <v-dialog v-model="dialog" width="500">
+                <template #activator="{ on, attrs }">
+                  <div d-flex justify="center">
+                    <v-layout justify-space-between align-content="center">
+                      <v-card
+                        @click="setShuchedule2()"
+                        style="font-size: 30px; margin-left: 20px"
+                        justify="center"
+                        align-content="center"
+                        x-large
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-card-title
+                          style="font-size: 32px; text-decoration: none; text-color: black"
+                          >酩酊</v-card-title
+                        >
+                        <img :src="imgSrc" width="150" height="100" />
+                      </v-card>
+                      <v-card
+                        @click="setShuchedule1()"
+                        style="font-size: 30px"
+                        x-large
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        justify="center"
+                        align-content="center"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-card-title
+                          style="font-size: 32px; text-decoration: none; text-color: black"
+                          >ほろ酔い</v-card-title
+                        >
+                        <img :src="sakeSrc" width="150" height="100" />
+                      </v-card>
 
-                            <p style="font-size: 32px">酒ケジュール作成中...</p>
-                          </slot>
+                      <v-card
+                        @click="setShuchedule0()"
+                        style="font-size: 30px"
+                        x-large
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        justify="center"
+                        align-content="center"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-card-title
+                          style="font-size: 32px; text-decoration: none; text-color: black"
+                          >しっぽり</v-card-title
+                        >
+                        <img :src="drinkSrc" width="150" height="100" />
+                      </v-card>
+                    </v-layout>
+                  </div>
+
+                  <transition name="modal">
+                    <div v-if="showModal" @close="showModal = false">
+                      <div class="modal-mask">
+                        <div class="modal-wrapper">
+                          <div class="modal-container">
+                            <div class="modal-body" align-content="center">
+                              <slot name="body">
+                                <FacebookLoader />
+
+                                <p style="font-size: 32px">
+                                  酒ケジュール作成中
+                                  <v-progress-linear
+                                    indeterminate
+                                    color="white"
+                                    class="mb-0"
+                                  ></v-progress-linear>
+                                </p>
+                              </slot>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </transition>
-            </template>
-          </v-dialog>
-        </v-row>
+                  </transition>
+                </template>
+              </v-dialog>
+            </v-col>
+          </v-row>
+        </v-layout>
       </v-container>
     </template>
   </div>
@@ -192,6 +221,7 @@ export default {
       show: false,
       showModal: false,
       users: [],
+      alcohols: [],
     };
   },
   components: {
@@ -202,65 +232,16 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
     imgSrc() {
-      return require('../src/img/liquor.svg');
+      return require('../src/img/drunkman.svg');
     },
     sakeSrc() {
       return require('../src/img/sake.svg');
     },
     drinkSrc() {
-      return require('../src/img/drink.svg');
+      return require('../src/img/liquor.svg');
     },
-
-    createSchedule() {
-      var currentAnalyzes = this.analyzes;
-      var trueAnswers = this.questions;
-      const answer0 = trueAnswers[0]['answer'];
-      const answer1 = trueAnswers[1]['answer'];
-      const answer2 = trueAnswers[2]['answer'];
-      const answer3 = trueAnswers[3]['answer'];
-      const answer4 = trueAnswers[4]['answer'];
-      const answer5 = trueAnswers[5]['answer'];
-      const answer6 = trueAnswers[6]['answer'];
-      const answer7 = trueAnswers[7]['answer'];
-      const answer8 = trueAnswers[8]['answer'];
-      const answer9 = trueAnswers[9]['answer'];
-      const answer10 = trueAnswers[10]['answer'];
-      const answer11 = trueAnswers[11]['answer'];
-      const answer12 = trueAnswers[12]['answer'];
-
-      let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
-      let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
-      let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
-      let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
-      let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
-      let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
-      let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
-      let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
-      let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
-      let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
-      let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
-      let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
-      let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
-
-      const sumResult =
-        answerFirst +
-        answerSecond +
-        answerThird +
-        answerForth +
-        answerFifth +
-        answerSixth +
-        answerSeventh +
-        answerEighth +
-        answerNinth +
-        answerTenth +
-        answerEleventh +
-        answerTwelvth +
-        answerThirteenth;
-      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0;
-      currentAnalyzes.total_points = sumResult;
-      currentAnalyzes.sake_strongness_types = AlcoholStrongness;
-
-      return currentAnalyzes.sake_strongness_types;
+    currentUserName() {
+      return this.users[0];
     },
     Sakenotuyosa() {
       const yourSakeStrongness = this.analyzes.total_points;
@@ -274,11 +255,12 @@ export default {
     },
   },
   created() {
+    this.users = this.fetchAuthUser;
     this.fetchAuthUser();
   },
-  watch: {},
   mounted() {
     axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+    axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     //与えられた関数によって実装されたテストに合格したすべての配列からなる新しい配列を生成する
     //未回答以外の値数を算出
@@ -312,7 +294,7 @@ export default {
     countAnswer(indexNum, updAnswer) {
       this.updateAnswer({ indexNum, updAnswer });
     },
-    async setShuchedule() {
+    async setShuchedule0() {
       var trueAnswers = this.questions;
       const answer0 = trueAnswers[0]['answer'];
       const answer1 = trueAnswers[1]['answer'];
@@ -358,6 +340,80 @@ export default {
         answerThirteenth;
       let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0; //2: 酒豪, 1: 普通. 0: 下戸
       let Nomivation = 0;
+      let Description =
+        sumResult < -20
+          ? '過去に飲み会でトラウマを抱えているタイプの下戸'
+          : sumResult < -19
+          ? '飲み会にいてくれるだけで感謝されるタイプの下戸'
+          : sumResult < -18
+          ? '先輩や上司から好かれるタイプの下戸'
+          : sumResult < -17
+          ? '本当は家でのんびり華金を過ごしたいタイプの下戸'
+          : sumResult < -16
+          ? '酒は飲むより飲まれるタイプの下戸'
+          : sumResult < -15
+          ? '飲んだら顔がすぐに真っ赤になるタイプの下戸'
+          : sumResult < -14
+          ? '飲み会で体調を心配されるタイプの下戸'
+          : sumResult < -13
+          ? '飲まされると顔が赤くなって口数が少なくなるタイプの下戸'
+          : sumResult < -12
+          ? '家でしっぽりと飲む方が好きなタイプの下戸'
+          : sumResult < -11
+          ? '弱いけど呑みたいタイプの下戸'
+          : sumResult < -10
+          ? '酒は弱いが行きつけのバーを持っているタイプの下戸'
+          : sumResult < -9
+          ? '先輩から好かれるタイプの下戸'
+          : sumResult < -8
+          ? '強いお酒を飲んでみたいと密かに思っているタイプの下戸'
+          : sumResult < -7
+          ? '好きな人と飲むとすぐによっちゃうタイプの下戸'
+          : sumResult < -6
+          ? 'お酒が入るといつもの自分と違う一面が出てしまうタイプの下戸'
+          : sumResult < -5
+          ? '上司の前だと酔わないが気を許した仲間の前だとすぐに酔うタイプの下戸'
+          : sumResult < -4
+          ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -3
+          ? '酔った時の対処法を心得ているタイプの下戸'
+          : sumResult < -2
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -1
+          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          : sumResult < 0
+          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          : sumResult < 1
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          : sumResult < 2
+          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          : sumResult < 3
+          ? '気配り上手で先輩から好かれるタイプの酒豪'
+          : sumResult < 4
+          ? 'お酒よりおつまみが好きなタイプの酒豪'
+          : sumResult < 5
+          ? '気持ち悪くなるまで呑み続けてしまう愉快なタイプの酒豪'
+          : sumResult < 6
+          ? '飲み会の場でテンションが高くなって飲み会終わりに反省するタイプの酒豪'
+          : sumResult < 7
+          ? '潰れた人を介抱する技術を磨いてきたタイプの酒豪'
+          : sumResult < 8
+          ? '異性の前で仕事の話をしてウザがられるタイプの酒豪'
+          : sumResult < 9
+          ? '日本酒は獺祭と豪快しか知らないタイプの酒豪'
+          : sumResult < 10
+          ? '酒の強さを聞かれたらまあ人並みにはと答えるタイプの酒豪'
+          : sumResult < 11
+          ? '酒が強いキャラで界隈に轟かせてるタイプの酒豪'
+          : sumResult < 12
+          ? '九州の血が入っているタイプの酒豪'
+          : sumResult < 13
+          ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
+          : sumResult < 14
+          ? '酒呑として界隈では有名な酒豪'
+          : sumResult < 15
+          ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
+          : '外人の血が入っている大酒豪。酒呑人';
 
       let promise = new Promise((resolve, reject) => {
         // #1
@@ -365,6 +421,323 @@ export default {
           total_points: sumResult,
           sake_strongness_types: AlcoholStrongness,
           next_nomivation_types: Nomivation,
+          description: Description,
+        };
+
+        resolve(this.createAnalyze(updAnalyze));
+        reject();
+      });
+      promise
+        .then(() => {
+          // #2
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve((this.showModal = true));
+              reject();
+            }, 1000);
+          });
+        })
+        .then(() => {
+          // #3
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(this.$router.push('/result'));
+              reject(console.log());
+            }, 3200);
+          });
+        })
+        .catch(() => {
+          // エラーハンドリング
+          console.error('Something wrong!');
+        });
+      return promise;
+    },
+    async setShuchedule1() {
+      var trueAnswers = this.questions;
+      const answer0 = trueAnswers[0]['answer'];
+      const answer1 = trueAnswers[1]['answer'];
+      const answer2 = trueAnswers[2]['answer'];
+      const answer3 = trueAnswers[3]['answer'];
+      const answer4 = trueAnswers[4]['answer'];
+      const answer5 = trueAnswers[5]['answer'];
+      const answer6 = trueAnswers[6]['answer'];
+      const answer7 = trueAnswers[7]['answer'];
+      const answer8 = trueAnswers[8]['answer'];
+      const answer9 = trueAnswers[9]['answer'];
+      const answer10 = trueAnswers[10]['answer'];
+      const answer11 = trueAnswers[11]['answer'];
+      const answer12 = trueAnswers[12]['answer'];
+
+      let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
+      let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
+      let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
+      let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
+      let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
+      let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
+      let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
+      let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
+      let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
+      let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
+      let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
+      let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
+      let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
+
+      const sumResult =
+        answerFirst +
+        answerSecond +
+        answerThird +
+        answerForth +
+        answerFifth +
+        answerSixth +
+        answerSeventh +
+        answerEighth +
+        answerNinth +
+        answerTenth +
+        answerEleventh +
+        answerTwelvth +
+        answerThirteenth;
+      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0; //2: 酒豪, 1: 普通. 0: 下戸
+      let Nomivation = 1;
+      let Description =
+        sumResult < -20
+          ? '過去に飲み会でトラウマを抱えているタイプの下戸'
+          : sumResult < -19
+          ? '飲み会にいてくれるだけで感謝されるタイプの下戸'
+          : sumResult < -18
+          ? '先輩や上司から好かれるタイプの下戸'
+          : sumResult < -17
+          ? '本当は家でのんびり華金を過ごしたいタイプの下戸'
+          : sumResult < -16
+          ? '酒は飲むより飲まれるタイプの下戸'
+          : sumResult < -15
+          ? '飲んだら顔がすぐに真っ赤になるタイプの下戸'
+          : sumResult < -14
+          ? '飲み会で体調を心配されるタイプの下戸'
+          : sumResult < -13
+          ? '飲まされると顔が赤くなって口数が少なくなるタイプの下戸'
+          : sumResult < -12
+          ? '家でしっぽりと飲む方が好きなタイプの下戸'
+          : sumResult < -11
+          ? '弱いけど呑みたいタイプの下戸'
+          : sumResult < -10
+          ? '酒は弱いが行きつけのバーを持っているタイプの下戸'
+          : sumResult < -9
+          ? '先輩から好かれるタイプの下戸'
+          : sumResult < -8
+          ? '強いお酒を飲んでみたいと密かに思っているタイプの下戸'
+          : sumResult < -7
+          ? '好きな人と飲むとすぐによっちゃうタイプの下戸'
+          : sumResult < -6
+          ? 'お酒が入るといつもの自分と違う一面が出てしまうタイプの下戸'
+          : sumResult < -5
+          ? '上司の前だと酔わないが気を許した仲間の前だとすぐに酔うタイプの下戸'
+          : sumResult < -4
+          ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -3
+          ? '酔った時の対処法を心得ているタイプの下戸'
+          : sumResult < -2
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -1
+          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          : sumResult < 0
+          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          : sumResult < 1
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          : sumResult < 2
+          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          : sumResult < 3
+          ? '気配り上手で先輩から好かれるタイプの酒豪'
+          : sumResult < 4
+          ? 'お酒よりおつまみが好きなタイプの酒豪'
+          : sumResult < 5
+          ? '気持ち悪くなるまで呑み続けてしまう愉快なタイプの酒豪'
+          : sumResult < 6
+          ? '飲み会の場でテンションが高くなって飲み会終わりに反省するタイプの酒豪'
+          : sumResult < 7
+          ? '潰れた人を介抱する技術を磨いてきたタイプの酒豪'
+          : sumResult < 8
+          ? '異性の前で仕事の話をしてウザがられるタイプの酒豪'
+          : sumResult < 9
+          ? '日本酒は獺祭と豪快しか知らないタイプの酒豪'
+          : sumResult < 10
+          ? '酒の強さを聞かれたらまあ人並みにはと答えるタイプの酒豪'
+          : sumResult < 11
+          ? '酒が強いキャラで界隈に轟かせてるタイプの酒豪'
+          : sumResult < 12
+          ? '九州の血が入っているタイプの酒豪'
+          : sumResult < 13
+          ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
+          : sumResult < 14
+          ? '酒呑として界隈では有名な酒豪'
+          : sumResult < 15
+          ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
+          : '外人の血が入っている大酒豪。酒呑人';
+
+      let promise = new Promise((resolve, reject) => {
+        // #1
+        const updAnalyze = {
+          total_points: sumResult,
+          sake_strongness_types: AlcoholStrongness,
+          next_nomivation_types: Nomivation,
+          description: Description,
+        };
+
+        resolve(this.createAnalyze(updAnalyze));
+        reject();
+      });
+      promise
+        .then(() => {
+          // #2
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve((this.showModal = true));
+              reject();
+            }, 1000);
+          });
+        })
+        .then(() => {
+          // #3
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(this.$router.push('/result'));
+              reject(console.log());
+            }, 3200);
+          });
+        })
+        .catch(() => {
+          // エラーハンドリング
+          console.error('Something wrong!');
+        });
+      return promise;
+    },
+    async setShuchedule2() {
+      var trueAnswers = this.questions;
+      const answer0 = trueAnswers[0]['answer'];
+      const answer1 = trueAnswers[1]['answer'];
+      const answer2 = trueAnswers[2]['answer'];
+      const answer3 = trueAnswers[3]['answer'];
+      const answer4 = trueAnswers[4]['answer'];
+      const answer5 = trueAnswers[5]['answer'];
+      const answer6 = trueAnswers[6]['answer'];
+      const answer7 = trueAnswers[7]['answer'];
+      const answer8 = trueAnswers[8]['answer'];
+      const answer9 = trueAnswers[9]['answer'];
+      const answer10 = trueAnswers[10]['answer'];
+      const answer11 = trueAnswers[11]['answer'];
+      const answer12 = trueAnswers[12]['answer'];
+
+      let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
+      let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
+      let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
+      let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
+      let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
+      let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
+      let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
+      let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
+      let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
+      let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
+      let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
+      let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
+      let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
+
+      const sumResult =
+        answerFirst +
+        answerSecond +
+        answerThird +
+        answerForth +
+        answerFifth +
+        answerSixth +
+        answerSeventh +
+        answerEighth +
+        answerNinth +
+        answerTenth +
+        answerEleventh +
+        answerTwelvth +
+        answerThirteenth;
+      let AlcoholStrongness = sumResult > 0 ? 2 : sumResult === 0 ? 1 : 0; //2: 酒豪, 1: 普通. 0: 下戸
+      let Nomivation = 2;
+      let Description =
+        sumResult < -20
+          ? '過去に飲み会でトラウマを抱えているタイプの下戸'
+          : sumResult < -19
+          ? '飲み会にいてくれるだけで感謝されるタイプの下戸'
+          : sumResult < -18
+          ? '先輩や上司から好かれるタイプの下戸'
+          : sumResult < -17
+          ? '本当は家でのんびり華金を過ごしたいタイプの下戸'
+          : sumResult < -16
+          ? '酒は飲むより飲まれるタイプの下戸'
+          : sumResult < -15
+          ? '飲んだら顔がすぐに真っ赤になるタイプの下戸'
+          : sumResult < -14
+          ? '飲み会で体調を心配されるタイプの下戸'
+          : sumResult < -13
+          ? '飲まされると顔が赤くなって口数が少なくなるタイプの下戸'
+          : sumResult < -12
+          ? '家でしっぽりと飲む方が好きなタイプの下戸'
+          : sumResult < -11
+          ? '弱いけど呑みたいタイプの下戸'
+          : sumResult < -10
+          ? '酒は弱いが行きつけのバーを持っているタイプの下戸'
+          : sumResult < -9
+          ? '先輩から好かれるタイプの下戸'
+          : sumResult < -8
+          ? '強いお酒を飲んでみたいと密かに思っているタイプの下戸'
+          : sumResult < -7
+          ? '好きな人と飲むとすぐによっちゃうタイプの下戸'
+          : sumResult < -6
+          ? 'お酒が入るといつもの自分と違う一面が出てしまうタイプの下戸'
+          : sumResult < -5
+          ? '上司の前だと酔わないが気を許した仲間の前だとすぐに酔うタイプの下戸'
+          : sumResult < -4
+          ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -3
+          ? '酔った時の対処法を心得ているタイプの下戸'
+          : sumResult < -2
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          : sumResult < -1
+          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          : sumResult < 0
+          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          : sumResult < 1
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          : sumResult < 2
+          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          : sumResult < 3
+          ? '気配り上手で先輩から好かれるタイプの酒豪'
+          : sumResult < 4
+          ? 'お酒よりおつまみが好きなタイプの酒豪'
+          : sumResult < 5
+          ? '気持ち悪くなるまで呑み続けてしまう愉快なタイプの酒豪'
+          : sumResult < 6
+          ? '飲み会の場でテンションが高くなって飲み会終わりに反省するタイプの酒豪'
+          : sumResult < 7
+          ? '潰れた人を介抱する技術を磨いてきたタイプの酒豪'
+          : sumResult < 8
+          ? '異性の前で仕事の話をしてウザがられるタイプの酒豪'
+          : sumResult < 9
+          ? '日本酒は獺祭と豪快しか知らないタイプの酒豪'
+          : sumResult < 10
+          ? '酒の強さを聞かれたらまあ人並みにはと答えるタイプの酒豪'
+          : sumResult < 11
+          ? '酒が強いキャラで界隈に轟かせてるタイプの酒豪'
+          : sumResult < 12
+          ? '九州の血が入っているタイプの酒豪'
+          : sumResult < 13
+          ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
+          : sumResult < 14
+          ? '酒呑として界隈では有名な酒豪'
+          : sumResult < 15
+          ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
+          : '外人の血が入っている大酒豪。酒呑人';
+
+      let promise = new Promise((resolve, reject) => {
+        // #1
+        const updAnalyze = {
+          total_points: sumResult,
+          sake_strongness_types: AlcoholStrongness,
+          next_nomivation_types: Nomivation,
+          description: Description,
         };
 
         resolve(this.createAnalyze(updAnalyze));

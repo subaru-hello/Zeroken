@@ -37,6 +37,16 @@ const actions = {
       return null;
     }
   },
+  async loginGuestUser({ commit }, user) {
+    try {
+      const userResponse = await axios.post('guest_login', user); //createアクション実行
+      commit('setAuthUser', userResponse.data);
+      return userResponse.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  },
   async logoutUser({ commit }) {
     try {
       const res = await axios.delete('sessions'); //destroyアクション実行
@@ -53,6 +63,18 @@ const actions = {
     if (!userResponse) return null;
     commit('setAuthUser', userResponse.data);
     return userResponse.data;
+  },
+
+  async updateAuthUser({ commit }, authUser) {
+    try {
+      const res = await axios.patch('profile', authUser);
+
+      commit('setAuthUser', res.data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   },
 };
 
