@@ -45,6 +45,7 @@ module Preliquo
       controller_specs: false,
       request_specs: false
     end
+    config.action_mailer.preview_path = "#{Rails.root}/app/mailers/previews"
     config.generators.system_tests = nil
     config.i18n.available_locales = :ja
     config.i18n.default_locale = :ja
