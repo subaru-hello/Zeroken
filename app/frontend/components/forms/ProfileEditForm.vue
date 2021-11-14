@@ -27,7 +27,7 @@
           {{ errors[0] }}
         </v-alert>
       </ValidationProvider> -->
-      <ValidationObserver v-slot="{ handleSubmit }" class="pb-6" tag="div">
+      <ValidationObserver v-slot="{ handleSubmit }" class="pb-6" tag="div" ref="inputText">
         <ValidationProvider
           v-slot="{ errors }"
           name="ニックネーム"
@@ -47,6 +47,7 @@
           v-slot="{ errors }"
           name="メールアドレス"
           mode="blur"
+           
           :rules="formRules.email"
         >
           <v-text-field
@@ -165,9 +166,7 @@ export default {
       this.$emit('closeDialog');
     },
     hideErrorMessage() {
-      // バリデーション失敗後だと、エラーメッセージが残ってしまう為
-      const obj = this.fileForm
-      this.obj =''
+      this.$refs.inputText.reset();
       this.fileErrorDisplayed = false;
     },
   },

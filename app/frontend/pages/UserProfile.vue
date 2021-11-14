@@ -24,7 +24,7 @@
                 <v-divider class="mb-6" />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                  <div>{{  authUser.data.attributes.email}}</div>
+                  <div>{{ authUser.data.attributes.email }}</div>
                 </div>
                 <v-divider class="mb-6" />
               </div>
@@ -218,7 +218,7 @@ export default {
             color: 'error',
             isShow: true,
           });
-           console.log(err);
+          console.log(err);
         });
     },
     //Todo authUserEditにavatarを追加する
