@@ -4,7 +4,7 @@
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging,
 # :magic_login, :external
-Rails.application.config.sorcery.submodules = [:reset_password]
+# Rails.application.config.sorcery.submodules = [:reset_password]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -361,17 +361,17 @@ Rails.application.config.sorcery.configure do |config|
     # Password reset token attribute name.
     # Default: `:reset_password_token`
     #
-    user.reset_password_token_attribute_name = :reset_password_token
+    # user.reset_password_token_attribute_name = :reset_password_token
 
     # Password token expiry attribute name.
     # Default: `:reset_password_token_expires_at`
     #
-    user.reset_password_token_expires_at_attribute_name = :reset_password_token_expires_at
+    # user.reset_password_token_expires_at_attribute_name = :reset_password_token_expires_at
 
     # When was password reset email sent. Used for hammering protection.
     # Default: `:reset_password_email_sent_at`
     #
-    user.reset_password_email_sent_at_attribute_name = :reset_password_email_sent_at
+    # user.reset_password_email_sent_at_attribute_name = :reset_password_email_sent_at
 
     # REQUIRED:
     # Password reset mailer class.
@@ -382,19 +382,19 @@ Rails.application.config.sorcery.configure do |config|
     # Reset password email method on your mailer class.
     # Default: `:reset_password_email`
     #
-    user.reset_password_email_method_name = :reset_password_email
+    # user.reset_password_email_method_name = :reset_password_email
 
     # When true, sorcery will not automatically
     # send the password reset details email, and allow you to
     # manually handle how and when the email is sent
     # Default: `false`
     #
-    user.reset_password_mailer_disabled = false
+    # user.reset_password_mailer_disabled = false
 
     # How many seconds before the reset request expires. nil for never expires.
     # Default: `nil`
     #
-    user.reset_password_expiration_period = nil
+    # user.reset_password_expiration_period = nil
 
     # Hammering protection: how long in seconds to wait before allowing another email to be sent.
     # Default: `5 * 60`
@@ -404,7 +404,7 @@ Rails.application.config.sorcery.configure do |config|
     # Access counter to a reset password page attribute name
     # Default: `:access_count_to_reset_password_page`
     #
-    user.reset_password_page_access_count_attribute_name = :access_count_to_reset_password_page
+    # user.reset_password_page_access_count_attribute_name = :access_count_to_reset_password_page
 
     # -- magic_login --
     # Magic login code attribute name.
