@@ -17,11 +17,8 @@ const actions = {
   async registerUser({ commit }, user) {
     try {
       const userResponse = await axios.post('users', { user: user });
-      //axiosを通して非同期post。data内のuserをuserに入れてstore/module/index.jsのpost通信をしている。
       commit('setAuthUser', userResponse.data);
-      //mutationのsetAuthUserにコミットしている。axiosのレスポンスデータをsetAuthUserに渡している。
       return userResponse.data;
-      //userResponse.dataを取得している。
     } catch (err) {
       console.log(err);
       return nil;
