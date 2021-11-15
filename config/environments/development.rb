@@ -16,7 +16,7 @@ Rails.application.configure do
     Bullet.add_footer    = true
   end
   config.cache_classes = false
-
+  config.active_storage.service = :local
   # Do not eager load code on boot.
   config.eager_load = false
 
