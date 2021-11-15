@@ -377,7 +377,7 @@ Rails.application.config.sorcery.configure do |config|
     # Password reset mailer class.
     # Default: `nil`
     #
-    user.reset_password_mailer = nil
+    # user.reset_password_mailer = nil
 
     # Reset password email method on your mailer class.
     # Default: `:reset_password_email`
