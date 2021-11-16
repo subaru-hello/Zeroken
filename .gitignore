@@ -26,6 +26,7 @@
 /config/master.key
 /config/database.yml
 .env
+Procfile
 
 /public/packs
 /public/packs-test
