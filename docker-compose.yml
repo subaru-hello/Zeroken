@@ -15,7 +15,7 @@ services:
       - mysql-data:/var/lib/mysql
   web:
     build: .
-    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && rails server -u puma"
     volumes:
       - .:/Preliquo
     ports:
