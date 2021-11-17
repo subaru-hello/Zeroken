@@ -91,7 +91,7 @@
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'"
         >
           <v-row justify="center" align-content="center">
-            <star-rating :rating="3" :show-rating="false" read-only class="mx-auto"></star-rating>
+            <star-rating :rating="4" :show-rating="false" read-only class="mx-auto"></star-rating>
           </v-row>
           <h1>
             {{ $t('analyzes.sake_strongness_types.strong') }}
@@ -114,7 +114,7 @@
         </div>
         <div class="centered" v-else>
           <v-row justify="center" align-content="center">
-            <star-rating :rating="3" :show-rating="false" read-only class="mx-auto"></star-rating>
+            <star-rating :rating="2" :show-rating="false" read-only class="mx-auto"></star-rating>
           </v-row>
           <h1>
             {{ $t('analyzes.sake_strongness_types.weak') }}
