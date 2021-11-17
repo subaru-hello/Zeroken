@@ -13,13 +13,13 @@
           class="centered"
           v-else-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'"
         >
-          { {{ $t('analyzes.sake_strongness_types.normal') }}
+           {{ $t('analyzes.sake_strongness_types.normal') }}
         </h1>
         <h1 class="centered" v-else>{{ $t('analyzes.sake_strongness_types.weak') }}</h1>
 
         <img :src="beerSrc" width="150" height="100" />
         <v-card-subtitle style="font-size: 26px">
-          {{ $t(analyzes[analyzes.length - 1]['description']) }}のようですね。</v-card-subtitle
+          {{ $t(analyzes[analyzes.length - 1]['description']) }} </v-card-subtitle
         >
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           {{ $t('analyzes.next_nomivation_types.flesh') }} になりたいあなたへ
