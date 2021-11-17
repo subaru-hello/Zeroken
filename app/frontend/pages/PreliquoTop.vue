@@ -6,13 +6,13 @@
     />
 
     <v-row align-content="center">
-      <v-spacer />
-      <img :src="imgSrc" class="img" width="150" height="100" />
+      <!-- <v-spacer /> -->
       <v-col class="text-right align-self-center" cols="6">
         <p class="text-h2 bold">ゼロケン</p>
         <p class="text-h5 mb-12 font-weight-bold d-sm-block text-no-wrap service-description">
           {{ title }}<br />{{ text }}
         </p>
+        <img :src="imgSrc" class="img" width="150" height="100" />
         <v-spacer />
         <!-- 開始ボタン -->
         <div>
@@ -82,7 +82,7 @@ export default {
       return require('../src/img/Izakaya_4.jpeg');
     },
     imgSrc() {
-      return require('../src/img/drunkman.svg');
+      return require('../src/img/beer.svg');
     },
   },
   mounted() {
@@ -96,7 +96,6 @@ export default {
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('users', ['loginGuestUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
-
     loginFunction() {
       this.loginGuestUser(this.user).then((user) => {
         if (user) {
