@@ -1,81 +1,89 @@
 <template>
   <div>
-    <p>Step.1 酒の強さ診断画面</p>
-    <v-row justify="center" align-content="center">
-      <v-col
-        v-for="question in questions"
-        :key="question.num"
-        cols="12"
-        xs="12"
-        sm="12"
-        md="12"
-        lg="12"
-      >
-        <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-          <v-layout justify-center>
-            <v-card-title>
-              <v-container>
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  shaped
-                  width="500"
-                  id="form"
-                >
-                  <v-card-title
-                    style="width: 100%"
-                    class="headline justify-center"
-                    :id="'bigq' + question.num"
-                  >
-                    Q{{ question.num }}.
-                    {{ question.title }}
-                  </v-card-title>
+    <v-stepper v-model="e6" vertical>
+      <v-stepper-step :complete="e6 > 1" step="1">
+        お酒の強さを診断
+        <!-- <small>Summarize if needed</small> -->
+      </v-stepper-step>
 
-                  <v-radio-group :id="'smallq' + question.num" mandatory row>
-                    <v-radio
-                      class="mx-auto justify-center"
-                      fab
-                      light
-                      :ripple="{ center: false, class: 'gray--text' }"
-                      @click="
-                        clickScroll($event);
-                        countAnswer(question.num, 1);
-                      "
-                      label="1: いつもある"
-                    ></v-radio>
-                    <v-radio
-                      class="mx-auto justify-center"
-                      fab
-                      light
-                      :ripple="{ center: false, class: 'gray--text' }"
-                      @click="
-                        clickScroll($event);
-                        countAnswer(question.num, 2);
-                      "
-                      label="2: 時々ある"
-                    ></v-radio>
-                    <v-radio
-                      class="mx-auto justify-center"
-                      fab
-                      light
-                      :ripple="{ center: false, class: 'gray--text' }"
-                      @click="
-                        clickScroll($event);
-                        countAnswer(question.num, 3);
-                      "
-                      label="3: 全くない"
-                    ></v-radio>
-                  </v-radio-group>
-                  <p class="py-3" style="font-size: 16px">あなたの回答： {{ question.answer }}</p>
-                </v-card>
-              </v-container>
-            </v-card-title>
-          </v-layout>
-        </v-col>
-      </v-col>
+      <v-stepper-content step="1">
+        <v-row justify="center" align-content="center">
+          <v-col
+            v-for="question in questions"
+            :key="question.num"
+            cols="12"
+            xs="12"
+            sm="12"
+            md="12"
+            lg="12"
+          >
+            <v-col cols="12" xs="12" sm="12" md="12" lg="12">
+              <v-layout justify-center>
+                <v-card-title>
+                  <v-container>
+                    <v-card
+                      class="text-center mx-auto my-5 form"
+                      elevation="2"
+                      shaped
+                      width="500"
+                      id="form"
+                    >
+                      <v-card-title
+                        style="width: 100%"
+                        class="headline justify-center"
+                        :id="'bigq' + question.num"
+                      >
+                        Q{{ question.num }}.
+                        {{ question.title }}
+                      </v-card-title>
 
-      <v-col cols="4" xs="4" sm="2" md="2" lg="1">
-        <v-btn
+                      <v-radio-group :id="'smallq' + question.num" mandatory row>
+                        <v-radio
+                          class="mx-auto justify-center"
+                          fab
+                          light
+                          :ripple="{ center: false, class: 'gray--text' }"
+                          @click="
+                            clickScroll($event);
+                            countAnswer(question.num, 1);
+                          "
+                          label="1: いつもある"
+                        ></v-radio>
+                        <v-radio
+                          class="mx-auto justify-center"
+                          fab
+                          light
+                          :ripple="{ center: false, class: 'gray--text' }"
+                          @click="
+                            clickScroll($event);
+                            countAnswer(question.num, 2);
+                          "
+                          label="2: 時々ある"
+                        ></v-radio>
+                        <v-radio
+                          class="mx-auto justify-center"
+                          fab
+                          light
+                          :ripple="{ center: false, class: 'gray--text' }"
+                          @click="
+                            clickScroll($event);
+                            countAnswer(question.num, 3);
+                          "
+                          label="3: 全くない"
+                        ></v-radio>
+                      </v-radio-group>
+                      <p class="py-3" style="font-size: 16px">
+                        あなたの回答： {{ question.answer }}
+                      </p>
+                    </v-card>
+                  </v-container>
+                </v-card-title>
+              </v-layout>
+            </v-col>
+          </v-col>
+
+          <v-col cols="4" xs="4" sm="2" md="2" lg="1">
+            <!-- <v-btn
           style="font-size: 30px"
           x-large
           :disabled="isVisible"
@@ -83,128 +91,157 @@
           @click="clickScrollNext()"
         >
           次へ
+        </v-btn> -->
+          </v-col>
+          <p class="Page-Btn">
+            <v-btn fab dark small color="primary" @click="scrollTop()">
+              <v-icon>mdi-arrow-up-thick</v-icon>
+            </v-btn>
+          </p>
+          <p
+            v-if="isVisible"
+            class="text-center red--text text--lightn-3 my-5 mb-5"
+            outlined
+            tile
+            height="150"
+          >
+            <span></span>未回答の項目があります。
+          </p>
+        </v-row>
+
+        <v-btn
+          color="primary"
+          x-large
+          style="font-size: 30px"
+          :disabled="isVisible"
+          @click="
+            clickScrollNext();
+            e6 = 2;
+          "
+        >
+          次へ
         </v-btn>
-      </v-col>
-      <p class="Page-Btn">
-        <v-btn fab dark small color="primary" @click="scrollTop()">
-          <v-icon>mdi-arrow-up-thick</v-icon>
-        </v-btn>
-      </p>
-    </v-row>
+      </v-stepper-content>
 
-    <p
-      v-if="isVisible"
-      class="text-center red--text text--lightn-3 my-5 mb-5"
-      outlined
-      tile
-      height="150"
-    >
-      <span></span>未回答の項目があります。
-    </p>
-    <template v-if="show">
-      <v-container justify="center" align-content="center">
-        <v-layout justify-center>
-          <v-row justify-center>
-            <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Step 2</th>
-                  </tr>
-                  <tr>
-                    飲みベーション選択画面
-                  </tr>
-                </tbody>
-              </table>
-              <h1 class="text-center" style="font-size: 50px">飲み会へのモチベーションを選択</h1>
+      <v-stepper-step :complete="e6 > 2" step="2"> 飲みベーション選択画面 </v-stepper-step>
 
-              <v-dialog v-model="dialog" width="500">
-                <template #activator="{ on, attrs }">
-                  <div d-flex justify="center">
-                    <v-layout justify-space-between align-content="center">
-                      <v-card
-                        @click="setShuchedule2()"
-                        style="font-size: 30px; margin-left: 20px"
-                        justify="center"
-                        align-content="center"
-                        x-large
-                        :ripple="{ center: false, class: 'gray--text' }"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <v-card-title
-                          style="font-size: 32px; text-decoration: none; text-color: black"
-                          >酩酊</v-card-title
-                        >
-                        <img :src="imgSrc" width="150" height="100" />
-                      </v-card>
-                      <v-card
-                        @click="setShuchedule1()"
-                        style="font-size: 30px"
-                        x-large
-                        :ripple="{ center: false, class: 'gray--text' }"
-                        justify="center"
-                        align-content="center"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <v-card-title
-                          style="font-size: 32px; text-decoration: none; text-color: black"
-                          >ほろ酔い</v-card-title
-                        >
-                        <img :src="sakeSrc" width="150" height="100" />
-                      </v-card>
+      <v-stepper-content step="2">
+        <template v-if="show">
+          <v-container justify="center" align-content="center">
+            <v-layout justify-center>
+              <v-row justify-center>
+                <v-col cols="12" xs="12" sm="12" md="12" lg="12">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>Step 2</th>
+                      </tr>
+                      <tr>
+                        飲みベーション選択画面
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h1 class="text-center" style="font-size: 50px">なりたい状態をクリック！</h1>
 
-                      <v-card
-                        @click="setShuchedule0()"
-                        style="font-size: 30px"
-                        x-large
-                        :ripple="{ center: false, class: 'gray--text' }"
-                        justify="center"
-                        align-content="center"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <v-card-title
-                          style="font-size: 32px; text-decoration: none; text-color: black"
-                          >しっぽり</v-card-title
-                        >
-                        <img :src="drinkSrc" width="150" height="100" />
-                      </v-card>
-                    </v-layout>
-                  </div>
+                  <v-dialog v-model="dialog" width="500">
+                    <template #activator="{ on, attrs }">
+                      <div d-flex justify="center">
+                        <v-layout justify-space-between align-content="center">
+                          <v-card
+                            @click="setShuchedule2()"
+                            style="font-size: 30px; margin-left: 20px"
+                            justify="center"
+                            align-content="center"
+                            x-large
+                            :ripple="{ center: false, class: 'gray--text' }"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-card-title
+                              style="font-size: 32px; text-decoration: none; text-color: black"
+                              >酩酊</v-card-title
+                            >
+                            <img :src="imgSrc" width="150" height="100" />
+                          </v-card>
+                          <v-card
+                            @click="setShuchedule1()"
+                            style="font-size: 30px"
+                            x-large
+                            :ripple="{ center: false, class: 'gray--text' }"
+                            justify="center"
+                            align-content="center"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-card-title
+                              style="font-size: 32px; text-decoration: none; text-color: black"
+                              >ほろ酔い</v-card-title
+                            >
+                            <img :src="sakeSrc" width="150" height="100" />
+                          </v-card>
 
-                  <transition name="modal">
-                    <div v-if="showModal" @close="showModal = false">
-                      <div class="modal-mask">
-                        <div class="modal-wrapper">
-                          <div class="modal-container">
-                            <div class="modal-body" align-content="center">
-                              <slot name="body">
-                                <FacebookLoader />
+                          <v-card
+                            @click="setShuchedule0()"
+                            style="font-size: 30px"
+                            x-large
+                            :ripple="{ center: false, class: 'gray--text' }"
+                            justify="center"
+                            align-content="center"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-card-title
+                              style="font-size: 32px; text-decoration: none; text-color: black"
+                              >しっぽり</v-card-title
+                            >
+                            <img :src="drinkSrc" width="150" height="100" />
+                          </v-card>
+                        </v-layout>
+                      </div>
 
-                                <p style="font-size: 32px">
-                                  酒ケジュール作成中
-                                  <v-progress-linear
-                                    indeterminate
-                                    color="white"
-                                    class="mb-0"
-                                  ></v-progress-linear>
-                                </p>
-                              </slot>
+                      <transition name="modal">
+                        <div v-if="showModal" @close="showModal = false">
+                          <div class="modal-mask">
+                            <div class="modal-wrapper">
+                              <div class="modal-container">
+                                <div class="modal-body" align-content="center">
+                                  <slot name="body">
+                                    <FacebookLoader />
+
+                                    <p style="font-size: 32px">
+                                      酒ケジュール作成中
+                                      <v-progress-linear
+                                        indeterminate
+                                        color="white"
+                                        class="mb-0"
+                                      ></v-progress-linear>
+                                    </p>
+                                  </slot>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </transition>
-                </template>
-              </v-dialog>
-            </v-col>
-          </v-row>
-        </v-layout>
-      </v-container>
-    </template>
+                      </transition>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </v-row>
+            </v-layout>
+          </v-container>
+        </template>
+
+        <!-- <v-btn
+        color="primary"
+        @click="e6 = 3"
+      >
+        Continue
+      </v-btn>
+      <v-btn text>
+        Cancel
+      </v-btn> -->
+      </v-stepper-content>
+    </v-stepper>
   </div>
 </template>
 <script>
@@ -222,6 +259,7 @@ export default {
       showModal: false,
       users: [],
       alcohols: [],
+      e6: 1,
     };
   },
   components: {
