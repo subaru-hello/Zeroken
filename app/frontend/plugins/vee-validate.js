@@ -53,15 +53,14 @@ extend('image', {
   message: '{_field_}は画像形式で入力してください',
 });
 extend('isUnique', {
-  params: ['column', 'user_id'],
-  async validate(value, { column, user_id }) {
-    const response = await axios.get('validations/unique', {
+  params: ['column'],
+  async validate(value, { column}) {
+    const response = await axios.get('validation/unique', {
       params: {
-        [column]: value,
-        id: user_id,
+        [column]: value
       },
     });
-    if (response.data != 'exist') {
+    if (response.data === 'unique') {
       return true;
     } else {
       return '{_value_}は既に使われています';
