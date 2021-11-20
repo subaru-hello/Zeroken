@@ -2,12 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/index';
 import Analyze from '../pages/Analyze';
+import AnalyzeShow from '../pages/AnalyzeShow';
 import Result from '../pages/Result';
 import SelectNomivation from '../pages/SelectNomivation';
 import UserProfile from '../pages/UserProfile.vue';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
 import UserLogin from '../pages/UserLogin';
+import UserAll from '../pages/UserAll';
 Vue.use(Router);
 
 const router = new Router({
@@ -15,7 +17,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/top',
+      path: '/',
       component: PreliquoTop,
       name: 'PreliquoTop',
     },
@@ -43,9 +45,19 @@ const router = new Router({
       props: true,
     },
     {
+      path: '/users',
+      component: UserAll,
+      name: 'UserAll',
+    },
+    {
       path: '/nomivation',
       component: SelectNomivation,
       name: 'SelectNomivation',
+    },
+    {
+      path: '/analyzes/:id',
+      component: AnalyzeShow,
+      name: 'AnalyzeShow',
     },
     {
       path: '/result',
