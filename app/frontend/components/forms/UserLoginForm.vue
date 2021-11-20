@@ -68,13 +68,12 @@ export default {
     },
   },
   data() {
-  return {
+    return {
       rules: {
         email: { required: true, email: true, max: 50 },
         password: { required: true, min: 6, regex: /^[0-9a-zA-Z]+$/i },
       },
       showPassword: false,
-
     };
   },
   methods: {

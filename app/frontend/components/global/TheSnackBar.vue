@@ -15,49 +15,41 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-export default{
-    name: 'TheSnckBar',
-    computed: {
-        ...mapGetters('snackbar', ['snackbarData']),
-        //snackbar.jsのgettersに描かれたsnackbarDataをmapGettersで呼び出している。
-        isVisible:{
-            get(){
-                return this.snackbarData.isShow;
-            },
-            set(){
-                return this.fetchSnackbarData({
-                    msg: '',
-                    color: '',
-                    isShow: false,
-                });
-
-            },
-        },
-        snackbarIcon: function(){
-            switch(this.snackbarData.color){
-                case 'success':
-                    return 'mdi-check-circle-outline';
-                    case 'error':
-                        return 'mdi-information-outline';
-                        default: 
-                        return '';
-            }
-        },
+export default {
+  name: 'TheSnckBar',
+  computed: {
+    ...mapGetters('snackbar', ['snackbarData']),
+    isVisible: {
+      get() {
+        return this.snackbarData.isShow;
+      },
+      set() {
+        return this.fetchSnackbarData({
+          msg: '',
+          color: '',
+          isShow: false,
+        });
+      },
     },
-    methods: {
-        ...mapActions('user', ['logoutUser']),
-        ...mapActions('snackbar', ['fetchSnackbarData']),
-        //mapActionsでsnackbar.jsのfetchSnackBarDataを呼び出している
+    snackbarIcon: function () {
+      switch (this.snackbarData.color) {
+        case 'success':
+          return 'mdi-check-circle-outline';
+        case 'error':
+          return 'mdi-information-outline';
+        default:
+          return '';
+      }
+    },
+  },
+  methods: {
+    ...mapActions('user', ['logoutUser']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
     logoutFunction() {
-        //新しくlogoutFunctionを定義
       this.logoutUser().then((res) => {
-        //user.jsにあるlogoutUserを呼び出す
         if (res) {
-        //成功した場合
-         this.$router.go({ path: this.$router.currentRoute.path });
-        //一個前のページに戻る。$router.goでひとつ前に戻る役割を果たしている　
-         this.fetchSnackbarData({
-        //fetchSnackBarDataを呼び出している。
+          this.$router.go({ path: this.$router.currentRoute.path });
+          this.fetchSnackbarData({
             msg: 'ログアウトしました',
             color: 'success',
             isShow: true,
@@ -71,6 +63,6 @@ export default{
         }
       });
     },
-    },
+  },
 };
 </script>

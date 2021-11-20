@@ -6,15 +6,24 @@ module Api
       end
 
       def index
+        #純アルコール量が0~14、それかビールしか入れない。また、「お酒を飲んではいけない人」になった場合はソフトドリンクしか勝たんモードに入る
         @semi_weaks = Alcohol.all.semi_weak.selected.sort_by { |a| a[:alcohol_percentage] }
+
+        #純アルコール量が0.1~15
         @weaks = Alcohol.all.weak.selected.sort_by { |a| a[:alcohol_percentage] }
+
+        #純アルコール量が
         @semi_strongs = Alcohol.all.semi_strong.selected.sort_by { |a| a[:alcohol_percentage] }
         @strongs = Alcohol.all.strong.selected.sort_by { |a| a[:alcohol_percentage] }
 
         respond_to do |format|
           format.json do
-            render json: { first_orders: @semi_weaks, second_orders:  @weaks, third_orders:  @semi_strongs,
-                           forth_orders: @strongs }
+            render json: {
+                     first_orders: @semi_weaks,
+                     second_orders: @weaks,
+                     third_orders: @semi_strongs,
+                     forth_orders: @strongs
+                   }
           end
         end
       end
@@ -33,7 +42,14 @@ module Api
       def alcohol_params
         params
           .require(:alcohol)
-          .permit(:type, :alcohol_percentage, :alcohol_amount, :name, :description, :pure_alcohol_intake)
+          .permit(
+            :type,
+            :alcohol_percentage,
+            :alcohol_amount,
+            :name,
+            :description,
+            :pure_alcohol_intake
+          )
       end
     end
   end

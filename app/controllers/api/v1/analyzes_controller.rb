@@ -37,11 +37,13 @@ module Api
       private
 
       def analyze_params
-        params.require(:analyze).permit(:total_points, :sake_strongness_types, :next_nomivation_types, :description)
+        params
+          .require(:analyze)
+          .permit(:total_points, :sake_strongness_types, :next_nomivation_types, :description)
       end
 
       def set_analyze
-        @analyze = Analyze.find(params[:id])
+        @analyze = Analyze.find_by(id: params[:id])
       end
     end
   end
