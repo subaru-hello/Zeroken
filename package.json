@@ -44,6 +44,6 @@
     "webpack-dev-server": "^3"
   },
   "scripts": {
-    "fmt": "prettier --write app/**/**/*.{js,rb,vue} app/**/*.{js,rb,vue}"
+    "fmt": "prettier --write app/**/**/*.{js,rb,vue} app/**/*.{js,rb,vue} app/**/**/**/*.{js,rb,vue}"
   }
 }
