@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_093921) do
+ActiveRecord::Schema.define(version: 2021_11_19_213903) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 2021_11_13_093921) do
   create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "analyze_id"
     t.bigint "alcohol_id"
-    t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["alcohol_id"], name: "index_alcohol_orders_on_alcohol_id"
@@ -58,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_093921) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "order"
   end
 
   create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
