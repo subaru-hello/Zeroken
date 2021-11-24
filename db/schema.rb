@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_213903) do
+ActiveRecord::Schema.define(version: 2021_11_23_054020) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -53,11 +53,9 @@ ActiveRecord::Schema.define(version: 2021_11_19_213903) do
     t.string "name"
     t.float "alcohol_percentage"
     t.integer "alcohol_amount"
-    t.integer "pure_alcohol_intake"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "order"
   end
 
   create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
@@ -69,6 +67,15 @@ ActiveRecord::Schema.define(version: 2021_11_19_213903) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
     t.index ["user_id"], name: "index_analyzes_on_user_id"
+  end
+
+  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "liquor_box_id", null: false
+    t.integer "liquor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["liquor_box_id"], name: "index_relationships_on_liquor_box_id"
+    t.index ["liquor_id"], name: "index_relationships_on_liquor_id"
   end
 
   create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
