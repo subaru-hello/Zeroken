@@ -10,14 +10,14 @@ class Alcohol < ApplicationRecord
            class_name: 'Relationship',
            foreign_key: 'liquor_box_id',
            dependent: :destroy,
-           inverse_of: :relationship
+           inverse_of: :liquor
 
   # コーヒーが属するliquor_box_idを取得するassociation
   has_many :liquor_box_relationships,
            class_name: 'Relationship',
            foreign_key: 'liquor_id',
            dependent: :destroy,
-           inverse_of: :relationship
+           inverse_of: :liquor_box
 
   # 【後段部分】
 

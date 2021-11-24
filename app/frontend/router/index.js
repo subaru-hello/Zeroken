@@ -10,6 +10,7 @@ import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
 import UserLogin from '../pages/UserLogin';
 import UserAll from '../pages/UserAll';
+import AlcoholAll from '../pages/AlcoholAll';
 Vue.use(Router);
 
 const router = new Router({
@@ -48,6 +49,11 @@ const router = new Router({
       path: '/users',
       component: UserAll,
       name: 'UserAll',
+    },
+    {
+      path: '/alcohols',
+      component: AlcoholAll,
+      name: 'AlcoholAll',
     },
     {
       path: '/nomivation',
