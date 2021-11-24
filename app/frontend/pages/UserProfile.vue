@@ -38,13 +38,33 @@
               </p>
             </v-sheet>
             <div style="margin-left: 10%">
-              <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+              <h3
+                class="text-h6 font-weight-black mb-8 mx-auto text-center"
+                @click.stop="dialog = true"
+              >
+                過去の酒ケジュール
+              </h3>
 
-              <v-date-picker full-width class="mt-4"></v-date-picker>
+              <!-- <v-date-picker full-width @click.stop="dialog = true"></v-date-picker> -->
+              <v-date-picker
+                full-width
+                v-model="date1"
+                :events="arrayEvents"
+                event-color="green lighten-1"
+                @click="opened()"
+              ></v-date-picker>
+
+              <v-dialog v-model="dialog" scrollable max-width="80%">
+                <v-card>
+                  <v-card-title>11月12日の酒ケジュール</v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text height="200px"
+                    >1. ビール 2. ハイボール 3. 日本酒 4. ワイン</v-card-text
+                  >
+                </v-card>
+              </v-dialog>
             </div>
-            <!-- プロフィール編集フォーム -->
-            <!-- @updateProfile="update"がユーザーの情報を更新するハンドラ。 -->
-            <!-- v-bind.sync="authUserEdit"で子に現在のユーザー情報を私エイル。 -->
+
             <ProfileEditForm
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
@@ -87,6 +107,14 @@ export default {
   data() {
     return {
       users: [],
+      dialog: false,
+      arrayEvents: null,
+      date1: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       authUserEdit: {},
       password: '',
       password_confirmation: '',
@@ -108,6 +136,12 @@ export default {
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
+    this.arrayEvents = [...Array(6)].map(() => {
+      const day = Math.floor(Math.random() * 30);
+      const d = new Date();
+      d.setDate(day);
+      return d.toISOString().substr(0, 10);
+    });
   },
   created() {
     this.fetchAuthUser();
@@ -124,6 +158,15 @@ export default {
     ...mapActions('users', ['updateAuthUser']),
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+    functionEvents(date) {
+      const [, , day] = date.split('-');
+      if ([12, 17, 28].includes(parseInt(day, 10))) return true;
+      if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f'];
+      return false;
+    },
+    opened() {
+      this.dialog = true;
+    },
     displayProfileEditDialog() {
       // this.initAuthUserEdit();
       this.handleShowEditProfile();
