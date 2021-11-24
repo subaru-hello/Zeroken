@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :analyzes, dependent: :destroy
   has_one_attached :avatar
   enum role: { guest: 0, member: 1 }
+
   mount_uploader :avatar, AvatarUploader
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   VALID_PASSWORD_FORMAT = /\A\w+\z/i.freeze

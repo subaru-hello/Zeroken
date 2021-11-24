@@ -1,7 +1,7 @@
 
     User.seed do |s|
         s.id = 1
-        s.email = 'test@examle.com'
+        s.email = 'test@example.com'
         s.nickname = 'テス太郎'
         s.password = 'aaaaaaa'
         s.password_confirmation = 'aaaaaaa'
