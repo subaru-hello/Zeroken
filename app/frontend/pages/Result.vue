@@ -1,6 +1,8 @@
 <template>
   <div>
+ 
     <v-layout>
+        <p> {{currentUser}}</p>
       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="5000" id="form">
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           {{ $t('analyzes.next_nomivation_types.flesh') }} になりたいあなたに向けた
@@ -25,15 +27,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[3].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[3].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -47,15 +49,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+           v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[1].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[1].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -69,15 +71,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+             v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[0].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[0].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -166,9 +168,16 @@
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-action>
-                    <v-icon>mdi-email</v-icon>
+                    <a
+                      href="https://timeline.line.me/social-plugin/share?url=https://preliquo.herokuapp.com/top"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      ><v-icon color="cyan"> mdi-twitter </v-icon></a
+                    >
+                    <!-- <div data-url="https://social-plugins.line.me/lineit/share?url={URL}"> -->
+                    <!-- </div> -->
                   </v-list-item-action>
-                  <v-card-title>Email</v-card-title>
+                  <v-card-title>LINE</v-card-title>
                 </v-list-item>
               </v-list>
             </v-card>
@@ -203,6 +212,17 @@ export default {
   computed: {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
+        contents() {
+          // a = 0;
+      let targetValues = this.alcohols;
+      let contentsOfTarget = Object.values(targetValues)[0];
+      return contentsOfTarget;
+    },
+currentUser(){
+   const thisAnalyze = this.analyzes;
+      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1]
+return targetSakeStrongness ;
+},
     currentUsersSakeStrongness() {
       const thisAnalyze = this.analyzes;
       const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1]['sake_strongness_types'];
