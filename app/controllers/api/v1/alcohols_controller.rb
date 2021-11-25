@@ -33,30 +33,30 @@ module Api
         respond_to do |format|
           format.json do
             render json: {
-              alcohols_1: @alcohols_1,
-              alcohols_2: @alcohols_2,
-              alcohols_3: @alcohols_3,
-              alcohols_4: @alcohols_4,
-              alcohols_5: @alcohols_5,
-              alcohols_6: @alcohols_6,
-              alcohols_7: @alcohols_7,
-              alcohols_8: @alcohols_8,
-              alcohols_9: @alcohols_9,
-              alcohols_10: @alcohols_10,
-              alcohols_11: @alcohols_11,
-              alcohols_12: @alcohols_12,
-              alcohols_13: @alcohols_13,
-              alcohols_14: @alcohols_14,
-              alcohols_15: @alcohols_15,
-              alcohols_16: @alcohols_16,
-              alcohols_17: @alcohols_17,
-              alcohols_18: @alcohols_18,
-              alcohols_19: @alcohols_19,
-              alcohols_20: @alcohols_20,
-              alcohols_21: @alcohols_21,
-              alcohols_22: @alcohols_22,
-              alcohols_23: @alcohols_23
-            }
+                     alcohols_1: @alcohols_1,
+                     alcohols_2: @alcohols_2,
+                     alcohols_3: @alcohols_3,
+                     alcohols_4: @alcohols_4,
+                     alcohols_5: @alcohols_5,
+                     alcohols_6: @alcohols_6,
+                     alcohols_7: @alcohols_7,
+                     alcohols_8: @alcohols_8,
+                     alcohols_9: @alcohols_9,
+                     alcohols_10: @alcohols_10,
+                     alcohols_11: @alcohols_11,
+                     alcohols_12: @alcohols_12,
+                     alcohols_13: @alcohols_13,
+                     alcohols_14: @alcohols_14,
+                     alcohols_15: @alcohols_15,
+                     alcohols_16: @alcohols_16,
+                     alcohols_17: @alcohols_17,
+                     alcohols_18: @alcohols_18,
+                     alcohols_19: @alcohols_19,
+                     alcohols_20: @alcohols_20,
+                     alcohols_21: @alcohols_21,
+                     alcohols_22: @alcohols_22,
+                     alcohols_23: @alcohols_23
+                   }
           end
         end
       end
