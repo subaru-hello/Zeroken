@@ -4,7 +4,7 @@
       <!-- <v-col v-model="shuche">{{ shuche }}</v-col> -->
       <!-- <p >{{ testAnalyzes }}</p> -->
       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="5000" id="form">
-        <!-- <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
+        <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           {{ $t('analyzes.next_nomivation_types.flesh') }} になりたいあなたに向けた
         </p>
         <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
@@ -12,14 +12,14 @@
         </p>
         <p v-else>
           {{ $t('analyzes.next_nomivation_types.heavy_drunk') }} になりたいあなたに向けた
-        </p> -->
+        </p>
 
         <v-card-title style="width: 100%" class="headline justify-center">
           <h1 class="centered">酒ケジュール</h1>
         </v-card-title>
         <v-container
           class="d-flex flex-row mb-6"
-         
+          v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'"
         >
           <v-card
             class="text-center mx-auto my-5 form"
@@ -39,7 +39,7 @@
             </v-card-text>
           </v-card>
         </v-container>
-        <!-- <v-container
+        <v-container
           class="d-flex flex-row mb-6"
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'"
         >
@@ -82,7 +82,7 @@
               {{ data.description }}
             </v-card-text>
           </v-card>
-        </v-container> -->
+        </v-container>
       </v-card>
     </v-layout>
     <div class="text-center" style="font-size: 50px">
