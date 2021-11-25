@@ -228,13 +228,6 @@ export default {
       const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
 
       return contentsOfTarget;
-      return contentsOfTarget;
-      // const thisAnalyze = this.analyzes;
-      // const targetShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-
-      // let targetValues = this.alcohols;
-      // let contentsOfTarget = Object.values(targetValues)[0];
-      // return contentsOfTarget;
     },
     currentUser() {
       const thisAnalyze = this.analyzes;
