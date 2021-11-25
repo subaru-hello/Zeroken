@@ -110,9 +110,32 @@
         </v-btn>
       </v-stepper-content>
 
-      <v-stepper-step :complete="e6 > 2" step="2"> 飲みベーション選択画面 </v-stepper-step>
-
+      <v-stepper-step :complete="e6 > 2" step="2"> 体重設定画面 </v-stepper-step>
       <v-stepper-content step="2">
+        <template v-if="show">
+          <v-container justify="center" align-content="center">
+            <v-layout justify-center>
+              <v-row justify-center>
+                <v-col cols="12" xs="12" sm="12" md="12" lg="12">
+                  <v-select v-model="weight" :items="items" label="体重"></v-select>
+                </v-col>
+              </v-row>
+            </v-layout>
+          </v-container>
+        </template>
+        <v-btn
+          color="primary"
+          x-large
+          style="font-size: 30px"
+          :disabled="isVisible"
+          @click="e6 = 3"
+        >
+          次へ
+        </v-btn>
+      </v-stepper-content>
+      <v-stepper-step :complete="e6 > 3" step="3"> 飲みベーション選択画面 </v-stepper-step>
+
+      <v-stepper-content step="3">
         <template v-if="show">
           <v-container justify="center" align-content="center">
             <v-layout justify-center>
@@ -227,9 +250,13 @@
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
 import axios from '../plugins/axios';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+const start = 40;
+const end = 100;
+const weightRange = [...Array(end - start + 1).keys()].map((e) => e + start);
 export default {
   data() {
     return {
+      items: weightRange,
       isVisible: '',
       radios: null,
       sakeStrongness: [],
@@ -239,6 +266,7 @@ export default {
       users: [],
       alcohols: [],
       e6: 1,
+      weight: 60,
     };
   },
   components: {
@@ -312,7 +340,7 @@ export default {
       this.updateAnswer({ indexNum, updAnswer });
     },
     async setShuchedule0() {
-      //TODO 要りファクト
+      //TODO 要リファクト
       //以下の式を塊に切り出してthis.で呼び出す
       var trueAnswers = this.questions;
       const answer0 = trueAnswers[0]['answer'];
@@ -358,7 +386,58 @@ export default {
         answerTwelvth +
         answerThirteenth;
       let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
-      let Nomivation = 0;
+      let Nomivation = 0; //flesh: 0, tipsy: 1, heavy_drunk: 2
+      let alcoholInVein = AlcoholStrongness === 2 ? 0.04 : AlcoholStrongness === 1 ? 0.03 : 0.02;
+      let coefficient = 833;
+      let yourWeight = this.weight;
+      let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
+      let yourShuchedule =
+        totalAlcoholAmount < 2000
+          ? 23
+          : totalAlcoholAmount < 2500
+          ? 22
+          : totalAlcoholAmount < 3000
+          ? 21
+          : totalAlcoholAmount < 3500
+          ? 20
+          : totalAlcoholAmount < 4000
+          ? 19
+          : totalAlcoholAmount < 4500
+          ? 18
+          : totalAlcoholAmount < 5000
+          ? 17
+          : totalAlcoholAmount < 5500
+          ? 16
+          : totalAlcoholAmount < 6000
+          ? 15
+          : totalAlcoholAmount < 6500
+          ? 14
+          : totalAlcoholAmount < 7000
+          ? 13
+          : totalAlcoholAmount < 7500
+          ? 12
+          : totalAlcoholAmount < 8000
+          ? 11
+          : totalAlcoholAmount < 8500
+          ? 10
+          : totalAlcoholAmount < 9000
+          ? 9
+          : totalAlcoholAmount < 9500
+          ? 8
+          : totalAlcoholAmount < 10000
+          ? 7
+          : totalAlcoholAmount < 10500
+          ? 6
+          : totalAlcoholAmount < 11000
+          ? 5
+          : totalAlcoholAmount < 11500
+          ? 4
+          : totalAlcoholAmount < 12000
+          ? 3
+          : totalAlcoholAmount < 12500
+          ? 2
+          : 1;
+
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -439,7 +518,8 @@ export default {
         const updAnalyze = {
           total_points: sumResult,
           sake_strongness_types: AlcoholStrongness,
-          next_nomivation_types: Nomivation,
+          next_nomivation_types: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
+          shuchedule: yourShuchedule,
           description: Description,
         };
 
@@ -516,7 +596,56 @@ export default {
         answerTwelvth +
         answerThirteenth;
       let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
-      // let Nomivation = 1;
+      let alcoholInVein = AlcoholStrongness === 2 ? 0.1 : AlcoholStrongness === 1 ? 0.07 : 0.05;
+      let coefficient = 833;
+      let yourWeight = this.weight;
+      let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
+      let yourShuchedule =
+        totalAlcoholAmount < 2000
+          ? 23
+          : totalAlcoholAmount < 2500
+          ? 22
+          : totalAlcoholAmount < 3000
+          ? 21
+          : totalAlcoholAmount < 3500
+          ? 20
+          : totalAlcoholAmount < 4000
+          ? 19
+          : totalAlcoholAmount < 4500
+          ? 18
+          : totalAlcoholAmount < 5000
+          ? 17
+          : totalAlcoholAmount < 5500
+          ? 16
+          : totalAlcoholAmount < 6000
+          ? 15
+          : totalAlcoholAmount < 6500
+          ? 14
+          : totalAlcoholAmount < 7000
+          ? 13
+          : totalAlcoholAmount < 7500
+          ? 12
+          : totalAlcoholAmount < 8000
+          ? 11
+          : totalAlcoholAmount < 8500
+          ? 10
+          : totalAlcoholAmount < 9000
+          ? 9
+          : totalAlcoholAmount < 9500
+          ? 8
+          : totalAlcoholAmount < 10000
+          ? 7
+          : totalAlcoholAmount < 10500
+          ? 6
+          : totalAlcoholAmount < 11000
+          ? 5
+          : totalAlcoholAmount < 11500
+          ? 4
+          : totalAlcoholAmount < 12000
+          ? 3
+          : totalAlcoholAmount < 12500
+          ? 2
+          : 1;
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -599,6 +728,7 @@ export default {
           total_points: sumResult,
           sake_strongness_types: AlcoholStrongness,
           next_nomivation_types: Nomivation,
+          shuchedule: yourShuchedule,
           description: Description,
         };
 
@@ -676,6 +806,56 @@ export default {
         answerThirteenth;
       let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
       let Nomivation = 2;
+      let alcoholInVein = AlcoholStrongness === 2 ? 0.15 : AlcoholStrongness === 1 ? 0.13 : 0.11;
+      let coefficient = 833;
+      let yourWeight = this.weight;
+      let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
+      let yourShuchedule =
+        totalAlcoholAmount < 2000
+          ? 23
+          : totalAlcoholAmount < 2500
+          ? 22
+          : totalAlcoholAmount < 3000
+          ? 21
+          : totalAlcoholAmount < 3500
+          ? 20
+          : totalAlcoholAmount < 4000
+          ? 19
+          : totalAlcoholAmount < 4500
+          ? 18
+          : totalAlcoholAmount < 5000
+          ? 17
+          : totalAlcoholAmount < 5500
+          ? 16
+          : totalAlcoholAmount < 6000
+          ? 15
+          : totalAlcoholAmount < 6500
+          ? 14
+          : totalAlcoholAmount < 7000
+          ? 13
+          : totalAlcoholAmount < 7500
+          ? 12
+          : totalAlcoholAmount < 8000
+          ? 11
+          : totalAlcoholAmount < 8500
+          ? 10
+          : totalAlcoholAmount < 9000
+          ? 9
+          : totalAlcoholAmount < 9500
+          ? 8
+          : totalAlcoholAmount < 10000
+          ? 7
+          : totalAlcoholAmount < 10500
+          ? 6
+          : totalAlcoholAmount < 11000
+          ? 5
+          : totalAlcoholAmount < 11500
+          ? 4
+          : totalAlcoholAmount < 12000
+          ? 3
+          : totalAlcoholAmount < 12500
+          ? 2
+          : 1;
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -758,6 +938,7 @@ export default {
           sake_strongness_types: AlcoholStrongness,
           next_nomivation_types: Nomivation,
           description: Description,
+          shuchedule: yourShuchedule,
         };
 
         resolve(this.createAnalyze(updAnalyze));

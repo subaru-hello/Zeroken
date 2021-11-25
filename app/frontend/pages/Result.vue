@@ -1,8 +1,8 @@
 <template>
   <div>
- 
     <v-layout>
-        <p> {{currentUser}}</p>
+      <!-- <v-col v-model="shuche">{{ shuche }}</v-col> -->
+      <!-- <p >{{ testAnalyzes }}</p> -->
       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="5000" id="form">
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           {{ $t('analyzes.next_nomivation_types.flesh') }} になりたいあなたに向けた
@@ -49,7 +49,7 @@
             shaped
             width="500"
             id="form"
-           v-for="data in contents"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
@@ -71,7 +71,7 @@
             shaped
             width="500"
             id="form"
-             v-for="data in contents"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
@@ -200,6 +200,7 @@ export default {
   },
   data: function () {
     return {
+      shuche: '',
       alcohols: [],
       analyze: [],
       users: [],
@@ -212,27 +213,32 @@ export default {
   computed: {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
-        contents() {
-          // a = 0;
-      let targetValues = this.alcohols;
-      let contentsOfTarget = Object.values(targetValues)[0];
-      return contentsOfTarget;
-    },
-currentUser(){
-   const thisAnalyze = this.analyzes;
-      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1]
-return targetSakeStrongness ;
-},
-    currentUsersSakeStrongness() {
+    testAnalyzes() {
       const thisAnalyze = this.analyzes;
-      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1]['sake_strongness_types'];
-      const SakeType =
-        targetSakeStrongness === 'strong'
-          ? '酒豪'
-          : targetSakeStrongness === 'weak'
-          ? '下戸'
-          : '普通';
-      return SakeType;
+      const targetShuchedule = thisAnalyze[thisAnalyze.length - 1];
+      return targetShuchedule;
+    },
+    contents() {
+      const thisAnalyze = this.analyzes;
+
+      const targetShuchedule = thisAnalyze[thisAnalyze.length - 1][0];
+
+      let targetValues = this.alcohols;
+
+      let contentsOfTarget = Object.values(targetValues)[1];
+
+      return contentsOfTarget;
+      // const thisAnalyze = this.analyzes;
+      // const targetShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+
+      // let targetValues = this.alcohols;
+      // let contentsOfTarget = Object.values(targetValues)[0];
+      // return contentsOfTarget;
+    },
+    currentUser() {
+      const thisAnalyze = this.analyzes;
+      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1];
+      return targetSakeStrongness;
     },
     imgSrc() {
       return require('../src/img/liquor.svg');
@@ -249,12 +255,12 @@ return targetSakeStrongness ;
   },
   mounted() {
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
+    this.analyze = this.fetchAnalyzes;
   },
   updated() {},
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
-    this.analyze = this.fetchAnalyzes;
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
