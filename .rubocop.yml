@@ -33,10 +33,13 @@ Naming/VariableNumber:
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Metrics/MethodLength
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc', 'hash']
+  Max: 30
 Metrics/AbcSize:
   # The ABC size is a calculated magnitude, so this number can be a Fixnum or
   # a Float.
-  Max: 26
+  Max: 60
+Metrics/BlockLength:
+  Max: 30
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/MemoizedInstanceVariableName
 Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: optional
