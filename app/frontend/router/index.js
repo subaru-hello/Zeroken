@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/index';
 import Analyze from '../pages/Analyze';
-import AnalyzeShow from '../pages/AnalyzeShow';
 import Result from '../pages/Result';
 import SelectNomivation from '../pages/SelectNomivation';
 import UserProfile from '../pages/UserProfile.vue';
@@ -59,11 +58,6 @@ const router = new Router({
       path: '/nomivation',
       component: SelectNomivation,
       name: 'SelectNomivation',
-    },
-    {
-      path: '/analyzes/:id',
-      component: AnalyzeShow,
-      name: 'AnalyzeShow',
     },
     {
       path: '/result',
