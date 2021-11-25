@@ -27,15 +27,4 @@ class Alcohol < ApplicationRecord
   # ビールから1000ボックスを取得する
   has_many :liquor_boxes, through: :liquor_box_relationships
 
-  # 酒を取り出すスコープ
-  scope :semi_weak, -> { where(' alcohol_percentage < ? ', 5.10) }
-  scope :weak, -> { where(' alcohol_percentage < ? ', 8.05) }
-
-  scope :semi_strong,
-        -> { where('alcohol_percentage > ? and alcohol_percentage < ? ', 5.00, 13.01) }
-  scope :strong, -> { where('alcohol_percentage > ? and alcohol_percentage < ? ', 8.00, 40.01) }
-
-  scope :selected, -> { select('id,name,description, alcohol_percentage') }
-  # pure_alcohol_intakeで条件検索をする。
-  #
 end
