@@ -26,5 +26,4 @@ class Alcohol < ApplicationRecord
 
   # ビールから1000ボックスを取得する
   has_many :liquor_boxes, through: :liquor_box_relationships
-
 end
