@@ -27,7 +27,6 @@ export default {
   computed: {
     contents() {
       let targetValues = this.alcoholAll;
-      let contentsOfTarget = Object.values(targetValues)[0];
       return targetValues;
     },
   },
