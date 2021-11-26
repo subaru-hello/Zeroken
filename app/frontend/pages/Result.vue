@@ -35,6 +35,10 @@
             <v-card-text>
               {{ data.description }}
             </v-card-text>
+            <v-row justify="center" align-content="center">
+              <p>度数: {{ data.alcohol_percentage }}%</p>
+              <p>量: {{ data.alcohol_amount }}ml</p>
+            </v-row>
           </v-card>
         </v-container>
         <v-container
@@ -57,6 +61,10 @@
             <v-card-text>
               {{ data.description }}
             </v-card-text>
+            <v-row justify="center" align-content="center">
+              <p>度数: {{ data.alcohol_percentage }}%</p>
+              <p>量: {{ data.alcohol_amount }}ml</p>
+            </v-row>
           </v-card>
         </v-container>
         <v-container
@@ -79,6 +87,10 @@
             <v-card-text>
               {{ data.description }}
             </v-card-text>
+            <v-row justify="center" align-content="center">
+              <p>度数: {{ data.alcohol_percentage }}%</p>
+              <p>量: {{ data.alcohol_amount }}ml</p>
+            </v-row>
           </v-card>
         </v-container>
       </v-card>
