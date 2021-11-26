@@ -3,7 +3,9 @@
     <table>
       <th>name</th>
       <th>desctiption</th>
-      <tr v-for="content in contents" :key="content.id">
+      <th>index</th>
+      <tr v-for="(content, index) in contents" :key="content.id">
+        <td>{{ index + 1 }}</td>
         <td>
           <p>{{ content.name }}</p>
         </td>
@@ -26,7 +28,7 @@ export default {
     contents() {
       let targetValues = this.alcoholAll;
       let contentsOfTarget = Object.values(targetValues)[0];
-      return contentsOfTarget;
+      return targetValues;
     },
   },
   created() {},
