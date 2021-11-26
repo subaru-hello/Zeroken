@@ -17,7 +17,7 @@ services:
     build: .
     # command: bash -c "rails server -u puma"
     volumes:
-      - .:/Preliquo
+      - .:/Zeroken
     ports:
       - "3000:3000"
     depends_on:

@@ -135,7 +135,7 @@ export default {
           isShow: true,
         });
 
-        this.$router.push({ name: 'PreliquoTop' });
+        this.$router.push({ name: 'ZerokenTop' });
       } catch {
         this.fetchSnackbarData({
           msg: 'プロフィールを更新できませんでした',

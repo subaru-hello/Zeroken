@@ -178,12 +178,14 @@
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-action>
-                    <a
-                      href="https://timeline.line.me/social-plugin/share?url=https://preliquo.herokuapp.com/top"
+                    <img
+                      :src="imgSrc"
+                      width="20"
+                      height="20"
+                      href="https://timeline.line.me/social-plugin/share?url=https://zeroken.herokuapp.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      ><v-icon color="cyan"> mdi-twitter </v-icon></a
-                    >
+                    />
                   </v-list-item-action>
                   <v-card-title>LINE</v-card-title>
                 </v-list-item>

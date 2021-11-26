@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_11_24_222302) do
 
-  create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
+  create_table "alcohol_orders", charset: "utf8", force: :cascade do |t|
     t.bigint "analyze_id"
     t.bigint "alcohol_id"
     t.datetime "created_at", precision: 6, null: false
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.index ["analyze_id"], name: "index_alcohol_orders_on_analyze_id"
   end
 
-  create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "alcohols", charset: "utf8", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
     t.float "alcohol_percentage"
     t.integer "alcohol_amount"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
+  create_table "analyzes", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "total_points"
     t.integer "sake_strongness_types", default: 0
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
-  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+  create_table "relationships", charset: "utf8", force: :cascade do |t|
     t.integer "liquor_box_id", null: false
     t.integer "liquor_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_222302) do
     t.index ["liquor_id"], name: "index_relationships_on_liquor_id"
   end
 
-  create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "users", charset: "utf8", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "nickname", limit: 191
     t.string "email", limit: 191, null: false
     t.string "crypted_password", limit: 191
