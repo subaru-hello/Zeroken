@@ -56,7 +56,7 @@ export default {
     registerFunction() {
       this.registerUser(this.user).then((user) => {
         if (user) {
-          this.$router.push({ name: 'PreliquoTop' });
+          this.$router.push({ name: 'ZerokenTop' });
         } else {
           this.fetchSnackbarData({
             msg: '新規登録に失敗しました',

@@ -179,7 +179,7 @@
                 <v-list-item>
                   <v-list-item-action>
                     <a
-                      href="https://timeline.line.me/social-plugin/share?url=https://preliquo.herokuapp.com/top"
+                      href="https://timeline.line.me/social-plugin/share?url=https://zeroken.herokuapp.com/top"
                       target="_blank"
                       rel="noopener noreferrer"
                       ><v-icon color="cyan"> mdi-twitter </v-icon></a

@@ -6,7 +6,7 @@ import Result from '../pages/Result';
 import SelectNomivation from '../pages/SelectNomivation';
 import UserProfile from '../pages/UserProfile.vue';
 import UserRegister from '../pages/UserRegister';
-import PreliquoTop from '../pages/PreliquoTop';
+import ZerokenTop from '../pages/ZerokenTop';
 import UserLogin from '../pages/UserLogin';
 import UserAll from '../pages/UserAll';
 import AlcoholAll from '../pages/AlcoholAll';
@@ -18,8 +18,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: PreliquoTop,
-      name: 'PreliquoTop',
+      component: ZerokenTop,
+      name: 'ZerokenTop',
     },
     {
       path: '/login',

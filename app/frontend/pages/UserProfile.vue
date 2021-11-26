@@ -253,7 +253,7 @@ export default {
             isShow: true,
           });
 
-          this.$router.push({ name: 'PreliquoTop' });
+          this.$router.push({ name: 'ZerokenTop' });
         })
         .catch((err) => {
           this.fetchSnackbarData({

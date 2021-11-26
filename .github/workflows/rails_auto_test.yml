@@ -105,4 +105,4 @@ jobs:
   #         heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
   #         heroku_email: ${{secrets.HEROKU_EMAIL}}
   #         # TODO: add a route for health check
-  #         healthcheck: "https://preliquo.herokuapp.com" 
+  #         healthcheck: "https://zeroken.herokuapp.com" 

@@ -7,7 +7,7 @@
         <router-link
           class="router-link text-h4"
           style="color: #6ea4ca"
-          :to="{ name: 'PreliquoTop' }"
+          :to="{ name: 'ZerokenTop' }"
         >
           ZEROKEN
         </router-link>
