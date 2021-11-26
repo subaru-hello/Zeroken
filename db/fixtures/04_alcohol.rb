@@ -145,151 +145,151 @@ Alcohol.seed(
     },
     {
         name: 'ビール',
-        alcohol_percentage: 5.01,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: '「醸造酒」の一つ。とりあえずビールでお馴染みのビール。乾杯、そしてキンキンに冷えたビールを流し込もう。'
     },
     {
         name: 'ビール(一口)',
-        alcohol_percentage: 5.01,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: '「醸造酒」の一つ。とりあえずビールの風潮で頼んだはいいがビールがそこまで好きではないあなたへのジャストサイズ。'
     },
     {
         name: 'ザ・プレミアムモルツ',
-        alcohol_percentage: 5.02,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: '「醸造酒」の一つ。きめ細やかな泡。乾杯、そしてキンキンに冷えたビールを流し込もう。'
     },
    {
         name: "赤ワイン",
-        alcohol_percentage: 12.02,
+        alcohol_percentage: 12.00,
         alcohol_amount: 120,
         description: "「醸造酒」の一つ。ヨーロッパで嗜まれている赤葡萄仕立てのお酒。洋風の店に置いてあることが多い、大人の味。肉によく合う。"
     },
    {
         name: "白ワイン",
-        alcohol_percentage: 12.03,
+        alcohol_percentage: 12.00,
         alcohol_amount: 120,
         description: "「醸造酒」の一つ。ヨーロッパで嗜まれている白葡萄仕立てのお酒。洋風の店に置いてあることが多い、大人の味。魚によく合う。"
     },
     {
         name: "ジンソーダ",
-        alcohol_percentage: 6.02,
+        alcohol_percentage: 6.00,
         alcohol_amount: 350,
         description: "ジンをソーダで割ったライム風味のお酒。爽やかなライムの香りが特徴。炭酸のシュワシュワと爽快な味わいが特徴。"
     },
     {
         name: "ジントニック",
-        alcohol_percentage: 5.07,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "ジンを水で割ったライム風味のお酒。爽やかなライムの香りが特徴。コスパ良く酔いたい時におすすめ。"
     },
     {
         name: "ジンバック",
-        alcohol_percentage: 5.09,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "ジンをジンジャエールで割ったライム風味のお酒。甘味と酸味がいい塩梅で配合されている。コスパ良く酔いたい時におすすめ。"
     },
     {
         name: "ハイボール",
-        alcohol_percentage: 8.01,
+        alcohol_percentage: 8.00,
         alcohol_amount: 350,
         description: "ウィスキーをソーダ水で割ったお酒。ダイエット中だけど酒は飲みたいという方が好んで飲む。食事の邪魔をしないシンプルな味わい。"
     },
     {
         name: "ウーロンハイ",
-        alcohol_percentage: 3.03,
+        alcohol_percentage: 3.00,
         alcohol_amount: 350,
         description: "焼酎を烏龍茶で割ったお酒。あまり酔いたくないが、場の雰囲気的にお酒は口に運んでおいた方が無難だよなと判断した時に頼むことが多い。好き嫌いが分かれる。"
     },
     {
         name: "緑茶ハイ",
-        alcohol_percentage: 3.04,
+        alcohol_percentage: 3.00,
         alcohol_amount: 350,
         description: "焼酎を緑茶で割ったお酒。炭酸が苦手な方におすすめ。これを頼む人は将来成功する人が多いと噂だ。"
     },
     {
         name: "コークハイ",
-        alcohol_percentage: 5.11,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "ウィスキーをコーラで割ったお酒。美味しく酔いたい時に頼むことが多い。悪酔いに注意が必要だ。"
     },
     {
         name: "ジンジャーハイ",
-        alcohol_percentage: 5.12,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "ウィスキーをジンジャーエールで割ったお酒。美味しく酔いたい時に頼むことが多い。ウィスキー割界においてコークハイと二大巨頭を張っている。"
     },
     {
         name: "メガハイボール",
-        alcohol_percentage: 7.01,
+        alcohol_percentage: 7.00,
         alcohol_amount: 700,
         description: "ウィスキーをソーダ水で割ったお酒。ダイエット中だけど酒は飲みたいという方が好んで飲む。コーラやジンジャーエールで割って楽しむことができる。食事の邪魔をしないシンプルな味わい。"
     },
     {
         name: "ウィスキー(ストレート)",
-        alcohol_percentage: 40.08,
+        alcohol_percentage: 40.00,
         alcohol_amount: 30,
         description: "「蒸留酒」の一つ。ダンディーな雰囲気が漂う大人の飲み物。ウィスキーがお好きでしょ。"
     },
     {
         name: "ウィスキー(水割り)",
-        alcohol_percentage: 10.07,
+        alcohol_percentage: 10.00,
         alcohol_amount: 100,
         description: "「蒸留酒」の一つ。ダンディーな雰囲気が漂う大人の飲み物。食事の邪魔をしないシンプルな味わい。"
     },
     {
         name: "ウィスキー(ロック)",
-        alcohol_percentage: 40.07,
+        alcohol_percentage: 40.00,
         alcohol_amount: 30,
         description: "「蒸留酒」の一つ。ダンディーな雰囲気が漂う大人の飲み物。指で氷を回す方も中にはいる。"
     },
     {
         name: "日本酒(冷酒）",
-        alcohol_percentage: 15.01,
+        alcohol_percentage: 15.00,
         alcohol_amount: 180,
         description: "「醸造酒」の一つ。日本発祥のお酒で、海外ではsakeとして楽しまれている。米を発酵させて作ったお酒。"
     },
     {
         name: "日本酒(熱燗)",
-        alcohol_percentage: 15.01,
+        alcohol_percentage: 15.00,
         alcohol_amount: 180,
         description: "「醸造酒」の一つ。日本発祥のお酒で、海外ではsakeとして楽しまれている。温めることで米の味わいが一層強まる。"
     },
     {
         name: "いも焼酎(ロック)",
-        alcohol_percentage: 25.05,
+        alcohol_percentage: 25.00,
         alcohol_amount: 90,
         description: "「蒸留酒」の一つ。芋を原料にして作られた焼酎。「好きなお酒はいも焼酎です」と言うとおじさんに可愛がられるかも。"
     },
     {
         name: "麦焼酎",
-        alcohol_percentage: 25.06,
+        alcohol_percentage: 25.00,
         alcohol_amount: 90,
         description: "「蒸留酒」の一つ。麦を原料にして作られた焼酎。甘い匂いを出す。飲むと酩酊に近づくことができる。"
     },
     {
         name: "レモンサワー",
-        alcohol_percentage: 5.05,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "「混成酒」の一つ。某有名男性ダンスグループに飲まれているお酒。お店によって度数の変動が激しい。"
     },
     {
         name: "男梅サワー",
-        alcohol_percentage: 5.05,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "「混成酒」の一つ。梅干しまるごと粉砕製法で、梅干しのおいしさを余すことなく閉じ込めた梅干しサワー。酸っぱい。"
     },
     {
         name: "優しいレモンサワー",
-        alcohol_percentage: 3.05,
+        alcohol_percentage: 3.00,
         alcohol_amount: 350,
         description: "「混成酒」の一つ。某有名男性ダンスグループに飲まれているお酒。優しい甘さとほんのり薫アルコールのバランスを堪能あれ。"
     },
     {
         name: "濃いめのレモンサワー",
-        alcohol_percentage: 7.01,
+        alcohol_percentage: 7.00,
         alcohol_amount: 350,
         description: "「混成酒」の一つ。レモンサワー専門店で提供されることが多い。度数は高めだが、呑みやすいことに定評がある。"
     },
@@ -361,25 +361,25 @@ Alcohol.seed(
     },
     {
         name: "ファジーネーブル",
-        alcohol_percentage: 3.10,
+        alcohol_percentage: 3.00,
         alcohol_amount: 350,
         description: "リキュールベースの甘いカクテル。「桃なのかオレンジなのかわからない曖昧な味」や「桃の産毛」という意味がある。"
     },
     {
         name: "柚ハチミツ",
-        alcohol_percentage: 3.10,
+        alcohol_percentage: 3.00,
         alcohol_amount: 350,
         description: "柚子とハチミツを混合させたリキュールベースのお酒。優しいお酒。お酒は頼んでおかないと場の雰囲気を壊しそう、、と判断した時に頼もう。"
     },
     {
         name: "モスコミュール",
-        alcohol_percentage: 5.10,
+        alcohol_percentage: 5.00,
         alcohol_amount: 350,
         description: "「モスクワのラバ」という意味があり、「ラバに蹴飛ばされたように」効いてくる、強いウォッカベースのカクテル。"
     },
     {
         name: "メガ金麦",
-        alcohol_percentage: 5.10,
+        alcohol_percentage: 5.00,
         alcohol_amount: 700,
         description: "金麦のメガサイズ。“贅沢麦芽”による麦のうまみとバランスの良い後味にこだわった金麦"
     },
