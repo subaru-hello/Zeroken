@@ -1,12 +1,14 @@
 import axios from '../../plugins/axios';
-const state = () => ({
-  alcohols: {
-    name: [],
-    alcohol_percentage: [],
-    alcohol_amount: [],
-    description: [],
-  },
-});
+const state = {
+  alcohols: [
+    {
+      name: '',
+      alcohol_percentage: '',
+      alcohol_amount: '',
+      description: '',
+    },
+  ],
+};
 const getters = {
   alcohols: (state) => state.alcohols,
 };
