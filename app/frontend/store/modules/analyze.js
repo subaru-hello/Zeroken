@@ -1,12 +1,14 @@
 import axios from '../../plugins/axios';
 const state = {
-  analyzes: {
-    total_points: '',
-    sake_strongness_types: '',
-    next_nomivation_types: '',
-    description: '',
-    shuchedule: '',
-  },
+  analyzes: [
+    {
+      total_points: '',
+      sake_strongness_types: '',
+      next_nomivation_types: '',
+      description: '',
+      shuchedule: '',
+    },
+  ],
 };
 const getters = {
   analyzes: (state) => state.analyzes,
