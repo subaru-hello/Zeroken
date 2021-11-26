@@ -1,8 +1,6 @@
 <template>
   <div>
     <v-layout>
-      <!-- <v-col v-model="shuche">{{ shuche }}</v-col> -->
-      <!-- <p >{{ testAnalyzes }}</p> -->
       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped width="5000" id="form">
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           {{ $t('analyzes.next_nomivation_types.flesh') }} になりたいあなたに向けた
@@ -174,8 +172,6 @@
                       rel="noopener noreferrer"
                       ><v-icon color="cyan"> mdi-twitter </v-icon></a
                     >
-                    <!-- <div data-url="https://social-plugins.line.me/lineit/share?url={URL}"> -->
-                    <!-- </div> -->
                   </v-list-item-action>
                   <v-card-title>LINE</v-card-title>
                 </v-list-item>
@@ -185,8 +181,6 @@
         </v-row>
       </v-card>
     </div>
-
-    <!-- <v-btn class="justify-center"> 結果を保存する</v-btn> -->
   </div>
 </template>
 
@@ -219,9 +213,9 @@ export default {
       return targetShuchedule;
     },
     contents() {
-   const thisAnalyze = this.analyzes;
+      const thisAnalyze = this.analyzes;
 
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]["shuchedule"]
+      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
 
       const targetValues = this.alcohols;
 
@@ -235,7 +229,7 @@ export default {
       return targetSakeStrongness;
     },
     imgSrc() {
-      return require('../src/img/liquor.svg');
+      return require('../src/img/line.png');
     },
     sakeSrc() {
       return require('../src/img/sake.svg');
