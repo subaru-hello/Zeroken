@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_093921) do
+ActiveRecord::Schema.define(version: 2021_11_24_222302) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 2021_11_13_093921) do
   create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "analyze_id"
     t.bigint "alcohol_id"
-    t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["alcohol_id"], name: "index_alcohol_orders_on_alcohol_id"
@@ -54,7 +53,6 @@ ActiveRecord::Schema.define(version: 2021_11_13_093921) do
     t.string "name"
     t.float "alcohol_percentage"
     t.integer "alcohol_amount"
-    t.integer "pure_alcohol_intake"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -68,7 +66,17 @@ ActiveRecord::Schema.define(version: 2021_11_13_093921) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.integer "shuchedule"
     t.index ["user_id"], name: "index_analyzes_on_user_id"
+  end
+
+  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "liquor_box_id", null: false
+    t.integer "liquor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["liquor_box_id"], name: "index_relationships_on_liquor_box_id"
+    t.index ["liquor_id"], name: "index_relationships_on_liquor_id"
   end
 
   create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|

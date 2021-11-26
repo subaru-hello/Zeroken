@@ -8,6 +8,8 @@ import UserProfile from '../pages/UserProfile.vue';
 import UserRegister from '../pages/UserRegister';
 import PreliquoTop from '../pages/PreliquoTop';
 import UserLogin from '../pages/UserLogin';
+import UserAll from '../pages/UserAll';
+import AlcoholAll from '../pages/AlcoholAll';
 Vue.use(Router);
 
 const router = new Router({
@@ -15,7 +17,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/top',
+      path: '/',
       component: PreliquoTop,
       name: 'PreliquoTop',
     },
@@ -41,6 +43,16 @@ const router = new Router({
       name: 'UserProfile',
       meta: { requireAuth: true },
       props: true,
+    },
+    {
+      path: '/users',
+      component: UserAll,
+      name: 'UserAll',
+    },
+    {
+      path: '/alcohols',
+      component: AlcoholAll,
+      name: 'AlcoholAll',
     },
     {
       path: '/nomivation',

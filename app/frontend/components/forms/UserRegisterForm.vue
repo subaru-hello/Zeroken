@@ -108,8 +108,7 @@ export default {
       // default: '',
     },
   },
-  data() {
-      },
+  data() {},
   data() {
     return {
       rules: {

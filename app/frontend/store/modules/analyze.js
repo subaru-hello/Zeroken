@@ -1,11 +1,14 @@
 import axios from '../../plugins/axios';
 const state = {
-  analyzes: {
-    total_points: '',
-    sake_strongness_types: '',
-    next_nomivation_types: '',
-    description: '',
-  },
+  analyzes: [
+    {
+      total_points: '',
+      sake_strongness_types: '',
+      next_nomivation_types: '',
+      description: '',
+      shuchedule: '',
+    },
+  ],
 };
 const getters = {
   analyzes: (state) => state.analyzes,
@@ -20,6 +23,7 @@ const mutations = {
     analyzeArray.push(analyze.sake_strongness_types);
     analyzeArray.push(analyze.next_nomivation_types);
     analyzeArray.push(analyze.description);
+    analyzeArray.push(analyze.shuchedule);
     state.analyzes = analyzeArray;
   },
   updateAnalyze: (state, updAnalyze) => {

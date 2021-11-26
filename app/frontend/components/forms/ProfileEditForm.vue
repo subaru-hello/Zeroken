@@ -2,11 +2,11 @@
   <v-dialog :value="isShow" width="650px" @click:outside="closeDialog">
     <v-sheet id="profile-edit-form" class="pa-10">
       <div class="text-center mb-5">
-       <v-avatar class="or-avatar mb-5" size="200">
-                <img :src="sakeSrc" width="150" height="100" />
-              </v-avatar>
-        </div>
-        <!-- <div>
+        <v-avatar class="or-avatar mb-5" size="200">
+          <img :src="sakeSrc" width="150" height="100" />
+        </v-avatar>
+      </div>
+      <!-- <div>
           <v-btn @click="actionInputFile">プロフィール画像を変更</v-btn>
         </div>
       
@@ -47,7 +47,6 @@
           v-slot="{ errors }"
           name="メールアドレス"
           mode="blur"
-           
           :rules="formRules.email"
         >
           <v-text-field
@@ -86,22 +85,21 @@
 import axios from '../../plugins/axios';
 export default {
   props: {
-    
     id: {
       type: Number,
-    //   required: true,
+      //   required: true,
     },
     nickname: {
       type: String,
-    //   required: true,
+      //   required: true,
     },
     email: {
       type: String,
-    //   required: true,
+      //   required: true,
     },
     avatar: {
       type: String,
-    //   required: true,
+      //   required: true,
     },
     isShow: {
       type: Boolean,
@@ -110,44 +108,43 @@ export default {
   data() {
     return {
       formRules: {
-        nickname: {  isUnique: ['nickname', this.id], max: 10 },
-        email: {  email: true, isUnique: ['email', this.id], max: 50 },
+        nickname: { isUnique: ['nickname', this.id], max: 10 },
+        email: { email: true, isUnique: ['email', this.id], max: 50 },
         avatar: { size: 10000, ext: ['jpg', 'jpeg', 'png', 'gif'] },
       },
       fileErrorDisplayed: false,
     };
   },
-  computed:{
-        sakeSrc() {
+  computed: {
+    sakeSrc() {
       return require('../../src/img/default_profile.png');
     },
   },
   methods: {
-        update() {
-      const formData = new FormData()
-      formData.append("user[nickname]", this.authUserEdit.nickname)
-      formData.append("user[email]", this.authUserEdit.email)
+    update() {
+      const formData = new FormData();
+      formData.append('user[nickname]', this.authUserEdit.nickname);
+      formData.append('user[email]', this.authUserEdit.email);
 
       try {
-        this.updateAuthUser(formData)
-         this.handleShowEditProfile();
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新しました',
-            color: 'success',
-            isShow: true,
-          });
-                
- 
-        this.$router.push({ name: "PreliquoTop" })
+        this.updateAuthUser(formData);
+        this.handleShowEditProfile();
+        this.fetchSnackbarData({
+          msg: 'プロフィールを更新しました',
+          color: 'success',
+          isShow: true,
+        });
+
+        this.$router.push({ name: 'PreliquoTop' });
       } catch {
         this.fetchSnackbarData({
-            msg: 'プロフィールを更新できませんでした',
-            color: 'error',
-            isShow: true,
-       
-      })}
+          msg: 'プロフィールを更新できませんでした',
+          color: 'error',
+          isShow: true,
+        });
+      }
     },
-      handleUpdateProfiles() {
+    handleUpdateProfiles() {
       this.$emit('updateProfiles');
     },
     actionInputFile() {

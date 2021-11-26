@@ -25,15 +25,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[3].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[3].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -47,15 +47,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[1].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[1].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -69,15 +69,15 @@
             shaped
             width="500"
             id="form"
-            v-for="data in alcohols"
+            v-for="data in contents"
             :key="data.id"
           >
             <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data[0].name }}
+              {{ data.name }}
             </v-card-title>
             <img :src="beerSrc" width="150" height="100" />
             <v-card-text>
-              {{ data[0].description }}
+              {{ data.description }}
             </v-card-text>
           </v-card>
         </v-container>
@@ -166,9 +166,14 @@
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-action>
-                    <v-icon>mdi-email</v-icon>
+                    <a
+                      href="https://timeline.line.me/social-plugin/share?url=https://preliquo.herokuapp.com/top"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      ><v-icon color="cyan"> mdi-twitter </v-icon></a
+                    >
                   </v-list-item-action>
-                  <v-card-title>Email</v-card-title>
+                  <v-card-title>LINE</v-card-title>
                 </v-list-item>
               </v-list>
             </v-card>
@@ -176,8 +181,6 @@
         </v-row>
       </v-card>
     </div>
-
-    <!-- <v-btn class="justify-center"> 結果を保存する</v-btn> -->
   </div>
 </template>
 
@@ -191,6 +194,7 @@ export default {
   },
   data: function () {
     return {
+      shuche: '',
       alcohols: [],
       analyze: [],
       users: [],
@@ -203,19 +207,29 @@ export default {
   computed: {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
-    currentUsersSakeStrongness() {
+    testAnalyzes() {
       const thisAnalyze = this.analyzes;
-      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1]['sake_strongness_types'];
-      const SakeType =
-        targetSakeStrongness === 'strong'
-          ? '酒豪'
-          : targetSakeStrongness === 'weak'
-          ? '下戸'
-          : '普通';
-      return SakeType;
+      const targetShuchedule = thisAnalyze[thisAnalyze.length - 1];
+      return targetShuchedule;
+    },
+    contents() {
+      const thisAnalyze = this.analyzes;
+
+      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+
+      const targetValues = this.alcohols;
+
+      const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
+
+      return contentsOfTarget;
+    },
+    currentUser() {
+      const thisAnalyze = this.analyzes;
+      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1];
+      return targetSakeStrongness;
     },
     imgSrc() {
-      return require('../src/img/liquor.svg');
+      return require('../src/img/line.png');
     },
     sakeSrc() {
       return require('../src/img/sake.svg');
@@ -229,12 +243,12 @@ export default {
   },
   mounted() {
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
+    this.analyze = this.fetchAnalyzes;
   },
   updated() {},
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
-    this.analyze = this.fetchAnalyzes;
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),

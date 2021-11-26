@@ -54,10 +54,10 @@ extend('image', {
 });
 extend('isUnique', {
   params: ['column'],
-  async validate(value, { column}) {
+  async validate(value, { column }) {
     const response = await axios.get('validation/unique', {
       params: {
-        [column]: value
+        [column]: value,
       },
     });
     if (response.data === 'unique') {

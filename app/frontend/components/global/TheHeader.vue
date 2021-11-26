@@ -1,51 +1,90 @@
-<template >
-    <div >
-     
-        <v-app-bar  style="background-color: #165e83;" id="page-header" >
-        <!-- <v-app-bar  class="izakaya" id="page-header"> -->
-            <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
-            <v-toolbar-title >
-          
-      
-                <router-link class="router-link text-h4" style="color: #6EA4CA"
-                :to="{ name: 'PreliquoTop' }">
-                ZEROKEN
-                </router-link>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-                 <template v-if="!!authUser"  >
-            <!-- <router-link
-            class="router-link text"
-              :to="{ name: 'UserProfile' }"
-  text rounded plain :ripple="{ center: true }" x-large  style="color: white"
-            >
-              酒テータス
-            </router-link> -->
-    
-                     <v-btn  class="router-link text" text rounded plain :ripple="{ center: true }" x-large  style="color: white">呑んべえ一覧</v-btn>
-                     <v-btn  class="router-link text" text rounded plain :ripple="{ center: true }" x-large  style="color: white">用語集</v-btn>
-        <v-btn text rounded plain class="router-link text"  :ripple="{ center: true }" x-large @click="logoutFunction" id="logput_btn" style="color: white">
-          ログアウト
-        </v-btn>
-        <router-link class="router-link text"
-                :to="{ name: 'Analyze' }"
+<template>
+  <div>
+    <v-app-bar style="background-color: #165e83" id="page-header">
+      <!-- <v-app-bar  class="izakaya" id="page-header"> -->
+      <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
+      <v-toolbar-title>
+        <router-link
+          class="router-link text-h4"
+          style="color: #6ea4ca"
+          :to="{ name: 'PreliquoTop' }"
+        >
+          ZEROKEN
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <template v-if="!!authUser">
+        <router-link
+          class="router-link text"
+          :to="{ name: 'UserProfile' }"
+          text
+          rounded
+          plain
+          :ripple="{ center: true }"
+          x-large
+          style="color: white"
+        >
+          酒テータス
+        </router-link>
+
+        <!-- <router-link class="router-link text"
+                :to="{ name: 'UserAll' }"
                 style="color: white"
                 text rounded plain :ripple="{ center: true }" x-large 
-                >
-                酒ケジュール作成する
-                </router-link>
+                >呑んべえ一覧</router-link> -->
+        <v-btn
+          class="router-link text"
+          text
+          rounded
+          plain
+          :ripple="{ center: true }"
+          x-large
+          style="color: white"
+          >用語集</v-btn
+        >
+        <v-btn
+          text
+          rounded
+          plain
+          class="router-link text"
+          :ripple="{ center: true }"
+          x-large
+          @click="logoutFunction"
+          id="logput_btn"
+          style="color: white"
+        >
+          ログアウト
+        </v-btn>
+        <router-link
+          class="router-link text"
+          :to="{ name: 'Analyze' }"
+          style="color: white"
+          text
+          rounded
+          plain
+          :ripple="{ center: true }"
+          x-large
+        >
+          酒ケジュール作成
+        </router-link>
       </template>
-        <template v-else>
-        <v-btn :to="{ name: 'UserRegister' }" text rounded :ripple="{ center: true }" x-large style="color: white">
+      <template v-else>
+        <v-btn
+          :to="{ name: 'UserRegister' }"
+          text
+          rounded
+          :ripple="{ center: true }"
+          x-large
+          style="color: white"
+        >
           新規登録
         </v-btn>
-          <v-btn text style="color: white">用語集</v-btn>
+        <v-btn text style="color: white">用語集</v-btn>
         <v-btn
           class="hidden-sm-and-down"
           :to="{ name: 'UserLogin' }"
           text
           rounded
-          
           :ripple="{ center: true }"
           x-large
           style="color: white"
@@ -53,21 +92,20 @@
           ログイン
         </v-btn>
       </template>
-
-        </v-app-bar>
-    </div>
+    </v-app-bar>
+  </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    name: "TheHeader",
-    computed: {
-        ...mapGetters('users', ['authUser']),
-    },
-    
-    methods: {
-        ...mapActions('users', ['logoutUser']),
-        ...mapActions('snackbar', ['fetchSnackbarData']),
+  name: 'TheHeader',
+  computed: {
+    ...mapGetters('users', ['authUser']),
+  },
+
+  methods: {
+    ...mapActions('users', ['logoutUser']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
     logoutFunction() {
       this.logoutUser().then((res) => {
         if (res) {
@@ -86,8 +124,8 @@ export default {
         }
       });
     },
-    },
-}
+  },
+};
 </script>
 <style scoped>
 .izakaya {
