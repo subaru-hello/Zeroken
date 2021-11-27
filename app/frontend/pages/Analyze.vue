@@ -267,7 +267,7 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
     highballSrc() {
-      return require('../src/img/38763.jpg');
+      return require('../src/img/high_ball_kanpai.jpg');
     },
     imgSrc() {
       return require('../src/img/drunkman.svg');
@@ -312,7 +312,7 @@ export default {
         behavior: 'smooth',
       });
     },
-
+    
     countAnswer(indexNum, updAnswer) {
       this.updateAnswer({ indexNum, updAnswer });
     },
