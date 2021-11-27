@@ -14,7 +14,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <template v-if="!!authUser">
-        <router-link
+        <!-- <router-link
           class="router-link text"
           :to="{ name: 'UserProfile' }"
           text
@@ -25,7 +25,7 @@
           style="color: white"
         >
           酒テータス
-        </router-link>
+        </router-link> -->
 
         <!-- <router-link class="router-link text"
                 :to="{ name: 'UserAll' }"

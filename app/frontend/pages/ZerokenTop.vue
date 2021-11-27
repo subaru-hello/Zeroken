@@ -21,6 +21,47 @@
       </v-col>
 
       <v-spacer />
+      <v-row>
+        <v-col xs="12" sm="12" class="d-flex justify-space-around">
+          <v-btn @click="dialog1 = true">酒(シュ)ケジュールとは</v-btn>
+          <v-dialog v-model="dialog1" scrollable max-width="80%">
+            <v-card>
+              <v-card-title>酒(シュ)ケジュールとは</v-card-title>
+              <v-divider></v-divider>
+              <v-card-text>次の飲み会でのむお酒の順番を意味しています。</v-card-text>
+              <v-card-text>「お酒の順番 + スケジュール」の造語です。</v-card-text>
+              <v-card-text
+                >使用例
+                「酒ケジュールによると次はノンアルを飲む予定になっているのでもうお酒は飲めません。。」</v-card-text
+              >
+            </v-card>
+          </v-dialog>
+          <v-btn @click="dialog2 = true">飲みベーションとは</v-btn>
+          <v-dialog v-model="dialog2" scrollable max-width="80%">
+            <v-card>
+              <v-card-title>飲みベーションとは</v-card-title>
+              <v-divider></v-divider>
+              <v-card-text>次の飲み会に向けたモチベーションを意味しています。</v-card-text>
+              <v-card-text>「お酒 + ステータス」の造語です。</v-card-text>
+              <v-card-text>使用例 「飲みべ低いので今日は帰ります。。」</v-card-text>
+            </v-card>
+          </v-dialog>
+          <v-btn @click="dialog3 = true">酒テータスとは</v-btn>
+          <v-dialog v-model="dialog3" scrollable max-width="80%">
+            <v-card>
+              <v-card-title>酒テータスとは</v-card-title>
+              <v-divider></v-divider>
+              <v-card-text
+                >ユーザーのお酒の強さ、そして次の飲み会で飲むお酒の順番を表す状態になります。</v-card-text
+              >
+              <v-card-text>「お酒 + ステータス」の造語です。</v-card-text>
+              <v-card-text
+                >使用例: 「私の酒テータス下戸だから飲み会参加できないんです。。」</v-card-text
+              >
+            </v-card>
+          </v-dialog>
+        </v-col>
+      </v-row>
     </v-row>
   </v-container>
 </template>
@@ -34,7 +75,9 @@ export default {
   data() {
     return {
       isVisibleFirstGreeting: false,
-      // users: [],
+      dialog1: false,
+      dialog2: false,
+      dialog3: false,
       tab: null,
       dialog: false,
       title: 'あなたにとっての0軒目',
