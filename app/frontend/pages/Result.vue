@@ -49,7 +49,6 @@
             class="text-center mx-auto my-5 form"
             elevation="2"
             shaped
-            width="500"
             id="form"
             v-for="data in contents"
             :key="data.id"
@@ -68,7 +67,7 @@
           </v-card>
         </v-container>
         <v-container
-          class="d-flex flex-row mb-6"
+          class="d-flex justify-center mb-6"
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'weak'"
         >
           <v-card

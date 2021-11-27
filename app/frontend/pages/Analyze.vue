@@ -14,77 +14,75 @@
             md="12"
             lg="12"
           >
-            <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-              <v-layout justify-center>
-                <v-card-title>
-                  <v-container>
-                    <v-card
-                      class="text-center mx-auto my-5 form"
-                      elevation="2"
-                      shaped
-                      width="500"
-                      id="form"
+            <v-layout justify-center>
+              <v-card-title>
+                <v-container>
+                  <v-card
+                    class="text-center mx-auto my-5 form"
+                    elevation="2"
+                    shaped
+                    width="500"
+                    id="form"
+                  >
+                    <v-card-title
+                      style="width: 100% white-space:pre-wrap;"
+                      class="headline justify-center"
+                      :id="'bigq' + question.num"
                     >
-                      <v-card-title
-                        style="width: 100%"
-                        class="headline justify-center"
-                        :id="'bigq' + question.num"
-                      >
-                        Q{{ question.num }}.
-                        {{ question.title }}
-                      </v-card-title>
-
-                      <v-radio-group :id="'smallq' + question.num" mandatory row>
-                        <v-radio
-                          class="mx-auto justify-center"
-                          fab
-                          light
-                          :ripple="{ center: false, class: 'gray--text' }"
-                          @click="
-                            clickScroll($event);
-                            countAnswer(question.num, 1);
-                          "
-                          label="1: いつもある"
-                        ></v-radio>
-                        <v-radio
-                          class="mx-auto justify-center"
-                          fab
-                          light
-                          :ripple="{ center: false, class: 'gray--text' }"
-                          @click="
-                            clickScroll($event);
-                            countAnswer(question.num, 2);
-                          "
-                          label="2: 時々ある"
-                        ></v-radio>
-                        <v-radio
-                          class="mx-auto justify-center"
-                          fab
-                          light
-                          :ripple="{ center: false, class: 'gray--text' }"
-                          @click="
-                            clickScroll($event);
-                            countAnswer(question.num, 3);
-                          "
-                          label="3: 全くない"
-                        ></v-radio>
-                      </v-radio-group>
-                      <p class="py-3" style="font-size: 16px">
-                        あなたの回答： {{ question.answer }}
-                      </p>
-                    </v-card>
-                  </v-container>
-                </v-card-title>
-              </v-layout>
-            </v-col>
+                      Q{{ question.num }}.
+                      {{ question.title }}
+                    </v-card-title>
+                    <!-- <v-col cols="12" xs="6" sm="12" md="12" lg="12" > -->
+                    <v-radio-group :id="'smallq' + question.num" mandatory row class="mx-16 px-9">
+                      <v-radio
+                        class="mx-auto justify-center"
+                        fab
+                        light
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        @click="
+                          clickScroll($event);
+                          countAnswer(question.num, 1);
+                        "
+                        label="1: いつも"
+                      ></v-radio>
+                      <v-radio
+                        class="mx-auto justify-center"
+                        fab
+                        light
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        @click="
+                          clickScroll($event);
+                          countAnswer(question.num, 2);
+                        "
+                        label="2: 時々"
+                      ></v-radio>
+                      <v-radio
+                        class="mx-auto justify-center"
+                        fab
+                        light
+                        :ripple="{ center: false, class: 'gray--text' }"
+                        @click="
+                          clickScroll($event);
+                          countAnswer(question.num, 3);
+                        "
+                        label="3: 全くない"
+                      ></v-radio>
+                    </v-radio-group>
+                    <!-- </v-col> -->
+                    <p class="py-3" style="font-size: 16px">あなたの回答： {{ question.answer }}</p>
+                    <!-- <p v-if="radios != null "><span></span>ここ</p> -->
+                  </v-card>
+                </v-container>
+              </v-card-title>
+            </v-layout>
           </v-col>
-
-          <v-col cols="4" xs="4" sm="2" md="2" lg="1"> </v-col>
           <p class="Page-Btn">
             <v-btn fab dark small color="primary" @click="scrollTop()">
               <v-icon>mdi-arrow-up-thick</v-icon>
             </v-btn>
           </p>
+          <!-- <v-col cols="12" xs="4" sm="12" md="12" lg="1"> </v-col> -->
+
           <p
             v-if="isVisible"
             class="text-center red--text text--lightn-3 my-5 mb-5"
@@ -95,19 +93,21 @@
             <span></span>未回答の項目があります。
           </p>
         </v-row>
-
-        <v-btn
-          color="primary"
-          x-large
-          style="font-size: 30px"
-          :disabled="isVisible"
-          @click="
-            clickScrollNext();
-            e6 = 2;
-          "
-        >
-          次へ
-        </v-btn>
+        <v-spacer></v-spacer>
+        <v-col cols="12" xs="4" sm="6" md="12" lg="12" class="text-center">
+          <v-btn
+            color=" primary"
+            x-large
+            style="font-size: 30px"
+            :disabled="isVisible"
+            @click="
+              clickScrollNext();
+              e6 = 2;
+            "
+          >
+            次へ
+          </v-btn>
+        </v-col>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2"> 体重設定画面 </v-stepper-step>
@@ -123,15 +123,17 @@
             </v-layout>
           </v-container>
         </template>
-        <v-btn
-          color="primary"
-          x-large
-          style="font-size: 30px"
-          :disabled="isVisible"
-          @click="e6 = 3"
-        >
-          次へ
-        </v-btn>
+        <v-col cols="12" xs="4" sm="6" md="12" lg="12" class="text-center">
+          <v-btn
+            color="primary"
+            x-large
+            style="font-size: 30px"
+            :disabled="isVisible"
+            @click="e6 = 3"
+          >
+            次へ
+          </v-btn>
+        </v-col>
       </v-stepper-content>
       <v-stepper-step :complete="e6 > 3" step="3"> 飲みベーション選択画面 </v-stepper-step>
 
@@ -141,7 +143,7 @@
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                  <h1 class="text-center" style="font-size: 50px">
+                  <h1 class="text-center" style="font-size: 25px">
                     なりたい状態をクリックしてください。
                   </h1>
 
@@ -165,6 +167,7 @@
                             >
                             <img :src="imgSrc" width="150" height="100" />
                           </v-card>
+
                           <v-card
                             @click="setShuchedule1()"
                             style="font-size: 30px"
@@ -208,16 +211,14 @@
                               <div class="modal-container">
                                 <div class="modal-body" align-content="center">
                                   <slot name="body" style="padding-left: 20px">
-                                    <FacebookLoader />
-
-                                    <p style="font-size: 25px">
+                                    <p style="font-size: 25px" class="text-center">
                                       酒ケジュール作成中
-                                      <v-progress-linear
-                                        indeterminate
-                                        color="white"
-                                        class="mb-0"
-                                      ></v-progress-linear>
                                     </p>
+                                    <div align="center">
+                                      <Facebook-loader />
+                                      <img :src="highballSrc" width="50" height="50" />
+                                      <Facebook-loader />
+                                    </div>
                                   </slot>
                                 </div>
                               </div>
@@ -232,16 +233,6 @@
             </v-layout>
           </v-container>
         </template>
-
-        <!-- <v-btn
-        color="primary"
-        @click="e6 = 3"
-      >
-        Continue
-      </v-btn>
-      <v-btn text>
-        Cancel
-      </v-btn> -->
       </v-stepper-content>
     </v-stepper>
   </div>
@@ -276,6 +267,9 @@ export default {
     ...mapGetters('question', ['questions']),
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
+    highballSrc() {
+      return require('../src/img/38763.jpg');
+    },
     imgSrc() {
       return require('../src/img/drunkman.svg');
     },
@@ -285,35 +279,21 @@ export default {
     drinkSrc() {
       return require('../src/img/liquor.svg');
     },
-    currentUserName() {
-      return this.users[0];
+
+    created() {
+      this.users = this.fetchAuthUser;
+      this.fetchAuthUser();
     },
-    Sakenotuyosa() {
-      const yourSakeStrongness = this.analyzes.total_points;
-      if (yourSakeStrongness < 0) {
-        return '下戸';
-      } else if (yourSakeStrongness === 0) {
-        return '普通';
+    mounted() {
+      axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+      axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
+      const notAnswers = this.questions.filter((question) => question.answer === '未回答');
+      if (notAnswers.length > 0) {
+        this.isVisible = true;
       } else {
-        return '酒豪';
+        this.isVisible = false;
       }
     },
-  },
-  created() {
-    this.users = this.fetchAuthUser;
-    this.fetchAuthUser();
-  },
-  mounted() {
-    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
-    axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
-    const notAnswers = this.questions.filter((question) => question.answer === '未回答');
-    //与えられた関数によって実装されたテストに合格したすべての配列からなる新しい配列を生成する
-    //未回答以外の値数を算出
-    if (notAnswers.length > 0) {
-      this.isVisible = true;
-    } else {
-      this.isVisible = false;
-    }
   },
   updated() {
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
@@ -324,7 +304,6 @@ export default {
     }
   },
   methods: {
-    //同期処理を記述する
     ...mapMutations('question', ['updateAnswer']),
     ...mapMutations('analyze', ['addAnalyze']),
     ...mapActions('analyze', ['createAnalyze']),
@@ -393,50 +372,50 @@ export default {
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
       let yourShuchedule =
         totalAlcoholAmount < 2000
-          ? 23
-          : totalAlcoholAmount < 2500
-          ? 22
-          : totalAlcoholAmount < 3000
           ? 21
-          : totalAlcoholAmount < 3500
+          : totalAlcoholAmount < 2500
           ? 20
-          : totalAlcoholAmount < 4000
+          : totalAlcoholAmount < 3000
           ? 19
-          : totalAlcoholAmount < 4500
+          : totalAlcoholAmount < 3500
           ? 18
-          : totalAlcoholAmount < 5000
+          : totalAlcoholAmount < 4000
           ? 17
-          : totalAlcoholAmount < 5500
+          : totalAlcoholAmount < 4500
           ? 16
-          : totalAlcoholAmount < 6000
+          : totalAlcoholAmount < 5000
           ? 15
-          : totalAlcoholAmount < 6500
+          : totalAlcoholAmount < 5500
           ? 14
-          : totalAlcoholAmount < 7000
+          : totalAlcoholAmount < 6000
           ? 13
-          : totalAlcoholAmount < 7500
+          : totalAlcoholAmount < 6500
           ? 12
-          : totalAlcoholAmount < 8000
+          : totalAlcoholAmount < 7000
           ? 11
-          : totalAlcoholAmount < 8500
+          : totalAlcoholAmount < 7500
           ? 10
-          : totalAlcoholAmount < 9000
+          : totalAlcoholAmount < 8000
           ? 9
-          : totalAlcoholAmount < 9500
+          : totalAlcoholAmount < 8500
           ? 8
-          : totalAlcoholAmount < 10000
+          : totalAlcoholAmount < 9000
           ? 7
-          : totalAlcoholAmount < 10500
+          : totalAlcoholAmount < 9500
           ? 6
-          : totalAlcoholAmount < 11000
+          : totalAlcoholAmount < 10000
           ? 5
-          : totalAlcoholAmount < 11500
+          : totalAlcoholAmount < 10500
           ? 4
-          : totalAlcoholAmount < 12000
+          : totalAlcoholAmount < 11000
           ? 3
-          : totalAlcoholAmount < 12500
+          : totalAlcoholAmount < 11500
           ? 2
-          : 1;
+          : totalAlcoholAmount < 12000
+          ? 1
+          : totalAlcoholAmount < 12500
+          ? 0
+          : 24;
 
       let Description =
         sumResult < -20
@@ -602,50 +581,51 @@ export default {
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
       let yourShuchedule =
         totalAlcoholAmount < 2000
-          ? 23
-          : totalAlcoholAmount < 2500
-          ? 22
-          : totalAlcoholAmount < 3000
           ? 21
-          : totalAlcoholAmount < 3500
+          : totalAlcoholAmount < 2500
           ? 20
-          : totalAlcoholAmount < 4000
+          : totalAlcoholAmount < 3000
           ? 19
-          : totalAlcoholAmount < 4500
+          : totalAlcoholAmount < 3500
           ? 18
-          : totalAlcoholAmount < 5000
+          : totalAlcoholAmount < 4000
           ? 17
-          : totalAlcoholAmount < 5500
+          : totalAlcoholAmount < 4500
           ? 16
-          : totalAlcoholAmount < 6000
+          : totalAlcoholAmount < 5000
           ? 15
-          : totalAlcoholAmount < 6500
+          : totalAlcoholAmount < 5500
           ? 14
-          : totalAlcoholAmount < 7000
+          : totalAlcoholAmount < 6000
           ? 13
-          : totalAlcoholAmount < 7500
+          : totalAlcoholAmount < 6500
           ? 12
-          : totalAlcoholAmount < 8000
+          : totalAlcoholAmount < 7000
           ? 11
-          : totalAlcoholAmount < 8500
+          : totalAlcoholAmount < 7500
           ? 10
-          : totalAlcoholAmount < 9000
+          : totalAlcoholAmount < 8000
           ? 9
-          : totalAlcoholAmount < 9500
+          : totalAlcoholAmount < 8500
           ? 8
-          : totalAlcoholAmount < 10000
+          : totalAlcoholAmount < 9000
           ? 7
-          : totalAlcoholAmount < 10500
+          : totalAlcoholAmount < 9500
           ? 6
-          : totalAlcoholAmount < 11000
+          : totalAlcoholAmount < 10000
           ? 5
-          : totalAlcoholAmount < 11500
+          : totalAlcoholAmount < 10500
           ? 4
-          : totalAlcoholAmount < 12000
+          : totalAlcoholAmount < 11000
           ? 3
-          : totalAlcoholAmount < 12500
+          : totalAlcoholAmount < 11500
           ? 2
-          : 1;
+          : totalAlcoholAmount < 12000
+          ? 1
+          : totalAlcoholAmount < 12500
+          ? 0
+          : 24;
+
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -812,50 +792,51 @@ export default {
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
       let yourShuchedule =
         totalAlcoholAmount < 2000
-          ? 23
-          : totalAlcoholAmount < 2500
-          ? 22
-          : totalAlcoholAmount < 3000
           ? 21
-          : totalAlcoholAmount < 3500
+          : totalAlcoholAmount < 2500
           ? 20
-          : totalAlcoholAmount < 4000
+          : totalAlcoholAmount < 3000
           ? 19
-          : totalAlcoholAmount < 4500
+          : totalAlcoholAmount < 3500
           ? 18
-          : totalAlcoholAmount < 5000
+          : totalAlcoholAmount < 4000
           ? 17
-          : totalAlcoholAmount < 5500
+          : totalAlcoholAmount < 4500
           ? 16
-          : totalAlcoholAmount < 6000
+          : totalAlcoholAmount < 5000
           ? 15
-          : totalAlcoholAmount < 6500
+          : totalAlcoholAmount < 5500
           ? 14
-          : totalAlcoholAmount < 7000
+          : totalAlcoholAmount < 6000
           ? 13
-          : totalAlcoholAmount < 7500
+          : totalAlcoholAmount < 6500
           ? 12
-          : totalAlcoholAmount < 8000
+          : totalAlcoholAmount < 7000
           ? 11
-          : totalAlcoholAmount < 8500
+          : totalAlcoholAmount < 7500
           ? 10
-          : totalAlcoholAmount < 9000
+          : totalAlcoholAmount < 8000
           ? 9
-          : totalAlcoholAmount < 9500
+          : totalAlcoholAmount < 8500
           ? 8
-          : totalAlcoholAmount < 10000
+          : totalAlcoholAmount < 9000
           ? 7
-          : totalAlcoholAmount < 10500
+          : totalAlcoholAmount < 9500
           ? 6
-          : totalAlcoholAmount < 11000
+          : totalAlcoholAmount < 10000
           ? 5
-          : totalAlcoholAmount < 11500
+          : totalAlcoholAmount < 10500
           ? 4
-          : totalAlcoholAmount < 12000
+          : totalAlcoholAmount < 11000
           ? 3
-          : totalAlcoholAmount < 12500
+          : totalAlcoholAmount < 11500
           ? 2
-          : 1;
+          : totalAlcoholAmount < 12000
+          ? 1
+          : totalAlcoholAmount < 12500
+          ? 0
+          : 24;
+
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
