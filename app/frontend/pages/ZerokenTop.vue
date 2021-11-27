@@ -5,8 +5,8 @@
       @close-dialog="isVisibleFirstGreeting = false"
     />
 
-    <v-row align-content="center">
-      <v-col class="text-right align-self-center" cols="6">
+    <v-row justify="center" align-content="center">
+      <v-col class="text-center align-self-center" cols="12">
         <p class="text-h2 bold">ゼロケン</p>
         <p class="text-h5 mb-12 font-weight-bold d-sm-block text-no-wrap service-description">
           {{ title }}<br />{{ text }}
@@ -21,8 +21,8 @@
       </v-col>
 
       <v-spacer />
-      <v-row>
-        <v-col xs="12" sm="12" class="d-flex justify-space-around">
+      <v-row class="text-center d-flex justify-space-around">
+        <v-col cols="3" sm="10" md="12" lg="12">
           <v-btn @click="dialog1 = true">酒(シュ)ケジュールとは</v-btn>
           <v-dialog v-model="dialog1" scrollable max-width="80%">
             <v-card>
@@ -81,7 +81,7 @@ export default {
       tab: null,
       dialog: false,
       title: 'あなたにとっての0軒目',
-      text: '華金に向けてお酒の強さを診断しましょう',
+      text: '飲み会で飲むお酒を診断しよう',
     };
   },
   components: {

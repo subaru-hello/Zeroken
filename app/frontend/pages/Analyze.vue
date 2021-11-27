@@ -32,7 +32,6 @@
                       Q{{ question.num }}.
                       {{ question.title }}
                     </v-card-title>
-                    <!-- <v-col cols="12" xs="6" sm="12" md="12" lg="12" > -->
                     <v-radio-group :id="'smallq' + question.num" mandatory row class="mx-16 px-9">
                       <v-radio
                         class="mx-auto justify-center"
@@ -81,7 +80,6 @@
               <v-icon>mdi-arrow-up-thick</v-icon>
             </v-btn>
           </p>
-          <!-- <v-col cols="12" xs="4" sm="12" md="12" lg="1"> </v-col> -->
 
           <p
             v-if="isVisible"
@@ -149,58 +147,59 @@
 
                   <v-dialog v-model="dialog" width="500">
                     <template #activator="{ on, attrs }">
-                      <div d-flex justify="center">
-                        <v-layout justify-space-between align-content="center">
-                          <v-card
-                            @click="setShuchedule2()"
-                            style="font-size: 30px; margin-left: 20px"
-                            justify="center"
-                            align-content="center"
-                            x-large
-                            :ripple="{ center: false, class: 'gray--text' }"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            <v-card-title
-                              style="font-size: 32px; text-decoration: none; text-color: black"
-                              >酩酊</v-card-title
-                            >
-                            <img :src="imgSrc" width="150" height="100" />
-                          </v-card>
+                      <div>
+                        <v-layout>
+                          <v-row justify="center" align-content="center">
+                            <v-col cols="12" sm="10" md="3" lg="3" xl="3">
+                              <v-card
+                                @click="setShuchedule2()"
+                                style="font-size: 30px"
+                                class="text-center"
+                                :ripple="{ center: false, class: 'gray--text' }"
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                <v-card-title
+                                  style="font-size: 32px; text-decoration: none; text-color: black"
+                                  class="text-center"
+                                  >酩酊</v-card-title
+                                >
+                                <img :src="imgSrc" width="150" height="100" class="text-center" />
+                              </v-card>
 
-                          <v-card
-                            @click="setShuchedule1()"
-                            style="font-size: 30px"
-                            x-large
-                            :ripple="{ center: false, class: 'gray--text' }"
-                            justify="center"
-                            align-content="center"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            <v-card-title
-                              style="font-size: 32px; text-decoration: none; text-color: black"
-                              >ほろ酔い</v-card-title
-                            >
-                            <img :src="sakeSrc" width="150" height="100" />
-                          </v-card>
+                              <v-card
+                                @click="setShuchedule1()"
+                                style="font-size: 30px"
+                                class="text-center"
+                                :ripple="{ center: false, class: 'gray--text' }"
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                <v-card-title
+                                  style="font-size: 32px; text-decoration: none; text-color: black"
+                                  class="text-center"
+                                  >ほろ酔い</v-card-title
+                                >
+                                <img :src="sakeSrc" width="150" height="100" class="text-center" />
+                              </v-card>
 
-                          <v-card
-                            @click="setShuchedule0()"
-                            style="font-size: 30px"
-                            x-large
-                            :ripple="{ center: false, class: 'gray--text' }"
-                            justify="center"
-                            align-content="center"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            <v-card-title
-                              style="font-size: 32px; text-decoration: none; text-color: black"
-                              >しっぽり</v-card-title
-                            >
-                            <img :src="drinkSrc" width="150" height="100" />
-                          </v-card>
+                              <v-card
+                                @click="setShuchedule0()"
+                                style="font-size: 30px"
+                                class="text-center"
+                                :ripple="{ center: false, class: 'gray--text' }"
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                <v-card-title
+                                  style="font-size: 32px; text-decoration: none; text-color: black"
+                                  class="text-center"
+                                  >しっぽり</v-card-title
+                                >
+                                <img :src="drinkSrc" width="150" height="100" class="text-center" />
+                              </v-card>
+                            </v-col>
+                          </v-row>
                         </v-layout>
                       </div>
 
@@ -280,20 +279,20 @@ export default {
       return require('../src/img/liquor.svg');
     },
   },
-    created() {
-      this.users = this.fetchAuthUser;
-      this.fetchAuthUser();
-    },
-    mounted() {
-      axios.get('/users').then((userResponse) => (this.users = userResponse.data));
-      axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
-      const notAnswers = this.questions.filter((question) => question.answer === '未回答');
-      if (notAnswers.length > 0) {
-        this.isVisible = true;
-      } else {
-        this.isVisible = false;
-      }
-    },
+  created() {
+    this.users = this.fetchAuthUser;
+    this.fetchAuthUser();
+  },
+  mounted() {
+    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+    axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
+    const notAnswers = this.questions.filter((question) => question.answer === '未回答');
+    if (notAnswers.length > 0) {
+      this.isVisible = true;
+    } else {
+      this.isVisible = false;
+    }
+  },
   updated() {
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {

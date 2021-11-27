@@ -1,8 +1,6 @@
 <template>
   <div>
     <v-app-bar style="background-color: #165e83" id="page-header">
-      <!-- <v-app-bar  class="izakaya" id="page-header"> -->
-      <!-- <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> -->
       <v-toolbar-title>
         <router-link
           class="router-link text-h4"
@@ -14,7 +12,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <template v-if="!!authUser">
-        <!-- <router-link
+        <router-link
           class="router-link text"
           :to="{ name: 'UserProfile' }"
           text
@@ -25,13 +23,7 @@
           style="color: white"
         >
           酒テータス
-        </router-link> -->
-
-        <!-- <router-link class="router-link text"
-                :to="{ name: 'UserAll' }"
-                style="color: white"
-                text rounded plain :ripple="{ center: true }" x-large 
-                >呑んべえ一覧</router-link> -->
+        </router-link>
         <v-btn
           class="router-link text"
           text
