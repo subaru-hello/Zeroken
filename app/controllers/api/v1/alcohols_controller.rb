@@ -7,7 +7,7 @@ module Api
 
       def index
         alcohols = Alcohol.all
-        alcohols_names = alcohols.map { |alcohol| alcohol.liquors }
+        alcohols_names = alcohols.map(&:liquors)
         alcohols_json = {}
         alcohols_names.each_with_index do |name, index|
           json_key = "alcohols_#{index + 1}"
