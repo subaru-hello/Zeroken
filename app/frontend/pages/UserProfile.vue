@@ -28,14 +28,14 @@
                 </div>
                 <v-divider class="mb-6" />
               </div>
-              <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
+              <!-- <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
                 <v-icon class="mr-1">mdi-account-cog</v-icon>
                 編集する
               </v-btn>
               <p class="text-body2">
                 パスワードを変更する場合は
                 <a @click.stop="displayPasswordEditDialog"> こちら </a>
-              </p>
+              </p> -->
             </v-sheet>
             <div style="margin-left: 10%">
               <h3
@@ -89,7 +89,6 @@
         <v-col> </v-col>
       </v-col>
     </v-row>
-    <div>{{ whuAreYou }}</div>
   </v-container>
 </template>
 
@@ -128,10 +127,6 @@ export default {
     ...mapGetters('users', ['authUser']),
     sakeSrc() {
       return require('../src/img/default_profile.png');
-    },
-    whuAreYou() {
-      const currentUserData = this.authUserEdit;
-      return currentUserData;
     },
   },
   mounted() {

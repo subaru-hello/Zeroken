@@ -19,78 +19,90 @@
           class="d-flex flex-row mb-6"
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'"
         >
-          <v-card
-            class="text-center mx-auto my-5 form"
-            elevation="2"
-            shaped
-            width="500"
-            id="form"
-            v-for="data in contents"
-            :key="data.id"
-          >
-            <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data.name }}
-            </v-card-title>
-            <img :src="beerSrc" width="150" height="100" />
-            <v-card-text>
-              {{ data.description }}
-            </v-card-text>
-            <v-row justify="center" align-content="center">
-              <p>度数: {{ data.alcohol_percentage }}%</p>
-              <p>量: {{ data.alcohol_amount }}ml</p>
-            </v-row>
-          </v-card>
+          <v-row justify="space-around" align-content="center">
+            <v-col cols="12" sm="10" md="8" lg="4" xl="3">
+              <v-card
+                class="text-center mx-auto my-5 form"
+                elevation="2"
+                shaped
+                width="500"
+                id="form"
+                v-for="data in contents"
+                :key="data.id"
+              >
+                <v-card-title style="width: 100%" class="headline justify-center">
+                  {{ data.name }}
+                </v-card-title>
+                <img :src="beerSrc" width="150" height="100" />
+                <v-card-text>
+                  {{ data.description }}
+                </v-card-text>
+                <v-row justify="center" align-content="center">
+                  <p>度数: {{ data.alcohol_percentage }}%</p>
+                  <p>量: {{ data.alcohol_amount }}ml</p>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-container>
         <v-container
           class="d-flex flex-row mb-6"
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'"
         >
-          <v-card
-            class="text-center mx-auto my-5 form"
-            elevation="2"
-            shaped
-            id="form"
-            v-for="data in contents"
-            :key="data.id"
-          >
-            <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data.name }}
-            </v-card-title>
-            <img :src="beerSrc" width="150" height="100" />
-            <v-card-text>
-              {{ data.description }}
-            </v-card-text>
-            <v-row justify="center" align-content="center">
-              <p>度数: {{ data.alcohol_percentage }}%</p>
-              <p>量: {{ data.alcohol_amount }}ml</p>
-            </v-row>
-          </v-card>
+          <v-row justify="center" align-content="center">
+            <v-col cols="12" sm="10" md="8" lg="4" xl="3">
+              <v-card
+                class="text-center mx-auto my-5 form"
+                elevation="2"
+                shaped
+                id="form"
+                v-for="data in contents"
+                :key="data.id"
+              >
+                <v-card-title style="width: 100%" class="headline justify-center">
+                  {{ data.name }}
+                </v-card-title>
+                <img :src="beerSrc" width="150" height="100" />
+                <v-card-text>
+                  {{ data.description }}
+                </v-card-text>
+                <v-row justify="center" align-content="center">
+                  <p>度数: {{ data.alcohol_percentage }}%</p>
+                  <p>量: {{ data.alcohol_amount }}ml</p>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-container>
         <v-container
           class="d-flex justify-center mb-6"
           v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'weak'"
         >
-          <v-card
-            class="text-center mx-auto my-5 form"
-            elevation="2"
-            shaped
-            width="500"
-            id="form"
-            v-for="data in contents"
-            :key="data.id"
-          >
-            <v-card-title style="width: 100%" class="headline justify-center">
-              {{ data.name }}
-            </v-card-title>
-            <img :src="beerSrc" width="150" height="100" />
-            <v-card-text>
-              {{ data.description }}
-            </v-card-text>
-            <v-row justify="center" align-content="center">
-              <p>度数: {{ data.alcohol_percentage }}%</p>
-              <p>量: {{ data.alcohol_amount }}ml</p>
-            </v-row>
-          </v-card>
+          <v-row justify="center" align-content="center">
+            <v-col cols="12" sm="10" md="8" lg="4" xl="3">
+              <v-card
+                class="text-center mx-auto my-5 form"
+                elevation="2"
+                shaped
+                width="500"
+                id="form"
+                v-for="data in contents"
+                :key="data.id"
+              >
+                <v-card-title style="width: 100%" class="headline justify-center">
+                  {{ data.name }}
+                </v-card-title>
+                <img :src="beerSrc" width="150" height="100" />
+                <v-card-text>
+                  {{ data.description }}
+                </v-card-text>
+                <v-row justify="center" align-content="center">
+                  <p>度数: {{ data.alcohol_percentage }}%</p>
+                  <p>量: {{ data.alcohol_amount }}ml</p>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card>
     </v-layout>
