@@ -141,14 +141,14 @@
         <v-row justify="center" align-content="center">
           <v-btn
             lass="centered"
-            :to="{ name: 'Analyze' }"
+            :to="{ name: 'ZerokenTop' }"
             style="color: bleck"
             text
             rounded
             plain
             x-large
           >
-            もう一回酒ケジュールを作成する
+            Topへ戻る
           </v-btn>
           <v-dialog v-model="dialog" width="400">
             <template v-slot:activator="{ on }">
