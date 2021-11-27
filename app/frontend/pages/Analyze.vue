@@ -279,7 +279,7 @@ export default {
     drinkSrc() {
       return require('../src/img/liquor.svg');
     },
-
+  },
     created() {
       this.users = this.fetchAuthUser;
       this.fetchAuthUser();
@@ -294,7 +294,6 @@ export default {
         this.isVisible = false;
       }
     },
-  },
   updated() {
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {
