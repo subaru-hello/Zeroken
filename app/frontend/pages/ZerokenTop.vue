@@ -42,7 +42,7 @@
               <v-card-title>飲みベーションとは</v-card-title>
               <v-divider></v-divider>
               <v-card-text>次の飲み会に向けたモチベーションを意味しています。</v-card-text>
-              <v-card-text>「お酒 + ステータス」の造語です。</v-card-text>
+              <v-card-text>「飲み + ステータス」の造語です。</v-card-text>
               <v-card-text>使用例 「飲みべ低いので今日は帰ります。。」</v-card-text>
             </v-card>
           </v-dialog>
