@@ -37,7 +37,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   process resize_to_fill: [300, 300, 'Center']
   process convert: 'png'
 
-  #サムネイルを生成
+  # サムネイルを生成
   version :thumb do
     process resize_to_limit: [300, 300]
   end
