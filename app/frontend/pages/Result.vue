@@ -299,7 +299,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" align-content="center">
-            <p>詳細</p>
+            <p style="font-size: 50px">詳細</p>
             <v-col cols="12" class="d-flex" v-for="data in contents" :key="data.id">
               <v-card
                 class="text-center mx-auto my-5 form"
