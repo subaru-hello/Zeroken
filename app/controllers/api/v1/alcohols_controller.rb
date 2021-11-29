@@ -13,13 +13,13 @@ module Api
           json_key = "alcohols_#{index + 1}"
           alcohols_json[json_key] = name
         end
-        respond_to { |format| format.json { render json: alcohols_json } }
+        respond_to { |format| format.json { render json: alcohols_json, methods: [:image_url] } }
       end
 
       def create
         @alcohol = Alcohol.build(alcohol_params)
         if alcohol.save
-          render json: @alcohol, status: :created
+          render json: @alcohol, status: :created, methods: [:image_url]
         else
           render json: @alcohol.errors.full_messages, status: :bad_request
         end
@@ -36,7 +36,8 @@ module Api
             :alcohol_amount,
             :name,
             :description,
-            :pure_alcohol_intake
+            :pure_alcohol_intake,
+            :image
           )
       end
     end
