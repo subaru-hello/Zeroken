@@ -1,5 +1,8 @@
 class Alcohol < ApplicationRecord
+  include Rails.application.routes.url_helpers
   has_many :alcohol_orders, dependent: :destroy
+  mount_uploader :image, ImageUploader
+  has_one_attached :image
 
   # 自己結合
 
@@ -26,4 +29,7 @@ class Alcohol < ApplicationRecord
 
   # ビールから1000ボックスを取得する
   has_many :liquor_boxes, through: :liquor_box_relationships
+  # def image_url
+  #   image.present? ? url_for(image) : nil
+  # end
 end

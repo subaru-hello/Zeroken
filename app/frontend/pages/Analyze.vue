@@ -150,59 +150,47 @@
                       <div>
                         <v-layout>
                           <v-row justify="center" align-content="center">
-                            <v-col cols="12" sm="10" md="3" lg="3" xl="3">
-                              <v-card
-                                @click="setShuchedule2()"
-                                style="font-size: 30px"
-                                class="text-center"
-                                :ripple="{ center: false, class: 'gray--text' }"
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                <v-card-title
-                                  style="font-size: 32px; text-decoration: none; text-color: black"
-                                  class="text-center"
-                                  >酩酊</v-card-title
-                                >
-                                <img :src="imgSrc" width="150" height="100" class="text-center" />
-                              </v-card>
+                            <v-col
+                              cols="12"
+                              sm="3"
+                              @click="setShuchedule2()"
+                              style="font-size: 30px"
+                              class="text-center"
+                              :ripple="{ center: false, class: 'gray--text' }"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              <img :src="imgSrc" width="150" height="100" class="text-center" />
+                            </v-col>
 
-                              <v-card
-                                @click="setShuchedule1()"
-                                style="font-size: 30px"
-                                class="text-center"
-                                :ripple="{ center: false, class: 'gray--text' }"
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                <v-card-title
-                                  style="font-size: 32px; text-decoration: none; text-color: black"
-                                  class="text-center"
-                                  >ほろ酔い</v-card-title
-                                >
-                                <img :src="sakeSrc" width="150" height="100" class="text-center" />
-                              </v-card>
+                            <v-col
+                              cols="12"
+                              sm="3"
+                              @click="setShuchedule1()"
+                              style="font-size: 30px"
+                              class="text-center"
+                              :ripple="{ center: false, class: 'gray--text' }"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              <img :src="sakeSrc" width="150" height="100" class="text-center" />
+                            </v-col>
 
-                              <v-card
-                                @click="setShuchedule0()"
-                                style="font-size: 30px"
-                                class="text-center"
-                                :ripple="{ center: false, class: 'gray--text' }"
-                                v-bind="attrs"
-                                v-on="on"
-                              >
-                                <v-card-title
-                                  style="font-size: 32px; text-decoration: none; text-color: black"
-                                  class="text-center"
-                                  >しっぽり</v-card-title
-                                >
-                                <img :src="drinkSrc" width="150" height="100" class="text-center" />
-                              </v-card>
+                            <v-col
+                              cols="12"
+                              sm="3"
+                              @click="setShuchedule0()"
+                              style="font-size: 30px"
+                              class="text-center"
+                              :ripple="{ center: false, class: 'gray--text' }"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              <img :src="drinkSrc" width="150" height="100" class="text-center" />
                             </v-col>
                           </v-row>
                         </v-layout>
                       </div>
-
                       <transition name="modal">
                         <div v-if="showModal" @close="showModal = false">
                           <div class="modal-mask">
@@ -267,16 +255,16 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
     highballSrc() {
-      return require('../src/img/38763.jpg');
+      return require('../src/img/high_ball_kanpai.jpg');
     },
     imgSrc() {
-      return require('../src/img/drunkman.svg');
+      return require('../src/img/meitei_stamp.png');
     },
     sakeSrc() {
-      return require('../src/img/sake.svg');
+      return require('../src/img/tipsy_stamp.png');
     },
     drinkSrc() {
-      return require('../src/img/liquor.svg');
+      return require('../src/img/flesh_stamp.png');
     },
   },
   created() {
@@ -485,10 +473,10 @@ export default {
           : sumResult < 13
           ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
           : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪'
+          ? '酒呑として界隈では有名な酒豪。'
           : sumResult < 15
           ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '外人の血が入っている大酒豪。酒呑人';
+          : '超弩級のウルトラ酒呑人。血液が酒でできている。';
 
       let promise = new Promise((resolve, reject) => {
         // #1
@@ -666,7 +654,7 @@ export default {
           : sumResult < -1
           ? '人並みには飲めるよと周りに言うタイプの下戸'
           : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          ? '度数の高いお酒を飲んだらバタンキューする普通の人'
           : sumResult < 1
           ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
           : sumResult < 2
@@ -694,10 +682,10 @@ export default {
           : sumResult < 13
           ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
           : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪'
+          ? '酒呑として界隈では有名な酒豪。女性からは良い人と言われてモテないタイプの酒豪'
           : sumResult < 15
           ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '外人の血が入っている大酒豪。酒呑人';
+          : '超弩級のウルトラ酒呑人。血液が酒でできている。とにかく酒が飲めるタイプの酒豪';
       //ここまでを切り出す
       let Nomivation = 1;
       let promise = new Promise((resolve, reject) => {
@@ -905,10 +893,10 @@ export default {
           : sumResult < 13
           ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
           : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪'
+          ? '酒呑として界隈では有名な酒豪。'
           : sumResult < 15
           ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '外人の血が入っている大酒豪。酒呑人';
+          : '超弩級のウルトラ酒呑人。血液が酒でできている。';
 
       let promise = new Promise((resolve, reject) => {
         // #1

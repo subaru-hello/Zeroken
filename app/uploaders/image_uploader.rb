@@ -19,6 +19,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     (0.byte)..(10.megabytes)
   end
 
+  def image_url
+    'beer.svg'
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -33,6 +37,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   process resize_to_fill: [300, 300, 'Center']
   process convert: 'png'
 
+  # サムネイルを生成
+  version :thumb do
+    process resize_to_limit: [300, 300]
+  end
+
   # def scale(width, height)
   #   # do something
   # end
@@ -45,7 +54,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_allowlist
-    %w[jpg jpeg gif png]
+    %w[jpg jpeg gif png svg]
   end
 
   # Override the filename of the uploaded files:
