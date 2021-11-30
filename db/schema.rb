@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_28_221005) do
+ActiveRecord::Schema.define(version: 2021_11_30_061153) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 2021_11_28_221005) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "alcohol_orders", charset: "utf8mb4", force: :cascade do |t|
+  create_table "alcohol_analyzes", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "analyze_id"
     t.bigint "alcohol_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["alcohol_id"], name: "index_alcohol_orders_on_alcohol_id"
-    t.index ["analyze_id"], name: "index_alcohol_orders_on_analyze_id"
+    t.index ["alcohol_id"], name: "index_alcohol_analyzes_on_alcohol_id"
+    t.index ["analyze_id"], name: "index_alcohol_analyzes_on_analyze_id"
   end
 
   create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|

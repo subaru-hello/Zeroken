@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AlcoholOrderController < ApplicationController
+    class AlcoholAnalyzeController < ApplicationController
       def index; end
     end
   end
