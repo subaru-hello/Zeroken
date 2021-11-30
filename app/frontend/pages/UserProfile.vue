@@ -53,7 +53,28 @@
                 event-color="green lighten-1"
                 @click="opened()"
               ></v-date-picker>
-
+              <v-row justify="center" align-content="center">
+                <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
+                  <v-card
+                    class="text-center mx-auto my-5 form"
+                    elevation="2"
+                    width="100%"
+                    shaped
+                    id="form"
+                  >
+                    <v-card-title style="width: 100%" class="headline justify-center">
+                      {{ data.name }}
+                    </v-card-title>
+                    <v-row justify="center">
+                      <img :src="beerSrc" width="150" height="100" />
+                      <v-row justify="center" align-content="center">
+                        <p>度数: {{ data.alcohol_percentage }}%</p>
+                        <p>量: {{ data.alcohol_amount }}ml</p>
+                      </v-row>
+                    </v-row>
+                  </v-card>
+                </v-col>
+              </v-row>
               <v-dialog v-model="dialog" scrollable max-width="80%">
                 <v-card>
                   <v-card-title>11月12日の酒ケジュール</v-card-title>
@@ -108,6 +129,7 @@ export default {
       users: [],
       dialog: false,
       arrayEvents: null,
+      alcohols: [],
       date1: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -125,8 +147,23 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
+    ...mapGetters('analyze', ['analyzes']),
     sakeSrc() {
       return require('../src/img/default_profile.png');
+    },
+    beerSrc() {
+      return require('../src/img/beer.svg');
+    },
+    contents() {
+      const thisAnalyze = this.analyzes;
+
+      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+
+      const targetValues = this.alcohols;
+
+      const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
+
+      return contentsOfTarget;
     },
   },
   mounted() {
@@ -139,7 +176,11 @@ export default {
     });
   },
   created() {
+    this.fetchAnalyzes();
     this.fetchAuthUser();
+
+    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
+
     const authUserData = {
       nickname: this.authUser.data.attributes.nickname,
       email: this.authUser.data.attributes.email,
@@ -152,6 +193,7 @@ export default {
   methods: {
     ...mapActions('users', ['updateAuthUser']),
     ...mapActions('users', ['fetchAuthUser']),
+    ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     functionEvents(date) {
       const [, , day] = date.split('-');
