@@ -67,13 +67,13 @@
     <v-layout>
       <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
-          <img :src="fleshSrc" width="150" height="100" />
+          <img :src="fleshSrc" width="150" height="150" />
         </p>
         <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
-          <img :src="tipsySrc" width="150" height="100" />
+          <img :src="tipsySrc" width="150" height="150" />
         </p>
         <p v-else>
-          <img :src="meiteiSrc" width="150" height="100" />
+          <img :src="meiteiSrc" width="150" height="150" />
         </p>
         <v-card-title style="width: 100%" class="headline justify-center">
           <h1 class="centered">酒ケジュール</h1>
@@ -105,8 +105,8 @@
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -140,15 +140,15 @@
                 <v-card-title style="width: 100%" class="headline justify-center">
                   {{ data.name }}
                 </v-card-title>
-               <v-row justify="center">
+                <v-row justify="center">
                   <!-- <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -193,8 +193,8 @@
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -235,8 +235,8 @@
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -274,15 +274,15 @@
                 <v-card-title style="width: 100%" class="headline justify-center">
                   {{ data.name }}
                 </v-card-title>
-                  <v-row justify="center">
+                <v-row justify="center">
                   <!-- <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -316,15 +316,15 @@
                 <v-card-title style="width: 100%" class="headline justify-center">
                   {{ data.name }}
                 </v-card-title>
-               <v-row justify="center">
+                <v-row justify="center">
                   <!-- <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
                   > -->
-                   <img :src="beerSrc" width="150" height="100" />
-                    <!-- <template v-slot:placeholder>
+                  <img :src="beerSrc" width="150" height="100" />
+                  <!-- <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
