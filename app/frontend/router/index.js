@@ -10,6 +10,7 @@ import ZerokenTop from '../pages/ZerokenTop';
 import UserLogin from '../pages/UserLogin';
 import UserAll from '../pages/UserAll';
 import AlcoholAll from '../pages/AlcoholAll';
+import ParentExample from '../pages/ParentExample';
 Vue.use(Router);
 
 const router = new Router({
@@ -42,6 +43,12 @@ const router = new Router({
       component: UserProfile,
       name: 'UserProfile',
       meta: { requireAuth: true },
+      props: true,
+    },
+    {
+      path: '/parent',
+      component: ParentExample,
+      name: 'ParentExample',
       props: true,
     },
     {
