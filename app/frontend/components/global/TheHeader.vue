@@ -35,14 +35,15 @@
           @click="dialog = true"
           >用語集</v-btn
         >
-         <v-dialog v-model="dialog" scrollable max-width="80%">
-            <v-card>
-              <v-card-title>作成中です。</v-card-title>
-              <v-divider></v-divider>
-              <v-card-text>大変申し訳ありません。作者が二日酔いのため作成が遅れております。しばしお待ちください。。
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+        <v-dialog v-model="dialog" scrollable max-width="80%">
+          <v-card>
+            <v-card-title>作成中です。</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text
+              >大変申し訳ありません。作者が二日酔いのため作成が遅れております。しばしお待ちください。。
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-btn
           text
           rounded
@@ -100,10 +101,10 @@
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'TheHeader',
-  data(){
-    return{
+  data() {
+    return {
       dialog: false,
-    }
+    };
   },
   computed: {
     ...mapGetters('users', ['authUser']),

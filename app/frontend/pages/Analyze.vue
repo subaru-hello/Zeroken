@@ -32,7 +32,12 @@
                       Q{{ question.num }}.
                       {{ question.title }}
                     </v-card-title>
-                    <v-radio-group :id="'smallq' + question.num" mandatory row class="mx-16 px-9">
+                    <v-radio-group :id="'smallq' + question.num" row class="mx-16 px-9">
+                      <template #label>
+                        <p v-if="question.answer === '未回答'">
+                          <strong class="red--text accent-3">未回答です！</strong>
+                        </p>
+                      </template>
                       <v-radio
                         class="mx-auto justify-center"
                         fab
@@ -160,7 +165,7 @@
                               v-bind="attrs"
                               v-on="on"
                             >
-                              <img :src="imgSrc" width="150" height="100" class="text-center" />
+                              <img :src="imgSrc" width="150" height="150" class="text-center" />
                             </v-col>
 
                             <v-col
@@ -173,7 +178,7 @@
                               v-bind="attrs"
                               v-on="on"
                             >
-                              <img :src="sakeSrc" width="150" height="100" class="text-center" />
+                              <img :src="sakeSrc" width="150" height="150" class="text-center" />
                             </v-col>
 
                             <v-col
@@ -186,7 +191,7 @@
                               v-bind="attrs"
                               v-on="on"
                             >
-                              <img :src="drinkSrc" width="150" height="100" class="text-center" />
+                              <img :src="drinkSrc" width="150" height="150" class="text-center" />
                             </v-col>
                           </v-row>
                         </v-layout>
@@ -234,9 +239,10 @@ const weightRange = [...Array(end - start + 1).keys()].map((e) => e + start);
 export default {
   data() {
     return {
+      row: null,
       items: weightRange,
       isVisible: '',
-      radios: null,
+      // radios: "",
       sakeStrongness: [],
       dialog: false,
       show: false,
