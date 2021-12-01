@@ -410,7 +410,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
 import axios from '../plugins/axios';
 export default {
@@ -491,10 +491,12 @@ export default {
   updated() {},
   created() {
     this.fetchAnalyzes();
+    this.clearAnswers();
     this.fetchAuthUser();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
+    ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
   },
 };

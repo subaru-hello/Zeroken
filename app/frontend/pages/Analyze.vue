@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <p v-for="a in answers" :key="a.id">{{ a.answer }}</p> -->
     <v-stepper v-model="e6" vertical>
       <v-stepper-step :complete="e6 > 1" step="1"> お酒の強さを診断 </v-stepper-step>
 
@@ -242,8 +243,6 @@ export default {
       row: null,
       items: weightRange,
       isVisible: '',
-      // radios: "",
-      sakeStrongness: [],
       dialog: false,
       show: false,
       showModal: false,
@@ -275,7 +274,9 @@ export default {
   },
   created() {
     this.users = this.fetchAuthUser;
+    // this.questions = this.fetchQuestions
     this.fetchAuthUser();
+    this.clearAnswers();
   },
   mounted() {
     axios.get('/users').then((userResponse) => (this.users = userResponse.data));
@@ -297,9 +298,11 @@ export default {
   },
   methods: {
     ...mapMutations('question', ['updateAnswer']),
+    ...mapMutations('question', ['clearAnswers']),
     ...mapMutations('analyze', ['addAnalyze']),
     ...mapActions('analyze', ['createAnalyze']),
     ...mapActions('users', ['fetchAuthUser']),
+
     scrollTop() {
       window.scrollTo({
         top: 0,
@@ -494,7 +497,10 @@ export default {
           description: Description,
         };
 
-        resolve(this.createAnalyze(updAnalyze));
+        resolve(
+          this.createAnalyze(updAnalyze)
+          // this.clearAnswers()
+        );
         reject();
       });
       promise
@@ -504,9 +510,18 @@ export default {
             setTimeout(() => {
               resolve((this.showModal = true));
               reject();
-            }, 1000);
+            }, 600);
           });
         })
+        // .then(() => {
+        //   // #2
+        //   return new Promise((resolve, reject) => {
+
+        //       resolve((this.clearAnswers()));
+        //       reject();
+
+        //   });
+        // })
         .then(() => {
           // #3
           return new Promise((resolve, reject) => {
