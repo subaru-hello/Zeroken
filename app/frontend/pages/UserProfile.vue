@@ -1,5 +1,7 @@
 <template>
   <v-container fluid>
+    <!-- <p>{{ userAnalyze }}</p>
+    <p>{{ dataAnalyze }}</p> -->
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -37,6 +39,8 @@
                 <a @click.stop="displayPasswordEditDialog"> こちら </a>
               </p> -->
             </v-sheet>
+
+            <!-- <Calender /> -->
             <div style="margin-left: 10%">
               <h3
                 class="text-h6 font-weight-black mb-8 mx-auto text-center"
@@ -53,28 +57,42 @@
                 event-color="green lighten-1"
                 @click="opened()"
               ></v-date-picker>
-              <v-row justify="center" align-content="center">
-                <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
-                  <v-card
-                    class="text-center mx-auto my-5 form"
-                    elevation="2"
-                    width="100%"
-                    shaped
-                    id="form"
+
+              <!-- <v-row justify="center" align-content="center"> -->
+              <div justify="center" align-content="center">
+                <v-col
+                  cols="12"
+                  sm="3"
+                  v-for="(data, index) in dataAnalyze"
+                  :key="index"
+                  class="d-flex justify-space-between mb-6"
+                >
+                  <v-col
+                    cols="12"
+                    v-for="(specificData, index) in data"
+                    :key="index"
+                    class="d-flex justify-space-between mb-6"
                   >
-                    <v-card-title style="width: 100%" class="headline justify-center">
-                      {{ data.name }}
-                    </v-card-title>
-                    <v-row justify="center">
-                      <img :src="beerSrc" width="150" height="100" />
-                      <v-row justify="center" align-content="center">
-                        <p>度数: {{ data.alcohol_percentage }}%</p>
-                        <p>量: {{ data.alcohol_amount }}ml</p>
-                      </v-row>
-                    </v-row>
-                  </v-card>
+                    <div>
+                      <v-card class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
+                        {{ specificData.created_at }}の酒ケジュール {{ index + 1 }}番目
+
+                        <v-card-title style="width: 100%" class="headline justify-center">
+                          {{ specificData.name }}
+                        </v-card-title>
+                        <v-row justify="center">
+                          <img :src="beerSrc" width="150" height="100" />
+                          <v-row justify="center" align-content="center">
+                            <p>度数: {{ specificData.alcohol_percentage }}%</p>
+                            <p>量: {{ specificData.alcohol_amount }} ml</p>
+                          </v-row>
+                        </v-row>
+                      </v-card>
+                    </div>
+                  </v-col>
                 </v-col>
-              </v-row>
+              </div>
+              <!-- </v-row> -->
               <v-dialog v-model="dialog" scrollable max-width="80%">
                 <v-card>
                   <v-card-title>11月12日の酒ケジュール</v-card-title>
@@ -118,11 +136,13 @@ import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
-// import Jimp from 'jimp/es';
+import Calender from '../components/Calender.vue';
+
 export default {
   components: {
     ProfileEditForm,
     PasswordEditForm,
+    Calender,
   },
   data() {
     return {
@@ -154,6 +174,62 @@ export default {
     beerSrc() {
       return require('../src/img/beer.svg');
     },
+    userAnalyze() {
+      function sum(numbers) {
+        let total = 0;
+        for (let i = 0; i < numbers.length; i++) {
+          total += numbers[i];
+        }
+        return total;
+      }
+      let targetUser = this.analyzes;
+      return sum([1, 1, 1, 1]);
+    },
+    dataAnalyze() {
+      const thisAnalyze = this.analyzes;
+
+      const targetValues = this.alcohols;
+      function createSake(targetAnalyze) {
+        const shucheduleHash = [];
+
+        for (let i = 0; i < targetAnalyze.length; i++) {
+          const shucheduleAll = thisAnalyze[i]['shuchedule'];
+          shucheduleHash.push(shucheduleAll);
+        }
+        return shucheduleHash;
+      }
+
+      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
+      function createShuchedule(sake) {
+        const alchol_case = [];
+
+        for (let i = 0; i < sake.length; i++) {
+          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
+          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
+          const shucheduleAll = arrayAnalyzeShuchedule[i];
+          //12,18を取り出した。
+          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
+          //  alcohol_12,alcohols_18を取り出すことができた。
+          alchol_case.push(contentsOfTarget);
+        }
+        return alchol_case;
+        //alcohol_12,alcohols_18が入っている。
+      }
+
+      let a = createSake(thisAnalyze);
+      let b = createShuchedule(a);
+      function all() {
+        let sake_case = {};
+        for (let i = 0; i < b.length; i++) {
+          let json_key = `alcohols_${i}`;
+          sake_case[json_key] = b[i];
+        }
+        // debugger;
+        return sake_case;
+      }
+      let c = all();
+      return c;
+    },
     contents() {
       const thisAnalyze = this.analyzes;
 
@@ -168,10 +244,13 @@ export default {
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
+    //:events = "arrayEvents"になっている。1~6までの数字を配列内に代入している
     this.arrayEvents = [...Array(6)].map(() => {
+      //
       const day = Math.floor(Math.random() * 30);
       const d = new Date();
       d.setDate(day);
+      // debugger
       return d.toISOString().substr(0, 10);
     });
   },

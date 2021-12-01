@@ -7,7 +7,7 @@ module Api
       end
 
       def index
-        @analyzes = Analyze.all
+        @analyzes = current_user.analyzes.all
         render json: @analyzes
       end
 
