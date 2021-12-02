@@ -87,8 +87,8 @@ const mutations = {
   //    state.questions[index].answer = noAnswer;
   // },
   clearAnswers(state) {
-    var arr2 = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS))
-    state.questions = arr2;
+    var copiedQuestions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS))
+    state.questions = copiedQuestions;
   },
 
   setQuestions: (state, default_question) => (state.questions = default_question),
