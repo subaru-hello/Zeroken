@@ -1,7 +1,9 @@
 <template>
-  <v-container fluid>
-    <!-- <p>{{ userAnalyze }}</p>
-    <p>{{ dataAnalyze }}</p> -->
+  <v-container fluid>    
+    <div v-for="(analyze,index) in userAnalyze" :key="index">
+    <p v-for="(nestedAnalyze, index) in analyze" :key="index">
+      {{nestedAnalyze.created_at}}</p>
+    </div>
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -44,21 +46,18 @@
             <div style="margin-left: 10%">
               <h3
                 class="text-h6 font-weight-black mb-8 mx-auto text-center"
-                @click.stop="dialog = true"
+               
               >
                 過去の酒ケジュール
               </h3>
 
-              <!-- <v-date-picker full-width @click.stop="dialog = true"></v-date-picker> -->
               <v-date-picker
-                full-width
-                v-model="date1"
-                :events="arrayEvents"
-                event-color="green lighten-1"
-                @click="opened()"
-              ></v-date-picker>
+                      v-model="date2"
+                      :events="arrayEvents"
+                      full-width
+                       @click.stop="dialog = true"
+                    ></v-date-picker>
 
-              <!-- <v-row justify="center" align-content="center"> -->
               <div justify="center" align-content="center">
                 <v-col
                   cols="12"
@@ -67,15 +66,17 @@
                   :key="index"
                   class="d-flex justify-space-between mb-6"
                 >
+                 <p>酒ケジュール</p>
                   <v-col
                     cols="12"
                     v-for="(specificData, index) in data"
                     :key="index"
                     class="d-flex justify-space-between mb-6"
                   >
+                  
                     <div>
                       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
-                        {{ specificData.created_at }}の酒ケジュール {{ index + 1 }}番目
+                        {{ date(specificData.created_at) }}
 
                         <v-card-title style="width: 100%" class="headline justify-center">
                           {{ specificData.name }}
@@ -137,7 +138,6 @@ import axios from '../plugins/axios';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
 import Calender from '../components/Calender.vue';
-
 export default {
   components: {
     ProfileEditForm,
@@ -147,12 +147,10 @@ export default {
   data() {
     return {
       users: [],
+      dataArray: null,
       dialog: false,
       arrayEvents: null,
       alcohols: [],
-      date1: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
       date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -168,6 +166,7 @@ export default {
   computed: {
     ...mapGetters('users', ['authUser']),
     ...mapGetters('analyze', ['analyzes']),
+
     sakeSrc() {
       return require('../src/img/default_profile.png');
     },
@@ -175,15 +174,37 @@ export default {
       return require('../src/img/beer.svg');
     },
     userAnalyze() {
-      function sum(numbers) {
-        let total = 0;
-        for (let i = 0; i < numbers.length; i++) {
-          total += numbers[i];
+      const thisAnalyze = this.analyzes
+
+      const targetValues = this.alcohols;
+      function createSake(targetAnalyze) {
+        const shucheduleHash = [];
+
+        for (let i = 0; i < targetAnalyze.length; i++) {
+          const shucheduleAll = thisAnalyze[i]['shuchedule'];
+          shucheduleHash.push(shucheduleAll);
         }
-        return total;
+        return shucheduleHash;
       }
-      let targetUser = this.analyzes;
-      return sum([1, 1, 1, 1]);
+
+      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
+      function createShuchedule(sake) {
+        const alchol_case = [];
+
+        for (let i = 0; i < sake.length; i++) {
+          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
+          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
+          const shucheduleAll = arrayAnalyzeShuchedule[i];
+          //12,18を取り出した。
+          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
+          //  alcohol_12,alcohols_18を取り出すことができた。
+          alchol_case.push(contentsOfTarget);
+        }
+        return alchol_case;
+        //alcohol_12,alcohols_18が入っている。
+      }
+      const alcoholOrders = createShuchedule(createSake(thisAnalyze))
+      return alcoholOrders;
     },
     dataAnalyze() {
       const thisAnalyze = this.analyzes;
@@ -227,6 +248,7 @@ export default {
         // debugger;
         return sake_case;
       }
+      
       let c = all();
       return c;
     },
@@ -244,9 +266,10 @@ export default {
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
+    // this.dataArray  = this.copyAnalyze()
     //:events = "arrayEvents"になっている。1~6までの数字を配列内に代入している
     this.arrayEvents = [...Array(6)].map(() => {
-      //
+      // const targetData = this.analyzes
       const day = Math.floor(Math.random() * 30);
       const d = new Date();
       d.setDate(day);
@@ -274,14 +297,15 @@ export default {
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+    date(date) {
+      return this.$dateFormat(date);
+    },
+    
     functionEvents(date) {
       const [, , day] = date.split('-');
       if ([12, 17, 28].includes(parseInt(day, 10))) return true;
       if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f'];
       return false;
-    },
-    opened() {
-      this.dialog = true;
     },
     displayProfileEditDialog() {
       // this.initAuthUserEdit();
