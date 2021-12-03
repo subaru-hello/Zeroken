@@ -6,8 +6,14 @@ module Api
         Analyze.new
       end
 
+      # current_user.analyzes.allの場合(6.7ms)
+      # User Load (4.0ms)  SELECT `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1
+      # Analyze Load (2.7ms)  SELECT `analyzes`.* FROM `analyzes` WHERE `analyzes`.`user_id` = 1
+      # current_user.analyzes.includes(:user)の場合(1.7ms)
+      # User Load (1.3ms)  SELECT `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1
+      # Analyze Load (0.4ms)  SELECT `analyzes`.* FROM `analyzes` WHERE `analyzes`.`user_id` = 1
       def index
-        @analyzes = current_user.analyzes.all
+        @analyzes = current_user.analyzes.includes(:user)
         render json: @analyzes
       end
 
