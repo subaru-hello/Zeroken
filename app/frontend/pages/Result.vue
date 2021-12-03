@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="text-center" style="font-size: 50px">
+
       <v-col>
         <p>あなたの酒テータス</p>
         <div
@@ -66,6 +67,19 @@
 
     <v-layout>
       <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
+        <!-- <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
+          <img :src="fleshSrc" width="150" height="150" />
+        </p>
+        <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
+          <img :src="tipsySrc" width="150" height="150" />
+        </p>
+        <p v-else>
+          <img :src="meiteiSrc" width="150" height="150" />
+        </p> -->
+        <v-card-title style="width: 100%" class="headline justify-center">
+          <h2 class="centered">酒ケジュール</h2>
+        </v-card-title>
+                    <v-col class="text-center mx-auto  form" elevation="2" shaped id="form">
         <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           <img :src="fleshSrc" width="150" height="150" />
         </p>
@@ -75,9 +89,7 @@
         <p v-else>
           <img :src="meiteiSrc" width="150" height="150" />
         </p>
-        <v-card-title style="width: 100%" class="headline justify-center">
-          <h1 class="centered">酒ケジュール</h1>
-        </v-card-title>
+            </v-col>
         <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'">
           <v-row justify="center" align-content="center">
             <v-col
