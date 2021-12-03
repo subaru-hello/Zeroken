@@ -37,3 +37,6 @@ yarn-debug.log*
 
 # Ignore solargraph file
 .solargraph.yml
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
