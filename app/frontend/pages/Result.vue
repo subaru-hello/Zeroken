@@ -99,14 +99,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -114,7 +114,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -141,14 +141,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -156,7 +156,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -187,14 +187,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -202,7 +202,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -229,14 +229,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -244,7 +244,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -275,14 +275,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -290,7 +290,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -317,14 +317,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                  <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -332,7 +332,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
