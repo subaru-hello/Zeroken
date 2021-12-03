@@ -67,8 +67,6 @@ const DEFAULT_QUESTIONS = [
 ];
 
 const state = () => ({
-
-
   questions: DEFAULT_QUESTIONS,
 });
 
@@ -87,7 +85,7 @@ const mutations = {
   //    state.questions[index].answer = noAnswer;
   // },
   clearAnswers(state) {
-    var copiedQuestions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS))
+    var copiedQuestions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
     state.questions = copiedQuestions;
   },
 
