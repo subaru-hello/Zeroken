@@ -4,6 +4,7 @@ import store from '../store/index';
 import router from '../router';
 import axiosInstance from '../plugins/axios';
 import * as VeeValidate from '../plugins/vee-validate';
+import dayjs from '../plugins/dayjs';
 import vuetify from '../plugins/vuetify';
 import VueI18n from 'vue-i18n';
 
@@ -18,7 +19,7 @@ const i18n = new VueI18n({
 });
 
 Vue.prototype.$axios = axiosInstance;
-
+Vue.mixin(dayjs);
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
