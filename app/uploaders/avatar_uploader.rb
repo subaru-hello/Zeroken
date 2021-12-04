@@ -4,20 +4,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
-
-  # storage :fog
-
+ # S3 strage
+ storage :fog
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
-
-  # storage :fog
 
   def size_range
     (0.byte)..(10.megabytes)

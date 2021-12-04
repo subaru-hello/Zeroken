@@ -35,6 +35,9 @@ gem 'carrierwave'
 gem 'mini_magick'
 # add settings per environment
 gem 'config'
+# For Carrierwave
+gem 'fog'
+# gem "nokogiri", "~> 1.4.7"
 
 group :development, :test do
   gem 'dotenv-rails'
