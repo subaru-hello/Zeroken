@@ -26,7 +26,7 @@
           <v-btn @click="dialog1 = true">酒(シュ)ケジュールとは</v-btn>
           <v-dialog v-model="dialog1" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
-               <v-card-title class="text-h5 grey lighten-2">酒(シュ)ケジュールとは</v-card-title>
+              <v-card-title class="text-h5 grey lighten-2">酒(シュ)ケジュールとは</v-card-title>
               <v-divider></v-divider>
               <v-card-text>次の飲み会でのむお酒の順番を意味しています。</v-card-text>
               <v-card-text>「お酒の順番 + スケジュール」の造語です。</v-card-text>
@@ -37,9 +37,9 @@
             </v-card>
           </v-dialog>
           <v-btn @click="dialog2 = true">飲みベーションとは</v-btn>
-          <v-dialog v-model="dialog2" scrollable max-width="80%"  transition="dialog-top-transition">
+          <v-dialog v-model="dialog2" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
-               <v-card-title class="text-h5 grey lighten-2">飲みベーションとは</v-card-title>
+              <v-card-title class="text-h5 grey lighten-2">飲みベーションとは</v-card-title>
               <v-divider></v-divider>
               <v-card-text>次の飲み会に向けたモチベーションを意味しています。</v-card-text>
               <v-card-text>「飲み + ステータス」の造語です。</v-card-text>
@@ -49,7 +49,7 @@
           <v-btn @click="dialog3 = true">酒テータスとは</v-btn>
           <v-dialog v-model="dialog3" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
-               <v-card-title class="text-h5 grey lighten-2">酒テータスとは</v-card-title>
+              <v-card-title class="text-h5 grey lighten-2">酒テータスとは</v-card-title>
               <v-divider></v-divider>
               <v-card-text
                 >ユーザーのお酒の強さ、そして次の飲み会で飲むお酒の順番を表す状態になります。</v-card-text
@@ -63,6 +63,7 @@
         </v-col>
       </v-row>
     </v-row>
+
   </v-container>
 </template>
 
