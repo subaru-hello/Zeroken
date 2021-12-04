@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="text-center" style="font-size: 50px">
-
       <v-col>
         <p>あなたの酒テータス</p>
         <div
@@ -79,17 +78,17 @@
         <v-card-title style="width: 100%" class="headline justify-center">
           <h2 class="centered">酒ケジュール</h2>
         </v-card-title>
-                    <v-col class="text-center mx-auto  form" elevation="2" shaped id="form">
-        <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
-          <img :src="fleshSrc" width="150" height="150" />
-        </p>
-        <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
-          <img :src="tipsySrc" width="150" height="150" />
-        </p>
-        <p v-else>
-          <img :src="meiteiSrc" width="150" height="150" />
-        </p>
-            </v-col>
+        <v-col class="text-center mx-auto form" elevation="2" shaped id="form">
+          <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
+            <img :src="fleshSrc" width="150" height="150" />
+          </p>
+          <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
+            <img :src="tipsySrc" width="150" height="150" />
+          </p>
+          <p v-else>
+            <img :src="meiteiSrc" width="150" height="150" />
+          </p>
+        </v-col>
         <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'">
           <v-row justify="center" align-content="center">
             <v-col
@@ -117,8 +116,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -159,8 +158,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -205,8 +204,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -247,8 +246,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -293,8 +292,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -335,8 +334,8 @@
                     max-height="150"
                     max-width="100"
                   >
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <template v-slot:placeholder>
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate

@@ -1,9 +1,10 @@
 <template>
-  <v-container fluid>    
-    <div v-for="(analyze,index) in userAnalyze" :key="index">
-    <p v-for="(nestedAnalyze, index) in analyze" :key="index">
-      {{nestedAnalyze.created_at}}</p>
-    </div>
+  <v-container fluid>
+    <!-- <div v-for="(analyze, index) in userAnalyze" :key="index">
+      <p v-for="(nestedAnalyze, index) in analyze" :key="index">
+        {{ nestedAnalyze.created_at }}
+      </p>
+    </div> -->
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -44,19 +45,14 @@
 
             <!-- <Calender /> -->
             <div style="margin-left: 10%">
-              <h3
-                class="text-h6 font-weight-black mb-8 mx-auto text-center"
-               
-              >
-                過去の酒ケジュール
-              </h3>
+              <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
 
               <v-date-picker
-                      v-model="date2"
-                      :events="arrayEvents"
-                      full-width
-                       @click.stop="dialog = true"
-                    ></v-date-picker>
+                v-model="date2"
+                :events="arrayEvents"
+                full-width
+                @click.stop="dialog = true"
+              ></v-date-picker>
 
               <div justify="center" align-content="center">
                 <v-col
@@ -66,14 +62,14 @@
                   :key="index"
                   class="d-flex justify-space-between mb-6"
                 >
-                 <p>酒ケジュール</p>
+                
+                  <p>酒ケジュール</p>
                   <v-col
                     cols="12"
                     v-for="(specificData, index) in data"
                     :key="index"
                     class="d-flex justify-space-between mb-6"
                   >
-                  
                     <div>
                       <v-card class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
                         {{ date(specificData.created_at) }}
@@ -137,12 +133,10 @@ import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
-import Calender from '../components/Calender.vue';
 export default {
   components: {
     ProfileEditForm,
     PasswordEditForm,
-    Calender,
   },
   data() {
     return {
@@ -174,7 +168,7 @@ export default {
       return require('../src/img/beer.svg');
     },
     userAnalyze() {
-      const thisAnalyze = this.analyzes
+      const thisAnalyze = this.analyzes;
 
       const targetValues = this.alcohols;
       function createSake(targetAnalyze) {
@@ -203,7 +197,7 @@ export default {
         return alchol_case;
         //alcohol_12,alcohols_18が入っている。
       }
-      const alcoholOrders = createShuchedule(createSake(thisAnalyze))
+      const alcoholOrders = createShuchedule(createSake(thisAnalyze));
       return alcoholOrders;
     },
     dataAnalyze() {
@@ -248,7 +242,7 @@ export default {
         // debugger;
         return sake_case;
       }
-      
+
       let c = all();
       return c;
     },
@@ -300,7 +294,7 @@ export default {
     date(date) {
       return this.$dateFormat(date);
     },
-    
+
     functionEvents(date) {
       const [, , day] = date.split('-');
       if ([12, 17, 28].includes(parseInt(day, 10))) return true;

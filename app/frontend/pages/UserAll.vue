@@ -1,22 +1,15 @@
 <template>
   <v-container>
     <p>{{ test }}</p>
- <v-calendar
-    :attributes='attributes'
-    @dayclick='dayClicked'>
-  </v-calendar>
-  <div
-    v-if='selectedDay'
-    class='selected-day'>
-    <h3>{{ selectedDay.date.toDateString() }}</h3>
-    <ul>
-      <li
-        v-for='attr in selectedDay.attributes'
-        :key='attr.key'>
-        {{ attr.customData.description }}
-      </li>
-    </ul>
-  </div>
+    <v-calendar :attributes="attributes" @dayclick="dayClicked"> </v-calendar>
+    <div v-if="selectedDay" class="selected-day">
+      <h3>{{ selectedDay.date.toDateString() }}</h3>
+      <ul>
+        <li v-for="attr in selectedDay.attributes" :key="attr.key">
+          {{ attr.customData.description }}
+        </li>
+      </ul>
+    </div>
     <table>
       <th>ITEM</th>
       <th>VALUE</th>
@@ -37,14 +30,14 @@ import axios from '../plugins/axios';
 export default {
   data() {
     return {
-       selectedDay: null, 
-        todos: [
+      selectedDay: null,
+      todos: [
         {
           id: 1,
           description: 'Clean the house.',
           date: new Date(2018, 12, 15),
           isCompleted: false,
-          color: 'red'
+          color: 'red',
         },
       ],
       userAll: [],
@@ -52,8 +45,8 @@ export default {
     };
   },
   computed: {
-    	attributes() {
-      return this.todos.map(t => ({
+    attributes() {
+      return this.todos.map((t) => ({
         key: `todo.${t.id}`,
         dot: {
           backgroundColor: t.color,
@@ -133,7 +126,7 @@ export default {
     axios.get('/analyzes').then((analyzeResponse) => (this.analyzeAll = analyzeResponse.data));
   },
   methods: {
-      dayClicked(day) {
+    dayClicked(day) {
       this.selectedDay = day;
     },
   },
