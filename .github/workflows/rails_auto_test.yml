@@ -1,4 +1,4 @@
-name: auto_test_and_deploy
+name: auto_test
 on: 
   pull_request:
     branches:
