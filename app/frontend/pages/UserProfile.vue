@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <!-- <div v-for="(analyze, index) in userAnalyze" :key="index">
+      <p v-for="(nestedAnalyze, index) in analyze" :key="index">
+        {{ nestedAnalyze.created_at }}
+      </p>
+    </div> -->
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -37,44 +42,54 @@
                 <a @click.stop="displayPasswordEditDialog"> こちら </a>
               </p> -->
             </v-sheet>
-            <div style="margin-left: 10%">
-              <h3
-                class="text-h6 font-weight-black mb-8 mx-auto text-center"
-                @click.stop="dialog = true"
-              >
-                過去の酒ケジュール
-              </h3>
 
-              <!-- <v-date-picker full-width @click.stop="dialog = true"></v-date-picker> -->
+            <!-- <Calender /> -->
+            <div style="margin-left: 10%">
+              <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+
               <v-date-picker
-                full-width
-                v-model="date1"
+                v-model="date2"
                 :events="arrayEvents"
-                event-color="green lighten-1"
-                @click="opened()"
+                full-width
+                @click.stop="dialog = true"
               ></v-date-picker>
-              <v-row justify="center" align-content="center">
-                <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
-                  <v-card
-                    class="text-center mx-auto my-5 form"
-                    elevation="2"
-                    width="100%"
-                    shaped
-                    id="form"
+
+              <div justify="center" align-content="center">
+                <v-col
+                  cols="12"
+                  sm="3"
+                  v-for="(data, index) in dataAnalyze"
+                  :key="index"
+                  class="d-flex justify-space-between mb-6"
+                >
+                
+                  <p>酒ケジュール</p>
+                  <v-col
+                    cols="12"
+                    v-for="(specificData, index) in data"
+                    :key="index"
+                    class="d-flex justify-space-between mb-6"
                   >
-                    <v-card-title style="width: 100%" class="headline justify-center">
-                      {{ data.name }}
-                    </v-card-title>
-                    <v-row justify="center">
-                      <img :src="beerSrc" width="150" height="100" />
-                      <v-row justify="center" align-content="center">
-                        <p>度数: {{ data.alcohol_percentage }}%</p>
-                        <p>量: {{ data.alcohol_amount }}ml</p>
-                      </v-row>
-                    </v-row>
-                  </v-card>
+                    <div>
+                      <v-card class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
+                        {{ date(specificData.created_at) }}
+
+                        <v-card-title style="width: 100%" class="headline justify-center">
+                          {{ specificData.name }}
+                        </v-card-title>
+                        <v-row justify="center">
+                          <img :src="beerSrc" width="150" height="100" />
+                          <v-row justify="center" align-content="center">
+                            <p>度数: {{ specificData.alcohol_percentage }}%</p>
+                            <p>量: {{ specificData.alcohol_amount }} ml</p>
+                          </v-row>
+                        </v-row>
+                      </v-card>
+                    </div>
+                  </v-col>
                 </v-col>
-              </v-row>
+              </div>
+              <!-- </v-row> -->
               <v-dialog v-model="dialog" scrollable max-width="80%">
                 <v-card>
                   <v-card-title>11月12日の酒ケジュール</v-card-title>
@@ -118,7 +133,6 @@ import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
-// import Jimp from 'jimp/es';
 export default {
   components: {
     ProfileEditForm,
@@ -127,12 +141,10 @@ export default {
   data() {
     return {
       users: [],
+      dataArray: null,
       dialog: false,
       arrayEvents: null,
       alcohols: [],
-      date1: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
       date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -148,11 +160,91 @@ export default {
   computed: {
     ...mapGetters('users', ['authUser']),
     ...mapGetters('analyze', ['analyzes']),
+
     sakeSrc() {
       return require('../src/img/default_profile.png');
     },
     beerSrc() {
       return require('../src/img/beer.svg');
+    },
+    userAnalyze() {
+      const thisAnalyze = this.analyzes;
+
+      const targetValues = this.alcohols;
+      function createSake(targetAnalyze) {
+        const shucheduleHash = [];
+
+        for (let i = 0; i < targetAnalyze.length; i++) {
+          const shucheduleAll = thisAnalyze[i]['shuchedule'];
+          shucheduleHash.push(shucheduleAll);
+        }
+        return shucheduleHash;
+      }
+
+      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
+      function createShuchedule(sake) {
+        const alchol_case = [];
+
+        for (let i = 0; i < sake.length; i++) {
+          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
+          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
+          const shucheduleAll = arrayAnalyzeShuchedule[i];
+          //12,18を取り出した。
+          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
+          //  alcohol_12,alcohols_18を取り出すことができた。
+          alchol_case.push(contentsOfTarget);
+        }
+        return alchol_case;
+        //alcohol_12,alcohols_18が入っている。
+      }
+      const alcoholOrders = createShuchedule(createSake(thisAnalyze));
+      return alcoholOrders;
+    },
+    dataAnalyze() {
+      const thisAnalyze = this.analyzes;
+
+      const targetValues = this.alcohols;
+      function createSake(targetAnalyze) {
+        const shucheduleHash = [];
+
+        for (let i = 0; i < targetAnalyze.length; i++) {
+          const shucheduleAll = thisAnalyze[i]['shuchedule'];
+          shucheduleHash.push(shucheduleAll);
+        }
+        return shucheduleHash;
+      }
+
+      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
+      function createShuchedule(sake) {
+        const alchol_case = [];
+
+        for (let i = 0; i < sake.length; i++) {
+          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
+          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
+          const shucheduleAll = arrayAnalyzeShuchedule[i];
+          //12,18を取り出した。
+          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
+          //  alcohol_12,alcohols_18を取り出すことができた。
+          alchol_case.push(contentsOfTarget);
+        }
+        return alchol_case;
+        //alcohol_12,alcohols_18が入っている。
+      }
+
+      let a = createSake(thisAnalyze);
+      let b = createShuchedule(a);
+      function all() {
+        let sake_case = {};
+        for (let i = 0; i < b.length; i++) {
+          let json_key = `alcohols_${i}`;
+          sake_case[json_key] = b[i];
+        }
+        // debugger;
+        return sake_case;
+      }
+
+      let c = all();
+      return c;
     },
     contents() {
       const thisAnalyze = this.analyzes;
@@ -168,10 +260,14 @@ export default {
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
+    // this.dataArray  = this.copyAnalyze()
+    //:events = "arrayEvents"になっている。1~6までの数字を配列内に代入している
     this.arrayEvents = [...Array(6)].map(() => {
+      // const targetData = this.analyzes
       const day = Math.floor(Math.random() * 30);
       const d = new Date();
       d.setDate(day);
+      // debugger
       return d.toISOString().substr(0, 10);
     });
   },
@@ -195,14 +291,15 @@ export default {
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+    date(date) {
+      return this.$dateFormat(date);
+    },
+
     functionEvents(date) {
       const [, , day] = date.split('-');
       if ([12, 17, 28].includes(parseInt(day, 10))) return true;
       if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f'];
       return false;
-    },
-    opened() {
-      this.dialog = true;
     },
     displayProfileEditDialog() {
       // this.initAuthUserEdit();

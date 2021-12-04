@@ -66,7 +66,7 @@
 
     <v-layout>
       <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
-        <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
+        <!-- <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
           <img :src="fleshSrc" width="150" height="150" />
         </p>
         <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
@@ -74,10 +74,21 @@
         </p>
         <p v-else>
           <img :src="meiteiSrc" width="150" height="150" />
-        </p>
+        </p> -->
         <v-card-title style="width: 100%" class="headline justify-center">
-          <h1 class="centered">酒ケジュール</h1>
+          <h2 class="centered">酒ケジュール</h2>
         </v-card-title>
+        <v-col class="text-center mx-auto form" elevation="2" shaped id="form">
+          <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
+            <img :src="fleshSrc" width="150" height="150" />
+          </p>
+          <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
+            <img :src="tipsySrc" width="150" height="150" />
+          </p>
+          <p v-else>
+            <img :src="meiteiSrc" width="150" height="150" />
+          </p>
+        </v-col>
         <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'">
           <v-row justify="center" align-content="center">
             <v-col
@@ -99,14 +110,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -114,7 +125,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -141,14 +152,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -156,7 +167,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -187,14 +198,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -202,7 +213,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -229,14 +240,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -244,7 +255,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -275,14 +286,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -290,7 +301,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -317,14 +328,14 @@
                   {{ data.name }}
                 </v-card-title>
                 <v-row justify="center">
-                  <!-- <v-img
+                  <v-img
                     :lazy-src="data.image_url"
                     :src="data.image_url"
                     max-height="150"
                     max-width="100"
-                  > -->
-                  <img :src="beerSrc" width="150" height="100" />
-                  <!-- <template v-slot:placeholder>
+                  >
+                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
+                    <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular
                           indeterminate
@@ -332,7 +343,7 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
-                  </v-img> -->
+                  </v-img>
                 </v-row>
 
                 <!-- <v-card-text>
@@ -410,7 +421,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
 import axios from '../plugins/axios';
 export default {
@@ -491,10 +502,12 @@ export default {
   updated() {},
   created() {
     this.fetchAnalyzes();
+    this.clearAnswers();
     this.fetchAuthUser();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
+    ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
   },
 };
