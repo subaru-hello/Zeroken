@@ -11,9 +11,9 @@ RUN gem install bundler
 RUN bundle install
 COPY . /Zeroken
 
-# COPY entrypoint.sh /usr/bin/
-# RUN chmod +x /usr/bin/entrypoint.sh
-# ENTRYPOINT ["entrypoint.sh"]
-# EXPOSE 3000
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
 
-# CMD rails server -u puma
+CMD rails server -u puma

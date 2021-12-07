@@ -6,11 +6,11 @@ Rails.application.routes.draw do
       get 'tell_on', on: :collection
     end
     resource :sessions, only: %i[ create destroy ]
-    resources :alcohols
+    resources :alcohols, only: [:new, :create, :index]
     resource :profile, only: %i[update edit] do
       patch 'password', on: :member
     end
-    resources :analyzes
+    resources :analyzes, except: [:edit, :destroy]
     post 'guest_login', to: 'sessions#guest_login'
   get 'validation/unique', to: 'validations#unique'
   end

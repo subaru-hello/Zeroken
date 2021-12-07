@@ -1,4 +1,3 @@
-
     User.seed do |s|
         s.id = 1
         s.email = 'test@example.com'
@@ -8,5 +7,3 @@
         s.avatar = Rails.root.join("db/fixtures/images/sample.png").open
         s.role = 0
         end
-    
-    

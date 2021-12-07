@@ -45,16 +45,10 @@ group :development, :test do
   gem 'prettier'
   gem 'rails_best_practices', require: false
   gem 'rubocop', '~> 1.10', require: false
-  gem 'rubocop-performance'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec', require: false
   # debug
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
-  gem 'pry-doc'
-  gem 'pry-rails'
   # test
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
@@ -70,7 +64,6 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   gem 'foreman'
 end
 

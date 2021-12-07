@@ -9,6 +9,7 @@ import UserRegister from '../pages/UserRegister';
 import ZerokenTop from '../pages/ZerokenTop';
 import UserLogin from '../pages/UserLogin';
 import UserAll from '../pages/UserAll';
+import Phrases from '../pages/Phrases';
 import AlcoholAll from '../pages/AlcoholAll';
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ const router = new Router({
       component: Analyze,
       name: 'Analyze',
       meta: { requireAuth: true },
+    },
+    {
+      path: '/phrases',
+      component: Phrases,
+      name: 'Phrases',
     },
     {
       path: '/profile',
@@ -66,6 +72,13 @@ const router = new Router({
       meta: { requireAuth: true },
     },
   ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 });
 
 router.beforeEach((to, from, next) => {

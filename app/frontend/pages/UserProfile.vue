@@ -1,10 +1,5 @@
 <template>
   <v-container fluid>
-    <!-- <div v-for="(analyze, index) in userAnalyze" :key="index">
-      <p v-for="(nestedAnalyze, index) in analyze" :key="index">
-        {{ nestedAnalyze.created_at }}
-      </p>
-    </div> -->
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -62,7 +57,6 @@
                   :key="index"
                   class="d-flex justify-space-between mb-6"
                 >
-                
                   <p>酒ケジュール</p>
                   <v-col
                     cols="12"

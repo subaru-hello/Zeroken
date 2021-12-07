@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <!-- <p v-for="a in answers" :key="a.id">{{ a.answer }}</p> -->
-    <v-stepper v-model="e6" vertical>
-      <v-stepper-step :complete="e6 > 1" step="1"> お酒の強さを診断 </v-stepper-step>
-
+  <div id="izakaya">
+    <v-stepper v-model="e6" vertical id="izakaya">
+      <v-stepper-step :complete="e6 > 1" step="1">
+        <!-- <span style="background-color: rgb(222, 184, 135)">お酒の強さを診断 </span>-->
+      </v-stepper-step>
+      <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
+          <h2 class="ma-5 text-white" style="background-color: rgb(222, 184, 135)">
+            お酒を飲んでいる時の状態を選択してください(13項目)
+          </h2>
           <v-col
             v-for="question in questions"
             :key="question.num"
@@ -34,11 +38,6 @@
                       {{ question.title }}
                     </v-card-title>
                     <v-radio-group :id="'smallq' + question.num" row class="mx-16 px-9">
-                      <template #label>
-                        <p v-if="question.answer === '未回答'">
-                          <strong class="red--text accent-3">未回答です！</strong>
-                        </p>
-                      </template>
                       <v-radio
                         class="mx-auto justify-center"
                         fab
@@ -73,9 +72,10 @@
                         label="3: 全くない"
                       ></v-radio>
                     </v-radio-group>
-                    <!-- </v-col> -->
+                    <p v-if="question.answer === '未回答'">
+                      <strong class="red--text accent-3">未回答です！</strong>
+                    </p>
                     <p class="py-3" style="font-size: 16px">あなたの回答： {{ question.answer }}</p>
-                    <!-- <p v-if="radios != null "><span></span>ここ</p> -->
                   </v-card>
                 </v-container>
               </v-card-title>
@@ -94,7 +94,7 @@
             tile
             height="150"
           >
-            <span></span>未回答の項目があります。
+            <span style="background-color: white"></span>未回答の項目があります。
           </p>
         </v-row>
         <v-spacer></v-spacer>
@@ -114,14 +114,22 @@
         </v-col>
       </v-stepper-content>
 
-      <v-stepper-step :complete="e6 > 2" step="2"> 体重設定画面 </v-stepper-step>
+      <v-stepper-step :complete="e6 > 2" step="2">
+        <!-- <span style="background-color: rgb(222, 184, 135)">体重設定画面 </span> -->
+      </v-stepper-step>
       <v-stepper-content step="2">
         <template v-if="show">
-          <v-container justify="center" align-content="center">
+          <v-container justify="center" align-content="center" style="background-color: white">
+            <h2 class="mt-5 text-color-white text-center">現在の体重を選択してください</h2>
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                  <v-select v-model="weight" :items="items" label="体重"></v-select>
+                  <v-select
+                    v-model="weight"
+                    :items="items"
+                    label="体重"
+                    class="text-center"
+                  ></v-select>
                 </v-col>
               </v-row>
             </v-layout>
@@ -139,16 +147,18 @@
           </v-btn>
         </v-col>
       </v-stepper-content>
-      <v-stepper-step :complete="e6 > 3" step="3"> 飲みベーション選択画面 </v-stepper-step>
+      <v-stepper-step :complete="e6 > 3" step="3">
+        <!-- <span style="background-color: rgb(222, 184, 135)"> 飲みベーション選択画面</span> -->
+      </v-stepper-step>
 
       <v-stepper-content step="3">
         <template v-if="show">
-          <v-container justify="center" align-content="center">
+          <v-container justify="center" align-content="center" style="background-color: white">
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
                   <h1 class="text-center" style="font-size: 25px">
-                    なりたい状態をクリックしてください。
+                    一次会でどのくらい酔いたいかクリックしてください
                   </h1>
 
                   <v-dialog v-model="dialog" width="500">
@@ -958,8 +968,11 @@ export default {
       return promise;
     },
     clickScroll(e) {
-      const targetArea = e.currentTarget.getBoundingClientRect();
-      window.scrollTo(0, window.pageYOffset + targetArea.top);
+      const targetArea = e.currentTarget.getBoundingClientRect().top;
+      window.scrollTo({
+        top: window.pageYOffset + targetArea,
+        behavior: 'smooth',
+      });
     },
     clickScrollNext() {
       let promise = new Promise((resolve, reject) => {
@@ -1051,5 +1064,8 @@ export default {
 
 .modal-default-button {
   float: right;
+}
+#izakaya {
+  background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
 }
 </style>

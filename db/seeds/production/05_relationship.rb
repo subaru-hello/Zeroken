@@ -238,7 +238,7 @@ Relationship.seed(
     }, {
         liquor_box_id: 185,
         liquor_id: 245
-    }, 
+    },
     {
         liquor_box_id: 185,
         liquor_id: 465

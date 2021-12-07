@@ -9,11 +9,11 @@
           text
           rounded
           class="my-2"
+          @click="getCreateUrl(link.url)"
           justify="center"
           align-content="center"
-          @click="dialog = true"
         >
-          {{ link }}
+          {{ link.name }}
         </v-btn>
       </v-row>
       <v-dialog v-model="dialog" scrollable max-width="80%">
@@ -34,8 +34,21 @@ export default {
   data() {
     return {
       dialog: false,
-      links: ['ZEROKENについて', '利用規約', 'お問い合わせ'],
-    };
-  },
+      links: [
+        {url: 'about',name: 'ZEROKENについて'}, 
+         {url: 'kiyaku',name: '利用規約'}, 
+          {url: 'form',name: 'お問い合わせ'}
+        ],
+    }},
+
+    methods: {
+        getCreateUrl(url) {
+        if(url==='form') {
+          location.href="https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link"
+        } else {
+          this.dialog = true
+        }
+      },
+    }
 };
 </script>
