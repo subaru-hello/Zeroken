@@ -51,10 +51,7 @@ group :development, :test do
   # debug
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
-  gem 'pry-doc'
-  gem 'pry-rails'
   # test
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
