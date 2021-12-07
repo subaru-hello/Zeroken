@@ -63,8 +63,7 @@ jobs:
         with:
           ruby-version: 2.6.7
       - name: Check Ruby version
-      run: |
-        ruby -v
+        run: ruby -v
 
       - name: Prepare Node
         uses: actions/setup-node@v2
