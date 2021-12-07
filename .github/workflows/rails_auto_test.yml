@@ -62,7 +62,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.7
-          bundler-cache: true
+      - name: Check Ruby version
+      run: |
+        ruby -v
 
       - name: Prepare Node
         uses: actions/setup-node@v2
