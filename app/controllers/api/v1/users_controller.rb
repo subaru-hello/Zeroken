@@ -26,9 +26,9 @@ module Api
         end
       end
 
-      def me
-        render json: current_user, methods: [:avatar_url]
-      end
+      # def me
+      #   render json: current_user, methods: [:avatar_url]
+      # end
 
       private
 

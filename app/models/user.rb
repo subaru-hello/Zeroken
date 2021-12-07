@@ -29,9 +29,11 @@ class User < ApplicationRecord
             format: {
               with: VALID_EMAIL_REGEX
             }
-  def avatar_url
-    Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true) if avatar.attached?
-  end
+  # def avatar_url
+  #   if avatar.attached?
+  #     Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
+  #   end
+  # end
 
   private
 
