@@ -74,9 +74,9 @@
             </v-col>
             <v-col>
               <v-card class="mx-auto" max-width="344">
-                <v-card-text>
+                <div align-content="center">
                   <v-img :src="beersSrc" width="344" height="100" />
-                </v-card-text>
+                </div>
 
                 <v-card-title> デートの前に </v-card-title>
 

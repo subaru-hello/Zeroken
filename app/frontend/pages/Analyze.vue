@@ -7,7 +7,7 @@
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="mt-5 text-color-white" style="background-color: white">
+          <h2 class="ma-5 text-white" style="background-color: rgb(222, 184, 135)">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
