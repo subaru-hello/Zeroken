@@ -18,20 +18,22 @@ jobs:
       # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
-
+      - name: Prepare Bundler
+        run: |
+          gem install bundler
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.7
           bundler-cache: true
-      - name: Setup Database
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        run: |
-          mysql.server start
-          gem install bundler
-          ./bin/rails db:create
-          ./bin/rails db:migrate
+      # - name: Setup Database
+      #   env:
+      #     MYSQL_ROOT_PASSWORD: password
+      #   run: |
+      #     mysql.server start
+      #     gem install bundler
+      #     ./bin/rails db:create
+      #     ./bin/rails db:migrate
      
       - name: Prepare Node
         uses: actions/setup-node@v2
