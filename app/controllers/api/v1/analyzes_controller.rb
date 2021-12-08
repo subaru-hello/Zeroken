@@ -45,13 +45,7 @@ module Api
       def analyze_params
         params
           .require(:analyze)
-          .permit(
-            :total_points,
-            :alcohol_strongness,
-            :next_motivation,
-            :description,
-            :shuchedule
-          )
+          .permit(:total_points, :alcohol_strongness, :next_motivation, :description, :shuchedule)
       end
 
       def set_analyze

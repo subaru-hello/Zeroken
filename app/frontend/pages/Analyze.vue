@@ -934,7 +934,7 @@ export default {
         const updAnalyze = {
           total_points: sumResult,
           alcohol_strongness: AlcoholStrongness,
-      next_motivation: Nomivation,
+          next_motivation: Nomivation,
           description: Description,
           shuchedule: yourShuchedule,
         };
