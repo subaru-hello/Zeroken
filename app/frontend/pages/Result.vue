@@ -6,49 +6,47 @@
           <v-col cols="12">
             <div>
               <v-col>
-                <p>酒テータス</p>
+                <p class="text-center" style="font-size: 40px">酒テータス</p>
               </v-col>
+              <div class="text-center">
+                <p class="text-center" align-content="center">
+                  <v-col>
+                    <p v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">
+                      <span class="text-center" style="font-size: 40px">下戸</span>
+                    </p>
+                    <p
+                      class="text-center"
+                      v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'"
+                    >
+                      <span class="text-center" style="font-size: 40px">普通の人</span>
+                    </p>
+                    <p class="text-center" v-else>
+                      <span class="text-center" style="font-size: 40px">酒豪</span>
+                    </p>
+                  </v-col>
+                </p>
+              </div>
+            </div>
+            <div class="d-flex" align-content="center">
+              <v-col>
+                <p class="text-center"></p>
+                <!-- <v-col>
+             
+                <p  v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'"><span class="text-center" style="font-size: 40px">下戸</span></p>
+                <p class="text-center" v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'">
+                  <span class="text-center" style="font-size: 40px">普通の人</span>
+                </p>
+                <p class="text-center" v-else><span class="text-center" style="font-size: 40px">酒豪</span></p>
+              </v-col> -->
+              </v-col>
+            </div>
+            <div></div>
+            <div>
               <v-col>
                 <p>「 {{ analyzes[analyzes.length - 1]['description'] }}」</p>
               </v-col>
-              <v-col cols="12">
-                アルハラ危険度:
-                <star-rating
-                  :rating="strongnessStar"
-                  :show-rating="false"
-                  read-only
-                  class="mx-auto"
-                ></star-rating>
-              </v-col>
-              <v-col>
-                <img :src="beerSrc" width="150" height="100" />
-              </v-col>
-            </div>
-            <div>
-              <v-col>
-                <p class="text-center">お名前</p>
-              </v-col>
-              <v-col>
-                <p class="text-center">{{ currentUser }}</p>
-              </v-col>
-            </div>
-            <div>
-              <v-col>
-                <p>お酒の強さ</p>
-              </v-col>
-              <v-col>
-                <p v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">下戸</p>
-                <p v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'">
-                  普通の人
-                </p>
-                <p v-else>酒豪</p>
-              </v-col>
-            </div>
-            <div>
-              <v-col>
-                <p>気分</p>
-              </v-col>
-              <v-col>
+
+              <v-col class="text-center">
                 <p v-if="analyzes[analyzes.length - 1]['next_motivation'] === 'flesh'">
                   <img :src="fleshSrc" width="150" height="150" />
                 </p>
@@ -60,6 +58,19 @@
                 </p>
               </v-col>
             </div>
+
+            <div>
+              <div v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">
+                <v-btn x-large @click="showCertificate = !showCertificate"
+                  >証明書が発行されました</v-btn
+                >
+                <v-dialog>
+                  <v-card>
+                    <img :src="certificateSrc" width="150" height="100" />
+                  </v-card>
+                </v-dialog>
+              </div>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -68,7 +79,7 @@
     <v-layout>
       <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
         <v-card-title style="width: 100%" class="headline justify-center">
-          <h2 class="centered">酒ケジュール</h2>
+          <h2 class="centered white--text" style="white--text">酒ケジュール</h2>
         </v-card-title>
         <v-container>
           <v-row justify="center" align-content="center">
@@ -94,52 +105,56 @@
             </v-col>
           </v-row>
           <v-btn @click="dialog2 = !dialog2"> 詳細を見る </v-btn>
-          <v-dialog
-            v-model="dialog2"
-            scrollable
-            max-width="100%"
-            transition="dialog-top-transition"
-          >
-            <v-row justify="center" align-content="center">
-              <v-col cols="12" v-for="data in contents" :key="data.id">
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  width="100%"
-                  shaped
-                  id="form"
-                >
-                  <v-card-title style="width: 100%" class="headline justify-center">
-                    {{ data.name }}
-                  </v-card-title>
-                  <v-row justify="center">
-                    <v-img
-                      :lazy-src="data.image_url"
-                      :src="data.image_url"
-                      max-height="150"
-                      max-width="100"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-row>
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ data.alcohol_percentage }}%</p>
-                    <p>量: {{ data.alcohol_amount }}ml</p>
-                  </v-row>
-                  <div>
-                    {{ data.description }}
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-dialog>
+          <transition name="fade">
+            <div
+              style="overflow-y: auto"
+              v-show="dialog2"
+              max-width="100%"
+              transition="dialog-top-transition"
+              justify="center"
+              align-content="center"
+            >
+              <v-row class="d-flex" justify="center" align-content="center">
+                <v-col cols="3" md="12" v-for="data in contents" :key="data.id">
+                  <v-card
+                    class="text-center mx-auto my-5 form"
+                    elevation="2"
+                    width="100%"
+                    shaped
+                    id="form"
+                  >
+                    <v-card-title style="width: 100%" class="headline justify-center">
+                      {{ data.name }}
+                    </v-card-title>
+                    <v-row justify="center">
+                      <v-img
+                        :lazy-src="data.image_url"
+                        :src="data.image_url"
+                        max-height="150"
+                        max-width="100"
+                      >
+                        <template v-slot:placeholder>
+                          <v-row class="fill-height ma-0" align="center" justify="center">
+                            <v-progress-circular
+                              indeterminate
+                              color="grey lighten-5"
+                            ></v-progress-circular>
+                          </v-row>
+                        </template>
+                      </v-img>
+                    </v-row>
+                    <v-row justify="center" align-content="center">
+                      <p>度数: {{ data.alcohol_percentage }}%</p>
+                      <p>量: {{ data.alcohol_amount }}ml</p>
+                    </v-row>
+                    <div>
+                      {{ data.description }}
+                    </div>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </div>
+          </transition>
         </v-container>
       </v-col>
     </v-layout>
@@ -221,6 +236,7 @@ export default {
       dialog0: false,
       dialog1: false,
       dialog2: false,
+      showCertificate: false,
       rating: [],
     };
   },
@@ -233,7 +249,7 @@ export default {
     },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
-      const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
+      const sakeStrongness = targetAnalyze['alcohol_strongness'];
       const starState = sakeStrongness === 'normal' ? 3 : sakeStrongness === 'strong' ? 5 : 1;
       return starState;
     },
@@ -289,6 +305,9 @@ export default {
     },
     fleshSrc() {
       return require('../src/img/flesh_stamp.png');
+    },
+    certificateSrc() {
+      return require('../src/img/certificate.png');
     },
   },
   mounted() {
