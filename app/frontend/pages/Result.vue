@@ -8,7 +8,8 @@
               <v-col>
                 <p class="text-center" style="font-size: 40px">酒テータス</p>
               </v-col>
-              <div class="text-center">
+
+              <!-- <div class="text-center">
                 <p class="text-center" align-content="center">
                   <v-col>
                     <p v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">
@@ -25,23 +26,29 @@
                     </p>
                   </v-col>
                 </p>
-              </div>
+              </div> -->
             </div>
             <div class="d-flex" align-content="center">
               <v-col>
                 <p class="text-center"></p>
-                <!-- <v-col>
-             
-                <p  v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'"><span class="text-center" style="font-size: 40px">下戸</span></p>
-                <p class="text-center" v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'">
-                  <span class="text-center" style="font-size: 40px">普通の人</span>
-                </p>
-                <p class="text-center" v-else><span class="text-center" style="font-size: 40px">酒豪</span></p>
-              </v-col> -->
+                <v-col>
+                  <p v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">
+                    <span class="text-center" style="font-size: 40px">下戸</span>
+                  </p>
+                  <p
+                    class="text-center"
+                    v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'"
+                  >
+                    <span class="text-center" style="font-size: 40px">普通の人</span>
+                  </p>
+                  <p class="text-center" v-else>
+                    <span class="text-center" style="font-size: 40px">下戸</span>
+                  </p>
+                </v-col>
               </v-col>
             </div>
             <div></div>
-            <div>
+            <!-- <div>
               <v-col>
                 <p>「 {{ analyzes[analyzes.length - 1]['description'] }}」</p>
               </v-col>
@@ -57,20 +64,47 @@
                   <img :src="meiteiSrc" width="150" height="150" />
                 </p>
               </v-col>
-            </div>
+            </div> -->
 
+            <!-- <div>
+              <div v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'"> -->
             <div>
-              <div v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">
-                <v-btn x-large @click="showCertificate = !showCertificate"
-                  >証明書が発行されました</v-btn
-                >
-                <v-dialog>
-                  <v-card>
-                    <img :src="certificateSrc" width="150" height="100" />
-                  </v-card>
-                </v-dialog>
-              </div>
+              <v-btn x-large @click="showCertificate = !showCertificate" class="text-center"
+                >証明書が発行されました</v-btn
+              >
             </div>
+            <modal v-if="showCertificate" @close="showCertificate = false">
+              <transition name="modal">
+                <div class="modal-mask">
+                  <div class="modal-wrapper">
+                    <div class="modal-container" style="width: 500px">
+                      <div class="modal-body">
+                        <slot name="body">
+                          <v-img :src="certificateSrc" width="250" height="200" />
+                        </slot>
+                      </div>
+
+                      <div class="modal-footer">
+                        <v-btn class="modal-default-button" @click="showCertificate = false">
+                          スクショで収めました
+                        </v-btn>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+
+              <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+              <v-card> </v-card>
+            </modal>
+            <v-dialog v-show="showCertificate">
+              <v-card class="d-flex" justify="center" align-content="center"> </v-card>
+            </v-dialog>
+            <!-- </div>
+            </div> -->
           </v-col>
         </v-row>
       </v-container>
