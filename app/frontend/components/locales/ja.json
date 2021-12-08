@@ -1,11 +1,11 @@
 {
       "analyzes": {
-        "sake_strongness_types": {
+        "alcohol_strongness": {
             "weak": "下戸",
             "normal": "普通",
             "strong": "酒豪"
         },
-        "next_nomivation_types": {
+        "next_motivation": {
           "flesh": "しっぽり",
           "tipsy": "ほろ酔い",
           "heavy_drunk": "酩酊"

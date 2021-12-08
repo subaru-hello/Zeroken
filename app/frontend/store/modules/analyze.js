@@ -3,8 +3,8 @@ const state = {
   analyzes: [
     {
       total_points: '',
-      sake_strongness_types: '',
-      next_nomivation_types: '',
+      alcohol_strongness: '',
+      next_motivation: '',
       description: '',
       shuchedule: '',
     },
@@ -20,8 +20,8 @@ const mutations = {
   addAnalyze: (state, analyze) => {
     const analyzeArray = [];
     analyzeArray.push(analyze.total_points);
-    analyzeArray.push(analyze.sake_strongness_types);
-    analyzeArray.push(analyze.next_nomivation_types);
+    analyzeArray.push(analyze.alcohol_strongness);
+    analyzeArray.push(analyze.next_motivation);
     analyzeArray.push(analyze.description);
     analyzeArray.push(analyze.shuchedule);
     state.analyzes = analyzeArray;

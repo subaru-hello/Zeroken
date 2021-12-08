@@ -47,8 +47,8 @@ module Api
           .require(:analyze)
           .permit(
             :total_points,
-            :sake_strongness_types,
-            :next_nomivation_types,
+            :alcohol_strongness,
+            :next_motivation,
             :description,
             :shuchedule
           )
