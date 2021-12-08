@@ -85,10 +85,10 @@ jobs:
           yarn eslint-config-prettier app/frontend/**/{*.js,*.vue}
           yarn run fmt
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
-      # - name: Run Breakman
-      #   run: |
-      #     bundle exec bundler-audit --update
-      #     bundle exec brakeman -q -w2
+      - name: Run Breakman
+        run: |
+          bundle exec bundler-audit --update
+          bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
           bundle exec rubocop -A
@@ -97,7 +97,7 @@ jobs:
            bundle exec rspec
   # deploy:
   #   name: auto deploy to heroku
-  #   needs: [prepare, build-test
+  #   needs: [prepare, build-test]
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 10
   #   steps:
