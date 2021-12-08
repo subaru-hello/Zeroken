@@ -3,8 +3,8 @@
     <v-footer style="background-color: rgb(222 184 135)">
       <v-row justify="center" no-gutters>
         <v-btn
-          v-for="link in links"
-          :key="link"
+          v-for="(link, index) in links"
+          :key="index"
           color="white"
           text
           rounded
@@ -35,20 +35,22 @@ export default {
     return {
       dialog: false,
       links: [
-        {url: 'about',name: 'ZEROKENについて'}, 
-         {url: 'kiyaku',name: '利用規約'}, 
-          {url: 'form',name: 'お問い合わせ'}
-        ],
-    }},
+        { url: 'about', name: 'ZEROKENについて' },
+        { url: 'kiyaku', name: '利用規約' },
+        { url: 'form', name: 'お問い合わせ' },
+      ],
+    };
+  },
 
-    methods: {
-        getCreateUrl(url) {
-        if(url==='form') {
-          location.href="https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link"
-        } else {
-          this.dialog = true
-        }
-      },
-    }
+  methods: {
+    getCreateUrl(url) {
+      if (url === 'form') {
+        location.href =
+          'https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link';
+      } else {
+        this.dialog = true;
+      }
+    },
+  },
 };
 </script>

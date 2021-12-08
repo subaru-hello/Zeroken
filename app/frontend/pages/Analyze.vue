@@ -7,7 +7,7 @@
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="ma-5 white--text rounded" style="background-color:#6ea4ca">
+          <h2 class="ma-5 white--text rounded" style="background-color: #6ea4ca">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
@@ -501,8 +501,8 @@ export default {
         // #1
         const updAnalyze = {
           total_points: sumResult,
-          sake_strongness_types: AlcoholStrongness,
-          next_nomivation_types: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
+          alcohol_strongness: AlcoholStrongness,
+          next_motivation: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
           shuchedule: yourShuchedule,
           description: Description,
         };
@@ -723,8 +723,8 @@ export default {
         // #1
         const updAnalyze = {
           total_points: sumResult,
-          sake_strongness_types: AlcoholStrongness,
-          next_nomivation_types: Nomivation,
+          alcohol_strongness: AlcoholStrongness,
+          next_motivation: Nomivation,
           shuchedule: yourShuchedule,
           description: Description,
         };
@@ -933,8 +933,8 @@ export default {
         // #1
         const updAnalyze = {
           total_points: sumResult,
-          sake_strongness_types: AlcoholStrongness,
-          next_nomivation_types: Nomivation,
+          alcohol_strongness: AlcoholStrongness,
+      next_motivation: Nomivation,
           description: Description,
           shuchedule: yourShuchedule,
         };
@@ -1068,7 +1068,7 @@ export default {
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
 }
-.rounded{
+.rounded {
   border-radius: 50px;
 }
 </style>
