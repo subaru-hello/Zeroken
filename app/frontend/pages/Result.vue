@@ -1,193 +1,76 @@
 <template>
   <div id="izakaya" style="width: 100%">
     <div>
-      <v-col>
-        <p class="text-center" style="font-size: 50px">酒テータス</p>
-        <div
-          class="centered"
-          v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'"
-        >
-          <v-row justify="center" align-content="center">
-            <p class="text-center" style="font-size: 25px">
-              {{ $t('analyzes.sake_strongness_types.strong') }}
-            </p>
-          </v-row>
-          <div class="d-flex" justify="center" align-content="center">
-            <star-rating :rating="5" :show-rating="false" read-only class="mx-auto"></star-rating>
-          </div>
-          <v-row justify="center" align-content="center">
-            <div class="d-flex">
-              <img :src="beerSrc" width="150" height="100" />
+      <v-container justify="center" style="background-color: white; width: 50%">
+        <v-row class="d-flex">
+          <v-col cols="12">
+            <div>
+              <v-col>
+                <p>酒テータス</p>
+              </v-col>
+              <v-col>
+                <p>「 {{ analyzes[analyzes.length - 1]['description'] }}」</p>
+              </v-col>
+              <v-col cols="12">
+                アルハラ危険度:
+                <star-rating
+                  :rating="strongnessStar"
+                  :show-rating="false"
+                  read-only
+                  class="mx-auto"
+                ></star-rating>
+              </v-col>
+              <v-col>
+                <img :src="beerSrc" width="150" height="100" />
+              </v-col>
             </div>
-          </v-row>
-        </div>
-
-        <div
-          class="centered"
-          v-else-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'"
-        >
-          <v-row justify="center" align-content="center">
-            <p class="text-center" style="font-size: 25px">
-              {{ $t('analyzes.sake_strongness_types.normal') }}
-            </p>
-          </v-row>
-
-          <div class="d-flex" justify="center" align-content="center">
-            <star-rating :rating="3" :show-rating="false" read-only class="mx-auto"></star-rating>
-          </div>
-
-          <v-row justify="center" align-content="center">
-            <div class="d-flex">
-              <img :src="beerSrc" width="150" height="100" />
+            <div>
+              <v-col>
+                <p class="text-center">お名前</p>
+              </v-col>
+              <v-col>
+                <p class="text-center">{{ currentUser }}</p>
+              </v-col>
             </div>
-          </v-row>
-        </div>
-        <div class="centered" v-else>
-          <v-row justify="center" align-content="center" style="font-size: 25px">
-            <p class="text-center">
-              {{ $t('analyzes.sake_strongness_types.weak') }}
-            </p>
-          </v-row>
-          <div class="d-flex" justify="center" align-content="center">
-            <star-rating :rating="1" :show-rating="false" read-only class="mx-auto"></star-rating>
-          </div>
-          <v-row justify="center" align-content="center">
-            <div class="d-flex">
-              <img :src="beerSrc" width="150" height="100" />
+            <div>
+              <v-col>
+                <p>お酒の強さ</p>
+              </v-col>
+              <v-col>
+                <p v-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'tipsy'">下戸</p>
+                <p v-else-if="analyzes[analyzes.length - 1]['alcohol_strongness'] === 'normal'">
+                  普通の人
+                </p>
+                <p v-else>酒豪</p>
+              </v-col>
             </div>
-          </v-row>
-        </div>
-
-        <v-card-subtitle style="font-size: 26px">
-          {{ analyzes[analyzes.length - 1]['description'] }}
-        </v-card-subtitle>
-      </v-col>
+            <div>
+              <v-col>
+                <p>気分</p>
+              </v-col>
+              <v-col>
+                <p v-if="analyzes[analyzes.length - 1]['next_motivation'] === 'flesh'">
+                  <img :src="fleshSrc" width="150" height="150" />
+                </p>
+                <p v-else-if="analyzes[analyzes.length - 1]['next_motivation'] === 'tipsy'">
+                  <img :src="tipsySrc" width="150" height="150" />
+                </p>
+                <p v-else>
+                  <img :src="meiteiSrc" width="150" height="150" />
+                </p>
+              </v-col>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
 
     <v-layout>
       <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
-        <!-- <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
-          <img :src="fleshSrc" width="150" height="150" />
-        </p>
-        <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
-          <img :src="tipsySrc" width="150" height="150" />
-        </p>
-        <p v-else>
-          <img :src="meiteiSrc" width="150" height="150" />
-        </p> -->
         <v-card-title style="width: 100%" class="headline justify-center">
           <h2 class="centered">酒ケジュール</h2>
         </v-card-title>
-        <v-col class="text-center mx-auto form" elevation="2" shaped id="form">
-          <p v-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'flesh'">
-            <img :src="fleshSrc" width="150" height="150" />
-          </p>
-          <p v-else-if="analyzes[analyzes.length - 1]['next_nomivation_types'] === 'tipsy'">
-            <img :src="tipsySrc" width="150" height="150" />
-          </p>
-          <p v-else>
-            <img :src="meiteiSrc" width="150" height="150" />
-          </p>
-        </v-col>
-
-        <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'strong'">
-          <v-row justify="center" align-content="center">
-            <v-col
-              cols="12"
-              sm="3"
-              class="d-flex"
-              width="1000"
-              v-for="data in contents"
-              :key="data.id"
-            >
-              <v-card
-                class="text-center mx-auto my-5 form"
-                elevation="2"
-                width="100%"
-                shaped
-                id="form"
-              >
-                <v-card-title style="width: 100%" class="headline justify-center">
-                  {{ data.name }}
-                </v-card-title>
-                <v-row justify="center">
-                  <v-img
-                    :lazy-src="data.image_url"
-                    :src="data.image_url"
-                    max-height="150"
-                    max-width="100"
-                  >
-                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                    <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-row>
-
-                <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
-                <v-row justify="center" align-content="center" class="d-flex">
-                  <p>度数: {{ data.alcohol_percentage }}%</p>
-                  <p>量: {{ data.alcohol_amount }}ml</p>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-btn @click="dialog0 = !dialog0"> 詳細を見る </v-btn>
-          <v-dialog v-model="dialog0" scrollable max-width="80%" transition="dialog-top-transition">
-            <v-row justify="center" align-content="center">
-              <v-col cols="12" class="d-flex" v-for="data in contents" :key="data.id">
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  width="100%"
-                  shaped
-                  id="form"
-                >
-                  <v-card-title style="width: 100%" class="headline justify-center">
-                    {{ data.name }}
-                  </v-card-title>
-                  <v-row justify="center">
-                    <v-img
-                      :lazy-src="data.image_url"
-                      :src="data.image_url"
-                      max-height="150"
-                      max-width="100"
-                    >
-                      <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-row>
-
-                  <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ data.alcohol_percentage }}%</p>
-                    <p>量: {{ data.alcohol_amount }}ml</p>
-                  </v-row>
-                  <div>
-                    {{ data.description }}
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-dialog>
-        </v-container>
-        <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'normal'">
+        <v-container>
           <v-row justify="center" align-content="center">
             <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
               <v-card
@@ -197,125 +80,12 @@
                 shaped
                 id="form"
               >
-                <v-card-title style="width: 100%" class="headline justify-center">
-                  {{ data.name }}
-                </v-card-title>
-                <v-row justify="center">
-                  <v-img
-                    :lazy-src="data.image_url"
-                    :src="data.image_url"
-                    max-height="150"
-                    max-width="100"
-                  >
-                    <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                    <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-row>
-
-                <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
-                <v-row justify="center" align-content="center" class="d-flex">
-                  <p>度数: {{ data.alcohol_percentage }}%</p>
-                  <p>量: {{ data.alcohol_amount }}ml</p>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-btn @click="dialog1 = !dialog1"> 詳細を見る </v-btn>
-          <v-dialog v-model="dialog1" scrollable max-width="80%" transition="dialog-top-transition">
-            <v-row justify="center" align-content="center">
-              <!-- <p style="font-size: 50px">詳細</p> -->
-
-              <v-col cols="12" class="d-flex" v-for="data in contents" :key="data.id">
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  width="100%"
-                  shaped
-                  id="form"
+                <v-icon :logo="data.percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'">
+                  mdi-glass-mug</v-icon
                 >
-                  <v-card-title style="width: 100%" class="headline justify-center">
-                    {{ data.name }}
-                  </v-card-title>
-                  <v-row justify="center">
-                    <v-img
-                      :lazy-src="data.image_url"
-                      :src="data.image_url"
-                      max-height="150"
-                      max-width="100"
-                    >
-                      <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-row>
-
-                  <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ data.alcohol_percentage }}%</p>
-                    <p>量: {{ data.alcohol_amount }}ml</p>
-                  </v-row>
-                  <div>
-                    {{ data.description }}
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-dialog>
-        </v-container>
-        <v-container v-if="analyzes[analyzes.length - 1]['sake_strongness_types'] === 'weak'">
-          <v-row justify="center" align-content="center">
-            <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
-              <v-card
-                class="text-center mx-auto my-5 form"
-                elevation="2"
-                width="100%"
-                shaped
-                id="form"
-              >
-                <v-icon> mdi-glass-mug </v-icon>
                 <v-card-title style="width: 100%" class="headline justify-center">
                   {{ data.name }}
                 </v-card-title>
-
-                <v-row justify="center">
-                  <!-- <v-img
-                    :lazy-src="data.image_url"
-                    :src="data.image_url"
-                    max-height="150"
-                    max-width="100"
-                  > -->
-                  <!-- <img :src="beerSrc" width="150" height="100" /> -->
-                  <!-- <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img> -->
-                </v-row>
-
-                <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
                 <v-row justify="center" align-content="center">
                   <p>度数: {{ data.alcohol_percentage }}%</p>
                   <p>量: {{ data.alcohol_amount }}ml</p>
@@ -331,7 +101,7 @@
             transition="dialog-top-transition"
           >
             <v-row justify="center" align-content="center">
-              <v-col cols="12" class="d-flex" v-for="data in contents" :key="data.id">
+              <v-col cols="12" v-for="data in contents" :key="data.id">
                 <v-card
                   class="text-center mx-auto my-5 form"
                   elevation="2"
@@ -349,7 +119,6 @@
                       max-height="150"
                       max-width="100"
                     >
-                      <!-- <img :src="beerSrc" width="150" height="100" /> -->
                       <template v-slot:placeholder>
                         <v-row class="fill-height ma-0" align="center" justify="center">
                           <v-progress-circular
@@ -360,10 +129,6 @@
                       </template>
                     </v-img>
                   </v-row>
-
-                  <!-- <v-card-text>
-                  {{ data.description }}
-                </v-card-text> -->
                   <v-row justify="center" align-content="center">
                     <p>度数: {{ data.alcohol_percentage }}%</p>
                     <p>量: {{ data.alcohol_amount }}ml</p>
@@ -450,6 +215,7 @@ export default {
       alcohols: [],
       analyze: [],
       users: [],
+      logo: '',
       errors: '',
       dialog: false,
       dialog0: false,
@@ -462,10 +228,26 @@ export default {
   computed: {
     ...mapGetters('analyze', ['analyzes']),
     ...mapGetters('users', ['authUser']),
-    testAnalyzes() {
+    currentUser() {
+      return this.authUser['data']['attributes']['nickname'];
+    },
+    strongnessStar() {
+      const targetAnalyze = this.analyzes;
+      const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
+      const starState = sakeStrongness === 'normal' ? 3 : sakeStrongness === 'strong' ? 5 : 1;
+      return starState;
+    },
+    isAlcohol() {
       const thisAnalyze = this.analyzes;
-      const targetShuchedule = thisAnalyze[thisAnalyze.length - 1];
-      return targetShuchedule;
+
+      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+
+      const targetValues = this.alcohols;
+
+      const contentsOfTarget = targetValues[analyzeShuchedule]; //数字を取り出している
+      const alcoholPercentage = contentsOfTarget['alcohol_percentage'];
+      const logoInspect = alcoholPercentage > 0 ? 'mdi-glass-mug' : 'mdi-cup';
+      return logoInspect;
     },
     contents() {
       const thisAnalyze = this.analyzes;
@@ -477,11 +259,6 @@ export default {
       const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
 
       return contentsOfTarget;
-    },
-    currentUser() {
-      const thisAnalyze = this.analyzes;
-      const targetSakeStrongness = thisAnalyze[thisAnalyze.length - 1];
-      return targetSakeStrongness;
     },
     imgSrc() {
       return require('../src/img/line.png');
