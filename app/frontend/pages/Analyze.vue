@@ -7,7 +7,7 @@
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="ma-5 text-white" style="background-color: rgb(222, 184, 135)">
+          <h2 class="ma-5 white--text rounded" style="background-color:#6ea4ca">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
@@ -23,8 +23,8 @@
               <v-card-title>
                 <v-container>
                   <v-card
-                    class="text-center mx-auto my-5 form"
-                    elevation="2"
+                    class="text-center mx-auto my-5 form rounded"
+                    elevation="24"
                     shaped
                     width="500"
                     id="form"
@@ -1067,5 +1067,8 @@ export default {
 }
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+}
+.rounded{
+  border-radius: 50px;
 }
 </style>
