@@ -31,7 +31,7 @@ jobs:
       #     MYSQL_ROOT_PASSWORD: password
       #   run: |
       #     mysql.server start
-      #     gem install bundler
+      #     sudo gem install bundler
       #     ./bin/rails db:create
       #     ./bin/rails db:migrate
      
@@ -85,6 +85,9 @@ jobs:
           yarn eslint-config-prettier app/frontend/**/{*.js,*.vue}
           yarn run fmt
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
+      - name: Prepare Bundler
+        run: |
+         sudo gem install bundler
       - name: Run Breakman
         run: |
           bundle exec bundler-audit --update
