@@ -86,7 +86,6 @@
               <v-icon>mdi-arrow-up-thick</v-icon>
             </v-btn>
           </p>
-
           <p
             v-if="isVisible"
             class="text-center red--text text--lightn-3 my-5 mb-5"
@@ -499,7 +498,7 @@ export default {
 
       let promise = new Promise((resolve, reject) => {
         // #1
-        const updAnalyze = {
+        const updateAnalyze = {
           total_points: sumResult,
           alcohol_strongness: AlcoholStrongness,
           next_motivation: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
@@ -508,7 +507,7 @@ export default {
         };
 
         resolve(
-          this.createAnalyze(updAnalyze)
+          this.createAnalyze(updateAnalyze)
           // this.clearAnswers()
         );
         reject();
@@ -523,15 +522,6 @@ export default {
             }, 600);
           });
         })
-        // .then(() => {
-        //   // #2
-        //   return new Promise((resolve, reject) => {
-
-        //       resolve((this.clearAnswers()));
-        //       reject();
-
-        //   });
-        // })
         .then(() => {
           // #3
           return new Promise((resolve, reject) => {
@@ -721,7 +711,7 @@ export default {
       let Nomivation = 1;
       let promise = new Promise((resolve, reject) => {
         // #1
-        const updAnalyze = {
+        const updateAnalyze = {
           total_points: sumResult,
           alcohol_strongness: AlcoholStrongness,
           next_motivation: Nomivation,
@@ -729,7 +719,7 @@ export default {
           description: Description,
         };
 
-        resolve(this.createAnalyze(updAnalyze));
+        resolve(this.createAnalyze(updateAnalyze));
         reject();
       });
       promise
@@ -931,7 +921,7 @@ export default {
 
       let promise = new Promise((resolve, reject) => {
         // #1
-        const updAnalyze = {
+        const updateAnalyze = {
           total_points: sumResult,
           alcohol_strongness: AlcoholStrongness,
           next_motivation: Nomivation,
@@ -939,7 +929,7 @@ export default {
           shuchedule: yourShuchedule,
         };
 
-        resolve(this.createAnalyze(updAnalyze));
+        resolve(this.createAnalyze(updateAnalyze));
         reject();
       });
       promise
