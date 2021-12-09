@@ -87,7 +87,7 @@ jobs:
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       - name: Run Breakman
         run: |
-          bundle exec bundler-audit --update
+          bundle exec bundle audit --update
           bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
