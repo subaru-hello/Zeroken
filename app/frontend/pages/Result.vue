@@ -212,12 +212,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import StarRating from 'vue-star-rating';
+// import StarRating from 'vue-star-rating';
 import axios from '../plugins/axios';
 export default {
-  components: {
-    StarRating,
-  },
+  // components: {
+  //   StarRating,
+  // },
   data: function () {
     return {
       shuche: '',
