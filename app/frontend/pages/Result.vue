@@ -10,6 +10,14 @@
               </v-col>
               <v-col> </v-col>
             </div>
+            <div class="d-flex" justify="center" align-content="center">
+              <star-rating
+                :rating="strongnessStar"
+                :show-rating="false"
+                read-only
+                class="mx-auto"
+              ></star-rating>
+            </div>
             <div class="d-flex" align-content="center">
               <v-col>
                 <p class="text-center"></p>
@@ -212,12 +220,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-// import StarRating from 'vue-star-rating';
+import StarRating from 'vue-star-rating';
 import axios from '../plugins/axios';
 export default {
-  // components: {
-  //   StarRating,
-  // },
+  components: {
+    StarRating,
+  },
   data: function () {
     return {
       shuche: '',
