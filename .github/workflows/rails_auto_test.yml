@@ -23,8 +23,8 @@ jobs:
       #    sudo gem install bundler
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6.7
+        # with:
+        #   ruby-version: 2.6.7
           bundler-cache: true
       # - name: Setup Database
       #   env:
@@ -62,8 +62,8 @@ jobs:
 
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6.7
+        # with:
+        #   ruby-version: 2.6.7
       - name: Check Ruby version
         run: ruby -v
 
