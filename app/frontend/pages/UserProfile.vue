@@ -57,7 +57,6 @@
                   :key="index"
                   class="d-flex justify-space-between mb-6"
                 >
-                  <p>酒ケジュール</p>
                   <v-col
                     cols="12"
                     v-for="(specificData, index) in data"

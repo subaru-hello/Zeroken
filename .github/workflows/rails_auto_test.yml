@@ -18,13 +18,11 @@ jobs:
       # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
-      # - name: Prepare Bundler
-      #   run: |
-      #    sudo gem install bundler
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.7
+          bundler: "Gemfile.lock"
+        #   ruby-version: 2.6.7
           bundler-cache: true
       # - name: Setup Database
       #   env:
@@ -63,7 +61,7 @@ jobs:
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.7
+          bundler: "Gemfile.lock"
       - name: Check Ruby version
         run: ruby -v
 
@@ -87,7 +85,7 @@ jobs:
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       # - name: Run Breakman
       #   run: |
-      #     bundle exec bundler-audit --update
+      #     bundle exec bundle audit --update
       #     bundle exec brakeman -q -w2
       # - name: Run Rubocop
       #   run: |

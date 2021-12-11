@@ -3,8 +3,8 @@ const state = {
   analyzes: [
     {
       total_points: '',
-      sake_strongness_types: '',
-      next_nomivation_types: '',
+      alcohol_strongness: '',
+      next_motivation: '',
       description: '',
       shuchedule: '',
     },
@@ -20,16 +20,16 @@ const mutations = {
   addAnalyze: (state, analyze) => {
     const analyzeArray = [];
     analyzeArray.push(analyze.total_points);
-    analyzeArray.push(analyze.sake_strongness_types);
-    analyzeArray.push(analyze.next_nomivation_types);
+    analyzeArray.push(analyze.alcohol_strongness);
+    analyzeArray.push(analyze.next_motivation);
     analyzeArray.push(analyze.description);
     analyzeArray.push(analyze.shuchedule);
     state.analyzes = analyzeArray;
   },
-  updateAnalyze: (state, updAnalyze) => {
-    const index = state.analyzes.findIndex((analyze) => analyze.id === updAnalyze.id);
+  updateAnalyze: (state, updateAnalyze) => {
+    const index = state.analyzes.findIndex((analyze) => analyze.id === updateAnalyze.id);
     if (index !== -1) {
-      state.analyzes.splice(index, 1, updAnalyze);
+      state.analyzes.splice(index, 1, updateAnalyze);
     }
   },
 };
@@ -50,8 +50,8 @@ const actions = {
       return nil;
     }
   },
-  async updateAnalyze({ commit }, updAnalyze) {
-    const response = await axios.put(`analyzes/${updAnalyze.id}`, updAnalyze);
+  async updateAnalyze({ commit }, updateAnalyze) {
+    const response = await axios.put(`analyzes/${updatedAnalyze.id}`, updateAnalyze);
     commit('updateAnalyze', response.data);
   },
 };
