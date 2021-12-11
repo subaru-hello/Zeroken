@@ -18,9 +18,6 @@ jobs:
       # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
-      # - name: Prepare Bundler
-      #   run: |
-      #    sudo gem install bundler
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
@@ -63,8 +60,8 @@ jobs:
 
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
-        # with:
-        #   ruby-version: 2.6.7
+        with:
+          bundler: "Gemfile.lock"
       - name: Check Ruby version
         run: ruby -v
 
