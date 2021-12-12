@@ -111,6 +111,9 @@ export default {
     toLogin() {
       this.$router.push({ name: 'UserLogin' });
     },
+    toRegister() {
+      this.$router.push({ name: 'UserRegister' });
+    },
     toPhrase() {
       this.$router.push({ name: 'Phrases' });
     },

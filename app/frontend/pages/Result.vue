@@ -285,8 +285,8 @@ export default {
     },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
-      const sakeStrongness = targetAnalyze['alcohol_strongness'];
-      const starState = sakeStrongness === 'normal' ? 3 : sakeStrongness === 'strong' ? 5 : 1;
+      const sakeStrongness = targetAnalyze[targetAnalyze.length -1 ]['alcohol_strongness'];
+      const starState = sakeStrongness === 'weak' ? 1 : sakeStrongness === 'geko_normal' ? 2 : sakeStrongness === 'normal' ? 3 : sakeStrongness === 'normal_strong' ? 4 : 5;
       return starState;
     },
     isAlcohol() {

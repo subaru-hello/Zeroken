@@ -2,12 +2,14 @@
   <div id="izakaya">
     <v-stepper v-model="e6" vertical id="izakaya">
       <v-stepper-step :complete="e6 > 1" step="1">
-        <!-- <span style="background-color: rgb(222, 184, 135)">お酒の強さを診断 </span>-->
+        <span class="white--text" style="background-color: rgb(222, 184, 135, 0.4)"
+          >お酒の強さを診断
+        </span>
       </v-stepper-step>
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="ma-5 white--text rounded" style="background-color: #6ea4ca">
+          <h2 class="ma-5 white--text rounded bold" style="background: rgba(51, 112, 121, 0.4)">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
@@ -114,12 +116,16 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2">
-        <!-- <span style="background-color: rgb(222, 184, 135)">体重設定画面 </span> -->
+        <span style="background-color: rgb(222, 184, 135, 0.8)">体重設定画面 </span>
       </v-stepper-step>
       <v-stepper-content step="2">
         <template v-if="show">
-          <v-container justify="center" align-content="center" style="background-color: white">
-            <h2 class="mt-5 text-color-white text-center">現在の体重を選択してください</h2>
+          <v-container
+            justify="center"
+            align-content="center"
+            style="background-color: rgb(222, 184, 135, 0.4)"
+          >
+            <h2 class="mt-5 white--text text-center">現在の体重を選択してください</h2>
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
@@ -147,7 +153,7 @@
         </v-col>
       </v-stepper-content>
       <v-stepper-step :complete="e6 > 3" step="3">
-        <!-- <span style="background-color: rgb(222, 184, 135)"> 飲みベーション選択画面</span> -->
+        <span style="background-color: rgb(222, 184, 135, 0.4)"> 飲みベーション選択画面</span>
       </v-stepper-step>
 
       <v-stepper-content step="3">
@@ -457,17 +463,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプの普通の人'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの普通の人'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
           ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない普通の人'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける普通の人'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -669,17 +675,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプの普通の人'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの普通の人'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューする普通の人'
+          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない普通の人'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける普通の人'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -703,10 +709,10 @@ export default {
           : sumResult < 13
           ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
           : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪。女性からは良い人と言われてモテないタイプの酒豪'
+          ? '酒呑として界隈では有名な酒豪。'
           : sumResult < 15
           ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '超弩級のウルトラ酒呑人。血液が酒でできている。とにかく酒が飲めるタイプの酒豪';
+          : '超弩級のウルトラ酒呑人。血液が酒でできている。';
       //ここまでを切り出す
       let Nomivation = 1;
       let promise = new Promise((resolve, reject) => {
@@ -844,7 +850,7 @@ export default {
           ? 0
           : 24;
 
-      let Description =
+    let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
           : sumResult < -19
@@ -880,17 +886,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプの普通の人'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの普通の人'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
           ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃない普通の人'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける普通の人'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -1043,7 +1049,6 @@ export default {
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
