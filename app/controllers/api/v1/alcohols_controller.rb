@@ -6,7 +6,7 @@ module Api
       end
 
       def index
-        alcohols = Alcohol.includes([:liquor_relationships]).includes([:liquors]).all
+        alcohols = Alcohol.includes([:liquor_relationships]).all
         alcohols_names = alcohols.map(&:liquors)
         alcohols_json = {}
         alcohols_names.each_with_index do |name, index|
