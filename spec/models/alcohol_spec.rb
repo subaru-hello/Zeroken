@@ -19,12 +19,7 @@ RSpec.describe Alcohol, type: :model do
           expect(alcohol).to be_valid
         end
       end
-      it 'フォーマットバリデーションを通過する' do
-        valid_pure_alcohol_intakes.each do |intake|
-          alcohol.pure_alcohol_intake = intake
-          expect(alcohol).to be_valid
-        end
-      end
+    
     end
   end
 end
