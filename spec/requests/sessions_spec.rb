@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'UserSessions', type: :request do
     describe 'POST /sessions' do
-        let(:user) { FactoryBot.create(:user, :login) }
-        let(:valid_attributes) do
+        let!(:user) { FactoryBot.create(:user, :login) }
+        let!(:valid_attributes) do
             {session:
             {
               email: "user1@example.com",
@@ -21,4 +21,12 @@ RSpec.describe 'UserSessions', type: :request do
         expect(logged_in?).to be_falsey
       end
     end
+
+    describe "POST api_v1_sessions_path" do
+        it '存在しないユーザでログインに失敗すること' do
+          user = build(:user)
+          post api_v1_sessions_path, params: {user: { session: { email: "user2@example.com", password: "password" } }}
+          expect(response.status).to eq 401
+        end
+      end
   end
