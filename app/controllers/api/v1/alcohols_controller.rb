@@ -6,12 +6,14 @@ module Api
       end
 
       def index
-        alcohols = Alcohol.all
+        alcohols = Alcohol.includes([:liquor_relationships]).includes([:liquors]).all
         alcohols_names = alcohols.map(&:liquors)
         alcohols_json = {}
         alcohols_names.each_with_index do |name, index|
           json_key = "alcohols_#{index + 1}"
           alcohols_json[json_key] = name
+          break if alcohols_json[json_key] === []
+          # break if index === 22 でも可能
         end
         respond_to { |format| format.json { render json: alcohols_json, methods: [:image_url] } }
       end
