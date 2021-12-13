@@ -25,6 +25,7 @@
     "rails-ujs": "^5.2.6",
     "vee-validate": "^3.4.13",
     "vue": "^2.6.14",
+    "vue-cli": "^2.9.6",
     "vue-i18n": "^8.26.7",
     "vue-loader": "^15.9.8",
     "vue-router": "^3.5.2",
