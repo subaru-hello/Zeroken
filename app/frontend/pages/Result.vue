@@ -259,8 +259,13 @@ export default {
           return '酒豪';
         } else if (target === 'weak') {
           return '下戸';
-        } else {
+        } else if(target === 'normal') {
           return '普通の人';
+        }
+         else if(target === 'normal_strong') {
+          return 'やや酒豪';
+        }else{
+return 'やや下戸';
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
@@ -286,7 +291,7 @@ export default {
     strongnessStar() {
       const targetAnalyze = this.analyzes;
       const sakeStrongness = targetAnalyze[targetAnalyze.length -1 ]['alcohol_strongness'];
-      const starState = sakeStrongness === 'weak' ? 1 : sakeStrongness === 'geko_normal' ? 2 : sakeStrongness === 'normal' ? 3 : sakeStrongness === 'normal_strong' ? 4 : 5;
+      const starState = sakeStrongness === 'weak' ? 1 : sakeStrongness === 'weak_normal' ? 2 : sakeStrongness === 'normal' ? 3 : sakeStrongness === 'normal_strong' ? 4 : 5;
       return starState;
     },
     isAlcohol() {

@@ -374,9 +374,9 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
+      let AlcoholStrongness = sumResult > 3 ? 4 :  sumResult < 3 ? 3: sumResult === 0 ? 2: sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = 0; //flesh: 0, tipsy: 1, heavy_drunk: 2
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.04 : AlcoholStrongness === 1 ? 0.03 : 0.02;
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.04 : AlcoholStrongness === 2 ? 0.03 : 0.02;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -587,8 +587,8 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.1 : AlcoholStrongness === 1 ? 0.07 : 0.05;
+       let AlcoholStrongness = sumResult > 3 ? 4 :  sumResult < 3 ? 3: sumResult === 0 ? 2: sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.1 : AlcoholStrongness === 2 ? 0.07 : 0.05;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -797,9 +797,9 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
+   let AlcoholStrongness = sumResult > 3 ? 4 :  sumResult < 3 ? 3: sumResult === 0 ? 2: sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = 2;
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.15 : AlcoholStrongness === 1 ? 0.13 : 0.11;
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.15 : AlcoholStrongness === 2 ? 0.13 : 0.11;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
