@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid id="izakaya">
     <v-row>
       <v-col cols="12" sm="12">
         <v-row class="d-flex justify-center">
@@ -405,3 +405,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+#izakaya {
+  background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+}
+</style>
