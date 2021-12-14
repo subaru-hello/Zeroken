@@ -12,7 +12,6 @@ RSpec.describe 'UserSessions', type: :request do
         end
       it '既に作成されたユーザーでログインできる' do
         delete api_v1_sessions_path
-        binding.pry
         post api_v1_sessions_path,  params:  { session: { email: "user1@example.com", password: "password" } }
         expect(response).to have_http_status(200)
       end

@@ -10,6 +10,7 @@
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
           <h2 class="ma-5 white--text rounded bold analyze-title">
+          <h2 class="ma-5 white--text rounded bold" style="background: rgba(51, 112, 121, 0.4)">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
@@ -852,7 +853,7 @@ export default {
           ? 0
           : 24;
 
-      let Description =
+    let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
           : sumResult < -19
