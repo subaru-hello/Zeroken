@@ -2,9 +2,7 @@
       "analyzes": {
         "alcohol_strongness": {
             "weak": "下戸",
-            "weak_normal": "やや下戸",
             "normal": "普通",
-            "normal_strong": "やや酒豪",
             "strong": "酒豪"
         },
         "next_motivation": {
