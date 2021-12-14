@@ -9,7 +9,6 @@
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="ma-5 white--text rounded bold analyze-title">
           <h2 class="ma-5 white--text rounded bold" style="background: rgba(51, 112, 121, 0.4)">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
