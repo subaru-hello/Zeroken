@@ -387,12 +387,6 @@ export default {
     this.show = true;
   },
   updated() {},
-  watch: {
-    //ページ移動するたびに
-    $route(to, from) {
-      this.snsUrl();
-    },
-  },
   created() {
     this.fetchAnalyzes();
     this.clearAnswers();

@@ -89,7 +89,6 @@
 
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
-import axios from '../plugins/axios';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'SelectNomivation',
