@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style>
-@media screen and (min-width: 650px) {
+/* @media screen and (min-width: 650px) {
   .br-pc {
     display: block;
   }
@@ -38,7 +38,7 @@ export default {
   .br-sp {
     display: block;
   }
-}
+} */
 .router-link {
   text-decoration: none;
 }

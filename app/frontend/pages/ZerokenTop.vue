@@ -7,7 +7,11 @@
       />
 
       <v-row justify="center" align-content="center">
-        <v-col class="text-center align-self-center" cols="12">
+        <v-col
+          class="text-center align-self-center"
+          style="background-color: rgb(0, 0, 0, 0.4)"
+          cols="12"
+        >
           <transition name="fade">
             <div class="text-h2 bold title" v-if="show">ZEROKEN</div>
           </transition>

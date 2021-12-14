@@ -7,7 +7,7 @@
       app
       elevate-on-scroll
       shaped
-      style="background-color: #6ea4ca"
+      style="background-color: rgb(0, 60, 80)"
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
