@@ -2,12 +2,14 @@
   <div id="izakaya">
     <v-stepper v-model="e6" vertical id="izakaya">
       <v-stepper-step :complete="e6 > 1" step="1">
-        <!-- <span style="background-color: rgb(222, 184, 135)">お酒の強さを診断 </span>-->
+        <!-- <span class="white--text " 
+          >お酒の強さを診断
+        </span> -->
       </v-stepper-step>
       <v-spacer />
       <v-stepper-content step="1">
         <v-row justify="center" align-content="center">
-          <h2 class="ma-5 white--text rounded" style="background-color: #6ea4ca">
+          <h2 class="ma-5 white--text rounded bold analyze-title">
             お酒を飲んでいる時の状態を選択してください(13項目)
           </h2>
           <v-col
@@ -114,20 +116,21 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2">
-        <!-- <span style="background-color: rgb(222, 184, 135)">体重設定画面 </span> -->
+        <span class="white--text">体重設定画面 </span>
       </v-stepper-step>
       <v-stepper-content step="2">
         <template v-if="show">
-          <v-container justify="center" align-content="center" style="background-color: white">
-            <h2 class="mt-5 text-color-white text-center">現在の体重を選択してください</h2>
+          <v-container justify="center" align-content="center" class="analyze-title">
+            <h2 class="mt-5 white--text text-center">現在の体重を選択してください</h2>
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
                   <v-select
                     v-model="weight"
                     :items="items"
-                    label="体重"
-                    class="text-center"
+                    label="クリックで体重を選択"
+                    class="white--text"
+                    style="width: 50%"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -136,9 +139,11 @@
         </template>
         <v-col cols="12" xs="4" sm="6" md="12" lg="12" class="text-center">
           <v-btn
+            class="analyze-title"
             color="primary"
             x-large
             style="font-size: 30px"
+            v-if="weight != '体重を選択'"
             :disabled="isVisible"
             @click="e6 = 3"
           >
@@ -147,16 +152,18 @@
         </v-col>
       </v-stepper-content>
       <v-stepper-step :complete="e6 > 3" step="3">
-        <!-- <span style="background-color: rgb(222, 184, 135)"> 飲みベーション選択画面</span> -->
+        <!-- <span class="white--text analyze-title" >
+          飲みベーション選択画面</span
+        > -->
       </v-stepper-step>
 
       <v-stepper-content step="3">
         <template v-if="show">
-          <v-container justify="center" align-content="center" style="background-color: white">
+          <v-container justify="center" align-content="center">
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                  <h1 class="text-center" style="font-size: 25px">
+                  <h1 class="text-center white--text" style="font-size: 25px">
                     一次会でどのくらい酔いたいかクリックしてください
                   </h1>
 
@@ -256,9 +263,8 @@ export default {
       show: false,
       showModal: false,
       users: [],
-      alcohols: [],
       e6: 1,
-      weight: 60,
+      weight: '体重を選択',
     };
   },
   components: {
@@ -289,7 +295,6 @@ export default {
   },
   mounted() {
     axios.get('/users').then((userResponse) => (this.users = userResponse.data));
-    axios.get('/alcohols').then((userResponse) => (this.alcohols = userResponse.data));
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {
       this.isVisible = true;
@@ -368,9 +373,10 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
+      let AlcoholStrongness =
+        sumResult > 3 ? 4 : sumResult < 3 ? 3 : sumResult === 0 ? 2 : sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = 0; //flesh: 0, tipsy: 1, heavy_drunk: 2
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.04 : AlcoholStrongness === 1 ? 0.03 : 0.02;
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.04 : AlcoholStrongness === 2 ? 0.03 : 0.02;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -457,17 +463,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプのやや下戸'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプのやや下戸'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          ? '度数の高いお酒を飲んだらバタンキューするやや酒豪'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃないやや酒豪'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける酒豪'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -581,8 +587,9 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.1 : AlcoholStrongness === 1 ? 0.07 : 0.05;
+      let AlcoholStrongness =
+        sumResult > 3 ? 4 : sumResult < 3 ? 3 : sumResult === 0 ? 2 : sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.1 : AlcoholStrongness === 2 ? 0.07 : 0.05;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -669,17 +676,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプのやや下戸'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプのやや下戸'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューする普通の人'
+          ? '度数の高いお酒を飲んだらバタンキューするやや酒豪'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃないやや酒豪'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける酒豪'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -703,10 +710,10 @@ export default {
           : sumResult < 13
           ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
           : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪。女性からは良い人と言われてモテないタイプの酒豪'
+          ? '酒呑として界隈では有名な酒豪。'
           : sumResult < 15
           ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '超弩級のウルトラ酒呑人。血液が酒でできている。とにかく酒が飲めるタイプの酒豪';
+          : '超弩級のウルトラ酒呑人。血液が酒でできている。';
       //ここまでを切り出す
       let Nomivation = 1;
       let promise = new Promise((resolve, reject) => {
@@ -791,9 +798,10 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      let AlcoholStrongness = sumResult > 3 ? 2 : sumResult < -3 ? 0 : 1; //2: 酒豪, 1: 普通. 0: 下戸
+      let AlcoholStrongness =
+        sumResult > 3 ? 4 : sumResult < 3 ? 3 : sumResult === 0 ? 2 : sumResult < 0 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = 2;
-      let alcoholInVein = AlcoholStrongness === 2 ? 0.15 : AlcoholStrongness === 1 ? 0.13 : 0.11;
+      let alcoholInVein = AlcoholStrongness === 4 ? 0.15 : AlcoholStrongness === 2 ? 0.13 : 0.11;
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -880,17 +888,17 @@ export default {
           : sumResult < -4
           ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
           : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプの下戸'
+          ? '酔った時の対処法を心得ているタイプのやや下戸'
           : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプの下戸'
+          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプのやや下戸'
           : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの下戸'
+          ? '人並みには飲めるよと周りに言うタイプの普通の人'
           : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューするタイプの人'
+          ? '度数の高いお酒を飲んだらバタンキューするやや酒豪'
           : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃない酒豪'
+          ? 'まあ飲めるけどそこまでお酒が好きじゃないやや酒豪'
           : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞けるタイプの酒豪'
+          ? '周囲の酒の空き具合を見て次何飲む？と聞ける酒豪'
           : sumResult < 3
           ? '気配り上手で先輩から好かれるタイプの酒豪'
           : sumResult < 4
@@ -1043,7 +1051,6 @@ export default {
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
@@ -1060,5 +1067,8 @@ export default {
 }
 .rounded {
   border-radius: 50px;
+}
+.analyze-title {
+  background-color: rgb(0, 0, 0, 0.4);
 }
 </style>

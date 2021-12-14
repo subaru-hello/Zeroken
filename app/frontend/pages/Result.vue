@@ -1,12 +1,16 @@
 <template>
   <div id="izakaya" style="width: 100%">
     <div>
-      <v-container justify="center" style="background-color: white; width: 50%">
+      <v-container
+        fluid
+        justify="center"
+        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+      >
         <v-row class="d-flex">
           <v-col cols="12">
             <div>
               <v-col>
-                <p class="text-center" style="font-size: 40px">酒テータス</p>
+                <p class="text-center white--text" style="font-size: 40px">酒テータス</p>
               </v-col>
               <v-col> </v-col>
             </div>
@@ -22,13 +26,17 @@
               <v-col>
                 <p class="text-center"></p>
                 <v-col>
-                  <p class="text-center" style="font-size: 40px">{{ currentAnalyze }}</p>
+                  <p class="text-center white--text" style="font-size: 40px">
+                    {{ currentAnalyze }}
+                  </p>
                 </v-col>
               </v-col>
             </div>
             <div>
               <v-col>
-                <p class="text-center">「 {{ analyzes[analyzes.length - 1]['description'] }}」</p>
+                <p class="text-center white--text">
+                  「 {{ analyzes[analyzes.length - 1]['description'] }}」
+                </p>
               </v-col>
             </div>
             <div>
@@ -62,7 +70,7 @@
 
                       <div class="modal-footer">
                         <v-btn class="modal-default-button" @click="showCertificate = false">
-                          スクショで収めました
+                          納めました
                         </v-btn>
                       </div>
                     </div>
@@ -77,7 +85,13 @@
     </div>
 
     <v-layout>
-      <v-col class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
+      <v-col
+        class="text-center mx-auto my-5 form"
+        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+        elevation="2"
+        shaped
+        id="form"
+      >
         <v-card-title style="width: 100%" class="headline justify-center">
           <h2 class="centered white--text" style="white--text">酒ケジュール</h2>
         </v-card-title>
@@ -163,19 +177,25 @@
 
     <v-row justify="center" align-content="center">
       <v-btn
-        lass="centered"
+        class="centered white--text"
         :to="{ name: 'ZerokenTop' }"
-        style="color: bleck"
+        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
         text
         rounded
         plain
         x-large
       >
-        Topへ戻る
+        もう一度診断する
       </v-btn>
       <v-dialog v-model="dialog" width="400">
         <template v-slot:activator="{ on }">
-          <v-icon v-on="on"> mdi-share-variant </v-icon>
+          <v-btn
+            v-on="on"
+            class="white--text"
+            style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+          >
+            シェアする
+          </v-btn>
         </template>
         <v-card>
           <v-card-title>
@@ -194,22 +214,15 @@
             </v-list-item>
             <v-list-item>
               <v-list-item-action>
-                <v-icon color="cyan"> mdi-twitter </v-icon>
+                <v-icon color="#1da1f2"> mdi-twitter </v-icon>
               </v-list-item-action>
-              <v-card-title>Twitter</v-card-title>
+              <v-btn :href="sns.twitter" target="_blank">{{ Twitter }} </v-btn>
             </v-list-item>
             <v-list-item>
               <v-list-item-action>
-                <img
-                  :src="imgSrc"
-                  width="20"
-                  height="20"
-                  href="https://timeline.line.me/social-plugin/share?url=https://zeroken.herokuapp.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
+                <img :src="imgSrc" width="20" height="20" />
               </v-list-item-action>
-              <v-card-title>LINE</v-card-title>
+              <v-btn :href="sns.line" target="_blank" rel="noopener noreferrer">LINE</v-btn>
             </v-list-item>
           </v-list>
         </v-card>
@@ -240,7 +253,16 @@ export default {
       dialog1: false,
       dialog2: false,
       showCertificate: false,
+      Twitter: 'Twitter',
       rating: [],
+      sns: {
+        twitter: '',
+        url: '',
+        title: '',
+        hashtags: 'ZEROKEN,アルハラ防止',
+        line: '',
+        lineDescription: 'で一次会に向けてお酒の強さを診断しましょう。',
+      },
     };
   },
 
@@ -259,8 +281,12 @@ export default {
           return '酒豪';
         } else if (target === 'weak') {
           return '下戸';
-        } else {
+        } else if (target === 'normal') {
           return '普通の人';
+        } else if (target === 'normal_strong') {
+          return 'やや酒豪';
+        } else {
+          return 'やや下戸';
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
@@ -285,8 +311,17 @@ export default {
     },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
-      const sakeStrongness = targetAnalyze['alcohol_strongness'];
-      const starState = sakeStrongness === 'normal' ? 3 : sakeStrongness === 'strong' ? 5 : 1;
+      const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
+      const starState =
+        sakeStrongness === 'weak'
+          ? 1
+          : sakeStrongness === 'weak_normal'
+          ? 2
+          : sakeStrongness === 'normal'
+          ? 3
+          : sakeStrongness === 'normal_strong'
+          ? 4
+          : 5;
       return starState;
     },
     isAlcohol() {
@@ -356,11 +391,35 @@ export default {
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
+    this.snsUrl();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    snsUrl() {
+      setTimeout(
+        function () {
+          // 現在のurlをエンコード
+          this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
+          this.sns.title = encodeURIComponent(document.title);
+          this.sns.twitter =
+            'https://twitter.com/intent/tweet?url=' +
+            this.sns.url +
+            '&text=' +
+            this.sns.title +
+            '&hashtags=' +
+            this.sns.hashtags;
+          this.sns.line =
+            'https://timeline.line.me/social-plugin/share?url=' +
+            this.sns.url +
+            '&text=' +
+            this.sns.title +
+            this.sns.lineDescription;
+        }.bind(this),
+        300
+      );
+    },
   },
 };
 </script>

@@ -79,12 +79,8 @@ const mutations = {
     const index = state.questions.findIndex((question) => question.num === indexNum);
     state.questions[index].answer = updAnswer;
   },
-  // clearAnswers(state ) {
-  //    const index = state.questions.findIndex((question) => question.num === indexNum);
-  //   //  const noAnswer = "未回答"
-  //    state.questions[index].answer = noAnswer;
-  // },
   clearAnswers(state) {
+    //値の参照渡しを行うために、DEFAULT_QUESTIONSをJSON形式に直した後、ハッシュ形式に戻しています。
     var copiedQuestions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
     state.questions = copiedQuestions;
   },
