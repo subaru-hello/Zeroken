@@ -4,19 +4,20 @@
       <v-container
         fluid
         justify="center"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+        style="background-color: rgb(0, 0, 0, 0.6); width: 80%; border-radius: 20%"
       >
+        <!-- <p> {{alcoholContents}}</p> -->
         <v-row class="d-flex">
           <v-col cols="12">
             <div>
               <v-col>
-                <p class="text-center white--text" style="font-size: 40px">酒テータス</p>
+                <p class="text-center white--text" style="font-size: 30px">酒テータス</p>
               </v-col>
-              <v-col> </v-col>
             </div>
             <div class="d-flex" justify="center" align-content="center">
               <star-rating
                 :rating="strongnessStar"
+                :star-size="30"
                 :show-rating="false"
                 read-only
                 class="mx-auto"
@@ -24,11 +25,17 @@
             </div>
             <div class="d-flex" align-content="center">
               <v-col>
-                <p class="text-center"></p>
                 <v-col>
-                  <p class="text-center white--text" style="font-size: 40px">
+                  <p class="text-center white--text" style="font-size: 30px">
                     {{ currentAnalyze }}
                   </p>
+                  <transition name="fade">
+                    <div v-if="currentAnalyze === '下戸'" class="text-center">
+                      <v-btn x-large @click="isVisibleShowCertificate" class="text-center"
+                        >証明書が発行されました</v-btn
+                      >
+                    </div>
+                  </transition>
                 </v-col>
               </v-col>
             </div>
@@ -40,141 +47,29 @@
               </v-col>
             </div>
             <div>
-              <v-col class="text-center">
-                <p>
-                  <img :src="`${changeSrc}`" width="150" height="150" />
-                </p>
-              </v-col>
-            </div>
-            <transition name="fade">
-              <div v-if="currentAnalyze === '下戸'" class="text-center">
-                <v-btn
-                  v-if="show"
-                  x-large
-                  @click="showCertificate = !showCertificate"
-                  class="text-center"
-                  >証明書が発行されました</v-btn
+              <div class="text-center">
+                <v-btn x-large @click="isVisibleShuchedule" class="text-center"
+                  >酒ケジュールを見る</v-btn
                 >
               </div>
-            </transition>
-            <modal v-if="showCertificate" @close="showCertificate = false">
-              <transition name="modal">
-                <div class="modal-mask">
-                  <div class="modal-wrapper">
-                    <div class="modal-container" style="width: 500px; height: 300px">
-                      <div class="modal-body">
-                        <slot name="body">
-                          <v-img :src="certificateSrc" width="500" height="200" />
-                        </slot>
-                      </div>
+            </div>
 
-                      <div class="modal-footer">
-                        <v-btn class="modal-default-button" @click="showCertificate = false">
-                          納めました
-                        </v-btn>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </transition>
-              <v-card> </v-card>
-            </modal>
+            <ShowShucheduleModal
+              v-if="showShuchedule"
+              :alcoholDatas="alcoholContents"
+              :motivationImg="nextMotivationImg"
+              @closeModal="closeShucheduleModal"
+            />
+            <ShowCertificateModal
+              v-if="showCertificate"
+              :expirationDate="expirationDate"
+              :nonAlcoholImg="nonAlcoholImg"
+              @closeCertificate="closeCertificateModal"
+            />
           </v-col>
         </v-row>
       </v-container>
     </div>
-
-    <v-layout>
-      <v-col
-        class="text-center mx-auto my-5 form"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
-        elevation="2"
-        shaped
-        id="form"
-      >
-        <v-card-title style="width: 100%" class="headline justify-center">
-          <h2 class="centered white--text" style="white--text">酒ケジュール</h2>
-        </v-card-title>
-        <v-container>
-          <v-row justify="center" align-content="center">
-            <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
-              <v-card
-                class="text-center mx-auto my-5 form"
-                elevation="2"
-                width="100%"
-                shaped
-                id="form"
-              >
-                <v-icon>{{ data.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug' }}</v-icon>
-
-                <v-card-title style="width: 100%" class="headline justify-center">
-                  {{ data.name }}
-                </v-card-title>
-                <v-row justify="center" align-content="center">
-                  <p>度数: {{ data.alcohol_percentage }}%</p>
-                  <p>量: {{ data.alcohol_amount }}ml</p>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-btn @click="dialog2 = !dialog2"> 詳細を見る </v-btn>
-          <!-- <transition name="fade"> -->
-          <div
-            style="overflow-y: auto"
-            v-show="dialog2"
-            max-width="100%"
-            transition="dialog-top-transition"
-            justify="center"
-            align-content="center"
-          >
-            <v-row class="d-flex" justify="center" align-content="center">
-              <v-col cols="3" md="12" v-for="data in contents" :key="data.id">
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  width="100%"
-                  shaped
-                  id="form"
-                >
-                  <v-card-title style="width: 100%" class="headline justify-center">
-                    {{ data.name }}
-                  </v-card-title>
-                  <v-row justify="center">
-                    <v-icon>{{
-                      data.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
-                    }}</v-icon>
-                    <!-- <v-img
-                        :lazy-src="data.image_url"
-                        :src="data.image_url"
-                        max-height="150"
-                        max-width="100"
-                      >
-                        <template v-slot:placeholder>
-                          <v-row class="fill-height ma-0" align="center" justify="center">
-                            <v-progress-circular
-                              indeterminate
-                              color="grey lighten-5"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img> -->
-                  </v-row>
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ data.alcohol_percentage }}%</p>
-                    <p>量: {{ data.alcohol_amount }}ml</p>
-                  </v-row>
-                  <div>
-                    {{ data.description }}
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </div>
-          <!-- </transition> -->
-        </v-container>
-      </v-col>
-    </v-layout>
-
     <v-row justify="center" align-content="center">
       <v-btn
         class="centered white--text"
@@ -185,7 +80,7 @@
         plain
         x-large
       >
-        もう一度診断する
+        トップに戻る
       </v-btn>
       <v-dialog v-model="dialog" width="400">
         <template v-slot:activator="{ on }">
@@ -208,12 +103,6 @@
           <v-list>
             <v-list-item>
               <v-list-item-action>
-                <v-icon color="indigo"> mdi-facebook </v-icon>
-              </v-list-item-action>
-              <v-card-title>Facebook</v-card-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-action>
                 <v-icon color="#1da1f2"> mdi-twitter </v-icon>
               </v-list-item-action>
               <v-btn :href="sns.twitter" target="_blank">{{ Twitter }} </v-btn>
@@ -228,25 +117,67 @@
         </v-card>
       </v-dialog>
     </v-row>
+    <v-layout>
+      <v-col
+        class="text-center mx-auto my-5 form"
+        style="background-color: rgb(255, 255, 255, 0.6); width: 50%; border-radius: 20%"
+        elevation="2"
+        shaped
+        id="form"
+      >
+        <v-container>
+          <div>
+            <h3>お酒の強さ算出ロジック</h3>
+            <v-btn>見る</v-btn>
+            <div id="strongness-logic">
+              TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。
+              <img :src="tastSrc" width="150" height="150" />
+              内容: 13項目からなる質問に３択で答えます。
+              各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。
+              ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。
+            </div>
+            <h3>酔い度合い算出ロジック</h3>
+            <v-btn>見る</v-btn>
+            <div id="drunkness-logic">
+              厚生労働省が用意しているデータを参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。
+              <img :src="drunknessSrc" width="150" height="150" />
+              「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。
+              ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。
+            </div>
+          </div>
+        </v-container>
+      </v-col>
+    </v-layout>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
+import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
+import ShowCertificateModal from '../components/result/ShowCertificateModal';
 import axios from '../plugins/axios';
 export default {
   components: {
     StarRating,
+    ShowShucheduleModal,
+    ShowCertificateModal,
   },
   data: function () {
     return {
       shuche: '',
+      showShuchedule: false,
+      alcoholContents: {},
+      nonAlcoholImg: '',
+      nextMotivationImg: '',
       alcohols: [],
       analyze: [],
       users: [],
       logo: '',
       errors: '',
+      expirationDate: new Date(Date.now() + 7 - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       show: false,
       dialog: false,
       dialog0: false,
@@ -307,7 +238,8 @@ export default {
         }
       }
       const result = checkMotivation(targetMotivation);
-      return result;
+      const nextMotivation = (this.nextMotivationImg = result);
+      return nextMotivation;
     },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
@@ -344,11 +276,20 @@ export default {
       const targetValues = this.alcohols;
 
       const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
-
-      return contentsOfTarget;
+      const changeProperty = (this.alcoholContents = contentsOfTarget);
+      return changeProperty;
     },
     imgSrc() {
       return require('../src/img/line.png');
+    },
+    woodSrc() {
+      return require('../src/img/woodtile.jpeg');
+    },
+    tastSrc() {
+      return require('../src/img/TAST.jpeg');
+    },
+    drunknessSrc() {
+      return require('../src/img/drunkness.png');
     },
     sakeSrc() {
       return require('../src/img/sake.svg');
@@ -380,6 +321,11 @@ export default {
     certificateSrc() {
       return require('../src/img/certificate.png');
     },
+    nonAlcoholSrc() {
+      const img = require('../src/img/geko_stamp.png');
+      const nonAlcoholPic = (this.nonAlcoholImg = img);
+      return nonAlcoholPic;
+    },
   },
   mounted() {
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
@@ -397,10 +343,21 @@ export default {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    closeShucheduleModal() {
+      this.isVisibleShuchedule();
+    },
+    closeCertificateModal() {
+      this.isVisibleShowCertificate();
+    },
+    isVisibleShowCertificate() {
+      this.showCertificate = !this.showCertificate;
+    },
+    isVisibleShuchedule() {
+      this.showShuchedule = !this.showShuchedule;
+    },
     snsUrl() {
       setTimeout(
         function () {
-          // 現在のurlをエンコード
           this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
           this.sns.title = encodeURIComponent(document.title);
           this.sns.twitter =
@@ -437,13 +394,13 @@ html {
 }
 .fade-enter-active,
 .fade-leave-active {
-  /* 表示されている際のCSSはこのブロックに記述 */
+  /* 表示時のCSS */
   will-change: opacity;
   transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1) 3000ms;
 }
 .fade-enter,
 .fade-leave-to {
-  /* 非表示の際のCSSはこのブロックに記述 */
+  /* 非表示時のCSS */
   opacity: 0;
 }
 </style>
