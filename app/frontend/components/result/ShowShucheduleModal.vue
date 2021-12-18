@@ -14,7 +14,7 @@
                   <br />
                   <v-row justify="center" align-content="center">
                     <v-col
-                      v-for="data in alcohols"
+                      v-for="data in alcoholItems"
                       :key="data.id"
                       class="justify-space-between outer-layer"
                     >
@@ -51,7 +51,7 @@
 export default {
   props: {
     alcoholDatas: {
-      type: Array,
+      type: Object,
     },
     motivationImg: {
       type: String,
@@ -59,12 +59,18 @@ export default {
   },
   data() {
     return {
-      alcohols: this.alcoholDatas,
+      alcohols: '',
     };
   },
   methods: {
     closeModal() {
       this.$emit('closeModal');
+    },
+  },
+  computed: {
+    alcoholItems() {
+      const targetAlcohols = (this.alcohols = this.alcoholDatas);
+      return targetAlcohols;
     },
   },
 };

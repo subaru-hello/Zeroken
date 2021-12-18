@@ -8,7 +8,7 @@
               <slot name="body">
                 <p class="text-center outer-layer">下戸証明書</p>
                 <div class="d-flex">
-                  <img :src="nonAlcohol" width="100" height="100" />
+                  <img :src="sakeSrc" width="100" height="100" />
                   <p class="text-center mt-5">
                     私にお酒を強要したら<br />
                     <span style="color: red">アルハラ</span><br />
@@ -77,6 +77,11 @@ export default {
   methods: {
     closeCertificate() {
       this.$emit('closeCertificate');
+    },
+  },
+  computed: {
+    sakeSrc() {
+      return require('../../src/img/default_profile.png');
     },
   },
 };
