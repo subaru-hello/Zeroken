@@ -1,5 +1,5 @@
 <template>
-  <div id="izakaya" style="width: 100%">
+  <div id="izakaya" style="width: 100%; box-sizing: border-box;">
     <div>
       <v-container
         fluid
@@ -74,10 +74,7 @@
       <v-btn
         class="centered white--text"
         :to="{ name: 'ZerokenTop' }"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
-        text
-        rounded
-        plain
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
         x-large
       >
         トップに戻る
@@ -86,8 +83,9 @@
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
+            x-large
             class="white--text"
-            style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+            style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
           >
             シェアする
           </v-btn>
@@ -120,32 +118,42 @@
     <v-layout>
       <v-col
         class="text-center mx-auto my-5 form"
-        style="background-color: rgb(255, 255, 255, 0.6); width: 50%; border-radius: 20%"
+        style="width: 50%; border-radius: 20%"
         elevation="2"
         shaped
+        v-for="list in logicLists"
+        :key="list.title"
         id="form"
       >
-        <v-container>
-          <div>
-            <h3>お酒の強さ算出ロジック</h3>
-            <v-btn>見る</v-btn>
-            <div id="strongness-logic">
-              TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。
-              <img :src="tastSrc" width="150" height="150" />
-              内容: 13項目からなる質問に３択で答えます。
-              各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。
-              ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。
+        <v-card>
+
+          <v-card-title>
+            {{ list.title }}
+          </v-card-title>
+
+          <v-card-subtitle>
+            {{ list.subtext }}
+          </v-card-subtitle>
+
+          <v-card-actions>
+            <v-btn color="orange lighten-2" text> 詳細を見る </v-btn>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="show = !show">
+              <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+            </v-btn>
+          </v-card-actions>
+
+          <v-expand-transition>
+            <div v-show="show">
+              <v-divider></v-divider>
+              <v-card-text>
+                {{ list.description }}
+              </v-card-text>
             </div>
-            <h3>酔い度合い算出ロジック</h3>
-            <v-btn>見る</v-btn>
-            <div id="drunkness-logic">
-              厚生労働省が用意しているデータを参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。
-              <img :src="drunknessSrc" width="150" height="150" />
-              「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。
-              ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。
-            </div>
-          </div>
-        </v-container>
+          </v-expand-transition>
+        </v-card>
       </v-col>
     </v-layout>
   </div>
@@ -168,12 +176,33 @@ export default {
       shuche: '',
       showShuchedule: false,
       alcoholContents: {},
+      alcoholismDrunkness: false,
+      alcoholismStrongness: false,
       nonAlcoholImg: '',
       nextMotivationImg: '',
-      alcohols: [],
+      alcohols: {},
       analyze: [],
       users: [],
-      logo: '',
+      logicLists: [
+        {
+          title: 'お酒の強さ算出ロジック',
+          subtext:
+            ' TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。',
+          description:
+            ' 内容: 13項目からなる質問に３択で答えます。各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。',
+          img: require('../src/img/TAST.jpeg'),
+          action: 'drunkness',
+        },
+        {
+          title: '酔い度合い算出ロジック',
+          subtext:
+            '  厚生労働省が用意しているデータを参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。',
+          description:
+            '「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。',
+          img: require('../src/img/drunkness.png'),
+          action: 'strongness',
+        },
+      ],
       errors: '',
       expirationDate: new Date(Date.now() + 7 - new Date().getTimezoneOffset() * 60000)
         .toISOString()
@@ -184,13 +213,15 @@ export default {
       dialog1: false,
       dialog2: false,
       showCertificate: false,
+      alcoholOrders: {},
+      alcoholStrongness: '',
       Twitter: 'Twitter',
       rating: [],
       sns: {
         twitter: '',
         url: '',
         title: '',
-        hashtags: 'ZEROKEN,アルハラ防止',
+        hashtags: 'ZEROKEN,アルハラ防止,酒ケジュール',
         line: '',
         lineDescription: 'で一次会に向けてお酒の強さを診断しましょう。',
       },
@@ -221,7 +252,8 @@ export default {
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      return result;
+      const AlcoholStrongness = (this.alcoholStrongness = result)
+      return AlcoholStrongness ;
     },
     changeSrc() {
       const thisAnalyze = this.analyzes;
@@ -270,11 +302,8 @@ export default {
     },
     contents() {
       const thisAnalyze = this.analyzes;
-
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-
       const targetValues = this.alcohols;
-
+      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
       const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
       const changeProperty = (this.alcoholContents = contentsOfTarget);
       return changeProperty;
@@ -297,15 +326,15 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
-    ippaiSrc() {
-      return require('../src/img/ippai_shuki.png');
-    },
-    sugusakeSrc() {
-      return require('../src/img/sugusake_stamp.png');
-    },
-    sugumeiteiSrc() {
-      return require('../src/img/sugumeitei_stamp.png');
-    },
+    // ippaiSrc() {
+    //   return require('../src/img/ippai_shuki.png');
+    // },
+    // sugusakeSrc() {
+    //   return require('../src/img/sugusake_stamp.png');
+    // },
+    // sugumeiteiSrc() {
+    //   return require('../src/img/sugumeitei_stamp.png');
+    // },
     beerSrc() {
       return require('../src/img/beer.svg');
     },
@@ -328,21 +357,23 @@ export default {
     },
   },
   mounted() {
-    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     this.analyze = this.fetchAnalyzes;
     this.show = true;
   },
   updated() {},
   created() {
+    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
     this.snsUrl();
+    this.isVisibleShuchedule();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+
     closeShucheduleModal() {
       this.isVisibleShuchedule();
     },
@@ -359,15 +390,16 @@ export default {
       setTimeout(
         function () {
           this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
-          this.sns.title = encodeURIComponent(document.title);
+          this.sns.title = encodeURIComponent('【酒テータス】');
           this.sns.twitter =
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
             '&text=' +
-            this.sns.title +
+            `私は${this.alcoholStrongness}でした。1軒目は${this.alcoholOrders}でいきます。` +
             '&hashtags=' +
             this.sns.hashtags;
-          this.sns.line =
+         
+         this.sns.line =
             'https://timeline.line.me/social-plugin/share?url=' +
             this.sns.url +
             '&text=' +
@@ -385,10 +417,7 @@ export default {
 /* #result-page{
   
 } */
-html {
-  overflow-x: hidden;
-  width: 1024px;
-}
+
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
 }
