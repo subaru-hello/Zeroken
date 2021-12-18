@@ -81,7 +81,6 @@
 </template>
 
 <script>
-// import Jimp from 'jimp/es';
 import axios from '../../plugins/axios';
 export default {
   props: {
