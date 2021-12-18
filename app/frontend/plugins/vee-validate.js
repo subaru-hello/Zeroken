@@ -60,7 +60,7 @@ extend('isUnique', {
         [column]: value,
       },
     });
-    if (response.data === 'unique') {
+    if (response.data === 200) {
       return true;
     } else {
       return '{_value_}は既に使われています';
