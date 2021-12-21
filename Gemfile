@@ -35,7 +35,9 @@ gem 'carrierwave'
 gem 'mini_magick'
 # add settings per environment
 gem 'config'
-
+# Error monitoring
+gem 'sentry-rails'
+gem 'sentry-ruby'
 group :development, :test do
   gem 'dotenv-rails'
   # Code check
@@ -55,7 +57,6 @@ group :development, :test do
   # test
   gem 'factory_bot_rails'
   gem 'guard-rspec', require: false
-  gem 'terminal-notifier-guard'
   gem 'rspec-rails', '~> 4.0.2'
   gem 'spring-commands-rspec'
   gem 'terminal-notifier-guard'

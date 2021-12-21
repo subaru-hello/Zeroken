@@ -1,99 +1,47 @@
 <template>
-  <v-container fluid id="izakaya">
-    <v-row>
-      <v-col cols="12" sm="12">
-        <v-row class="d-flex justify-center">
-          <v-col
-            cols="12"
-            sm="8"
-            class="pt-16 d-flex justify-space-between mb-6"
-            :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'"
-            flat
-            tile
-          >
-            <v-sheet id="profile-sheet" class="py-6 px-10 text-center" elevation="1">
-              <h3 class="text-h6 font-weight-black mb-8">プロフィール</h3>
-              <v-avatar class="or-avatar mb-5" size="200">
+  <v-container fluid class="mt-4 pt-21" style="box-sizing: border-box">
+    <v-row class="mt-4 pt-21">
+      <v-col>
+        <v-row class="d-flex justify-center content-center">
+          <v-col :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'" flat tile>
+            <v-sheet id="profile-sheet" class="text-center" elevation="1">
+              <h3 class="text-h6 font-weight-black">酒テータス</h3>
+              <p class="text-center black--text" style="font-size: 30px">
+                {{ currentAnalyze }}
+              </p>
+              <v-avatar class="or-avatar" size="200">
                 <img :src="sakeSrc" width="150" height="100" />
               </v-avatar>
-              <div class="text-left mb-6">
+              <div class="text-center">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
                   <div>{{ authUser.data.attributes.nickname }}</div>
                 </div>
-                <v-divider class="mb-6" />
+                <v-divider />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
                   <div>{{ authUser.data.attributes.email }}</div>
                 </div>
-                <v-divider class="mb-6" />
+                <div>
+                  <h3 class="text-subtitle-1 font-weight-black">酒の強さ</h3>
+                  <div>{{ currentAnalyze }}</div>
+                </div>
+                <v-divider />
               </div>
-              <!-- <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
-                <v-icon class="mr-1">mdi-account-cog</v-icon>
-                編集する
-              </v-btn>
-              <p class="text-body2">
-                パスワードを変更する場合は
-                <a @click.stop="displayPasswordEditDialog"> こちら </a>
-              </p> -->
+              <div v-if="authUser.data.attributes.role === 'member'">
+                <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
+                  <v-icon class="mr-1">mdi-account-cog</v-icon>
+                  編集する
+                </v-btn>
+                <p class="text-body2">
+                  パスワードを変更する場合は
+                  <a @click.stop="displayPasswordEditDialog"> こちら </a>
+                </p>
+              </div>
             </v-sheet>
 
             <!-- <Calender /> -->
-            <div style="margin-left: 10%">
-              <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
-
-              <v-date-picker
-                v-model="date2"
-                :events="arrayEvents"
-                full-width
-                @click.stop="dialog = true"
-              ></v-date-picker>
-
-              <div justify="center" align-content="center">
-                <v-col
-                  cols="12"
-                  sm="3"
-                  v-for="(data, index) in dataAnalyze"
-                  :key="index"
-                  class="d-flex justify-space-between mb-6"
-                >
-                  <v-col
-                    cols="12"
-                    v-for="(specificData, index) in data"
-                    :key="index"
-                    class="d-flex justify-space-between mb-6"
-                  >
-                    <div>
-                      <v-card class="text-center mx-auto my-5 form" elevation="2" shaped id="form">
-                        {{ date(specificData.created_at) }}
-
-                        <v-card-title style="width: 100%" class="headline justify-center">
-                          {{ specificData.name }}
-                        </v-card-title>
-                        <v-row justify="center">
-                          <img :src="beerSrc" width="150" height="100" />
-                          <v-row justify="center" align-content="center">
-                            <p>度数: {{ specificData.alcohol_percentage }}%</p>
-                            <p>量: {{ specificData.alcohol_amount }} ml</p>
-                          </v-row>
-                        </v-row>
-                      </v-card>
-                    </div>
-                  </v-col>
-                </v-col>
-              </div>
-              <!-- </v-row> -->
-              <v-dialog v-model="dialog" scrollable max-width="80%">
-                <v-card>
-                  <v-card-title>11月12日の酒ケジュール</v-card-title>
-                  <v-divider></v-divider>
-                  <v-card-text height="200px"
-                    >1. ビール 2. ハイボール 3. 日本酒 4. ワイン</v-card-text
-                  >
-                </v-card>
-              </v-dialog>
-            </div>
-
+            <!-- プロフィール編集フォーム -->
             <ProfileEditForm
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
@@ -115,8 +63,58 @@
             />
           </v-col>
         </v-row>
-        <v-col> </v-col>
+        <v-col>
+          <div>My 酒ケジュール</div>
+        </v-col>
       </v-col>
+
+      <!-- 表、カウントして出す。 -->
+
+      <!-- :events="arrayEvents" -->
+      <!-- <v-date-picker v-model="date2" @click.stop="dialog = true"></v-date-picker> -->
+
+      <div justify="center" align-content="center">
+        <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+        <v-col
+          v-for="(data, index) in dataAnalyze"
+          :key="index"
+          class="d-flex justify-space-between mb-6"
+        >
+          <v-col
+            v-for="(specificData, index) in data"
+            :key="index"
+            class="d-flex justify-space-between mb-6"
+            style="background-color: #fff"
+          >
+            <!-- 7日以前の診断 -->
+            <!-- <div v-if="showShucheduleAll"> -->
+            <div
+              v-if="checkDate(specificData.created_at)"
+              class="text-center mx-auto my-5 form"
+              elevation="2"
+              shaped
+              id="form"
+              :disabled="showShucheduleAll"
+            >
+              {{ date(specificData.created_at) }}の診断です
+
+              <v-card-title style="width: 100%" class="headline d-flex justify-center">
+                <v-icon>{{
+                  specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
+                }}</v-icon>
+                {{ specificData.name }}
+              </v-card-title>
+              <v-row justify="center">
+                <v-row justify="center" align-content="center">
+                  <p>度数: {{ specificData.alcohol_percentage }}%</p>
+                  <p>量: {{ specificData.alcohol_amount }} ml</p>
+                </v-row>
+              </v-row>
+            </div>
+          </v-col>
+        </v-col>
+        <!-- </v-card> -->
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -124,6 +122,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
+// import dayjs from '../plugins/dayjs';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
 export default {
@@ -143,6 +142,9 @@ export default {
         .substr(0, 10),
       authUserEdit: {},
       password: '',
+      showShucheduleAll: false,
+      showPastShuchedule: false,
+      showRecentShuchedule: false,
       password_confirmation: '',
       editProfileActed: false,
       editPasswordActed: false,
@@ -153,7 +155,26 @@ export default {
   computed: {
     ...mapGetters('users', ['authUser']),
     ...mapGetters('analyze', ['analyzes']),
-
+    currentAnalyze() {
+      const thisAnalyze = this.analyzes;
+      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+      function checkAlcoholStrongness(target) {
+        if (target === 'strong') {
+          return '酒豪';
+        } else if (target === 'weak') {
+          return '下戸';
+        } else if (target === 'normal') {
+          return '普通の人';
+        } else if (target === 'normal_strong') {
+          return 'やや酒豪';
+        } else {
+          return 'やや下戸';
+        }
+      }
+      const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      return result;
+    },
     sakeSrc() {
       return require('../src/img/default_profile.png');
     },
@@ -267,14 +288,13 @@ export default {
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
-
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
 
     const authUserData = {
       nickname: this.authUser.data.attributes.nickname,
       email: this.authUser.data.attributes.email,
-      // password: currentUserData["password"],
-      // password_confirmation: currentUserData["password_confirmation"],
+      password: this.authUser.data.attributes.password,
+      password_confirmation: this.authUser.data.attributes.password_confirmation,
       avatar: this.authUser.data.attributes.avatar,
     };
     this.authUserEdit = authUserData;
@@ -287,7 +307,31 @@ export default {
     date(date) {
       return this.$dateFormat(date);
     },
+    checkDate(date) {
+      const now = new Date();
+      const dateTo = now;
+      const dateFrom = new Date(date);
 
+      // const diffBetweenDate = dateTo.diff(dateFrom, 'day');
+      const diffBetweenDate = dateTo - dateFrom;
+      return diffBetweenDate;
+    },
+    triggerClick(action) {
+      const checkResult =
+        action === 0
+          ? (this.showRecentShuchedule = false) && (this.showShucheduleAll = true)
+          : (this.showPastShuchedule = false) && (this.showShucheduleAll = true);
+
+      return checkResult;
+    },
+    isVisiblePastShuchedule() {
+      this.isVisibleRecentShuchedule = false;
+      this.showPastShuchedule = !this.showPastShuchedule;
+    },
+    isVisibleRecentShuchedule() {
+      this.isVisiblePastShuchedule = false;
+      this.showRecentShuchedule = !this.showRecentShuchedule;
+    },
     functionEvents(date) {
       const [, , day] = date.split('-');
       if ([12, 17, 28].includes(parseInt(day, 10))) return true;
@@ -408,5 +452,10 @@ export default {
 <style scoped>
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+}
+.content-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

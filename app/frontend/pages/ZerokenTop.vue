@@ -1,201 +1,112 @@
 <template>
-  <div id="izakaya">
-    <v-container fill-height fluid style="width: 100%">
+  <div>
+    <v-container
+      fill-height
+      fluid
+      class="container"
+      style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box"
+    >
       <FirstGreeting
         :dialog="isVisibleFirstGreeting"
         @close-dialog="isVisibleFirstGreeting = false"
       />
 
       <v-row justify="center" align-content="center">
-        <v-col
-          class="text-center align-self-center"
-          style="background-color: rgb(0, 0, 0, 0.4)"
-          cols="12"
-        >
-          <transition name="fade">
-            <div class="text-h2 bold title" v-if="show">ZEROKEN</div>
-          </transition>
+        <v-col class="text-center align-self-center" cols="12">
           <p
-            class="text-h5 mb-12 font-weight-bold d-sm-block text-no-wrap service-description title"
+            class="
+              text-h5
+              mb-12
+              mt-5
+              font-weight-bold
+              d-sm-block
+              text-no-wrap
+              service-description
+              title
+            "
           >
-            {{ title }}<br />{{ text }}
+            {{ subtitle }}<br />{{ text }}
           </p>
+          <transition name="fade">
+            <div class="text-h2 bold title" style="font-size: 20px; font-weight: bold" v-if="show">
+              {{ title }}
+            </div>
+          </transition>
+
           <v-col>
-            <img :src="imgSrc" class="img" width="150" height="100" />
+            <!-- <img :src="imgSrc" class="img" width="150" height="100" /> -->
             <v-spacer />
 
-            <div v-if="!authUser">
-              <v-btn
-                class="mb-8"
-                style="background-color: rgb(222, 184, 135)"
+            <div v-if="!authUser" class="text-center">
+              <CreateShucheduleButton class="mb-8" x-large @click-response="loginFunction()" />
+            </div>
+            <div v-else class="text-center">
+              <CreateShucheduleButton class="mb-8" x-large @click-response="toAnalyze()" />
+            </div>
+            <v-row justify="center" align-content="center">
+              <v-icon
+                class="text-center d-flex mt-5"
+                color="#fff"
+                @click="clickScroll($event)"
                 x-large
-                @click="loginFunction()"
+                >mdi-chevron-down</v-icon
               >
-                さっそく酒ケジュールを作る
-              </v-btn>
-            </div>
-            <div v-else>
-              <v-btn @click="toAnalyze()" style="background-color: rgb(222, 184, 135)" x-large
-                >さっそく酒ケジュールを作る</v-btn
-              >
-            </div>
+            </v-row>
           </v-col>
         </v-col>
+
         <v-spacer />
-        <v-container align-content="center" justyfy="center" class="ma-4">
-          <v-row>
-            <v-col>
-              <div>
-                <v-card class="mx-auto" max-width="344">
-                  <div align-content="center">
-                    <v-img :src="beersSrc" width="344" height="100" />
-                  </div>
-                  <v-card-title> 飲み会の前に </v-card-title>
-
-                  <v-card-subtitle> ついつい飲み過ぎちゃう時ってありますよね </v-card-subtitle>
-
-                  <v-card-actions>
-                    <v-btn color="orange lighten-2" text> 解決方法</v-btn>
-
-                    <v-spacer></v-spacer>
-
-                    <v-btn icon @click="emerge = !emerge">
-                      <v-icon>{{ emerge ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                    </v-btn>
-                  </v-card-actions>
-
-                  <v-expand-transition>
-                    <div v-show="emerge">
-                      <v-divider></v-divider>
-
-                      <v-card-text>
-                        そんな時はZEROKENで事前に自分のお酒の強さをチェック。年を忘れる前にサクッとZEROKEN
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
+        <v-container class="about">
+          <v-container align-content="center" justyfy="center" class="ma-4">
+            <v-row>
+              <v-col>
+                <v-card class="mx-auto" max-width="500" elevation="10">
+                  <v-card-text class="text-center">
+                    <ZerokenAbout :autoplay="autoplay" />
+                  </v-card-text>
                 </v-card>
-              </div>
-            </v-col>
-            <v-col>
-              <v-card class="mx-auto" max-width="344">
-                <div align-content="center">
-                  <v-img :src="beersSrc" width="344" height="100" />
-                </div>
+              </v-col>
+            </v-row>
 
-                <v-card-title> デートの前に </v-card-title>
-
-                <v-card-subtitle>緊張するとすぐ飲みすぎちゃう</v-card-subtitle>
-
-                <v-card-actions>
-                  <v-btn color="orange lighten-2" text> 解決方法</v-btn>
-
-                  <v-spacer></v-spacer>
-
-                  <v-btn icon @click="emerge = !emerge">
-                    <v-icon>{{ emerge ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                  </v-btn>
-                </v-card-actions>
-
-                <v-expand-transition>
-                  <div v-show="emerge">
-                    <v-divider></v-divider>
-
-                    <v-card-text>
-                      そんな時はZEROKENを使って事前に自分のお酒の強さをチェック。デートの前日にサクッとZEROKEN。
-                    </v-card-text>
-                  </div>
-                </v-expand-transition>
-              </v-card>
-            </v-col>
-            <v-col>
-              <v-card class="mx-auto" max-width="344">
-                <v-img :src="beersSrc" width="344" height="100" />
-
-                <v-card-title> 歓送迎会の前に </v-card-title>
-
-                <v-card-subtitle> アルハラが怖い会ですよね。 </v-card-subtitle>
-
-                <v-card-actions>
-                  <v-btn color="orange lighten-2" text>解決方法</v-btn>
-
-                  <v-spacer></v-spacer>
-
-                  <v-btn icon @click="emerge = !emerge">
-                    <v-icon>{{ emerge ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                  </v-btn>
-                </v-card-actions>
-
-                <v-expand-transition>
-                  <div v-show="emerge">
-                    <v-divider></v-divider>
-
-                    <v-card-text>
-                      そんな時はZEROKENを使って事前に自分のお酒の強さをチェック。歓送迎会の前にサクッとZEROKEN
-                    </v-card-text>
-                  </div>
-                </v-expand-transition>
-              </v-card>
-            </v-col>
-          </v-row>
+            <v-row justify="center" align-content="center">
+              <v-col
+                cols="12"
+                sm="8"
+                class="d-flex inline text-center card-style"
+                v-for="list in lists"
+                :key="list.id"
+              >
+                <v-card class="mx-auto" max-width="344">
+                  <v-card-title style="border" class="text-center">
+                    {{ list.title }}
+                  </v-card-title>
+                  <v-card-text>
+                    {{ list.description }}
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-container>
-        <v-row class="text-center d-flex justify-space-around">
-          <v-col cols="3" sm="10" md="12" lg="12">
-            <!-- <v-btn @click="dialog1 = true">酒(シュ)ケジュールとは</v-btn> -->
-            <v-dialog
-              v-model="dialog1"
-              scrollable
-              max-width="80%"
-              transition="dialog-top-transition"
-            >
-              <v-card>
-                <v-card-title class="text-h5 grey lighten-2">酒(シュ)ケジュールとは</v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>次の飲み会でのむお酒の順番を意味しています。</v-card-text>
-                <v-card-text>「お酒の順番 + スケジュール」の造語です。</v-card-text>
-                <v-card-text
-                  >使用例
-                  「酒ケジュールによると次はノンアルを飲む予定になっているのでもうお酒は飲めません。。」</v-card-text
-                >
-              </v-card>
-            </v-dialog>
-            <!-- <v-btn @click="dialog2 = true">飲みベーションとは</v-btn> -->
-            <v-dialog
-              v-model="dialog2"
-              scrollable
-              max-width="80%"
-              transition="dialog-top-transition"
-            >
-              <v-card>
-                <v-card-title class="text-h5 grey lighten-2">飲みベーションとは</v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>次の飲み会に向けたモチベーションを意味しています。</v-card-text>
-                <v-card-text>「飲み + ステータス」の造語です。</v-card-text>
-                <v-card-text>使用例 「飲みべ低いので今日は帰ります。。」</v-card-text>
-              </v-card>
-            </v-dialog>
-            <!-- <v-btn @click="dialog3 = true">酒テータスとは</v-btn> -->
-            <v-dialog
-              v-model="dialog3"
-              scrollable
-              max-width="80%"
-              transition="dialog-top-transition"
-            >
-              <v-card>
-                <v-card-title class="text-h5 grey lighten-2">酒テータスとは</v-card-title>
-                <v-divider></v-divider>
-                <v-card-text
-                  >ユーザーのお酒の強さ、そして次の飲み会で飲むお酒の順番を表す状態になります。</v-card-text
-                >
-                <v-card-text>「お酒 + ステータス」の造語です。</v-card-text>
-                <v-card-text
-                  >使用例: 「私の酒テータス下戸だから飲み会参加できないんです。。」</v-card-text
-                >
-              </v-card>
-            </v-dialog>
-          </v-col>
-        </v-row>
+
+        <CreateShucheduleButton
+          class="mb-8 text-center"
+          v-if="!authUser"
+          style="background-color: rgb(222, 184, 135)"
+          x-large
+          @click-response="loginFunction()"
+        />
+
+        <CreateShucheduleButton
+          v-if="!!authUser"
+          class="mb-8"
+          style="background-color: rgb(222, 184, 135)"
+          x-large
+          @click-response="toAnalyze()"
+        />
       </v-row>
     </v-container>
+    <v-spacer></v-spacer>
   </div>
 </template>
 
@@ -203,11 +114,19 @@
 import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
+import CreateShucheduleButton from '../components/global/CreateShucheduleButton';
+import ZerokenAbout from '../components/top/ZerokenAbout';
 export default {
+  components: {
+    FirstGreeting,
+    ZerokenAbout,
+    CreateShucheduleButton,
+  },
   name: 'ZerokenTop',
   data() {
     return {
       isVisibleFirstGreeting: false,
+      autoplay: true,
       show: false,
       emerge: false,
       dialog1: false,
@@ -215,12 +134,27 @@ export default {
       dialog3: false,
       tab: null,
       dialog: false,
-      title: 'あなたにとっての0軒目',
+      subtitle: 'あなたにとっての0軒目',
+      title: 'ZEROKEN',
       text: '飲み会で飲むお酒を診断しよう',
+      lists: [
+        {
+          title: '東大生の考案したアルゴリズムを採用',
+          description:
+            'アルコールパッチテストの簡易版とも言えるTASTを採用しています。13項目の質問に答えるだけであなたのお酒の強さを診断します。',
+        },
+        {
+          title: '厚生労働省のデータに基づいた診断',
+          description:
+            '体内の血中アルコール濃度に基づいてなりたい状態までに必要なお酒の量を算出。酒ケジュールに従うだけで二日酔いをなくします。',
+        },
+        {
+          title: 'アルハラ対策に最適な証明書を獲得',
+          description:
+            '真の下戸に対して下戸証明書を発行します。お守りとして携帯の待受にすることで、お酒に弱い方でも安心して飲み会に参加することができます。',
+        },
+      ],
     };
-  },
-  components: {
-    FirstGreeting,
   },
   beforeRouteEnter(to, from, next) {
     if (from.name === 'UserRegister')
@@ -264,6 +198,13 @@ export default {
     toAnalyze() {
       this.$router.push({ name: 'Analyze' });
     },
+    clickScroll(e) {
+      const targetArea = e.currentTarget.getBoundingClientRect().top;
+      window.scrollTo({
+        top: window.pageYOffset + targetArea,
+        behavior: 'smooth',
+      });
+    },
     loginFunction() {
       this.loginGuestUser(this.user).then((user) => {
         if (user) {
@@ -305,5 +246,23 @@ html {
 
 .title {
   color: white;
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+.crd-title {
+  font-size: 15px;
+  border-bottom: 1rem;
+}
+.card-style {
+  align-content: center;
+  width: 50%;
+  margin: 0 auto;
+}
+.about {
+  margin: 0, auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

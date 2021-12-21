@@ -182,15 +182,15 @@
         },
         {
             liquor_box_id: 12,
-            liquor_id: 28
+            liquor_id: 25
         },
         {
             liquor_box_id: 12,
-            liquor_id: 28
+            liquor_id: 25
         },
         {
             liquor_box_id: 12,
-            liquor_id: 28
+            liquor_id: 25
         },
         {
             liquor_box_id: 13,

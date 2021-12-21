@@ -3,21 +3,34 @@
     <v-app-bar
       rounded
       elevation="24"
-      absolute
-      app
+      fixed
       elevate-on-scroll
-      shaped
       style="background-color: rgb(0, 60, 80)"
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
+      <v-divider class="mx-4" style="color: white" vertical></v-divider>
       <v-toolbar-title>
-        <div @click="toHome()" style="color: white">ZEROKEN</div>
+        <div @click="toHome()" style="color: white; float: left">ZEROKEN</div>
+        <!-- {{ checkUserRole}} -->
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-list-item-group
+        v-model="group"
+        class="login-user d-flex justify-space-between"
+        style="text-decoration: none"
+      >
+        <v-list-item>
+          <div @click="toRegister()" class="white--text">新規登録</div>
+        </v-list-item>
+        <v-divider class="mx-4" style="color: white" vertical></v-divider>
+        <v-list-item>
+          <div @click="toLogin()" class="white--text">ログイン</div>
+        </v-list-item>
+      </v-list-item-group>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
+      <v-list nav>
         <v-list-item-group v-model="group" style="text-decoration: none">
           <v-list-item>
             <div @click="toHome()">
@@ -100,11 +113,19 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
+    checkUserRole() {
+      const currentuUser = this.authUser['data'];
+      const vvv = currentuUser;
+      return vvv;
+    },
   },
-
+  created() {
+    this.fetchAuthUser();
+  },
   methods: {
     ...mapActions('users', ['logoutUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+    ...mapActions('users', ['fetchAuthUser']),
     toProfile() {
       this.$router.push({ name: 'UserProfile' });
     },
@@ -141,4 +162,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.login-user {
+  float: right;
+}
+</style>

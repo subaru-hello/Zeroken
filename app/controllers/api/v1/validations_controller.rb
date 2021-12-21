@@ -3,7 +3,7 @@ module Api
     class ValidationsController < ApplicationController
       def unique
         users = User.where('nickname = ? or email = ?', params[:nickname], params[:email])
-        result = users.exists? ? 'exist' : 'unique'
+        result = users.exists? ? 500 : 200
         render json: result
       end
     end

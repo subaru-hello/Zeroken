@@ -1,22 +1,22 @@
 <template>
-  <div id="izakaya" style="width: 100%">
+  <div style="width: 100%; box-sizing: border-box">
     <div>
       <v-container
         fluid
         justify="center"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+        style="background-color: rgb(0, 0, 0, 0.6); width: 80%; border-radius: 20%"
       >
         <v-row class="d-flex">
           <v-col cols="12">
             <div>
               <v-col>
-                <p class="text-center white--text" style="font-size: 40px">酒テータス</p>
+                <p class="text-center white--text" style="font-size: 30px">酒テータス</p>
               </v-col>
-              <v-col> </v-col>
             </div>
             <div class="d-flex" justify="center" align-content="center">
               <star-rating
                 :rating="strongnessStar"
+                :star-size="30"
                 :show-rating="false"
                 read-only
                 class="mx-auto"
@@ -24,11 +24,17 @@
             </div>
             <div class="d-flex" align-content="center">
               <v-col>
-                <p class="text-center"></p>
                 <v-col>
-                  <p class="text-center white--text" style="font-size: 40px">
+                  <p class="text-center white--text" style="font-size: 30px">
                     {{ currentAnalyze }}
                   </p>
+                  <transition name="fade">
+                    <div v-if="currentAnalyze === '下戸'" class="text-center">
+                      <v-btn x-large @click="isVisibleShowCertificate" class="text-center"
+                        >証明書が発行されました</v-btn
+                      >
+                    </div>
+                  </transition>
                 </v-col>
               </v-col>
             </div>
@@ -40,159 +46,52 @@
               </v-col>
             </div>
             <div>
-              <v-col class="text-center">
-                <p>
-                  <img :src="`${changeSrc}`" width="150" height="150" />
-                </p>
-              </v-col>
-            </div>
-            <transition name="fade">
-              <div v-if="currentAnalyze === '下戸'" class="text-center">
-                <v-btn
-                  v-if="show"
-                  x-large
-                  @click="showCertificate = !showCertificate"
-                  class="text-center"
-                  >証明書が発行されました</v-btn
+              <div class="text-center">
+                <v-btn x-large @click="isVisibleShuchedule" class="text-center"
+                  >酒ケジュールを見る</v-btn
                 >
               </div>
-            </transition>
-            <modal v-if="showCertificate" @close="showCertificate = false">
-              <transition name="modal">
-                <div class="modal-mask">
-                  <div class="modal-wrapper">
-                    <div class="modal-container" style="width: 500px; height: 300px">
-                      <div class="modal-body">
-                        <slot name="body">
-                          <v-img :src="certificateSrc" width="500" height="200" />
-                        </slot>
-                      </div>
+            </div>
+            <div>
+              <ShowShucheduleModal
+                v-if="showShuchedule"
+                :alcoholDatas="alcoholContents"
+                :childDialog="dialog"
+                :loadingCircle="loading"
+                :motivationImg="nextMotivationImg"
+                @twitterShare="snsUrl"
+                @closeModal="closeShucheduleModal"
+              />
+              <div>
+                <!-- <ShowLoading /> -->
+              </div>
+            </div>
 
-                      <div class="modal-footer">
-                        <v-btn class="modal-default-button" @click="showCertificate = false">
-                          納めました
-                        </v-btn>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </transition>
-              <v-card> </v-card>
-            </modal>
+            <ShowCertificateModal
+              v-if="showCertificate"
+              :expirationDate="expirationDate"
+              @closeCertificate="closeCertificateModal"
+            />
           </v-col>
         </v-row>
       </v-container>
     </div>
-
-    <v-layout>
-      <v-col
-        class="text-center mx-auto my-5 form"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
-        elevation="2"
-        shaped
-        id="form"
-      >
-        <v-card-title style="width: 100%" class="headline justify-center">
-          <h2 class="centered white--text" style="white--text">酒ケジュール</h2>
-        </v-card-title>
-        <v-container>
-          <v-row justify="center" align-content="center">
-            <v-col cols="12" sm="3" class="d-flex" v-for="data in contents" :key="data.id">
-              <v-card
-                class="text-center mx-auto my-5 form"
-                elevation="2"
-                width="100%"
-                shaped
-                id="form"
-              >
-                <v-icon>{{ data.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug' }}</v-icon>
-
-                <v-card-title style="width: 100%" class="headline justify-center">
-                  {{ data.name }}
-                </v-card-title>
-                <v-row justify="center" align-content="center">
-                  <p>度数: {{ data.alcohol_percentage }}%</p>
-                  <p>量: {{ data.alcohol_amount }}ml</p>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-btn @click="dialog2 = !dialog2"> 詳細を見る </v-btn>
-          <!-- <transition name="fade"> -->
-          <div
-            style="overflow-y: auto"
-            v-show="dialog2"
-            max-width="100%"
-            transition="dialog-top-transition"
-            justify="center"
-            align-content="center"
-          >
-            <v-row class="d-flex" justify="center" align-content="center">
-              <v-col cols="3" md="12" v-for="data in contents" :key="data.id">
-                <v-card
-                  class="text-center mx-auto my-5 form"
-                  elevation="2"
-                  width="100%"
-                  shaped
-                  id="form"
-                >
-                  <v-card-title style="width: 100%" class="headline justify-center">
-                    {{ data.name }}
-                  </v-card-title>
-                  <v-row justify="center">
-                    <v-icon>{{
-                      data.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
-                    }}</v-icon>
-                    <!-- <v-img
-                        :lazy-src="data.image_url"
-                        :src="data.image_url"
-                        max-height="150"
-                        max-width="100"
-                      >
-                        <template v-slot:placeholder>
-                          <v-row class="fill-height ma-0" align="center" justify="center">
-                            <v-progress-circular
-                              indeterminate
-                              color="grey lighten-5"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img> -->
-                  </v-row>
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ data.alcohol_percentage }}%</p>
-                    <p>量: {{ data.alcohol_amount }}ml</p>
-                  </v-row>
-                  <div>
-                    {{ data.description }}
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </div>
-          <!-- </transition> -->
-        </v-container>
-      </v-col>
-    </v-layout>
-
     <v-row justify="center" align-content="center">
       <v-btn
         class="centered white--text"
         :to="{ name: 'ZerokenTop' }"
-        style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
-        text
-        rounded
-        plain
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
         x-large
       >
-        もう一度診断する
+        トップに戻る
       </v-btn>
       <v-dialog v-model="dialog" width="400">
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
+            x-large
             class="white--text"
-            style="background-color: rgb(0, 0, 0, 0.6); width: 50%; border-radius: 20%"
+            style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
           >
             シェアする
           </v-btn>
@@ -208,58 +107,133 @@
           <v-list>
             <v-list-item>
               <v-list-item-action>
-                <v-icon color="indigo"> mdi-facebook </v-icon>
-              </v-list-item-action>
-              <v-card-title>Facebook</v-card-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-action>
                 <v-icon color="#1da1f2"> mdi-twitter </v-icon>
               </v-list-item-action>
               <v-btn :href="sns.twitter" target="_blank">{{ Twitter }} </v-btn>
             </v-list-item>
-            <v-list-item>
+            <!-- <v-list-item>
               <v-list-item-action>
                 <img :src="imgSrc" width="20" height="20" />
               </v-list-item-action>
               <v-btn :href="sns.line" target="_blank" rel="noopener noreferrer">LINE</v-btn>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-card>
       </v-dialog>
     </v-row>
+    <v-layout>
+      <v-row justify="center" align-content="center">
+        <v-col
+          class="text-center mx-auto my-5 form"
+          style="width: 50%; border-radius: 20%"
+          elevation="2"
+          shaped
+          v-for="list in logicLists"
+          :key="list.title"
+          id="form"
+        >
+          <v-card>
+            <v-card-title>
+              {{ list.title }}
+            </v-card-title>
+
+            <v-card-subtitle>
+              {{ list.subtext }}
+            </v-card-subtitle>
+
+            <v-card-actions>
+              <v-btn color="orange lighten-2" text> 詳細を見る </v-btn>
+
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="show = !show">
+                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </v-btn>
+            </v-card-actions>
+
+            <v-expand-transition>
+              <div v-show="show">
+                <v-divider></v-divider>
+                <v-card-text>
+                  {{ list.description }}
+                </v-card-text>
+              </div>
+            </v-expand-transition>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-layout>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
+// import ShowLoading from '../components/result/ShowLoading'
+import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
+import ShowCertificateModal from '../components/result/ShowCertificateModal';
 import axios from '../plugins/axios';
+// import {fetchAlcohol }from '../apis/api'
 export default {
   components: {
     StarRating,
+    ShowShucheduleModal,
+    ShowCertificateModal,
+    // ContentLoader,
+    // ShowLoading
   },
   data: function () {
     return {
       shuche: '',
-      alcohols: [],
+      showShuchedule: false,
+      alcoholContents: undefined,
+      alcoholismDrunkness: false,
+      alcoholismStrongness: false,
+      nonAlcoholImg: '',
+      nextMotivationImg: '',
+      alcohols: {},
       analyze: [],
       users: [],
-      logo: '',
+      logicLists: [
+        {
+          title: 'お酒の強さ算出ロジック',
+          subtext:
+            ' TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。',
+          description:
+            ' 内容: 13項目からなる質問に３択で答えます。各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。',
+          img: require('../src/img/TAST.jpeg'),
+          action: 'drunkness',
+        },
+        {
+          title: '酔い度合い算出ロジック',
+          subtext:
+            '  厚生労働省が用意しているデータを参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。',
+          description:
+            '「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。',
+          img: require('../src/img/drunkness.png'),
+          action: 'strongness',
+        },
+      ],
       errors: '',
+      expirationDate: new Date(Date.now() + 7 - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       show: false,
       dialog: false,
       dialog0: false,
       dialog1: false,
       dialog2: false,
+      loading: true,
       showCertificate: false,
+      alcoholOrders: {},
+      alcoholStrongness: '',
       Twitter: 'Twitter',
       rating: [],
       sns: {
         twitter: '',
         url: '',
         title: '',
-        hashtags: 'ZEROKEN,アルハラ防止',
+        hashtags: 'ZEROKEN,アルハラ防止,酒ケジュール',
         line: '',
         lineDescription: 'で一次会に向けてお酒の強さを診断しましょう。',
       },
@@ -272,43 +246,8 @@ export default {
     currentUser() {
       return this.authUser['data']['attributes']['nickname'];
     },
-    currentAnalyze() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
-      function checkAlcoholStrongness(target) {
-        if (target === 'strong') {
-          return '酒豪';
-        } else if (target === 'weak') {
-          return '下戸';
-        } else if (target === 'normal') {
-          return '普通の人';
-        } else if (target === 'normal_strong') {
-          return 'やや酒豪';
-        } else {
-          return 'やや下戸';
-        }
-      }
-      const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      return result;
-    },
-    changeSrc() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetMotivation = targetAnalyze['next_motivation'];
+    
 
-      function checkMotivation(target) {
-        if (target === 'flesh') {
-          return require('../src/img/flesh_stamp.png');
-        } else if (target === 'tipsy') {
-          return require('../src/img/tipsy_stamp.png');
-        } else {
-          return require('../src/img/meitei_stamp.png');
-        }
-      }
-      const result = checkMotivation(targetMotivation);
-      return result;
-    },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
       const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
@@ -336,19 +275,17 @@ export default {
       const logoInspect = alcoholPercentage > 0 ? 'mdi-glass-mug' : 'mdi-cup';
       return logoInspect;
     },
-    contents() {
-      const thisAnalyze = this.analyzes;
-
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-
-      const targetValues = this.alcohols;
-
-      const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
-
-      return contentsOfTarget;
-    },
     imgSrc() {
       return require('../src/img/line.png');
+    },
+    woodSrc() {
+      return require('../src/img/woodtile.jpeg');
+    },
+    tastSrc() {
+      return require('../src/img/TAST.jpeg');
+    },
+    drunknessSrc() {
+      return require('../src/img/drunkness.png');
     },
     sakeSrc() {
       return require('../src/img/sake.svg');
@@ -356,15 +293,15 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
-    ippaiSrc() {
-      return require('../src/img/ippai_shuki.png');
-    },
-    sugusakeSrc() {
-      return require('../src/img/sugusake_stamp.png');
-    },
-    sugumeiteiSrc() {
-      return require('../src/img/sugumeitei_stamp.png');
-    },
+    // ippaiSrc() {
+    //   return require('../src/img/ippai_shuki.png');
+    // },
+    // sugusakeSrc() {
+    //   return require('../src/img/sugusake_stamp.png');
+    // },
+    // sugumeiteiSrc() {
+    //   return require('../src/img/sugumeitei_stamp.png');
+    // },
     beerSrc() {
       return require('../src/img/beer.svg');
     },
@@ -380,44 +317,166 @@ export default {
     certificateSrc() {
       return require('../src/img/certificate.png');
     },
+  
   },
   mounted() {
-    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     this.analyze = this.fetchAnalyzes;
     this.show = true;
+    this.isVisibleShuchedule();
   },
   updated() {},
   created() {
+    axios
+      .get('/alcohols')
+      .then((alcoholResponse) => {
+        this.alcohols = alcoholResponse.data;
+        return this.alcohols;
+      })
+      .then((alcohols) => {
+        this.loading = false;
+        const thisAnalyze = this.analyzes;
+        const targetValues = alcohols;
+        const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+        const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
+        this.alcoholOrders = contentsOfTarget;
+        this.alcoholContents = contentsOfTarget;
+      });
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
     this.snsUrl();
+    this.changeSrc();
+    this.currentAnalyze();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    currentAnalyze() {
+      const thisAnalyze = this.analyzes;
+      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+      function checkAlcoholStrongness(target) {
+        if (target === 'strong') {
+          return '酒豪';
+        } else if (target === 'weak') {
+          return '下戸';
+        } else if (target === 'normal') {
+          return '普通の人';
+        } else if (target === 'normal_strong') {
+          return 'やや酒豪';
+        } else {
+          return 'やや下戸';
+        }
+      }
+      const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      const AlcoholStrongness = (this.alcoholStrongness = result);
+      return AlcoholStrongness;
+    },
+    alcoholDatas(response) {
+      this.alcohols = response.data;
+    },
+    changeSrc() {
+      const thisAnalyze = this.analyzes;
+      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      const targetMotivation = targetAnalyze['next_motivation'];
+
+      function checkMotivation(target) {
+        if (target === 'flesh') {
+          return require('../src/img/flesh_stamp.png');
+        } else if (target === 'tipsy') {
+          return require('../src/img/tipsy_stamp.png');
+        } else {
+          return require('../src/img/meitei_stamp.png');
+        }
+      }
+      const result = checkMotivation(targetMotivation);
+      const nextMotivation = (this.nextMotivationImg = result);
+      return nextMotivation;
+    },
+    closeShucheduleModal() {
+      this.isVisibleShuchedule();
+    },
+    closeCertificateModal() {
+      this.isVisibleShowCertificate();
+    },
+    isVisibleShowCertificate() {
+      this.showCertificate = !this.showCertificate;
+    },
+    isVisibleShuchedule() {
+      this.showShuchedule = !this.showShuchedule;
+    },
     snsUrl() {
       setTimeout(
         function () {
-          // 現在のurlをエンコード
           this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
-          this.sns.title = encodeURIComponent(document.title);
+          this.sns.title = encodeURIComponent('【酒テータス】');
+          console.log('alcoholOrders');
+          console.log(this.alcoholOrders);
+
+          const targetOrder = this.alcoholOrders;
+          const firstOrder = targetOrder[0]['name'];
+          const secondOrder = targetOrder[1]['name'];
+          const thirdOrder = targetOrder[2]['name'];
+          const forthOrder = targetOrder[3]['name'];
+          const thisAnalyze = this.analyzes;
+          const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+          const sipporiArray = [
+            'あんま飲みたくない',
+            '今日はソフドリがいい',
+            '今月試合あるから飲みたくない',
+            '家で推しの録画見たいから飲みたくない',
+          ];
+          const horoyoiArray = [
+            '途中で帰りたい',
+            '今日はソフドリがいい',
+            '金欠だから飲みたくない',
+            'ほろ酔いくらいまで飲みたい',
+          ];
+          const meiteiArray = [
+            'とことん飲みたい',
+            '酒で記憶を飛ばしたい',
+            'あるだけ飲みたい',
+            'とにかく酒をたくさん飲みたい',
+            '',
+          ];
+          const sippporiiKibun = sipporiArray[Math.floor(Math.random() * sipporiArray.length)];
+          const horoyoiKibun = horoyoiArray[Math.floor(Math.random() * horoyoiArray.length)];
+          const meiteiKibun = meiteiArray[Math.floor(Math.random() * meiteiArray.length)];
+          const targetMotivation = targetAnalyze['next_motivation'];
+          function checkMotivation(target) {
+            if (target === 'flesh') {
+              return sippporiiKibun;
+            } else if (target === 'tipsy') {
+              return horoyoiKibun;
+            } else {
+              return meiteiKibun;
+            }
+          }
+          const result = checkMotivation(targetMotivation);
+
+          console.log('firstOrder');
+          console.log(firstOrder);
           this.sns.twitter =
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
             '&text=' +
-            this.sns.title +
+            `【酒テータス】%0A${this.alcoholStrongness}
+            %0A【本音】%0A${result}
+            %0A【1軒目の酒ケジュール】
+            %0A1軒目は
+            %0A1.${firstOrder}%202.${secondOrder}%203.${thirdOrder}%204.${forthOrder}%0Aでいきます` +
             '&hashtags=' +
             this.sns.hashtags;
-          this.sns.line =
-            'https://timeline.line.me/social-plugin/share?url=' +
-            this.sns.url +
-            '&text=' +
-            this.sns.title +
-            this.sns.lineDescription;
+          window.location.href = this.sns.twitter;
+          //  this.sns.line =
+          //     'https://timeline.line.me/social-plugin/share?url=' +
+          //     this.sns.url +
+          //     '&text=' +
+          //     this.sns.title +
+          //     this.sns.lineDescription;
         }.bind(this),
-        300
+        100
       );
     },
   },
@@ -428,22 +487,19 @@ export default {
 /* #result-page{
   
 } */
-html {
-  overflow-x: hidden;
-  width: 1024px;
-}
+
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
 }
 .fade-enter-active,
 .fade-leave-active {
-  /* 表示されている際のCSSはこのブロックに記述 */
+  /* 表示時のCSS */
   will-change: opacity;
   transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1) 3000ms;
 }
 .fade-enter,
 .fade-leave-to {
-  /* 非表示の際のCSSはこのブロックに記述 */
+  /* 非表示時のCSS */
   opacity: 0;
 }
 </style>
