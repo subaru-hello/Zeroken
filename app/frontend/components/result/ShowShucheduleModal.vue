@@ -1,17 +1,33 @@
 <template>
-  <v-container>
-    <transition name="modal">
-      <div @click="closeModal" v-click-outside="closeModal">
-        <div class="modal-mask">
-          <div class="modal-shuchedule-wrapper">
-            <div class="modal-shuchedule-container" style="width: 400px; height: 400px">
-              <div class="modal-body">
-                <slot name="body">
-                  <p class="text-center black--text outer-layer" style="white--text">
-                    <img :src="motivationImg" width="50" height="50" />
-                    <span class="mb-6">への 酒ケジュール</span>
-                  </p>
-                  <br />
+  <transition name="modal">
+    <div @click="closeModal" v-click-outside="closeModal">
+      <div class="modal-mask">
+        <div class="modal-shuchedule-wrapper">
+          <div class="modal-shuchedule-container" style="width: 400px; height: 500px">
+            <div class="modal-body">
+              <slot name="body">
+                <div class="text-center black--text outer-layer" style="white--text">
+                  <div v-if="loadingCircle">
+                    <VueLoading
+                      type="cylon"
+                      color="#d9544e"
+                      :size="{ width: '50px', height: '50px' }"
+                    ></VueLoading>
+                  </div>
+                  <div v-else>
+                    <img :src="drunknessEagerToImg" width="50" height="50" />
+                  </div>
+                  <span class="mb-6 text-center">への 酒ケジュール</span>
+                </div>
+                <br />
+                <div v-if="loadingCircle">
+                  <VueLoading
+                    type="spiningDubbles"
+                    color="#d9544e"
+                    :size="{ width: '200px', height: '50px' }"
+                  ></VueLoading>
+                </div>
+                <div v-else>
                   <v-row justify="center" align-content="center">
                     <v-col
                       v-for="data in alcoholItems"
@@ -24,51 +40,103 @@
                       <p>
                         {{ data.name }}
                       </p>
-                      <!-- </div>
-                               <div> -->
                       <p>{{ data.alcohol_percentage }}%</p>
                       <p>{{ data.alcohol_amount }}ml</p>
                     </v-col>
                   </v-row>
-                </slot>
-              </div>
-
-              <div class="modal-footer">
-                <div class="d-flex text-center justify-space-between">
-                  <!-- <p>有効期限 {{ date }}</p> -->
-                  <v-btn class="modal-default-button" @click="closeModal"> 共有しました </v-btn>
                 </div>
+              </slot>
+            </div>
+
+            <div class="modal-footer">
+              <div class="d-flex text-center justify-space-between">
+                <v-btn class="modal-default-button" @click="closeModal"> 共有しました </v-btn>
+                <v-btn target="_blank" @click="twitterShare">
+                  シェア<v-icon color="#1da1f2"> mdi-twitter </v-icon>
+                </v-btn>
+                <!-- <v-dialog v-model="childDialog" width="400">
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-on="on"
+            x-large
+            class="white--text"
+           
+          >
+       <v-btn :href="snsData" target="_blank">    シェア<v-icon color="#1da1f2"> mdi-twitter </v-icon> </v-btn>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="text-h6 font-weight-bold">Share</span>
+            <v-spacer></v-spacer>
+            <v-btn class="mx-0" icon @click="childDialog = !childDialog">
+              <v-icon>mdi-close-circle-outline</v-icon>
+            </v-btn>
+          </v-card-title>
+          <v-list>
+            <v-list-item>
+              <v-list-item-action>
+                <v-icon color="#1da1f2"> mdi-twitter </v-icon>
+              </v-list-item-action>
+              <v-btn :href="snsData" target="_blank"> Twitter  </v-btn>
+            </v-list-item>
+           
+          </v-list>
+        </v-card>
+      </v-dialog> -->
               </div>
             </div>
           </div>
         </div>
       </div>
-    </transition>
-  </v-container>
+    </div>
+  </transition>
 </template>
 
 <script>
+import { VueLoading } from 'vue-loading-template';
 export default {
   props: {
     alcoholDatas: {
-      type: Object,
+      type: Array,
     },
     motivationImg: {
       type: String,
     },
+
+    twitterUrl: {
+      type: String,
+    },
+    childDialog: {
+      type: Boolean,
+    },
+    loadingCircle: {
+      type: Boolean,
+    },
+  },
+  components: {
+    VueLoading,
   },
   data() {
     return {
       alcohols: '',
+      drunknessEagerToImg: this.motivationImg,
+      snsData: this.twitterUrl,
     };
   },
   methods: {
     closeModal() {
       this.$emit('closeModal');
     },
+    twitterShare() {
+      this.dialog = true;
+      this.$emit('twitterShare');
+    },
   },
   computed: {
     alcoholItems() {
+      console.log('in ShowShucheduleModal alcoholItems()');
+      console.log(this.alcoholDatas);
       const targetAlcohols = (this.alcohols = this.alcoholDatas);
       return targetAlcohols;
     },
