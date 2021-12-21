@@ -1,5 +1,5 @@
 <template>
-  <div id="izakaya">
+  <div>
     <v-stepper v-model="e6" vertical id="izakaya">
       <v-stepper-step :complete="e6 > 1" step="1">
         <!-- <span class="white--text " 
@@ -34,10 +34,10 @@
                   >
                     <v-card-title
                       style="width: 100% white-space:pre-wrap;"
-                      class="headline justify-center"
+                      class="headline justify-center outer-layer"
                       :id="'bigq' + question.num"
                     >
-                      Q{{ question.num }}.
+                      問{{ question.num }}.
                       {{ question.title }}
                     </v-card-title>
                     <v-radio-group :id="'smallq' + question.num" row class="mx-16 px-9">
@@ -116,7 +116,7 @@
       </v-stepper-step>
       <v-stepper-content step="2">
         <template v-if="show">
-          <v-container justify="center" align-content="center" class="analyze-title">
+          <v-container justify="center" align-content="center" class="analyze-title-weight">
             <h2 class="mt-5 black--text text-center">現在の体重を選択してください</h2>
             <v-layout justify-center>
               <v-row justify-center>
@@ -148,11 +148,11 @@
 
       <v-stepper-content step="3">
         <template v-if="show">
-          <v-container justify="center" align-content="center">
+          <v-container justify="center" align-content="center" class="analyze-title-weight">
             <v-layout justify-center>
               <v-row justify-center>
                 <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                  <h1 class="text-center white--text" style="font-size: 25px">
+                  <h1 class="text-center black--text" style="font-size: 25px">
                     一次会でどのくらい酔いたいかクリックしてください
                   </h1>
 
@@ -161,50 +161,38 @@
                       <div>
                         <v-layout>
                           <v-row justify="center" align-content="center">
-                            <div class="d-flex">
+                            <div>
                               <v-radio-group
                                 cols="12"
                                 sm="3"
                                 v-model="nextMotivation"
                                 style="font-size: 30px"
-                                class="text-center analyze-title"
+                                class="text-center"
                                 :ripple="{ center: false, class: 'gray--text' }"
                                 v-bind="attrs"
                                 v-on="on"
                               >
                                 <v-radio :value="2" label="酩酊になりたい"></v-radio>
-                                <!-- <img :src="imgSrc" width="150" height="150" class="text-center" :value="2"/> -->
-                                <!-- </v-col> -->
-                                <!-- 
-                            <v-col
-                              cols="12"
-                              sm="3"
-                              v-model="nextMotivation"
-                              :value="1"
-                              style="font-size: 30px"
-                              class="text-center"
-                              :ripple="{ center: false, class: 'gray--text' }"
-                              v-bind="attrs"
-                              v-on="on"
-                            > -->
-                                <v-radio :value="1" label="ほろ酔いになりたい"></v-radio>
-                                <!-- <span :value= 1> <img :src="sakeSrc" width="150" height="150" class="text-center" /></span> -->
-                                <!-- </v-col> -->
-                                <!-- <v-col
-                              cols="12"
-                              sm="3"
-                              v-model="nextMotivation"
-                              :value="0"
-                              style="font-size: 30px"
-                              class="text-center"
-                              :ripple="{ center: false, class: 'gray--text' }"
-                              v-bind="attrs"
-                              v-on="on"
-                            > -->
-                                <v-radio :value="0" label="ほぼしらふでいい"></v-radio>
-                                <!-- <span :value= 1> <img :src="sakeSrc" width="150" height="150" class="text-center" /></span> -->
+                                <img
+                                  :src="imgSrc"
+                                  width="150"
+                                  height="150"
+                                  class="text-center"
+                                  :value="2"
+                                />
 
-                                <!-- <img :src="drinkSrc" width="150" height="150" class="text-center" :value="0"/> -->
+                                <v-radio :value="1" label="ほろ酔いになりたい"></v-radio>
+                                <img :src="sakeSrc" width="150" height="150" class="text-center" />
+
+                                <v-radio :value="0" label="ほぼしらふでいい"></v-radio>
+
+                                <img
+                                  :src="drinkSrc"
+                                  width="150"
+                                  height="150"
+                                  class="text-center"
+                                  :value="0"
+                                />
                               </v-radio-group>
 
                               <v-btn
@@ -384,8 +372,11 @@ export default {
         answerThirteenth;
       let AlcoholStrongness =
         sumResult > 3 ? 4 : sumResult > 0 ? 3 : sumResult === 0 ? 2 : sumResult > -3 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
+      console.log('AlcoholStrongness');
+      console.log(AlcoholStrongness);
       let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
-
+      console.log('Nomivation');
+      console.log(Nomivation);
       let alcoholInVein =
         AlcoholStrongness === 4 && Nomivation === 0
           ? 0.04
@@ -418,6 +409,8 @@ export default {
           : AlcoholStrongness === 0 && Nomivation === 2
           ? 0.11
           : 0.02;
+      console.log('alcoholInVein');
+      console.log(alcoholInVein);
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -467,7 +460,8 @@ export default {
           : totalAlcoholAmount < 12500
           ? 0
           : 24;
-
+      console.log('yourShuchedule');
+      console.log(yourShuchedule);
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -665,9 +659,15 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33); */
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+}
+.outer-layer {
+  padding: 0.5em 3em;
+  margin: 2em 0;
+  font-weight: bold;
+  border: solid 3px rgb(243, 190, 92);
 }
 .modal-body {
   margin: 20px 0;
@@ -684,5 +684,8 @@ export default {
 }
 .analyze-title {
   background-color: rgb(0, 0, 0, 0.4);
+}
+.analyze-title-weight {
+  background-color: rgb(255, 254, 254, 0.4);
 }
 </style>

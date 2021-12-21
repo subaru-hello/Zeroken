@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid id="izakaya">
+  <v-container fluid>
     <v-container
       justify="center"
       align-content="center"
@@ -143,7 +143,7 @@ export default {
       const targetAnalyze = this.analyzes;
       const sumResult = targetAnalyze[targetAnalyze.length - 1]['shuchedule'];
       const userAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
-     let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
+      let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
 
       let alcoholInVein =
         AlcoholStrongness === 4 && Nomivation === 0
@@ -188,7 +188,7 @@ export default {
           ? 1
           : 0;
 
-        let coefficient = 833;
+      let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
       let yourShuchedule =
