@@ -60,7 +60,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.2'
   gem 'spring-commands-rspec'
   gem 'terminal-notifier-guard'
-
 end
 
 group :development do

@@ -70,7 +70,6 @@
             <ShowCertificateModal
               v-if="showCertificate"
               :expirationDate="expirationDate"
-              :nonAlcoholImg="nonAlcoholImg"
               @closeCertificate="closeCertificateModal"
             />
           </v-col>
@@ -247,27 +246,7 @@ export default {
     currentUser() {
       return this.authUser['data']['attributes']['nickname'];
     },
-    currentAnalyze() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
-      function checkAlcoholStrongness(target) {
-        if (target === 'strong') {
-          return '酒豪';
-        } else if (target === 'weak') {
-          return '下戸';
-        } else if (target === 'normal') {
-          return '普通の人';
-        } else if (target === 'normal_strong') {
-          return 'やや酒豪';
-        } else {
-          return 'やや下戸';
-        }
-      }
-      const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      const AlcoholStrongness = (this.alcoholStrongness = result);
-      return AlcoholStrongness;
-    },
+    
 
     strongnessStar() {
       const targetAnalyze = this.analyzes;
@@ -338,11 +317,7 @@ export default {
     certificateSrc() {
       return require('../src/img/certificate.png');
     },
-    nonAlcoholSrc() {
-      const img = require('../src/img/geko_stamp.png');
-      const nonAlcoholPic = (this.nonAlcoholImg = img);
-      return nonAlcoholPic;
-    },
+  
   },
   mounted() {
     this.analyze = this.fetchAnalyzes;
@@ -371,11 +346,33 @@ export default {
     this.fetchAuthUser();
     this.snsUrl();
     this.changeSrc();
+    this.currentAnalyze();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    currentAnalyze() {
+      const thisAnalyze = this.analyzes;
+      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+      function checkAlcoholStrongness(target) {
+        if (target === 'strong') {
+          return '酒豪';
+        } else if (target === 'weak') {
+          return '下戸';
+        } else if (target === 'normal') {
+          return '普通の人';
+        } else if (target === 'normal_strong') {
+          return 'やや酒豪';
+        } else {
+          return 'やや下戸';
+        }
+      }
+      const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      const AlcoholStrongness = (this.alcoholStrongness = result);
+      return AlcoholStrongness;
+    },
     alcoholDatas(response) {
       this.alcohols = response.data;
     },

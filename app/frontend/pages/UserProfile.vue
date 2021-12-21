@@ -122,7 +122,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
-import Qs from 'qs';
 // import dayjs from '../plugins/dayjs';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
