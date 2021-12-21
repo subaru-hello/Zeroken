@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid id="izakaya" style="box-sizing: border-box;">
-    <v-row>
+  <v-container fluid class="mt-4 pt-21" style="box-sizing: border-box">
+    <v-row class="mt-4 pt-21">
       <v-col>
         <v-row class="d-flex justify-center content-center">
           <v-col :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'" flat tile>
@@ -17,7 +17,7 @@
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
                   <div>{{ authUser.data.attributes.nickname }}</div>
                 </div>
-                <v-divider class="" />
+                <v-divider />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
                   <div>{{ authUser.data.attributes.email }}</div>
@@ -26,20 +26,22 @@
                   <h3 class="text-subtitle-1 font-weight-black">酒の強さ</h3>
                   <div>{{ currentAnalyze }}</div>
                 </div>
-                <v-divider class="" />
+                <v-divider />
               </div>
-              <!-- <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
-                <v-icon class="mr-1">mdi-account-cog</v-icon>
-                編集する
-              </v-btn>
-              <p class="text-body2">
-                パスワードを変更する場合は
-                <a @click.stop="displayPasswordEditDialog"> こちら </a>
-              </p> -->
+              <div v-if="authUser.data.attributes.role === 'member'">
+                <v-btn class="mb-6" x-large @click.stop="displayProfileEditDialog">
+                  <v-icon class="mr-1">mdi-account-cog</v-icon>
+                  編集する
+                </v-btn>
+                <p class="text-body2">
+                  パスワードを変更する場合は
+                  <a @click.stop="displayPasswordEditDialog"> こちら </a>
+                </p>
+              </div>
             </v-sheet>
 
             <!-- <Calender /> -->
-
+            <!-- プロフィール編集フォーム -->
             <ProfileEditForm
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
@@ -61,15 +63,18 @@
             />
           </v-col>
         </v-row>
-        <v-col> </v-col>
+        <v-col>
+          <div>My 酒ケジュール</div>
+        </v-col>
       </v-col>
-      <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+
+      <!-- 表、カウントして出す。 -->
 
       <!-- :events="arrayEvents" -->
       <!-- <v-date-picker v-model="date2" @click.stop="dialog = true"></v-date-picker> -->
 
       <div justify="center" align-content="center">
-        <v-btn @click="showShucheduleAll = !showShucheduleAll"> 酒ケジュールを見る </v-btn>
+        <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
         <v-col
           v-for="(data, index) in dataAnalyze"
           :key="index"
@@ -82,29 +87,29 @@
             style="background-color: #fff"
           >
             <!-- 7日以前の診断 -->
-            <div v-if="showShucheduleAll">
-              <div
-                v-if="checkDate(specificData.created_at)"
-                class="text-center mx-auto my-5 form"
-                elevation="2"
-                shaped
-                id="form"
-              >
-                {{ checkDate(specificData.created_at) }}前の投稿です
+            <!-- <div v-if="showShucheduleAll"> -->
+            <div
+              v-if="checkDate(specificData.created_at)"
+              class="text-center mx-auto my-5 form"
+              elevation="2"
+              shaped
+              id="form"
+              :disabled="showShucheduleAll"
+            >
+              {{ date(specificData.created_at) }}の診断です
 
-                <v-card-title style="width: 100%" class="headline justify-center">
-                  {{ specificData.name }}
-                </v-card-title>
-                <v-row justify="center">
-                  <v-icon>{{
-                    specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
-                  }}</v-icon>
-                  <v-row justify="center" align-content="center">
-                    <p>度数: {{ specificData.alcohol_percentage }}%</p>
-                    <p>量: {{ specificData.alcohol_amount }} ml</p>
-                  </v-row>
+              <v-card-title style="width: 100%" class="headline d-flex justify-center">
+                <v-icon>{{
+                  specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
+                }}</v-icon>
+                {{ specificData.name }}
+              </v-card-title>
+              <v-row justify="center">
+                <v-row justify="center" align-content="center">
+                  <p>度数: {{ specificData.alcohol_percentage }}%</p>
+                  <p>量: {{ specificData.alcohol_amount }} ml</p>
                 </v-row>
-              </div>
+              </v-row>
             </div>
           </v-col>
         </v-col>
@@ -117,7 +122,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import axios from '../plugins/axios';
-import dayjs from '../plugins/dayjs';
+import Qs from 'qs';
+// import dayjs from '../plugins/dayjs';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
 export default {
@@ -131,7 +137,6 @@ export default {
       dataArray: null,
       dialog: false,
       arrayEvents: null,
-
       alcohols: [],
       date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
@@ -284,14 +289,13 @@ export default {
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
-
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
 
     const authUserData = {
       nickname: this.authUser.data.attributes.nickname,
       email: this.authUser.data.attributes.email,
-      // password: currentUserData["password"],
-      // password_confirmation: currentUserData["password_confirmation"],
+      password: this.authUser.data.attributes.password,
+      password_confirmation: this.authUser.data.attributes.password_confirmation,
       avatar: this.authUser.data.attributes.avatar,
     };
     this.authUserEdit = authUserData;
@@ -309,7 +313,8 @@ export default {
       const dateTo = now;
       const dateFrom = new Date(date);
 
-      const diffBetweenDate = dateTo.diff(dateFrom, 'day');
+      // const diffBetweenDate = dateTo.diff(dateFrom, 'day');
+      const diffBetweenDate = dateTo - dateFrom;
       return diffBetweenDate;
     },
     triggerClick(action) {
