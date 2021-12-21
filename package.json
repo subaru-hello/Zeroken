@@ -1,6 +1,10 @@
 {
   "name": "zeroken",
   "private": true,
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.x"
+  },
   "dependencies": {
     "@bit/joshk.vue-spinners-css.facebook-loader": "^1.1.5",
     "@fortawesome/fontawesome-free": "^5.15.4",
