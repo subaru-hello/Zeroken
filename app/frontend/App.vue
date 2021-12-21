@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <TheHeader />
-    <v-main class="mt-12 mb-6">
+    <v-main class="mt-12 izakaya">
       <TheSnackBar />
       <router-view />
     </v-main>
@@ -12,7 +12,6 @@
 import TheFooter from './components/global/TheFooter';
 import TheHeader from './components/global/TheHeader';
 import TheSnackBar from './components/global/TheSnackBar';
-
 export default {
   components: {
     TheHeader,
@@ -23,22 +22,10 @@ export default {
 </script>
 
 <style>
-/* @media screen and (min-width: 650px) {
-  .br-pc {
-    display: block;
-  }
-  .br-sp {
-    display: none;
-  }
+.izakaya {
+  background: url(./src/img/beer.jpeg) center center / cover no-repeat fixed;
 }
-@media screen and (max-width: 650px) {
-  .br-pc {
-    display: none;
-  }
-  .br-sp {
-    display: block;
-  }
-} */
+
 .router-link {
   text-decoration: none;
 }

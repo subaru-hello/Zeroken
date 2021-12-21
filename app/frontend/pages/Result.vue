@@ -1,12 +1,11 @@
 <template>
-  <div id="izakaya" style="width: 100%; box-sizing: border-box;">
+  <div style="width: 100%; box-sizing: border-box">
     <div>
       <v-container
         fluid
         justify="center"
         style="background-color: rgb(0, 0, 0, 0.6); width: 80%; border-radius: 20%"
       >
-        <!-- <p> {{alcoholContents}}</p> -->
         <v-row class="d-flex">
           <v-col cols="12">
             <div>
@@ -53,13 +52,21 @@
                 >
               </div>
             </div>
+            <div>
+              <ShowShucheduleModal
+                v-if="showShuchedule"
+                :alcoholDatas="alcoholContents"
+                :childDialog="dialog"
+                :loadingCircle="loading"
+                :motivationImg="nextMotivationImg"
+                @twitterShare="snsUrl"
+                @closeModal="closeShucheduleModal"
+              />
+              <div>
+                <!-- <ShowLoading /> -->
+              </div>
+            </div>
 
-            <ShowShucheduleModal
-              v-if="showShuchedule"
-              :alcoholDatas="alcoholContents"
-              :motivationImg="nextMotivationImg"
-              @closeModal="closeShucheduleModal"
-            />
             <ShowCertificateModal
               v-if="showCertificate"
               :expirationDate="expirationDate"
@@ -105,56 +112,57 @@
               </v-list-item-action>
               <v-btn :href="sns.twitter" target="_blank">{{ Twitter }} </v-btn>
             </v-list-item>
-            <v-list-item>
+            <!-- <v-list-item>
               <v-list-item-action>
                 <img :src="imgSrc" width="20" height="20" />
               </v-list-item-action>
               <v-btn :href="sns.line" target="_blank" rel="noopener noreferrer">LINE</v-btn>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-card>
       </v-dialog>
     </v-row>
     <v-layout>
-      <v-col
-        class="text-center mx-auto my-5 form"
-        style="width: 50%; border-radius: 20%"
-        elevation="2"
-        shaped
-        v-for="list in logicLists"
-        :key="list.title"
-        id="form"
-      >
-        <v-card>
+      <v-row justify="center" align-content="center">
+        <v-col
+          class="text-center mx-auto my-5 form"
+          style="width: 50%; border-radius: 20%"
+          elevation="2"
+          shaped
+          v-for="list in logicLists"
+          :key="list.title"
+          id="form"
+        >
+          <v-card>
+            <v-card-title>
+              {{ list.title }}
+            </v-card-title>
 
-          <v-card-title>
-            {{ list.title }}
-          </v-card-title>
+            <v-card-subtitle>
+              {{ list.subtext }}
+            </v-card-subtitle>
 
-          <v-card-subtitle>
-            {{ list.subtext }}
-          </v-card-subtitle>
+            <v-card-actions>
+              <v-btn color="orange lighten-2" text> 詳細を見る </v-btn>
 
-          <v-card-actions>
-            <v-btn color="orange lighten-2" text> 詳細を見る </v-btn>
+              <v-spacer></v-spacer>
 
-            <v-spacer></v-spacer>
+              <v-btn icon @click="show = !show">
+                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </v-btn>
+            </v-card-actions>
 
-            <v-btn icon @click="show = !show">
-              <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-            </v-btn>
-          </v-card-actions>
-
-          <v-expand-transition>
-            <div v-show="show">
-              <v-divider></v-divider>
-              <v-card-text>
-                {{ list.description }}
-              </v-card-text>
-            </div>
-          </v-expand-transition>
-        </v-card>
-      </v-col>
+            <v-expand-transition>
+              <div v-show="show">
+                <v-divider></v-divider>
+                <v-card-text>
+                  {{ list.description }}
+                </v-card-text>
+              </div>
+            </v-expand-transition>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-layout>
   </div>
 </template>
@@ -162,20 +170,24 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
+// import ShowLoading from '../components/result/ShowLoading'
 import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
 import ShowCertificateModal from '../components/result/ShowCertificateModal';
 import axios from '../plugins/axios';
+// import {fetchAlcohol }from '../apis/api'
 export default {
   components: {
     StarRating,
     ShowShucheduleModal,
     ShowCertificateModal,
+    // ContentLoader,
+    // ShowLoading
   },
   data: function () {
     return {
       shuche: '',
       showShuchedule: false,
-      alcoholContents: {},
+      alcoholContents: undefined,
       alcoholismDrunkness: false,
       alcoholismStrongness: false,
       nonAlcoholImg: '',
@@ -212,6 +224,7 @@ export default {
       dialog0: false,
       dialog1: false,
       dialog2: false,
+      loading: true,
       showCertificate: false,
       alcoholOrders: {},
       alcoholStrongness: '',
@@ -252,27 +265,10 @@ export default {
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      const AlcoholStrongness = (this.alcoholStrongness = result)
-      return AlcoholStrongness ;
+      const AlcoholStrongness = (this.alcoholStrongness = result);
+      return AlcoholStrongness;
     },
-    changeSrc() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetMotivation = targetAnalyze['next_motivation'];
 
-      function checkMotivation(target) {
-        if (target === 'flesh') {
-          return require('../src/img/flesh_stamp.png');
-        } else if (target === 'tipsy') {
-          return require('../src/img/tipsy_stamp.png');
-        } else {
-          return require('../src/img/meitei_stamp.png');
-        }
-      }
-      const result = checkMotivation(targetMotivation);
-      const nextMotivation = (this.nextMotivationImg = result);
-      return nextMotivation;
-    },
     strongnessStar() {
       const targetAnalyze = this.analyzes;
       const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
@@ -299,14 +295,6 @@ export default {
       const alcoholPercentage = contentsOfTarget['alcohol_percentage'];
       const logoInspect = alcoholPercentage > 0 ? 'mdi-glass-mug' : 'mdi-cup';
       return logoInspect;
-    },
-    contents() {
-      const thisAnalyze = this.analyzes;
-      const targetValues = this.alcohols;
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-      const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
-      const changeProperty = (this.alcoholContents = contentsOfTarget);
-      return changeProperty;
     },
     imgSrc() {
       return require('../src/img/line.png');
@@ -359,21 +347,56 @@ export default {
   mounted() {
     this.analyze = this.fetchAnalyzes;
     this.show = true;
+    this.isVisibleShuchedule();
   },
   updated() {},
   created() {
-    axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
+    axios
+      .get('/alcohols')
+      .then((alcoholResponse) => {
+        this.alcohols = alcoholResponse.data;
+        return this.alcohols;
+      })
+      .then((alcohols) => {
+        this.loading = false;
+        const thisAnalyze = this.analyzes;
+        const targetValues = alcohols;
+        const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
+        const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
+        this.alcoholOrders = contentsOfTarget;
+        this.alcoholContents = contentsOfTarget;
+      });
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
     this.snsUrl();
-    this.isVisibleShuchedule();
+    this.changeSrc();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    alcoholDatas(response) {
+      this.alcohols = response.data;
+    },
+    changeSrc() {
+      const thisAnalyze = this.analyzes;
+      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      const targetMotivation = targetAnalyze['next_motivation'];
 
+      function checkMotivation(target) {
+        if (target === 'flesh') {
+          return require('../src/img/flesh_stamp.png');
+        } else if (target === 'tipsy') {
+          return require('../src/img/tipsy_stamp.png');
+        } else {
+          return require('../src/img/meitei_stamp.png');
+        }
+      }
+      const result = checkMotivation(targetMotivation);
+      const nextMotivation = (this.nextMotivationImg = result);
+      return nextMotivation;
+    },
     closeShucheduleModal() {
       this.isVisibleShuchedule();
     },
@@ -391,22 +414,72 @@ export default {
         function () {
           this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
           this.sns.title = encodeURIComponent('【酒テータス】');
+          console.log('alcoholOrders');
+          console.log(this.alcoholOrders);
+
+          const targetOrder = this.alcoholOrders;
+          const firstOrder = targetOrder[0]['name'];
+          const secondOrder = targetOrder[1]['name'];
+          const thirdOrder = targetOrder[2]['name'];
+          const forthOrder = targetOrder[3]['name'];
+          const thisAnalyze = this.analyzes;
+          const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+          const sipporiArray = [
+            'あんま飲みたくない',
+            '今日はソフドリがいい',
+            '今月試合あるから飲みたくない',
+            '家で推しの録画見たいから飲みたくない',
+          ];
+          const horoyoiArray = [
+            '途中で帰りたい',
+            '今日はソフドリがいい',
+            '金欠だから飲みたくない',
+            'ほろ酔いくらいまで飲みたい',
+          ];
+          const meiteiArray = [
+            'とことん飲みたい',
+            '酒で記憶を飛ばしたい',
+            'あるだけ飲みたい',
+            'とにかく酒をたくさん飲みたい',
+            '',
+          ];
+          const sippporiiKibun = sipporiArray[Math.floor(Math.random() * sipporiArray.length)];
+          const horoyoiKibun = horoyoiArray[Math.floor(Math.random() * horoyoiArray.length)];
+          const meiteiKibun = meiteiArray[Math.floor(Math.random() * meiteiArray.length)];
+          const targetMotivation = targetAnalyze['next_motivation'];
+          function checkMotivation(target) {
+            if (target === 'flesh') {
+              return sippporiiKibun;
+            } else if (target === 'tipsy') {
+              return horoyoiKibun;
+            } else {
+              return meiteiKibun;
+            }
+          }
+          const result = checkMotivation(targetMotivation);
+
+          console.log('firstOrder');
+          console.log(firstOrder);
           this.sns.twitter =
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
             '&text=' +
-            `私は${this.alcoholStrongness}でした。1軒目は${this.alcoholOrders}でいきます。` +
+            `【酒テータス】%0A${this.alcoholStrongness}
+            %0A【本音】%0A${result}
+            %0A【1軒目の酒ケジュール】
+            %0A1軒目は
+            %0A1.${firstOrder}%202.${secondOrder}%203.${thirdOrder}%204.${forthOrder}%0Aでいきます` +
             '&hashtags=' +
             this.sns.hashtags;
-         
-         this.sns.line =
-            'https://timeline.line.me/social-plugin/share?url=' +
-            this.sns.url +
-            '&text=' +
-            this.sns.title +
-            this.sns.lineDescription;
+          window.location.href = this.sns.twitter;
+          //  this.sns.line =
+          //     'https://timeline.line.me/social-plugin/share?url=' +
+          //     this.sns.url +
+          //     '&text=' +
+          //     this.sns.title +
+          //     this.sns.lineDescription;
         }.bind(this),
-        300
+        100
       );
     },
   },
