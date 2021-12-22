@@ -26,10 +26,10 @@
               <v-col>
                 <v-col>
                   <p class="text-center white--text" style="font-size: 30px">
-                    {{ currentAnalyze }}
+                    {{ alcoholStrongness }}
                   </p>
                   <transition name="fade">
-                    <div v-if="currentAnalyze === '下戸'" class="text-center">
+                    <div v-if="alcoholStrongness === '下戸'" class="text-center">
                       <v-btn x-large @click="isVisibleShowCertificate" class="text-center"
                         >証明書が発行されました</v-btn
                       >
@@ -146,16 +146,28 @@
 
               <v-spacer></v-spacer>
 
-              <v-btn icon @click="show = !show">
+              <v-btn
+                icon
+                @click="
+                  list.action;
+                  show = !show;
+                "
+              >
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
               </v-btn>
             </v-card-actions>
 
             <v-expand-transition>
-              <div v-show="show">
+              <div v-if="alcoholismDrunkness">
                 <v-divider></v-divider>
                 <v-card-text>
-                  {{ list.description }}
+                  {{ list.description[0] }}
+                </v-card-text>
+              </div>
+              <div v-if="alcoholismStrongness">
+                <v-divider></v-divider>
+                <v-card-text>
+                  {{ list.description[1] }}
                 </v-card-text>
               </div>
             </v-expand-transition>
@@ -169,7 +181,6 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
-// import ShowLoading from '../components/result/ShowLoading'
 import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
 import ShowCertificateModal from '../components/result/ShowCertificateModal';
 import axios from '../plugins/axios';
@@ -179,8 +190,6 @@ export default {
     StarRating,
     ShowShucheduleModal,
     ShowCertificateModal,
-    // ContentLoader,
-    // ShowLoading
   },
   data: function () {
     return {
@@ -202,7 +211,7 @@ export default {
           description:
             ' 内容: 13項目からなる質問に３択で答えます。各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。',
           img: require('../src/img/TAST.jpeg'),
-          action: 'drunkness',
+          action: 'isVisibleSakeStrongnessAlcoholismDescription',
         },
         {
           title: '酔い度合い算出ロジック',
@@ -211,7 +220,7 @@ export default {
           description:
             '「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。',
           img: require('../src/img/drunkness.png'),
-          action: 'strongness',
+          action: 'isVisibleNextMotivationAlcoholismDescription',
         },
       ],
       errors: '',
@@ -246,7 +255,6 @@ export default {
     currentUser() {
       return this.authUser['data']['attributes']['nickname'];
     },
-    
 
     strongnessStar() {
       const targetAnalyze = this.analyzes;
@@ -317,7 +325,6 @@ export default {
     certificateSrc() {
       return require('../src/img/certificate.png');
     },
-  
   },
   mounted() {
     this.analyze = this.fetchAnalyzes;
@@ -325,37 +332,33 @@ export default {
     this.isVisibleShuchedule();
   },
   updated() {},
-  created() {
-    axios
-      .get('/alcohols')
-      .then((alcoholResponse) => {
-        this.alcohols = alcoholResponse.data;
-        return this.alcohols;
-      })
-      .then((alcohols) => {
-        this.loading = false;
-        const thisAnalyze = this.analyzes;
-        const targetValues = alcohols;
-        const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-        const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
-        this.alcoholOrders = contentsOfTarget;
-        this.alcoholContents = contentsOfTarget;
-      });
+  async created() {
+    const alcoholResponses = await axios.get('/alcohols');
+    const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
+    this.loading = false;
+    const analyzeResponses = await axios.get('/analyzes');
+    const targetAnalyze = await analyzeResponses.data;
+    const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1];
+    const analyzeShuchedule = targetAlcoholStrongness['shuchedule'];
+
+    const contentsOfTarget = Object.values(changeAlcoholData)[analyzeShuchedule];
+    this.alcoholOrders = contentsOfTarget;
+    this.alcoholContents = contentsOfTarget;
+
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
-    this.snsUrl();
-    this.changeSrc();
     this.currentAnalyze();
+    this.changeSrc();
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
-    currentAnalyze() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+    async currentAnalyze() {
+      const responseAnalyze = await axios.get('/analyzes');
+      const targetAnalyze = await responseAnalyze['data'];
+      const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -375,6 +378,16 @@ export default {
     },
     alcoholDatas(response) {
       this.alcohols = response.data;
+    },
+    isVisibleSakeStrongnessAlcoholismDescription() {
+      this.isVisibleNextMotivationAlcoholismDescription =
+        !this.isVisibleNextMotivationAlcoholismDescription;
+      this.alcoholismStrongness = !this.alcoholismStrongness;
+    },
+    isVisibleNextMotivationAlcoholismDescription() {
+      this.isVisibleSakeStrongnessAlcoholismDescription =
+        !this.isVisibleSakeStrongnessAlcoholismDescription;
+      this.alcoholismDrunkness = !this.alcoholismDrunkness;
     },
     changeSrc() {
       const thisAnalyze = this.analyzes;
@@ -409,10 +422,8 @@ export default {
     snsUrl() {
       setTimeout(
         function () {
-          this.sns.url = encodeURIComponent(`https://zeroken.herokuapp.com`);
+          this.sns.url = encodeURIComponent(`https://www.zeroken.site`);
           this.sns.title = encodeURIComponent('【酒テータス】');
-          console.log('alcoholOrders');
-          console.log(this.alcoholOrders);
 
           const targetOrder = this.alcoholOrders;
           const firstOrder = targetOrder[0]['name'];
@@ -454,9 +465,6 @@ export default {
             }
           }
           const result = checkMotivation(targetMotivation);
-
-          console.log('firstOrder');
-          console.log(firstOrder);
           this.sns.twitter =
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
