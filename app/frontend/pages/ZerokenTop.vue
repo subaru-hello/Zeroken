@@ -14,16 +14,7 @@
       <v-row justify="center" align-content="center">
         <v-col class="text-center align-self-center" cols="12">
           <p
-            class="
-              text-h5
-              mb-12
-              mt-5
-              font-weight-bold
-              d-sm-block
-              text-no-wrap
-              service-description
-              title
-            "
+            class="text-h5 mb-12 mt-5 font-weight-bold d-sm-block text-no-wrap service-description title"
           >
             {{ subtitle }}<br />{{ text }}
           </p>
