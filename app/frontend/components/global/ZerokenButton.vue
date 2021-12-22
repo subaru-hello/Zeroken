@@ -1,6 +1,12 @@
 <template>
-  <v-btn @click="clicked" color="primary" x-large style="font-size: 30px" :disabled="isVisible">
-    次へ
+  <v-btn
+    @click="clicked"
+    x-large
+    style="background-color: rgb(222, 184, 135); font-size: 20px"
+    :disabled="isVisible"
+  >
+    <slot></slot>
+    {{ buttonName }}
   </v-btn>
 </template>
 <script>
@@ -8,7 +14,9 @@ export default {
   props: {
     isVisible: {
       type: Boolean,
-      required: true,
+    },
+    buttonName: {
+      type: String,
     },
   },
   data() {
