@@ -15,7 +15,7 @@
                     ></VueLoading>
                   </div>
                   <div v-else>
-                    <img :src="drunknessEagerToImg" width="50" height="50" />
+                    <img :src="motivationImg" width="50" height="50" />
                   </div>
                   <span class="mb-6 text-center">への 酒ケジュール</span>
                 </div>
@@ -54,36 +54,6 @@
                 <v-btn target="_blank" @click="twitterShare">
                   シェア<v-icon color="#1da1f2"> mdi-twitter </v-icon>
                 </v-btn>
-                <!-- <v-dialog v-model="childDialog" width="400">
-        <template v-slot:activator="{ on }">
-          <v-btn
-            v-on="on"
-            x-large
-            class="white--text"
-           
-          >
-       <v-btn :href="snsData" target="_blank">    シェア<v-icon color="#1da1f2"> mdi-twitter </v-icon> </v-btn>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="text-h6 font-weight-bold">Share</span>
-            <v-spacer></v-spacer>
-            <v-btn class="mx-0" icon @click="childDialog = !childDialog">
-              <v-icon>mdi-close-circle-outline</v-icon>
-            </v-btn>
-          </v-card-title>
-          <v-list>
-            <v-list-item>
-              <v-list-item-action>
-                <v-icon color="#1da1f2"> mdi-twitter </v-icon>
-              </v-list-item-action>
-              <v-btn :href="snsData" target="_blank"> Twitter  </v-btn>
-            </v-list-item>
-           
-          </v-list>
-        </v-card>
-      </v-dialog> -->
               </div>
             </div>
           </div>
@@ -120,7 +90,6 @@ export default {
   data() {
     return {
       alcohols: '',
-      drunknessEagerToImg: this.motivationImg,
       snsData: this.twitterUrl,
     };
   },
@@ -135,8 +104,6 @@ export default {
   },
   computed: {
     alcoholItems() {
-      console.log('in ShowShucheduleModal alcoholItems()');
-      console.log(this.alcoholDatas);
       const targetAlcohols = (this.alcohols = this.alcoholDatas);
       return targetAlcohols;
     },
