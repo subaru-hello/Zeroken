@@ -52,7 +52,6 @@
     },
     "scripts": {
       "fmt": "prettier --write app/**/**/*.{js,rb,vue} app/**/*.{js,rb,vue} app/**/**/**/*.{js,rb,vue} ",
-      "build": "webpack --mode production --watch --config webpack.config.js",
       "dev": "webpack-dev-server"
     }
   }
