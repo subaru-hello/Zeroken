@@ -1,8 +1,12 @@
 <template>
-  <v-container fluid id="izakaya">
+  <v-container
+    fluid
+    id="izakaya"
+    style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box"
+  >
     <v-row class="mb-10">
-      <v-col class="pt-10 text-center">
-        <h3 class="text-h4 mb-4 font-weight-black">ログイン</h3>
+      <v-col class="pt-10 text-center login">
+        <h3 class="text-h4 mb-4 font-weight-black white--text">ログイン</h3>
         <p class="text-body-1">
           新規登録が済んでいない方は
           <router-link class="router-link" :to="{ name: 'UserRegister' }"> こちら </router-link>
@@ -71,8 +75,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-#izakaya {
-  background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
-}
-</style>
+<style scoped></style>

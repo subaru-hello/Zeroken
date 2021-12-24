@@ -1,33 +1,21 @@
 <template>
-  <div>
+  <div class="phrases">
     <v-container>
-      <v-title> ZEROKEN 用語集 </v-title>
-      <div d-flex>
-        <h2>造語</h2>
-        <h3>ZEOKEN</h3>
-        <p>１軒目の前に使って欲しいという思いからZEROKEN。0軒目から由来している。</p>
-        酒ケジュール 次の飲み会で飲むお酒の順番 酒テータス
-        ユーザーのお酒の強さと過去の酒ケジュールを指す。 アルコリズム アルコールに関するアルゴリズム
-        ゼロケン
-        本アプリ名。一軒目に行く前に診断して欲しいという意味を込めて名付けた。0軒目から取ってゼロケン。
-        飲みべーション 学生言葉。呑み会に向けたモチベーション(士気)を指す。
-        「今飲みべ低いから今回の飲み渋いわ」
+      <v-title class="text-center" style="font-size: 25px"> ZEROKEN 用語集 </v-title>
+      <h2 class="title">造語</h2>
+      <div v-for="a in lists" :key="a.title" d-flex>
+        <h3>{{ a.title }}</h3>
+        <p>{{ a.description }}</p>
       </div>
-      <div d-flex>
-        <h3>酒ケジュール</h3>
-        <p>「お酒の順番 + スケジュール」を掛け合わせた造語。</p>
+      <h2 class="title">お酒の種類</h2>
+      <div v-for="b in kinds" :key="b.name" d-flex>
+        <h3>{{ b.name }}</h3>
+        <p>{{ b.description }}</p>
       </div>
-      <div d-flex>
-        <h2>お酒の種類</h2>
-        <h3>ZEOKEN</h3>
-        <p></p>
-        酒知識 TAST アルコール度数 アルコール体内血中濃度 純アルコール量 上戸、下戸 酒豪 和み水
-        醸造酒 混合酒 蒸留酒 ファジーネーブル メガハイ メガ金麦 ジンバック
-      </div>
-      <div d-flex>
-        <h2>その他</h2>
-        <h3>ZEOKEN</h3>
-        <p></p>
+      <h2 class="title">酒知識</h2>
+      <div v-for="c in knowledges" :key="c.title" d-flex>
+        <h3>{{ c.title }}</h3>
+        <p>{{ c.description }}</p>
       </div>
       <v-row class="text-center d-flex justify-space-around">
         <v-col cols="3" sm="10" md="12" lg="12">
@@ -80,6 +68,103 @@ export default {
       dialog3: false,
       dialog1: false,
       dialog2: false,
+      lists: [
+        {
+          title: 'ZEOKEN',
+          description: '１軒目の前に使って欲しいという思いからZEROKEN。0軒目から由来している。',
+          example: '',
+        },
+        {
+          title: '酒ケジュール',
+          description: '次の飲み会で飲むお酒の順番',
+          example: '',
+        },
+        {
+          title: 'アルコリズム',
+          description: 'アルコールに関するアルゴリズム。アルコール ✖︎ アルゴリズムの略',
+          example: '',
+        },
+        {
+          title: '飲みべーション',
+          description: '学生言葉。呑み会に向けたモチベーション(士気)を指す。',
+          example: '「今飲みべ低いから今回の飲み渋いわ」',
+        },
+      ],
+      knowledges: [
+        {
+          title: 'TAST',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' アルコール度数 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' アルコール体内血中濃度 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 純アルコール量 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: '上戸',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 下戸 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 酒豪 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 和み水',
+          description: '',
+          example: '',
+        },
+        {
+          title: '  醸造酒 ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 混合酒  ',
+          description: '',
+          example: '',
+        },
+        {
+          title: ' 蒸留酒  ',
+          description: '',
+          example: '',
+        },
+      ],
+      kinds: [
+        {
+          name: 'ファジーネーブル',
+          descripption: '',
+        },
+        {
+          name: '  メガハイ ',
+          descripption: '',
+        },
+        {
+          name: 'メガ金麦 ',
+          descripption: '',
+        },
+        {
+          name: 'ジンバック',
+          descripption: '',
+        },
+      ],
     };
   },
 };
@@ -88,5 +173,12 @@ export default {
 <style>
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+}
+.phrases {
+  /* margin-bottom: 20px; */
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.title {
+  text-align: center;
 }
 </style>

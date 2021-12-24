@@ -1,6 +1,6 @@
 import axios from '../../plugins/axios';
 const state = {
-  authUser: null,
+  authUser: '',
 };
 
 const getters = {

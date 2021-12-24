@@ -10,6 +10,8 @@ import ZerokenTop from '../pages/ZerokenTop';
 import UserLogin from '../pages/UserLogin';
 import UserAll from '../pages/UserAll';
 import Phrases from '../pages/Phrases';
+import Term from '../pages/Term';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 import AlcoholAll from '../pages/AlcoholAll';
 Vue.use(Router);
 
@@ -21,6 +23,16 @@ const router = new Router({
       path: '/',
       component: ZerokenTop,
       name: 'ZerokenTop',
+    },
+    {
+      path: '/term',
+      component: Term,
+      name: 'Term',
+    },
+    {
+      path: '/policy',
+      component: PrivacyPolicy,
+      name: 'PrivacyPolicy',
     },
     {
       path: '/login',

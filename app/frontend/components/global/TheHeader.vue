@@ -11,7 +11,7 @@
       <v-divider class="mx-4" style="color: white" vertical></v-divider>
       <v-toolbar-title>
         <div @click="toHome()" style="color: white; float: left">ZEROKEN</div>
-        <!-- {{ checkUserRole}} -->
+        <!-- {{ checkUserRole }} -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-list-item-group
@@ -109,14 +109,16 @@ export default {
       dialog: false,
       drawer: false,
       group: null,
+      user: [],
     };
   },
   computed: {
     ...mapGetters('users', ['authUser']),
     checkUserRole() {
-      const currentuUser = this.authUser['data'];
-      const vvv = currentuUser;
-      return vvv;
+      const currentUser = this.authUser['data'];
+      const x = (this.user = currentUser);
+
+      return currentUser;
     },
   },
   created() {
