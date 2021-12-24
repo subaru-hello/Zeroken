@@ -10,7 +10,8 @@ import VueI18n from 'vue-i18n';
 import VueLoading from 'vue-loading-template';
 Vue.use(VueLoading /** options **/);
 Vue.use(VueI18n);
-
+import smoothscroll from 'smoothscroll-polyfill';
+smoothscroll.polyfill();
 const i18n = new VueI18n({
   locale: 'ja', // ← ここを「en」に切り替えれば英語になる
   fallbackLocale: 'ja',

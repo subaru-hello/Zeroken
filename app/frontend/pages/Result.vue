@@ -256,7 +256,7 @@ export default {
       return this.authUser['data']['attributes']['nickname'];
     },
 
-    strongnessStar() {
+     strongnessStar() {
       const targetAnalyze = this.analyzes;
       const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
       const starState =
@@ -273,7 +273,6 @@ export default {
     },
     isAlcohol() {
       const thisAnalyze = this.analyzes;
-
       const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
 
       const targetValues = this.alcohols;
@@ -389,8 +388,9 @@ export default {
         !this.isVisibleSakeStrongnessAlcoholismDescription;
       this.alcoholismDrunkness = !this.alcoholismDrunkness;
     },
-    changeSrc() {
-      const thisAnalyze = this.analyzes;
+   async changeSrc() {
+      const responseAnalyze = await axios.get('/analyzes');
+      const thisAnalyze = await responseAnalyze['data'];
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       const targetMotivation = targetAnalyze['next_motivation'];
 
@@ -404,6 +404,7 @@ export default {
         }
       }
       const result = checkMotivation(targetMotivation);
+      
       const nextMotivation = (this.nextMotivationImg = result);
       return nextMotivation;
     },
