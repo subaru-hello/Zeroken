@@ -190,9 +190,7 @@ export default {
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
       return result;
     },
-    toOnlyMotivation() {
-      this.$router.push({ name: 'SelectNomivation' });
-    },
+   
     sakeSrc() {
       return require('../src/img/default_profile.png');
     },
@@ -314,6 +312,9 @@ export default {
     ...mapActions('snackbar', ['fetchSnackbarData']),
     date(date) {
       return this.$dateFormat(date);
+    },
+     toOnlyMotivation() {
+      this.$router.push({ name: 'SelectNomivation' });
     },
     checkDate(date) {
       const now = new Date();

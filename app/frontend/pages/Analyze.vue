@@ -255,7 +255,7 @@
 </template>
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
-import axios from '../plugins/axios';
+// import axios from '../plugins/axios';
 import ZerokenButton from '../components/global/ZerokenButton';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 const start = 40;
