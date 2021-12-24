@@ -34,47 +34,45 @@
                   >
                     <v-card-title
                       style="width: 100% white-space:pre-wrap;"
-                      class="headline justify-center outer-layer"
+                      class="headline justify-center"
                       :id="'bigq' + question.num"
                     >
                       問{{ question.num }}.
                       {{ question.title }}
                     </v-card-title>
-                    <v-radio-group :id="'smallq' + question.num" row class="mx-16 px-9">
-                      <v-radio
-                        class="mx-auto justify-center"
-                        fab
-                        light
-                        :ripple="{ center: false, class: 'gray--text' }"
+                    <div :id="'smallq' + question.num" row>
+                      <v-btn
+                        outlined
+                        :ripple="{ class: 'gray--text' }"
                         @click="
                           clickScroll($event);
                           countAnswer(question.num, 1);
                         "
-                        label="1: いつも"
-                      ></v-radio>
-                      <v-radio
+                        >1: いつも</v-btn
+                      >
+                      <v-btn
                         class="mx-auto justify-center"
-                        fab
-                        light
+                        outlined
                         :ripple="{ center: false, class: 'gray--text' }"
                         @click="
                           clickScroll($event);
                           countAnswer(question.num, 2);
                         "
                         label="2: 時々"
-                      ></v-radio>
-                      <v-radio
+                        >2: 時々</v-btn
+                      >
+                      <v-btn
                         class="mx-auto justify-center"
-                        fab
-                        light
+                        outlined
                         :ripple="{ center: false, class: 'gray--text' }"
                         @click="
                           clickScroll($event);
                           countAnswer(question.num, 3);
                         "
                         label="3: 全くない"
-                      ></v-radio>
-                    </v-radio-group>
+                        >3: 全くない</v-btn
+                      >
+                    </div>
                     <p v-if="question.answer === '未回答'">
                       <strong class="red--text accent-3">未回答です！</strong>
                     </p>
@@ -101,13 +99,14 @@
         </v-row>
         <v-spacer></v-spacer>
         <v-col cols="12" xs="4" sm="6" md="12" lg="12" class="text-center">
-          <NextButton
+          <ZerokenButton
             @click-response="
               e6 = 2;
               clickScrollNext();
             "
             :isVisible="isVisible"
-          />
+            >次へ</ZerokenButton
+          >
         </v-col>
       </v-stepper-content>
 
@@ -133,11 +132,12 @@
           </v-container>
         </template>
         <v-col cols="12" xs="4" sm="6" md="12" lg="12" class="text-center">
-          <NextButton
+          <ZerokenButton
             v-if="weight != '体重を選択'"
             @click-response="e6 = 3"
             :isVisible="isVisible"
-          />
+            >次へ</ZerokenButton
+          >
         </v-col>
       </v-stepper-content>
       <v-stepper-step :complete="e6 > 3" step="3">
@@ -172,7 +172,11 @@
                                 v-bind="attrs"
                                 v-on="on"
                               >
-                                <v-radio :value="2" label="酩酊になりたい"></v-radio>
+                                <v-radio
+                                  :value="2"
+                                  style="font-size: 20px"
+                                  label="酩酊になりたい"
+                                ></v-radio>
                                 <img
                                   :src="imgSrc"
                                   width="150"
@@ -181,10 +185,18 @@
                                   :value="2"
                                 />
 
-                                <v-radio :value="1" label="ほろ酔いになりたい"></v-radio>
+                                <v-radio
+                                  :value="1"
+                                  style="font-size: 20px"
+                                  label="ほろ酔いになりたい"
+                                ></v-radio>
                                 <img :src="sakeSrc" width="150" height="150" class="text-center" />
 
-                                <v-radio :value="0" label="ほぼしらふでいい"></v-radio>
+                                <v-radio
+                                  :value="0"
+                                  style="font-size: 20px"
+                                  label="ほぼしらふでいい"
+                                ></v-radio>
 
                                 <img
                                   :src="drinkSrc"
@@ -195,15 +207,15 @@
                                 />
                               </v-radio-group>
 
-                              <v-btn
+                              <ZerokenButton
                                 v-if="nextMotivation >= 0"
                                 class="text-center"
                                 :ripple="{ center: false, class: 'gray--text' }"
                                 v-bind="attrs"
                                 v-on="on"
-                                @click="createShuchedule()"
+                                @click-response="createShuchedule()"
                                 >酒ケジュールを作成する
-                              </v-btn>
+                              </ZerokenButton>
                             </div>
                           </v-row>
                         </v-layout>
@@ -244,7 +256,7 @@
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
 import axios from '../plugins/axios';
-import NextButton from '../components/global/NextButton';
+import ZerokenButton from '../components/global/ZerokenButton';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 const start = 40;
 const end = 100;
@@ -257,16 +269,17 @@ export default {
       isVisible: '',
       dialog: false,
       show: false,
+      radio: '',
       showModal: false,
       nextMotivation: '',
-      users: [],
+      // users: [],
       e6: 1,
       weight: '体重を選択',
     };
   },
   components: {
     FacebookLoader,
-    NextButton,
+    ZerokenButton,
   },
   computed: {
     ...mapGetters('question', ['questions']),
@@ -286,12 +299,15 @@ export default {
     },
   },
   created() {
-    this.users = this.fetchAuthUser;
+    console.warn('this.authUser');
+    console.warn(this.authUser);
     this.fetchAuthUser();
     this.clearAnswers();
   },
   mounted() {
-    axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+    // axios.get('/users').then((userResponse) => (this.users = userResponse.data));
+    console.log('this.authUser');
+    console.log(this.authUser.data);
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {
       this.isVisible = true;
@@ -651,7 +667,7 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33); */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
