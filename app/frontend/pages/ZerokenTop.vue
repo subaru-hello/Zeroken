@@ -16,6 +16,7 @@
           <p
             class="text-h5 mb-12 mt-5 font-weight-bold d-sm-block text-no-wrap service-description title"
           >
+            <!-- <p v-if ="authUser.data.relationships.analyzes.data = []">{{authUser}}</p> -->
             {{ subtitle }}<br />{{ text }}
           </p>
           <transition name="fade">
@@ -27,12 +28,33 @@
           <v-col>
             <!-- <img :src="imgSrc" class="img" width="150" height="100" /> -->
             <v-spacer />
-
-            <div v-if="!authUser" class="text-center">
-              <CreateShucheduleButton class="mb-8" x-large @click-response="loginFunction()" />
+            <div v-if="currentUser">
+              <ZerokenButton
+                button-name="初めての酒ケジュール診断"
+                class="mb-8 text-center"
+                style="background-color: rgb(222, 184, 135)"
+                x-large
+                @click-response="toAnalyze()"
+              >
+              </ZerokenButton>
+              <ZerokenButton
+                button-name="気分だけ選択"
+                class="mb-8 text-center"
+                style="background-color: rgb(222, 184, 135)"
+                x-large
+                @click-response="toOnlyMotivation()"
+              >
+              </ZerokenButton>
             </div>
-            <div v-else class="text-center">
-              <CreateShucheduleButton class="mb-8" x-large @click-response="toAnalyze()" />
+            <div v-else>
+              <ZerokenButton
+                button-name="ゲストで作成"
+                class="mb-8 text-center"
+                style="background-color: rgb(222, 184, 135)"
+                x-large
+                @click-response="loginFunction()"
+              >
+              </ZerokenButton>
             </div>
             <v-row justify="center" align-content="center">
               <v-icon
@@ -79,22 +101,22 @@
             </v-row>
           </v-container>
         </v-container>
-
-        <CreateShucheduleButton
+        <ZerokenButton
+          button-name="初めての酒ケジュール診断"
           class="mb-8 text-center"
-          v-if="!authUser"
           style="background-color: rgb(222, 184, 135)"
           x-large
-          @click-response="loginFunction()"
-        />
+          @click-response="toAnalyze()"
+        >
+        </ZerokenButton>
 
-        <CreateShucheduleButton
+        <!-- <CreateShucheduleButton
           v-if="!!authUser"
           class="mb-8"
           style="background-color: rgb(222, 184, 135)"
           x-large
           @click-response="toAnalyze()"
-        />
+        /> -->
       </v-row>
     </v-container>
     <v-spacer></v-spacer>
@@ -105,13 +127,13 @@
 import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
-import CreateShucheduleButton from '../components/global/CreateShucheduleButton';
+import ZerokenButton from '../components/global/ZerokenButton';
 import ZerokenAbout from '../components/top/ZerokenAbout';
 export default {
   components: {
     FirstGreeting,
     ZerokenAbout,
-    CreateShucheduleButton,
+    ZerokenButton,
   },
   name: 'ZerokenTop',
   data() {
@@ -123,6 +145,7 @@ export default {
       dialog1: false,
       dialog2: false,
       dialog3: false,
+      currentUser: '',
       tab: null,
       dialog: false,
       subtitle: 'あなたにとっての0軒目',
@@ -179,8 +202,11 @@ export default {
     this.show = true;
   },
 
-  created() {
-    this.fetchAuthUser();
+  async created() {
+    const a = await this.fetchAuthUser();
+    this.currentUser = a.data.attributes.role;
+    console.warn('this.authUser');
+    console.warn(this.currentUser);
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
@@ -189,6 +215,22 @@ export default {
     toAnalyze() {
       this.$router.push({ name: 'Analyze' });
     },
+    toOnlyMotivation() {
+      this.$router.push({ name: 'SelectNomivation' });
+    },
+    //     checkAuthUserRole(){
+    //       console.log("this.authUser")
+    //       console.log(this.authUser)
+    //       const currentUser = this.authUser.data
+    // if((currentUser.attributes.role = 'member') && (currentUser.relationships.analyzes.data = []) ){
+    //   this.loginFunction()
+
+    // }else if( currentUser.attributes.role ==="guest"){
+    //   this.toAnalyze()
+    // }else{
+    //     this.toOnlyMotivation()
+    // }
+    //     },
     clickScroll(e) {
       const targetArea = e.currentTarget.getBoundingClientRect().top;
       window.scrollTo({

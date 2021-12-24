@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid class="mt-4 pt-21" style="box-sizing: border-box">
-    <v-row class="mt-4 pt-21">
+  <v-container fluid class="mt-4 pt-21" style="box-sizing: border-box; padding: 0">
+    <v-row>
       <v-col>
-        <v-row class="d-flex justify-center content-center">
+        <v-row class="content-center">
           <v-col :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'" flat tile>
             <v-sheet id="profile-sheet" class="text-center" elevation="1">
               <h3 class="text-h6 font-weight-black">酒テータス</h3>
@@ -74,7 +74,12 @@
       <!-- <v-date-picker v-model="date2" @click.stop="dialog = true"></v-date-picker> -->
 
       <div justify="center" align-content="center">
-        <h3 class="text-h6 font-weight-black mb-8 mx-auto text-center">過去の酒ケジュール</h3>
+        <h3
+          class="text-h6 font-weight-black mb-8 text-center outer-layer"
+          style="background-color: rgb(255, 255, 255, 0.7)"
+        >
+          過去の酒ケジュール
+        </h3>
         <v-col
           v-for="(data, index) in dataAnalyze"
           :key="index"
@@ -83,22 +88,23 @@
           <v-col
             v-for="(specificData, index) in data"
             :key="index"
-            class="d-flex justify-space-between mb-6"
+            class="justify-space-between mb-6 shuchedule"
             style="background-color: #fff"
           >
             <!-- 7日以前の診断 -->
             <!-- <div v-if="showShucheduleAll"> -->
             <div
               v-if="checkDate(specificData.created_at)"
-              class="text-center mx-auto my-5 form"
+              class="text-center mx-auto my-5 form outer-layer"
               elevation="2"
               shaped
               id="form"
               :disabled="showShucheduleAll"
             >
+              <!-- １の時だけ表示する -->
               {{ date(specificData.created_at) }}の診断です
 
-              <v-card-title style="width: 100%" class="headline d-flex justify-center">
+              <v-card-title style="width: 100%" class="headline justify-center">
                 <v-icon>{{
                   specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
                 }}</v-icon>
@@ -113,7 +119,14 @@
             </div>
           </v-col>
         </v-col>
-        <!-- </v-card> -->
+        <ZerokenButton
+          button-name="気分だけ選択"
+          class="mb-8 text-center"
+          style="background-color: rgb(222, 184, 135)"
+          x-large
+          @click-response="toOnlyMotivation()"
+        >
+        </ZerokenButton>
       </div>
     </v-row>
   </v-container>
@@ -125,10 +138,12 @@ import axios from '../plugins/axios';
 // import dayjs from '../plugins/dayjs';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
+import ZerokenButton from '../components/global/ZerokenButton.vue';
 export default {
   components: {
     ProfileEditForm,
     PasswordEditForm,
+    ZerokenButton,
   },
   data() {
     return {
@@ -174,6 +189,9 @@ export default {
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
       return result;
+    },
+    toOnlyMotivation() {
+      this.$router.push({ name: 'SelectNomivation' });
     },
     sakeSrc() {
       return require('../src/img/default_profile.png');
@@ -274,22 +292,12 @@ export default {
   },
   mounted() {
     axios.get('/users').then((response) => (this.users = response.data));
-    // this.dataArray  = this.copyAnalyze()
-    //:events = "arrayEvents"になっている。1~6までの数字を配列内に代入している
-    this.arrayEvents = [...Array(6)].map(() => {
-      // const targetData = this.analyzes
-      const day = Math.floor(Math.random() * 30);
-      const d = new Date();
-      d.setDate(day);
-      // debugger
-      return d.toISOString().substr(0, 10);
-    });
   },
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
-
+    // 決められた日を持ってくる
     const authUserData = {
       nickname: this.authUser.data.attributes.nickname,
       email: this.authUser.data.attributes.email,
@@ -316,14 +324,6 @@ export default {
       const diffBetweenDate = dateTo - dateFrom;
       return diffBetweenDate;
     },
-    triggerClick(action) {
-      const checkResult =
-        action === 0
-          ? (this.showRecentShuchedule = false) && (this.showShucheduleAll = true)
-          : (this.showPastShuchedule = false) && (this.showShucheduleAll = true);
-
-      return checkResult;
-    },
     isVisiblePastShuchedule() {
       this.isVisibleRecentShuchedule = false;
       this.showPastShuchedule = !this.showPastShuchedule;
@@ -331,12 +331,6 @@ export default {
     isVisibleRecentShuchedule() {
       this.isVisiblePastShuchedule = false;
       this.showRecentShuchedule = !this.showRecentShuchedule;
-    },
-    functionEvents(date) {
-      const [, , day] = date.split('-');
-      if ([12, 17, 28].includes(parseInt(day, 10))) return true;
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f'];
-      return false;
     },
     displayProfileEditDialog() {
       // this.initAuthUserEdit();
@@ -452,10 +446,29 @@ export default {
 <style scoped>
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+  box-sizing: border-box;
 }
 .content-center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.shuchedule {
+  background: url(../src/img/woodtile.jpeg) center center / cover no-repeat fixed;
+  box-sizing: border-box;
+}
+.outer-layer {
+  /* padding: 0.5em 1em;
+  margin: 2em 0; */
+  font-weight: bold;
+  border: solid 3px #000; /*線*/
+  border-radius: 10px; /*角の丸み*/
+}
+.row {
+  display: contents;
+}
+.col {
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>
