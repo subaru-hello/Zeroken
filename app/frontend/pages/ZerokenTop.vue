@@ -30,25 +30,25 @@
             <v-spacer />
             <div v-if="currentUser">
               <ZerokenButton
-                button-name="初めての酒ケジュール診断"
+                button-name="酒ケジュールを作成する"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
                 @click-response="toAnalyze()"
               >
               </ZerokenButton>
-              <ZerokenButton
+              <!-- <ZerokenButton
                 button-name="2回目以降の診断はこちら"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
                 @click-response="toOnlyMotivation()"
               >
-              </ZerokenButton>
+              </ZerokenButton> -->
             </div>
             <div v-else>
               <ZerokenButton
-                button-name="ゲストで作成"
+                button-name="ゲストで診断する"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
@@ -104,25 +104,25 @@
         <v-container class="about">
           <div v-if="currentUser">
             <ZerokenButton
-              button-name="初めての酒ケジュール診断"
+              button-name="酒ケジュールを作成する"
               class="mb-8 text-center"
               style="background-color: rgb(222, 184, 135)"
               x-large
               @click-response="toAnalyze()"
             >
             </ZerokenButton>
-            <ZerokenButton
+            <!-- <ZerokenButton
               button-name="2回目以降の診断はこちら"
               class="mb-8 text-center"
               style="background-color: rgb(222, 184, 135)"
               x-large
               @click-response="toOnlyMotivation()"
             >
-            </ZerokenButton>
+            </ZerokenButton> -->
           </div>
           <div v-else>
             <ZerokenButton
-              button-name="ゲストで作成"
+              button-name="ゲストで診断する"
               class="mb-8 text-center"
               style="background-color: rgb(222, 184, 135)"
               x-large

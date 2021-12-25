@@ -116,6 +116,7 @@ export default {
       show: false,
       showModal: false,
       nextMotivation: '',
+      weight: 60
     };
   },
   components: {

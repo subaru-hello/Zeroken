@@ -35,7 +35,7 @@ export default {
     return {
       dialog: false,
       links: [
-        { url: 'about', name: 'ZEROKENについて' },
+        { url: 'About', name: 'ZEROKENについて' },
         { url: 'Term', name: '利用規約' },
         { url: 'form', name: 'お問い合わせ' },
         { url: 'PrivacyPolicy', name: 'プライバシーポリシー' },
@@ -48,7 +48,9 @@ export default {
       if (url === 'form') {
         location.href =
           'https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link';
-      } else {
+      } else if(url === 'About'){
+        this.dialog = true
+      }else {
         this.$router.push({ name: `${url}` });
       }
     },

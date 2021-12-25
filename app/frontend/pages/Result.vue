@@ -534,12 +534,6 @@ export default {
             '&hashtags=' +
             this.sns.hashtags;
           window.location.href = this.sns.twitter;
-          //  this.sns.line =
-          //     'https://timeline.line.me/social-plugin/share?url=' +
-          //     this.sns.url +
-          //     '&text=' +
-          //     this.sns.title +
-          //     this.sns.lineDescription;
         }.bind(this),
         100
       );

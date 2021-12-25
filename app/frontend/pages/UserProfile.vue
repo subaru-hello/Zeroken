@@ -93,7 +93,7 @@
           >
             <!-- 7日以前の診断 -->
             <!-- <div v-if="showShucheduleAll"> -->
-            <div v-if="index === 0">{{ date(specificData.created_at) }}の診断です</div>
+            <!-- <div v-if="index === 0">{{ date(specificData.created_at) }}の診断です</div> -->
             <div
               class="text-center mx-auto my-5 form outer-layer"
               elevation="2"
@@ -119,14 +119,14 @@
             </div>
           </v-col>
         </v-col>
-        <ZerokenButton
+        <!-- <ZerokenButton
           button-name="気分だけ選択"
           class="mb-8 text-center"
           style="background-color: rgb(222, 184, 135)"
           x-large
           @click-response="toOnlyMotivation()"
         >
-        </ZerokenButton>
+        </ZerokenButton> -->
       </div>
     </v-row>
   </v-container>
