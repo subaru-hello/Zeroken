@@ -1,13 +1,9 @@
 <template>
-  <v-container
-    fluid
-    id="izakaya"
-    style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box"
-  >
+  <v-container fluid style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box">
     <v-row class="mb-10">
       <v-col class="pt-10 text-center login">
         <h3 class="text-h4 mb-4 font-weight-black white--text">ログイン</h3>
-        <p class="text-body-1">
+        <p class="text-body-1 white--text">
           新規登録が済んでいない方は
           <router-link class="router-link" :to="{ name: 'UserRegister' }"> こちら </router-link>
           から。

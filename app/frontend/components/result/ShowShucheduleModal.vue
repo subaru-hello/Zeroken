@@ -10,7 +10,7 @@
                   <div v-if="loadingCircle">
                     <VueLoading
                       type="cylon"
-                      color="#d9544e"
+                      color="rgba(255, 255, 255, 0.5)"
                       :size="{ width: '50px', height: '50px' }"
                     ></VueLoading>
                   </div>
@@ -23,7 +23,7 @@
                 <div v-if="loadingCircle">
                   <VueLoading
                     type="spiningDubbles"
-                    color="#d9544e"
+                    color="rgba(255, 255, 255, 0.5)"
                     :size="{ width: '200px', height: '50px' }"
                   ></VueLoading>
                 </div>

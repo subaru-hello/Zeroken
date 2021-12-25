@@ -1,8 +1,8 @@
 <template>
-  <v-container class="terms">
+  <v-container class="outer-layer">
     <v-row class="pt-5 mb-3">
       <v-col cols="auto">
-        <div class="mb-5 text-h4 font-weight-bold">利用規約</div>
+        <div class="mb-5 text-h4 font-weight-bold text-center">利用規約</div>
         <div class="text-body-1 font-weight-medium">
           本利用規約（以下，「本規約」といいます。）は，このウェブサイト上で提供するサービス「ZEROKEN」（以下，「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には本規約に従って，本サービスをご利用いただきます。
           <br class=".br-pc" />
@@ -452,5 +452,13 @@ ul li {
 .terms {
   margin-bottom: 20px;
   background-color: rgba(255, 255, 255, 0.7);
+}
+.outer-layer {
+  background: url(../src/img/woodtile.jpeg);
+  /* padding: 0.5em 1em;
+  margin: 2em 0; */
+  /* font-weight: bold; */
+  border: solid 3px #000; /*線*/
+  border-radius: 10px; /*角の丸み*/
 }
 </style>

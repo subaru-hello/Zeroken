@@ -1,8 +1,8 @@
 <template>
-  <v-container class="privacy-policy">
+  <v-container class="outer-layer">
     <v-row class="pt-5 mb-3">
       <v-col cols="auto">
-        <div class="mb-5 text-h4 font-weight-bold">プライバシーポリシー</div>
+        <div class="mb-5 text-h4 font-weight-bold text-center">プライバシーポリシー</div>
         <div class="text-body-1 font-weight-medium">
           このプライベートポリシー(以下、「本ポリシー」といいます。)は，このウェブサイト上で提供するサービス（以下，「本サービス」といいます。）における，ユーザーの個人情報の取り扱いについて定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には本ポリシーに従って，本サービスをご利用いただきます。
           <br class=".br-pc" />
@@ -291,6 +291,14 @@ ul {
 }
 ul li {
   line-height: 1.7rem;
+}
+.outer-layer {
+  background: url(../src/img/woodtile.jpeg);
+  /* padding: 0.5em 1em;
+  margin: 2em 0; */
+  /* font-weight: bold; */
+  border: solid 3px #000; /*線*/
+  border-radius: 10px; /*角の丸み*/
 }
 .privacy-policy {
   /* margin-bottom: 20px; */

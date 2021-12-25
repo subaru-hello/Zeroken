@@ -38,7 +38,7 @@
               >
               </ZerokenButton>
               <ZerokenButton
-                button-name="気分だけ選択"
+                button-name="2回目以降の診断はこちら"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
@@ -101,22 +101,36 @@
             </v-row>
           </v-container>
         </v-container>
-        <ZerokenButton
-          button-name="初めての酒ケジュール診断"
-          class="mb-8 text-center"
-          style="background-color: rgb(222, 184, 135)"
-          x-large
-          @click-response="toAnalyze()"
-        >
-        </ZerokenButton>
-
-        <!-- <CreateShucheduleButton
-          v-if="!!authUser"
-          class="mb-8"
-          style="background-color: rgb(222, 184, 135)"
-          x-large
-          @click-response="toAnalyze()"
-        /> -->
+        <v-container class="about">
+          <div v-if="currentUser">
+            <ZerokenButton
+              button-name="初めての酒ケジュール診断"
+              class="mb-8 text-center"
+              style="background-color: rgb(222, 184, 135)"
+              x-large
+              @click-response="toAnalyze()"
+            >
+            </ZerokenButton>
+            <ZerokenButton
+              button-name="2回目以降の診断はこちら"
+              class="mb-8 text-center"
+              style="background-color: rgb(222, 184, 135)"
+              x-large
+              @click-response="toOnlyMotivation()"
+            >
+            </ZerokenButton>
+          </div>
+          <div v-else>
+            <ZerokenButton
+              button-name="ゲストで作成"
+              class="mb-8 text-center"
+              style="background-color: rgb(222, 184, 135)"
+              x-large
+              @click-response="loginFunction()"
+            >
+            </ZerokenButton>
+          </div>
+        </v-container>
       </v-row>
     </v-container>
     <v-spacer></v-spacer>
@@ -232,7 +246,7 @@ export default {
     // }
     //     },
     clickScroll(e) {
-      const targetArea = e.currentTarget.getBoundingClientRect().top;
+      const targetArea = e.currentTarget.getBoundingClientRect().top + 1500;
       window.scrollTo({
         top: window.pageYOffset + targetArea,
         behavior: 'smooth',

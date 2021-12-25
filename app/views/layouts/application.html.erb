@@ -22,6 +22,8 @@
     <%= javascript_pack_tag 'application' %>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7PDJHSG0D"></script>
+    <%# polyfill for es6 %>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
