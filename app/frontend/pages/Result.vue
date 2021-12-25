@@ -78,17 +78,19 @@
     </div>
     <v-row justify="center" align-content="center">
       <v-btn
-        class="white--text"
+        class="white--text   mx-3 mt-4"
         style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
         @click="toTop()"
+        x-large
       >
         トップに戻る
       </v-btn>
       <v-btn
         target="_blank"
         @click="snsUrl()"
-        class="white--text"
-        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+        class="white--text mx-3 mt-4"
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%; "
+           x-large
       >
         シェアする<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
       >
@@ -121,7 +123,6 @@
               <v-btn
                 icon
                 @click="
-                  list.action;
                   show = !show;
                 "
               >
@@ -130,16 +131,10 @@
             </v-card-actions>
 
             <v-expand-transition>
-              <div v-if="alcoholismDrunkness">
+              <div v-if="show">
                 <v-divider></v-divider>
                 <v-card-text>
-                  {{ list.description[0] }}
-                </v-card-text>
-              </div>
-              <div v-if="alcoholismStrongness">
-                <v-divider></v-divider>
-                <v-card-text>
-                  {{ list.description[1] }}
+                  {{ list.description }}
                 </v-card-text>
               </div>
             </v-expand-transition>
@@ -315,7 +310,7 @@ export default {
           const alcoholPercentage = targetAnalyze[i]['alcohol_percentage'];
           alcoholsPercentageArray.push(alcoholPercentage);
         }
-        return percentageArray;
+        return alcoholsPercentageArray;
       }
       const alcoholPercentage = percentageCheck(contentsOfTarget);
       const logoInspect = alcoholPercentage === 0 ? 'mdi-cup' : 'mdi-glass-mug';

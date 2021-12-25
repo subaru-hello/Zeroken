@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div> -->
     <v-stepper v-model="e6" vertical id="izakaya">
       <v-stepper-step :complete="e6 > 1" step="1">
         <!-- <span class="white--text " 
@@ -251,7 +251,7 @@
         </template>
       </v-stepper-content>
     </v-stepper>
-  </div>
+  <!-- </div> -->
 </template>
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
@@ -616,7 +616,10 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+body {
+  background-color: white;
+}
 .Page-Btn {
   position: fixed;
   right: 14px;
@@ -685,7 +688,7 @@ export default {
   float: right;
 }
 #izakaya {
-  background: url(../src/img/beer.jpeg) center center / cover no-repeat;
+  background: url(../src/img/beer.jpeg)  /  no-repeat;
 }
 .rounded {
   border-radius: 50px;
@@ -694,7 +697,7 @@ export default {
   background-color: rgb(0, 0, 0, 0.4);
 }
 .analyze-title-weight {
-  background-color: rgb(255, 254, 254, 0.4);
+  background-color: rgb(255, 254, 254, 0.7);
 }
 
 .v-label {
