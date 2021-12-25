@@ -34,7 +34,7 @@
                   >
                     <v-card-title
                       style="width: 100% white-space:pre-wrap;"
-                      class="headline justify-center"
+                      class="headline justify-center v-radio"
                       :id="'bigq' + question.num"
                     >
                       問{{ question.num }}.
@@ -177,20 +177,20 @@
                                   style="font-size: 20px"
                                   label="酩酊になりたい"
                                 ></v-radio>
-                                <img
+                                <!-- <img
                                   :src="imgSrc"
                                   width="150"
                                   height="150"
                                   class="text-center"
                                   :value="2"
-                                />
+                                /> -->
 
                                 <v-radio
                                   :value="1"
                                   style="font-size: 20px"
                                   label="ほろ酔いになりたい"
                                 ></v-radio>
-                                <img :src="sakeSrc" width="150" height="150" class="text-center" />
+                                <!-- <img :src="sakeSrc" width="150" height="150" class="text-center" /> -->
 
                                 <v-radio
                                   :value="0"
@@ -198,13 +198,13 @@
                                   label="ほぼしらふでいい"
                                 ></v-radio>
 
-                                <img
+                                <!-- <img
                                   :src="drinkSrc"
                                   width="150"
                                   height="150"
                                   class="text-center"
                                   :value="0"
-                                />
+                                /> -->
                               </v-radio-group>
 
                               <ZerokenButton
@@ -695,5 +695,9 @@ export default {
 }
 .analyze-title-weight {
   background-color: rgb(255, 254, 254, 0.4);
+}
+
+.v-label {
+  font-size: 30px;
 }
 </style>

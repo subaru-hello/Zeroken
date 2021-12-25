@@ -78,48 +78,20 @@
     </div>
     <v-row justify="center" align-content="center">
       <v-btn
-        class="centered white--text"
-        :to="{ name: 'ZerokenTop' }"
+        class="white--text"
         style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
-        x-large
+        @click="toTop()"
       >
         トップに戻る
       </v-btn>
-      <v-dialog v-model="dialog" width="400">
-        <template v-slot:activator="{ on }">
-          <v-btn
-            v-on="on"
-            x-large
-            class="white--text"
-            style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
-          >
-            シェアする
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="text-h6 font-weight-bold">Share</span>
-            <v-spacer></v-spacer>
-            <v-btn class="mx-0" icon @click="dialog = false">
-              <v-icon>mdi-close-circle-outline</v-icon>
-            </v-btn>
-          </v-card-title>
-          <v-list>
-            <v-list-item>
-              <v-list-item-action>
-                <v-icon color="#1da1f2"> mdi-twitter </v-icon>
-              </v-list-item-action>
-              <v-btn :href="sns.twitter" target="_blank">{{ Twitter }} </v-btn>
-            </v-list-item>
-            <!-- <v-list-item>
-              <v-list-item-action>
-                <img :src="imgSrc" width="20" height="20" />
-              </v-list-item-action>
-              <v-btn :href="sns.line" target="_blank" rel="noopener noreferrer">LINE</v-btn>
-            </v-list-item> -->
-          </v-list>
-        </v-card>
-      </v-dialog>
+      <v-btn
+        target="_blank"
+        @click="snsUrl()"
+        class="white--text"
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+      >
+        シェアする<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
+      >
     </v-row>
     <v-layout>
       <v-row justify="center" align-content="center">
@@ -233,6 +205,7 @@ export default {
       dialog1: false,
       dialog2: false,
       loading: true,
+      analyzeData: '',
       showCertificate: false,
       alcoholOrders: {},
       alcoholStrongness: '',
@@ -256,32 +229,6 @@ export default {
       return this.authUser['data']['attributes']['nickname'];
     },
 
-     strongnessStar() {
-      const targetAnalyze = this.analyzes;
-      const sakeStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
-      const starState =
-        sakeStrongness === 'weak'
-          ? 1
-          : sakeStrongness === 'weak_normal'
-          ? 2
-          : sakeStrongness === 'normal'
-          ? 3
-          : sakeStrongness === 'normal_strong'
-          ? 4
-          : 5;
-      return starState;
-    },
-    isAlcohol() {
-      const thisAnalyze = this.analyzes;
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-
-      const targetValues = this.alcohols;
-
-      const contentsOfTarget = targetValues[analyzeShuchedule]; //数字を取り出している
-      const alcoholPercentage = contentsOfTarget['alcohol_percentage'];
-      const logoInspect = alcoholPercentage > 0 ? 'mdi-glass-mug' : 'mdi-cup';
-      return logoInspect;
-    },
     imgSrc() {
       return require('../src/img/line.png');
     },
@@ -324,6 +271,56 @@ export default {
     certificateSrc() {
       return require('../src/img/certificate.png');
     },
+    strongnessStar() {
+      // const responseAnalyzes= await axios.get('/analyzes');
+      const responseAnalyze = this.analyzes;
+
+      console.log('sake aaaa');
+      console.log(responseAnalyze);
+      const sakeStrongness = responseAnalyze[responseAnalyze.length - 1]['alcohol_strongness'];
+      console.log('sake');
+      console.log(sakeStrongness);
+      const starState =
+        sakeStrongness === 'weak'
+          ? 1
+          : sakeStrongness === 'weak_normal'
+          ? 2
+          : sakeStrongness === 'normal'
+          ? 3
+          : sakeStrongness === 'normal_strong'
+          ? 4
+          : 5;
+      console.log('starState');
+      console.log(starState);
+      return starState;
+    },
+
+    isAlcohol() {
+      const targetAnalyze = this.analyzes;
+      console.log('targetAnalyze');
+      console.log(targetAnalyze);
+      const analyzeShuchedule = targetAnalyze[targetAnalyze.length - 1]['shuchedule'];
+
+      const targetValues = this.alcohols;
+      console.log('targetValues');
+      console.log(targetValues);
+      const alcoholsArray = Object.values(targetValues);
+      const contentsOfTarget = alcoholsArray[analyzeShuchedule]; //お酒の入ったボックスを取り出している
+      console.log('contentsOf');
+      console.log(contentsOfTarget);
+      function percentageCheck(targetAnalyze) {
+        const alcoholsPercentageArray = [];
+
+        for (let i = 0; i < 4; i++) {
+          const alcoholPercentage = targetAnalyze[i]['alcohol_percentage'];
+          alcoholsPercentageArray.push(alcoholPercentage);
+        }
+        return percentageArray;
+      }
+      const alcoholPercentage = percentageCheck(contentsOfTarget);
+      const logoInspect = alcoholPercentage === 0 ? 'mdi-cup' : 'mdi-glass-mug';
+      return logoInspect;
+    },
   },
   mounted() {
     this.analyze = this.fetchAnalyzes;
@@ -334,13 +331,19 @@ export default {
   async created() {
     const alcoholResponses = await axios.get('/alcohols');
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
+    console.log('alcohols');
+    console.log(this.alcohols);
     this.loading = false;
     const analyzeResponses = await axios.get('/analyzes');
-    const targetAnalyze = await analyzeResponses.data;
+    const targetAnalyze = analyzeResponses.data;
+    this.analyzeData = targetAnalyze;
     const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1];
     const analyzeShuchedule = targetAlcoholStrongness['shuchedule'];
-
+    console.log('changeAlcoholData before');
+    console.log(changeAlcoholData);
     const contentsOfTarget = Object.values(changeAlcoholData)[analyzeShuchedule];
+    console.log('contentsOfTarget after');
+    console.log(contentsOfTarget);
     this.alcoholOrders = contentsOfTarget;
     this.alcoholContents = contentsOfTarget;
 
@@ -349,15 +352,22 @@ export default {
     this.fetchAuthUser();
     this.currentAnalyze();
     this.changeSrc();
+    // this.strongnessStar();
+    //  this.isAlcohol() ;
   },
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+    toTop() {
+      this.$router.push({ name: 'ZerokenTop' });
+    },
     async currentAnalyze() {
       const responseAnalyze = await axios.get('/analyzes');
       const targetAnalyze = await responseAnalyze['data'];
       const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
+      console.warn('targetAlcoholStrongness');
+      console.warn(targetAlcoholStrongness);
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -372,6 +382,8 @@ export default {
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      console.warn('result');
+      console.warn(result);
       const AlcoholStrongness = (this.alcoholStrongness = result);
       return AlcoholStrongness;
     },
@@ -388,7 +400,7 @@ export default {
         !this.isVisibleSakeStrongnessAlcoholismDescription;
       this.alcoholismDrunkness = !this.alcoholismDrunkness;
     },
-   async changeSrc() {
+    async changeSrc() {
       const responseAnalyze = await axios.get('/analyzes');
       const thisAnalyze = await responseAnalyze['data'];
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
@@ -404,7 +416,7 @@ export default {
         }
       }
       const result = checkMotivation(targetMotivation);
-      
+
       const nextMotivation = (this.nextMotivationImg = result);
       return nextMotivation;
     },
@@ -437,7 +449,7 @@ export default {
             'あんま飲みたくない',
             '今日はソフドリがいい',
             '今月試合あるから飲みたくない',
-            '家で推しの録画見たいから飲みたくない',
+            '推しの録画をみたいから飲みたくない',
           ];
           const horoyoiArray = [
             '途中で帰りたい',
@@ -449,9 +461,39 @@ export default {
             'とことん飲みたい',
             '酒で記憶を飛ばしたい',
             'あるだけ飲みたい',
-            'とにかく酒をたくさん飲みたい',
-            '',
+            'とにかくたくさん飲みたい',
           ];
+          const characterMetapherWeak = [
+            '五条悟も下戸らしいですよ',
+            '織田信長も下戸らしいですよ',
+            '夏目漱石も下戸らしいですよ',
+            '戸愚呂弟も下戸らしいですよ',
+            '西郷隆盛も下戸らしいですよ',
+            '坂田銀時も下戸らしいですよ',
+            '四乃森蒼紫も下戸らしいですよ',
+            'チョッパーも下戸らしいですよ',
+            '井之頭五郎も下戸らしいですよ',
+            '南海先生も下戸らしいですよ',
+          ];
+          const characterMetapherNormal = ['凡人ですね。'];
+          const characterMetapherStrong = [
+            'ロロノアゾロくらい強いですね',
+            '黒ひげくらい強いですね',
+            '白ひげくらい強いですね',
+            'ゴールドロジャーくらい強いですね',
+            '赤井秀一くらい強いですね',
+            '次元大介くらい強いですね',
+            '葛城ミサトくらい強いですね',
+            '六本木朱美くらい強いですね',
+            '松本乱菊くらい強いですね',
+            '只野仁くらい強いですね',
+            'トリコくらい強いですね',
+            '上杉謙信くらい強いですね',
+            '張飛くらい強いですね',
+            'カイドウくらい強いですね',
+            'ハネオツパイくらい強いですね',
+          ];
+
           const sippporiiKibun = sipporiArray[Math.floor(Math.random() * sipporiArray.length)];
           const horoyoiKibun = horoyoiArray[Math.floor(Math.random() * horoyoiArray.length)];
           const meiteiKibun = meiteiArray[Math.floor(Math.random() * meiteiArray.length)];
@@ -466,11 +508,30 @@ export default {
             }
           }
           const result = checkMotivation(targetMotivation);
+
+          const weakCharacter =
+            characterMetapherWeak[Math.floor(Math.random() * characterMetapherWeak.length)];
+          const normalCharacter =
+            characterMetapherNormal[Math.floor(Math.random() * characterMetapherNormal.length)];
+          const strongCharacter =
+            characterMetapherStrong[Math.floor(Math.random() * characterMetapherStrong.length)];
+
+          const userAlcoholStrongness = this.alcoholStrongness;
+          function checkAlcoholStrongness(target) {
+            if (target === '酒豪') {
+              return strongCharacter;
+            } else if (target === '下戸') {
+              return weakCharacter;
+            } else {
+              return normalCharacter;
+            }
+          }
+          const strongnessResult = checkAlcoholStrongness(userAlcoholStrongness);
           this.sns.twitter =
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
             '&text=' +
-            `【酒テータス】%0A${this.alcoholStrongness}
+            `【酒テータス】%0A${this.alcoholStrongness}%0A${strongnessResult}
             %0A【本音】%0A${result}
             %0A【1軒目の酒ケジュール】
             %0A1軒目は

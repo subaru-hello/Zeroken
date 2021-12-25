@@ -1,25 +1,25 @@
 <template>
   <div class="phrases">
     <v-container>
-      <v-title class="text-center" style="font-size: 25px"> ZEROKEN 用語集 </v-title>
-      <h2 class="title">造語</h2>
-      <div v-for="a in lists" :key="a.title" d-flex>
+      <h1 class="text-center title outer-layer" style="font-size: 25px">ZEROKEN 用語集</h1>
+      <h2 class="title outer-layer">造語</h2>
+      <div v-for="a in lists" :key="a.title" d-flex class="outer-layer">
         <h3>{{ a.title }}</h3>
         <p>{{ a.description }}</p>
       </div>
-      <h2 class="title">お酒の種類</h2>
-      <div v-for="b in kinds" :key="b.name" d-flex>
+      <h2 class="title outer-layer">お酒の種類</h2>
+      <div v-for="b in kinds" :key="b.name" d-flex class="outer-layer">
         <h3>{{ b.name }}</h3>
         <p>{{ b.description }}</p>
       </div>
-      <h2 class="title">酒知識</h2>
-      <div v-for="c in knowledges" :key="c.title" d-flex>
+      <h2 class="title outer-layer">酒知識</h2>
+      <div v-for="c in knowledges" :key="c.title" d-flex class="outer-layer">
         <h3>{{ c.title }}</h3>
         <p>{{ c.description }}</p>
       </div>
       <v-row class="text-center d-flex justify-space-around">
-        <v-col cols="3" sm="10" md="12" lg="12">
-          <v-btn @click="dialog1 = true">酒(シュ)ケジュールとは</v-btn>
+        <v-col class="d-flex justify-space-between">
+          <v-btn @click="dialog1 = true" style="width: 33%">酒ケジュールとは</v-btn>
           <v-dialog v-model="dialog1" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
               <v-card-title class="text-h5 grey lighten-2">酒(シュ)ケジュールとは</v-card-title>
@@ -32,7 +32,7 @@
               >
             </v-card>
           </v-dialog>
-          <v-btn @click="dialog2 = true">飲みベーションとは</v-btn>
+          <v-btn @click="dialog2 = true" style="width: 33%">飲みベーションとは</v-btn>
           <v-dialog v-model="dialog2" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
               <v-card-title class="text-h5 grey lighten-2">飲みベーションとは</v-card-title>
@@ -42,7 +42,7 @@
               <v-card-text>使用例 「飲みべ低いので今日は帰ります。。」</v-card-text>
             </v-card>
           </v-dialog>
-          <v-btn @click="dialog3 = true">酒テータスとは</v-btn>
+          <v-btn @click="dialog3 = true" style="width: 33%">酒テータスとは</v-btn>
           <v-dialog v-model="dialog3" scrollable max-width="80%" transition="dialog-top-transition">
             <v-card>
               <v-card-title class="text-h5 grey lighten-2">酒テータスとは</v-card-title>
@@ -180,5 +180,13 @@ export default {
 }
 .title {
   text-align: center;
+}
+.outer-layer {
+  background: url(../src/img/woodtile.jpeg);
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  font-weight: bold;
+  border: solid 3px #000; /*線*/
+  border-radius: 10px; /*角の丸み*/
 }
 </style>

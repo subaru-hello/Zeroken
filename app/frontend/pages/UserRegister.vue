@@ -1,13 +1,9 @@
 <template>
-  <v-container
-    fluid
-    id="izakaya"
-    style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box"
-  >
+  <v-container fluid style="background-color: rgb(0, 0, 0, 0.4); box-sizing: border-box">
     <v-row class="mb-10">
       <v-col class="pt-10 text-center register">
         <h3 class="text-h4 mb-4 font-weight-black white--text">新規登録</h3>
-        <p class="text-body-1">
+        <p class="text-body-1 white--text">
           アカウントをお持ちの方は
           <router-link class="router-link" :to="{ name: 'UserLogin' }"> こちら </router-link>
           から。
@@ -76,5 +72,14 @@ export default {
 <style scoped>
 #izakaya {
   background-color: rgb(0, 0, 0, 0.4);
+}
+.outer-layer {
+  /* background: url(../src/img/woodtile.jpeg) ; */
+  background-color: rgb(0, 255, 0, 0.4);
+  /* padding: 0.5em 1em;
+  margin: 2em 0; */
+  /* font-weight: bold; */
+  border: solid 3px #000; /*線*/
+  border-radius: 10px; /*角の丸み*/
 }
 </style>

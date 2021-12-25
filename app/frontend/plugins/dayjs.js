@@ -5,7 +5,7 @@ dayjs.locale('ja');
 export default {
   methods: {
     $dateFormat(date) {
-      return dayjs(date).format('YYYY年M月D日(dd)');
+      return dayjs(date).format('YYYY年M月D日H時mm分(dd)');
     },
   },
 };

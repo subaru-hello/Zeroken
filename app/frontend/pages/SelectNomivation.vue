@@ -16,50 +16,59 @@
                 <div>
                   <v-layout>
                     <v-row justify="center" align-content="center">
-                      <v-col
+                      <v-radio-group
                         cols="12"
                         sm="3"
                         v-model="nextMotivation"
-                        :value="2"
-                        @click="createShuchedule()"
                         style="font-size: 30px"
                         class="text-center"
                         :ripple="{ center: false, class: 'gray--text' }"
                         v-bind="attrs"
                         v-on="on"
                       >
-                        <img :src="imgSrc" width="150" height="150" class="text-center" />
-                      </v-col>
+                        <v-radio
+                          :value="2"
+                          style="font-size: 20px"
+                          label="酩酊になりたい"
+                        ></v-radio>
+                        <!-- <img
+                                  :src="imgSrc"
+                                  width="150"
+                                  height="150"
+                                  class="text-center"
+                                  :value="2"
+                                /> -->
 
-                      <v-col
-                        cols="12"
-                        sm="3"
-                        v-model="nextMotivation"
-                        :value="1"
-                        @click="createShuchedule()"
-                        style="font-size: 30px"
-                        class="text-center"
-                        :ripple="{ center: false, class: 'gray--text' }"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <img :src="sakeSrc" width="150" height="150" class="text-center" />
-                      </v-col>
+                        <v-radio
+                          :value="1"
+                          style="font-size: 20px"
+                          label="ほろ酔いになりたい"
+                        ></v-radio>
+                        <!-- <img :src="sakeSrc" width="150" height="150" class="text-center" /> -->
 
-                      <v-col
-                        cols="12"
-                        sm="3"
-                        v-model="nextMotivation"
-                        :value="0"
-                        @click="createShuchedule()"
-                        style="font-size: 30px"
+                        <v-radio
+                          :value="0"
+                          style="font-size: 20px"
+                          label="ほぼしらふでいい"
+                        ></v-radio>
+
+                        <!-- <img
+                                  :src="drinkSrc"
+                                  width="150"
+                                  height="150"
+                                  class="text-center"
+                                  :value="0"
+                                /> -->
+                      </v-radio-group>
+                      <ZerokenButton
+                        v-if="nextMotivation >= 0"
                         class="text-center"
                         :ripple="{ center: false, class: 'gray--text' }"
                         v-bind="attrs"
                         v-on="on"
-                      >
-                        <img :src="drinkSrc" width="150" height="150" class="text-center" />
-                      </v-col>
+                        @click-response="createShuchedule()"
+                        >酒ケジュールを作成する
+                      </ZerokenButton>
                     </v-row>
                   </v-layout>
                 </div>
@@ -94,6 +103,7 @@
 
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
+import ZerokenButton from '../components/global/ZerokenButton.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'SelectNomivation',
@@ -110,6 +120,7 @@ export default {
   },
   components: {
     FacebookLoader,
+    ZerokenButton,
   },
   computed: {
     ...mapActions('analyze', ['fetchAnalyzes']),

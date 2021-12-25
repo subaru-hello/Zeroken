@@ -4,7 +4,7 @@
       <v-col>
         <v-row class="content-center">
           <v-col :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'" flat tile>
-            <v-sheet id="profile-sheet" class="text-center" elevation="1">
+            <v-sheet id="profile-sheet" class="text-center outer-layer" elevation="1">
               <h3 class="text-h6 font-weight-black">酒テータス</h3>
               <p class="text-center black--text" style="font-size: 30px">
                 {{ currentAnalyze }}
@@ -63,9 +63,9 @@
             />
           </v-col>
         </v-row>
-        <v-col>
+        <!-- <v-col>
           <div>My 酒ケジュール</div>
-        </v-col>
+        </v-col> -->
       </v-col>
 
       <!-- 表、カウントして出す。 -->
@@ -93,8 +93,8 @@
           >
             <!-- 7日以前の診断 -->
             <!-- <div v-if="showShucheduleAll"> -->
+            <div v-if="index === 0">{{ date(specificData.created_at) }}の診断です</div>
             <div
-              v-if="checkDate(specificData.created_at)"
               class="text-center mx-auto my-5 form outer-layer"
               elevation="2"
               shaped
@@ -102,8 +102,8 @@
               :disabled="showShucheduleAll"
             >
               <!-- １の時だけ表示する -->
-              {{ date(specificData.created_at) }}の診断です
-
+              <!-- {{ date(specificData.created_at) }}の診断です
+{{index}} -->
               <v-card-title style="width: 100%" class="headline justify-center">
                 <v-icon>{{
                   specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
@@ -172,6 +172,7 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
     currentAnalyze() {
       const thisAnalyze = this.analyzes;
+      console.log(thisAnalyze);
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
       function checkAlcoholStrongness(target) {
@@ -187,10 +188,11 @@ export default {
           return 'やや下戸';
         }
       }
+
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
       return result;
     },
-   
+
     sakeSrc() {
       return require('../src/img/default_profile.png');
     },
@@ -294,6 +296,7 @@ export default {
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
+    console.info(this.fetchAuthUser);
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     // 決められた日を持ってくる
     const authUserData = {
@@ -313,7 +316,7 @@ export default {
     date(date) {
       return this.$dateFormat(date);
     },
-     toOnlyMotivation() {
+    toOnlyMotivation() {
       this.$router.push({ name: 'SelectNomivation' });
     },
     checkDate(date) {
