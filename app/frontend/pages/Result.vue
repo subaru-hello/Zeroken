@@ -122,7 +122,7 @@
             >アルコール体内血中濃度計算グラフ</v-card-title
           >
           <v-card-text class="mx-auto"
-            ><img :src="alcoholInVeinSrc" class="text-center" width="290" height="350"
+            ><img :src="alcoholInVeinSrc" class="text-center" max-width="290" max-height="350"
           /></v-card-text>
           <v-card-text>
             厚生労働省 生活習慣病予防のための健康情報サイト
@@ -136,7 +136,7 @@
           <v-card-title class="text-h5 alcoholism-back"
             >TAST(東大式ALDH2スクリーニングテスト)グラフ</v-card-title
           >
-          <img :src="tastSrc" width="370" class="text-center" height="350" />
+          <img :src="tastSrc" max-width="370" class="text-center" max-height="350" />
           <v-card-text>
             (『お酒とのつきあい方をチェック』（後志保健福祉事務所保健福祉部）
             https://pehttps://perseus.blog.ss-blog.jp/2010-03-27rseus.blog.ss-blog.jp/2010-03-27)
@@ -156,7 +156,7 @@
           id="form"
         >
           <v-card>
-            <v-card-title>
+            <v-card-title class="contnents-image">
               {{ list.title }}
             </v-card-title>
 
@@ -164,22 +164,22 @@
               {{ list.subtext }}
             </v-card-subtitle>
 
-            <v-card-actions>
+            <!-- <v-card-actions>
               <v-spacer></v-spacer>
 
               <v-btn icon @click="show = !show">
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
               </v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
 
-            <v-expand-transition>
+            <!-- <v-expand-transition>
               <div v-if="show">
                 <v-divider></v-divider>
                 <v-card-text>
                   {{ list.description }}
                 </v-card-text>
               </div>
-            </v-expand-transition>
+            </v-expand-transition> -->
           </v-card>
         </v-col>
       </v-row>
@@ -216,7 +216,7 @@ export default {
       users: [],
       logicLists: [
         {
-          title: 'お酒の強さ算出ロジック',
+          title: 'TAST',
           subtext:
             ' TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。',
           description:
@@ -568,10 +568,7 @@ export default {
   /* 非表示時のCSS */
   opacity: 0;
 }
-.contnents-image {
-  width: 250px;
-  box-sizing: border-box;
-}
+
 .alcoholism-back {
   background: url(../src/img/woodtile.jpeg) center center / cover no-repeat fixed;
   border-radius: 20%;
