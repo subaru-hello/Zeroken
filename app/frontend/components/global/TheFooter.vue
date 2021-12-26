@@ -15,6 +15,7 @@
         >
           {{ link.name }}
         </v-btn>
+        <p class="white--text">©︎2021 ZEROKEN</p>
       </v-row>
       <v-dialog v-model="dialog" scrollable max-width="80%">
         <v-card>
@@ -39,6 +40,7 @@ export default {
         { url: 'Term', name: '利用規約' },
         { url: 'form', name: 'お問い合わせ' },
         { url: 'PrivacyPolicy', name: 'プライバシーポリシー' },
+        { url: 'About', name: '©︎2021 ZEROKEN' },
       ],
     };
   },
@@ -48,9 +50,9 @@ export default {
       if (url === 'form') {
         location.href =
           'https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link';
-      } else if(url === 'About'){
-        this.dialog = true
-      }else {
+      } else if (url === 'About') {
+        this.dialog = true;
+      } else {
         this.$router.push({ name: `${url}` });
       }
     },
