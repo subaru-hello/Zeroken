@@ -138,12 +138,10 @@ import axios from '../plugins/axios';
 // import dayjs from '../plugins/dayjs';
 import ProfileEditForm from '../components/forms/ProfileEditForm.vue';
 import PasswordEditForm from '../components/forms/PasswordEditForm.vue';
-import ZerokenButton from '../components/global/ZerokenButton.vue';
 export default {
   components: {
     ProfileEditForm,
     PasswordEditForm,
-    ZerokenButton,
   },
   data() {
     return {
