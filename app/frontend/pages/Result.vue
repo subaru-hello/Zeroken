@@ -288,9 +288,6 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
-    tastSrc() {
-      return require('../src/img/TAST.jpeg');
-    },
     alcoholInVeinSrc() {
       return require('../src/img/drunkness.png');
     },
