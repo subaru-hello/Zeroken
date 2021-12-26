@@ -9,8 +9,7 @@
                 <p class="text-center outer-layer">下戸証明書</p>
                 <div class="d-flex">
                   <img :src="sakeSrc" width="100" height="100" />
-                  <p class="text-center 
-                ">
+                  <p class="text-center">
                     私にお酒を強要したら<br />
                     <span style="color: red">アルハラ</span><br />
                     で訴えます。
