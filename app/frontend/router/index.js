@@ -8,11 +8,9 @@ import UserProfile from '../pages/UserProfile.vue';
 import UserRegister from '../pages/UserRegister';
 import ZerokenTop from '../pages/ZerokenTop';
 import UserLogin from '../pages/UserLogin';
-import UserAll from '../pages/UserAll';
 import Phrases from '../pages/Phrases';
 import Term from '../pages/Term';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
-import AlcoholAll from '../pages/AlcoholAll';
 Vue.use(Router);
 
 const router = new Router({
@@ -63,19 +61,10 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/users',
-      component: UserAll,
-      name: 'UserAll',
-    },
-    {
-      path: '/alcohols',
-      component: AlcoholAll,
-      name: 'AlcoholAll',
-    },
-    {
       path: '/nomivation',
       component: SelectNomivation,
       name: 'SelectNomivation',
+      meta: { requireAuth: true },
     },
     {
       path: '/result',
