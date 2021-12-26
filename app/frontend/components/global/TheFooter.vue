@@ -15,7 +15,6 @@
         >
           {{ link.name }}
         </v-btn>
-        <p class="white--text">©︎2021 ZEROKEN</p>
       </v-row>
       <v-dialog v-model="dialog" scrollable max-width="80%">
         <v-card>
