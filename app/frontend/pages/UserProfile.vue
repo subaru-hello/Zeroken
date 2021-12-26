@@ -172,7 +172,6 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
     currentAnalyze() {
       const thisAnalyze = this.analyzes;
-      console.log(thisAnalyze);
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
       function checkAlcoholStrongness(target) {
@@ -296,7 +295,6 @@ export default {
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
-    console.info(this.fetchAuthUser);
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     // 決められた日を持ってくる
     const authUserData = {

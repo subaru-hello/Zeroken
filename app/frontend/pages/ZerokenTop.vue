@@ -219,8 +219,6 @@ export default {
   async created() {
     const a = await this.fetchAuthUser();
     this.currentUser = a.data.attributes.role;
-    console.warn('this.authUser');
-    console.warn(this.currentUser);
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),

@@ -311,12 +311,7 @@ export default {
     },
     strongnessStar() {
       const responseAnalyze = this.analyzes;
-
-      console.log('sake aaaa');
-      console.log(responseAnalyze);
       const sakeStrongness = responseAnalyze[responseAnalyze.length - 1]['alcohol_strongness'];
-      console.log('sake');
-      console.log(sakeStrongness);
       const starState =
         sakeStrongness === 'weak'
           ? 1
@@ -327,24 +322,16 @@ export default {
           : sakeStrongness === 'normal_strong'
           ? 4
           : 5;
-      console.log('starState');
-      console.log(starState);
       return starState;
     },
 
     isAlcohol() {
       const targetAnalyze = this.analyzes;
-      console.log('targetAnalyze');
-      console.log(targetAnalyze);
       const analyzeShuchedule = targetAnalyze[targetAnalyze.length - 1]['shuchedule'];
 
       const targetValues = this.alcohols;
-      console.log('targetValues');
-      console.log(targetValues);
       const alcoholsArray = Object.values(targetValues);
       const contentsOfTarget = alcoholsArray[analyzeShuchedule]; //お酒の入ったボックスを取り出している
-      console.log('contentsOf');
-      console.log(contentsOfTarget);
       function percentageCheck(targetAnalyze) {
         const alcoholsPercentageArray = [];
 
@@ -368,19 +355,13 @@ export default {
   async created() {
     const alcoholResponses = await axios.get('/alcohols');
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
-    console.log('alcohols');
-    console.log(this.alcohols);
     this.loading = false;
     const analyzeResponses = await axios.get('/analyzes');
     const targetAnalyze = analyzeResponses.data;
     this.analyzeData = targetAnalyze;
     const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1];
     const analyzeShuchedule = targetAlcoholStrongness['shuchedule'];
-    console.log('changeAlcoholData before');
-    console.log(changeAlcoholData);
     const contentsOfTarget = Object.values(changeAlcoholData)[analyzeShuchedule];
-    console.log('contentsOfTarget after');
-    console.log(contentsOfTarget);
     this.alcoholOrders = contentsOfTarget;
     this.alcoholContents = contentsOfTarget;
 
@@ -404,8 +385,6 @@ export default {
       const responseAnalyze = await axios.get('/analyzes');
       const targetAnalyze = await responseAnalyze['data'];
       const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
-      console.warn('targetAlcoholStrongness');
-      console.warn(targetAlcoholStrongness);
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -420,8 +399,6 @@ export default {
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      console.warn('result');
-      console.warn(result);
       const AlcoholStrongness = (this.alcoholStrongness = result);
       return AlcoholStrongness;
     },

@@ -296,15 +296,11 @@ export default {
     },
   },
   created() {
-    console.warn('this.authUser');
-    console.warn(this.authUser);
     this.fetchAuthUser();
     this.clearAnswers();
   },
   mounted() {
-    // axios.get('/users').then((userResponse) => (this.users = userResponse.data));
-    console.log('this.authUser');
-    console.log(this.authUser.data);
+
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {
       this.isVisible = true;
@@ -341,8 +337,6 @@ export default {
       //TODO 要リファクト
       //以下の式を塊に切り出してthis.で呼び出す
       var trueAnswers = this.questions;
-      console.log('trueAnswers');
-      console.log(trueAnswers);
       const answer0 = trueAnswers[0]['answer'];
       const answer1 = trueAnswers[1]['answer'];
       const answer2 = trueAnswers[2]['answer'];
@@ -385,13 +379,9 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
-      console.log('sumResult');
-      console.log(sumResult);
       let AlcoholStrongness =
         sumResult > 3 ? 4 : sumResult > 0 ? 3 : sumResult === 0 ? 2 : sumResult > -3 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
-      console.log('AlcoholStrongness');
-      console.log(AlcoholStrongness);
       let alcoholInVein =
         AlcoholStrongness === 4 && Nomivation === 0
           ? 0.04
@@ -424,8 +414,6 @@ export default {
           : AlcoholStrongness === 0 && Nomivation === 2
           ? 0.11
           : 0.02;
-      console.log('alcoholInVein');
-      console.log(alcoholInVein);
       let coefficient = 833;
       let yourWeight = this.weight;
       let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
@@ -475,8 +463,6 @@ export default {
           : totalAlcoholAmount < 12500
           ? 0
           : 24;
-      console.log('yourShuchedule ');
-      console.log(yourShuchedule);
       let Description =
         sumResult < -20
           ? '過去に飲み会でトラウマを抱えているタイプの下戸'
@@ -561,8 +547,6 @@ export default {
           shuchedule: yourShuchedule,
           description: Description,
         };
-        console.log('updateAnalyze');
-        console.log(updateAnalyze);
         resolve(
           this.createAnalyze(updateAnalyze)
           // this.clearAnswers()
