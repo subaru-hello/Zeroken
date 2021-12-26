@@ -12,13 +12,19 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  data() {
-    return {};
+  computed: {
+    ...mapGetters('users', ['authUser']),
+  },
+  created() {
+    this.fetchAuthUser();
+  },
+  methods: {
+    ...mapActions('users', ['fetchAuthUser']),
   },
 };
 </script>
-
 <style>
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
