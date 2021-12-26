@@ -1,7 +1,9 @@
 <template>
   <div class="phrases">
     <v-container>
-      <h1 class="text-center title outer-layer" style="font-size: 40px">ZEROKEN 用語集</h1>
+      <h1 class="text-center title outer-layer" style="font-size: 40px">
+        ZEROKEN 用語集(2021/12/26時点)
+      </h1>
       <h2 class="title outer-layer-title">造語</h2>
       <div v-for="a in lists" :key="a.title" d-flex class="outer-layer">
         <h3>{{ a.title }}</h3>
@@ -62,6 +64,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -72,7 +75,8 @@ export default {
         {
           title: 'ZEROKEN',
           description: '１軒目の前に使って欲しいという思いからZEROKEN。0軒目から由来している。',
-          example: '今度の飲み会ではお酒をあまり飲みたくないな。ZEROKENを使って飲む量を診断してみるか',
+          example:
+            '今度の飲み会ではお酒をあまり飲みたくないな。ZEROKENを使って飲む量を診断してみるか',
         },
         {
           title: '酒ケジュール',
@@ -93,22 +97,26 @@ export default {
       knowledges: [
         {
           title: 'TAST',
-          description: '東大式ALDH2スクリーニングテストの頭文字を取ったもの。13個の質問に回答するだけでお酒の強さが分かる。東大生が作った。2013年にTwitterで流行ったそう。',
+          description:
+            '東大式ALDH2スクリーニングテストの頭文字を取ったもの。13個の質問に回答するだけでお酒の強さが分かる。東大生が作った。2013年にTwitterで流行ったそう。',
           example: '',
         },
         {
           title: ' アルコール度数 ',
-          description: '飲料に対する温度15度の時において原容量百分中に含有するエチルアルコールの容量を指す。%や度を使って表す。',
+          description:
+            '飲料に対する温度15度の時において原容量百分中に含有するエチルアルコールの容量を指す。%や度を使って表す。',
           example: '',
         },
         {
           title: ' アルコール体内血中濃度 ',
-          description: '飲酒して消化管から吸収されたアルコールが血中に移行した状態の濃度で、酔いの程度を決める。血中濃度(%)が「0.02～0.04：爽快期」「0.05～0.10：ほろ酔い期」「0.11～0.15：酩酊初期」「0.16～0.30：酩酊極期」「0.31～0.40：泥酔期」「0.41～：昏睡期」というのが血中濃度と酔いの程度の目安。',
+          description:
+            '飲酒して消化管から吸収されたアルコールが血中に移行した状態の濃度で、酔いの程度を決める。血中濃度(%)が「0.02～0.04：爽快期」「0.05～0.10：ほろ酔い期」「0.11～0.15：酩酊初期」「0.16～0.30：酩酊極期」「0.31～0.40：泥酔期」「0.41～：昏睡期」というのが血中濃度と酔いの程度の目安。',
           example: '',
         },
         {
           title: ' 純アルコール量 ',
-          description: '酒のラベルには、中に含まれるアルコールの度数が書かれています。 この度数は、体積パーセント(%)を意味します。 度数5または5%のビールとは、100ミリリッター(mL)に、純アルコールが5mL含まれているビールということです。',
+          description:
+            '酒のラベルには、中に含まれるアルコールの度数が書かれています。 この度数は、体積パーセント(%)を意味します。 度数5または5%のビールとは、100ミリリッター(mL)に、純アルコールが5mL含まれているビールということです。',
           example: '',
         },
         {
@@ -123,7 +131,8 @@ export default {
         },
         {
           title: ' 酒豪 ',
-          description: 'アルコール飲料（酒）を大量に飲むことが出来、さらにこれで酔態をさらさない者の俗称',
+          description:
+            'アルコール飲料（酒）を大量に飲むことが出来、さらにこれで酔態をさらさない者の俗称',
           example: '',
         },
         {
@@ -138,34 +147,48 @@ export default {
         },
         {
           title: '混合酒',
-          description: '既製の酒に糖分，アルコール，果実，香味料あるいは薬料などを加えて造った再製酒。 最も代表的なものに日本の梅酒，ヨーロッパのリキュールなどがある',
+          description:
+            '既製の酒に糖分，アルコール，果実，香味料あるいは薬料などを加えて造った再製酒。 最も代表的なものに日本の梅酒，ヨーロッパのリキュールなどがある',
           example: '',
         },
         {
           title: '蒸留酒',
-          description: '醸造酒を蒸留して作った酒。焼酎、ウォッカ、ブランデー、ウィスキー、スピリッツなどが該当する。',
+          description:
+            '醸造酒を蒸留して作った酒。焼酎、ウォッカ、ブランデー、ウィスキー、スピリッツなどが該当する。',
           example: '',
         },
       ],
       kinds: [
         {
           name: 'ファジーネーブル',
-          description: 'リキュールベースの甘いカクテル。「桃なのかオレンジなのかわからない曖昧な味」や「桃の産毛」という意味がある。',
+          description:
+            'リキュールベースの甘いカクテル。「桃なのかオレンジなのかわからない曖昧な味」や「桃の産毛」という意味がある。',
         },
         {
           name: 'メガハイ',
-          descripption: 'ハイボールのメガサイズ。某焼き鳥チェーンに行くと頼む事ができる。コスパ良く飲みたい方におすすめ。',
+          description:
+            'ハイボールのメガサイズ。某焼き鳥チェーンに行くと頼む事ができる。コスパ良く飲みたい方におすすめ。',
         },
         {
           name: 'メガ金麦',
-          descripption: '金麦のメガサイズ。SUNTORYの提供する金麦が700ml入っている。',
+          description: '金麦のメガサイズ。SUNTORYの提供する金麦が700ml入っている。',
         },
         {
           name: 'ジンバック',
-          descripption: 'ジンをジンジャエールで割ったライム風味のお酒。甘味と酸味がいい塩梅で配合されている。コスパ良く酔いたい時におすすめ。',
+          description:
+            'ジンをジンジャエールで割ったライム風味のお酒。甘味と酸味がいい塩梅で配合されている。コスパ良く酔いたい時におすすめ。',
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters('users', ['authUser']),
+  },
+  created() {
+    this.fetchAuthUser();
+  },
+  methods: {
+    ...mapActions('users', ['fetchAuthUser']),
   },
 };
 </script>
@@ -190,7 +213,7 @@ export default {
   border-radius: 10px; /*角の丸み*/
 }
 .outer-layer-title {
-  background-color: rgb(0,0,0,0.6);
+  background-color: rgb(0, 0, 0, 0.6);
   color: white;
   padding: 0.5em 1em;
   margin: 2em 0;

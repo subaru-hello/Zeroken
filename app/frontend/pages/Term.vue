@@ -427,7 +427,20 @@
     </v-row>
   </v-container>
 </template>
-
+<script>
+import { mapActions, mapGetters } from 'vuex';
+export default {
+  computed: {
+    ...mapGetters('users', ['authUser']),
+  },
+  created() {
+    this.fetchAuthUser();
+  },
+  methods: {
+    ...mapActions('users', ['fetchAuthUser']),
+  },
+};
+</script>
 <style scoped>
 h1 {
   margin-top: 20px;

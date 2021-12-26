@@ -20,11 +20,22 @@
         style="text-decoration: none"
       >
         <v-list-item>
-          <div @click="toRegister()" class="white--text">新規登録</div>
+          <v-btn
+            @click="snsUrl()"
+            class="white--text"
+            style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+          >
+            作者を応援<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
+          >
+        </v-list-item>
+        <v-divider class="mx-4" style="color: white" vertical></v-divider>
+
+        <v-list-item>
+          <div @click="toRegister()" class="white--text" style="font-size: 10px;">新規登録</div>
         </v-list-item>
         <v-divider class="mx-4" style="color: white" vertical></v-divider>
         <v-list-item>
-          <div @click="toLogin()" class="white--text">ログイン</div>
+          <div @click="toLogin()" class="white--text" style="font-size: 10px;">ログイン</div>
         </v-list-item>
       </v-list-item-group>
     </v-app-bar>
@@ -109,6 +120,7 @@ export default {
       dialog: false,
       drawer: false,
       group: null,
+      hashtags: 'ZEROKEN,アルハラ防止,酒ケジュール',
       user: [],
     };
   },
@@ -142,6 +154,25 @@ export default {
     },
     toHome() {
       this.$router.push({ name: 'ZerokenTop' });
+    },
+    snsUrl() {
+      setTimeout(
+        function () {
+          const url = encodeURIComponent(`https://www.zeroken.site`);
+          const title = encodeURIComponent('【ZEROKEN】');
+          const writer = encodeURIComponent(`@247subaru`);
+          const twitter =
+            'https://twitter.com/intent/tweet?url=' +
+            url +
+            '&text=' +
+            title +
+            `%0Aまだ酒ケジュールを作成していないですが、なんか良さそうなサイトでした!!` +
+            '&hashtags=' +
+            this.hashtags;
+          window.location.href = twitter;
+        }.bind(this),
+        100
+      );
     },
     logoutFunction() {
       this.logoutUser().then((res) => {

@@ -4,7 +4,7 @@
       <v-col cols="auto">
         <div class="mb-5 text-h4 font-weight-bold text-center">プライバシーポリシー</div>
         <div class="text-body-1 font-weight-medium">
-          このプライベートポリシー(以下、「本ポリシー」といいます。)は，このウェブサイト上で提供するサービス（以下，「本サービス」といいます。）における，ユーザーの個人情報の取り扱いについて定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には本ポリシーに従って，本サービスをご利用いただきます。
+          このプライバシーポリシー(以下、「本ポリシー」といいます。)は，このウェブサイト上で提供するサービス（以下，「本サービス」といいます。）における，ユーザーの個人情報の取り扱いについて定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には本ポリシーに従って，本サービスをご利用いただきます。
           <br class=".br-pc" />
           ユーザーは本サービスに利用登録することにより，本ポリシーの全ての記載内容について同意したものとみなされます。
         </div>
@@ -263,10 +263,16 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  mounted() {
-    this.$toTop();
-    document.title = 'プライバシーポリシー - ZEROKEN';
+  computed: {
+    ...mapGetters('users', ['authUser']),
+  },
+  created() {
+    this.fetchAuthUser();
+  },
+  methods: {
+    ...mapActions('users', ['fetchAuthUser']),
   },
 };
 </script>

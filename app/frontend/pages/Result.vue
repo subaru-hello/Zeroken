@@ -47,9 +47,10 @@
             </div>
             <div>
               <div class="text-center">
-                <v-btn x-large @click="isVisibleShuchedule" class="text-center"
-                  >酒ケジュールを見る</v-btn
-                >
+                <ZerokenButton
+                  button-name="作成された酒ケジュール"
+                  @click-response="isVisibleShuchedule()"
+                ></ZerokenButton>
               </div>
             </div>
             <div>
@@ -78,7 +79,7 @@
     </div>
     <v-row justify="center" align-content="center">
       <v-btn
-        class="white--text   mx-3 mt-4"
+        class="white--text mx-3 mt-4"
         style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
         @click="toTop()"
         x-large
@@ -89,11 +90,59 @@
         target="_blank"
         @click="snsUrl()"
         class="white--text mx-3 mt-4"
-        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%; "
-           x-large
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+        x-large
       >
         シェアする<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
       >
+    </v-row>
+    <v-row justify="center" align-content="center">
+      <v-btn
+        @click="alcoholInVeinDialog = true"
+        class="white--text mx-3 mt-4"
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+        >アルコリズム①</v-btn
+      >
+
+      <v-btn
+        @click="tastDialog = true"
+        class="white--text mx-3 mt-4"
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+        >アルコリズム②</v-btn
+      >
+
+      <v-dialog
+        v-model="alcoholInVeinDialog"
+        scrollable
+        max-width="80%"
+        transition="dialog-top-transition"
+      >
+        <v-card>
+          <v-card-title class="text-h5 alcoholism-back"
+            >アルコール体内血中濃度計算グラフ</v-card-title
+          >
+          <v-card-text class="mx-auto"
+            ><img :src="alcoholInVeinSrc" class="text-center" width="290" height="350"
+          /></v-card-text>
+          <v-card-text>
+            厚生労働省 生活習慣病予防のための健康情報サイト
+            (https://www.e-healthnet.mhlw.go.jp/information/dictionary/alcohol/ya-009.html)
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="tastDialog" scrollable max-width="100%" transition="dialog-top-transition">
+        <v-card>
+          <v-card-title class="text-h5 alcoholism-back"
+            >TAST(東大式ALDH2スクリーニングテスト)グラフ</v-card-title
+          >
+          <img :src="tastSrc" width="370" class="text-center" height="350" />
+          <v-card-text>
+            (『お酒とのつきあい方をチェック』（後志保健福祉事務所保健福祉部）
+            https://pehttps://perseus.blog.ss-blog.jp/2010-03-27rseus.blog.ss-blog.jp/2010-03-27)
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-row>
     <v-layout>
       <v-row justify="center" align-content="center">
@@ -116,16 +165,9 @@
             </v-card-subtitle>
 
             <v-card-actions>
-              <v-btn color="orange lighten-2" text> 詳細を見る </v-btn>
-
               <v-spacer></v-spacer>
 
-              <v-btn
-                icon
-                @click="
-                  show = !show;
-                "
-              >
+              <v-btn icon @click="show = !show">
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
               </v-btn>
             </v-card-actions>
@@ -148,6 +190,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import StarRating from 'vue-star-rating';
+import ZerokenButton from '../components/global/ZerokenButton';
 import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
 import ShowCertificateModal from '../components/result/ShowCertificateModal';
 import axios from '../plugins/axios';
@@ -155,6 +198,7 @@ import axios from '../plugins/axios';
 export default {
   components: {
     StarRating,
+    ZerokenButton,
     ShowShucheduleModal,
     ShowCertificateModal,
   },
@@ -163,8 +207,8 @@ export default {
       shuche: '',
       showShuchedule: false,
       alcoholContents: undefined,
-      alcoholismDrunkness: false,
-      alcoholismStrongness: false,
+      tastDialog: false,
+      alcoholInVeinDialog: false,
       nonAlcoholImg: '',
       nextMotivationImg: '',
       alcohols: {},
@@ -176,18 +220,20 @@ export default {
           subtext:
             ' TASTという東大生が考案した、お酒の強さをはかる診断を使用しています。2013年にTwitterで拡散され、1.6万リツイートされるほどにバズりました。',
           description:
-            ' 内容: 13項目からなる質問に３択で答えます。各項目にポイントがあり、ポイント合計が正の値だった場合は酒豪、0だったら普通、負の値だった場合は下戸という診断結果が出るようになっています。ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。',
+            '症状に対する３つの回答に点数が割り振られ、全部を合計してマイナスなら弱い～飲めない体質（ＡＡ型とＡＧ型）という風に判定できます。ZEROKENでは、より厳密に判断するために、「やや酒豪」「やや下戸」を追加しています。',
           img: require('../src/img/TAST.jpeg'),
-          action: 'isVisibleSakeStrongnessAlcoholismDescription',
+          reference:
+            '(『お酒とのつきあい方をチェック』（後志保健福祉事務所保健福祉部） https://pehttps://perseus.blog.ss-blog.jp/2010-03-27rseus.blog.ss-blog.jp/2010-03-27)',
         },
         {
           title: '酔い度合い算出ロジック',
           subtext:
-            '  厚生労働省が用意しているデータを参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。',
+            '  厚生労働省が用意している「体内血中アルコール濃度計算グラフ」を参考にして「酔いたい状態になるまでに必要なお酒の量」を算出しています。',
           description:
-            '「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。ZEROKENでは、下記のような構成でアルコール血中濃度と、「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけています。',
+            '「酔い」というものは、血中アルコール濃度に応じて状態が変わってきます。ZEROKENでは、アルコール体内血中濃度と、なりたい状態「しっぽり・ほろ酔い・酩酊」をそれぞれ紐づけた独自のアルコリズムを構築しています。',
           img: require('../src/img/drunkness.png'),
-          action: 'isVisibleNextMotivationAlcoholismDescription',
+          reference:
+            '厚生労働省 生活習慣病予防のための健康情報サイト (https://www.e-healthnet.mhlw.go.jp/information/dictionary/alcohol/ya-009.html)',
         },
       ],
       errors: '',
@@ -242,15 +288,9 @@ export default {
     drinkSrc() {
       return require('../src/img/drink.svg');
     },
-    // ippaiSrc() {
-    //   return require('../src/img/ippai_shuki.png');
-    // },
-    // sugusakeSrc() {
-    //   return require('../src/img/sugusake_stamp.png');
-    // },
-    // sugumeiteiSrc() {
-    //   return require('../src/img/sugumeitei_stamp.png');
-    // },
+    alcoholInVeinSrc() {
+      return require('../src/img/drunkness.png');
+    },
     beerSrc() {
       return require('../src/img/beer.svg');
     },
@@ -267,14 +307,8 @@ export default {
       return require('../src/img/certificate.png');
     },
     strongnessStar() {
-      // const responseAnalyzes= await axios.get('/analyzes');
       const responseAnalyze = this.analyzes;
-
-      console.log('sake aaaa');
-      console.log(responseAnalyze);
       const sakeStrongness = responseAnalyze[responseAnalyze.length - 1]['alcohol_strongness'];
-      console.log('sake');
-      console.log(sakeStrongness);
       const starState =
         sakeStrongness === 'weak'
           ? 1
@@ -285,24 +319,16 @@ export default {
           : sakeStrongness === 'normal_strong'
           ? 4
           : 5;
-      console.log('starState');
-      console.log(starState);
       return starState;
     },
 
     isAlcohol() {
       const targetAnalyze = this.analyzes;
-      console.log('targetAnalyze');
-      console.log(targetAnalyze);
       const analyzeShuchedule = targetAnalyze[targetAnalyze.length - 1]['shuchedule'];
 
       const targetValues = this.alcohols;
-      console.log('targetValues');
-      console.log(targetValues);
       const alcoholsArray = Object.values(targetValues);
       const contentsOfTarget = alcoholsArray[analyzeShuchedule]; //お酒の入ったボックスを取り出している
-      console.log('contentsOf');
-      console.log(contentsOfTarget);
       function percentageCheck(targetAnalyze) {
         const alcoholsPercentageArray = [];
 
@@ -326,19 +352,13 @@ export default {
   async created() {
     const alcoholResponses = await axios.get('/alcohols');
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
-    console.log('alcohols');
-    console.log(this.alcohols);
     this.loading = false;
     const analyzeResponses = await axios.get('/analyzes');
     const targetAnalyze = analyzeResponses.data;
     this.analyzeData = targetAnalyze;
     const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1];
     const analyzeShuchedule = targetAlcoholStrongness['shuchedule'];
-    console.log('changeAlcoholData before');
-    console.log(changeAlcoholData);
     const contentsOfTarget = Object.values(changeAlcoholData)[analyzeShuchedule];
-    console.log('contentsOfTarget after');
-    console.log(contentsOfTarget);
     this.alcoholOrders = contentsOfTarget;
     this.alcoholContents = contentsOfTarget;
 
@@ -354,6 +374,7 @@ export default {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
+ 
     toTop() {
       this.$router.push({ name: 'ZerokenTop' });
     },
@@ -361,8 +382,6 @@ export default {
       const responseAnalyze = await axios.get('/analyzes');
       const targetAnalyze = await responseAnalyze['data'];
       const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
-      console.warn('targetAlcoholStrongness');
-      console.warn(targetAlcoholStrongness);
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -377,23 +396,11 @@ export default {
         }
       }
       const result = checkAlcoholStrongness(targetAlcoholStrongness);
-      console.warn('result');
-      console.warn(result);
       const AlcoholStrongness = (this.alcoholStrongness = result);
       return AlcoholStrongness;
     },
     alcoholDatas(response) {
       this.alcohols = response.data;
-    },
-    isVisibleSakeStrongnessAlcoholismDescription() {
-      this.isVisibleNextMotivationAlcoholismDescription =
-        !this.isVisibleNextMotivationAlcoholismDescription;
-      this.alcoholismStrongness = !this.alcoholismStrongness;
-    },
-    isVisibleNextMotivationAlcoholismDescription() {
-      this.isVisibleSakeStrongnessAlcoholismDescription =
-        !this.isVisibleSakeStrongnessAlcoholismDescription;
-      this.alcoholismDrunkness = !this.alcoholismDrunkness;
     },
     async changeSrc() {
       const responseAnalyze = await axios.get('/analyzes');
@@ -560,5 +567,13 @@ export default {
 .fade-leave-to {
   /* 非表示時のCSS */
   opacity: 0;
+}
+.contnents-image {
+  width: 250px;
+  box-sizing: border-box;
+}
+.alcoholism-back {
+  background: url(../src/img/woodtile.jpeg) center center / cover no-repeat fixed;
+  border-radius: 20%;
 }
 </style>
