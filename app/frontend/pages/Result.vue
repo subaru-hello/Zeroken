@@ -533,11 +533,7 @@ export default {
             'https://twitter.com/intent/tweet?url=' +
             this.sns.url +
             '&text=' +
-            `【酒テータス】%0A${this.alcoholStrongness}%0A${strongnessResult}
-            %0A【本音】%0A${result}
-            %0A【1軒目の酒ケジュール】
-            %0A1軒目は
-            %0A1.${firstOrder}%202.${secondOrder}%203.${thirdOrder}%204.${forthOrder}%0Aでいきます` +
+            `【酒テータス】%0A${this.alcoholStrongness}%0A${strongnessResult}%0A【1軒目の酒ケジュール】%0A1軒目は%0A1.${firstOrder}%202.${secondOrder}%203.${thirdOrder}%204.${forthOrder}%0Aでいきます` +
             '&hashtags=' +
             this.sns.hashtags;
           window.location.href = this.sns.twitter;
