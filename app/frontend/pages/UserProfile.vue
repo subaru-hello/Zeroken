@@ -188,7 +188,7 @@ export default {
     currentAnalyze() {
       const thisAnalyze = this.analyzes;
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+      // const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
 
       const thisShuchedule = this.my_shuchedules;
       const targetShuchedule = thisShuchedule;
@@ -343,9 +343,9 @@ export default {
       const thisShucheduleResponses = await axios.get('/my_shuchedules');
       // console.log(thisShucheduleResponses.data);
       const targetShuchedule = thisShucheduleResponses.data['succeed_shuchedule'];
-      const targetAlcoholStrongness = thisShucheduleResponses.data['succeed_alcohol_strongness'];
-      const changeAlcoholData = await (this.succeededShucheduleDatas =
-        thisShucheduleResponses.data);
+      // const targetAlcoholStrongness = thisShucheduleResponses.data['succeed_alcohol_strongness'];
+      // const changeAlcoholData = await (this.succeededShucheduleDatas =
+        // thisShucheduleResponses.data);
       // console.log('targetShuchedul');
       // console.log(targetShuchedule);
       // console.log('Alcohols');

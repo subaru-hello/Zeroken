@@ -422,7 +422,6 @@ export default {
           succeed_shuchedule: analyzeShuchedule,
           succeed_alcohol_strongness: analyzeAlcoholStrongness,
         };
-        debugger;
         resolve(targetUser, this.createMyShuchedule(updateSchuchedule));
         reject();
 
@@ -593,7 +592,7 @@ export default {
               return meiteiKibun;
             }
           }
-          const result = checkMotivation(targetMotivation);
+          // const result = checkMotivation(targetMotivation);
 
           const weakCharacter =
             characterMetapherWeak[Math.floor(Math.random() * characterMetapherWeak.length)];
