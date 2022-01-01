@@ -2,6 +2,7 @@ class User < ApplicationRecord
   before_save :change_email_to_lowercase
   authenticates_with_sorcery!
   has_many :analyzes, dependent: :destroy
+  has_many :my_shuchedules, dependent: :destroy
   has_one_attached :avatar
   enum role: { guest: 0, member: 1 }
 
