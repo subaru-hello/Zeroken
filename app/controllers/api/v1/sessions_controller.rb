@@ -17,13 +17,6 @@ module Api
         logout
         head :ok
       end
-
-      def guest_login
-        user = User.find_by!(role: :guest)
-        auto_login(user)
-        json_string = UserSerializer.new(user).serializable_hash.to_json
-        render json: json_string
-      end
     end
   end
 end
