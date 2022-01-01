@@ -9,6 +9,9 @@
               <p class="text-center black--text" style="font-size: 30px">
                 {{ currentAnalyze }}
               </p>
+              <!-- <p class="text-center black--text" style="font-size: 30px">
+                {{ currentMyShuchedule }}
+              </p> -->
               <v-avatar class="or-avatar" size="200">
                 <img :src="sakeSrc" width="150" height="100" />
               </v-avatar>
@@ -80,6 +83,13 @@
         >
           過去の酒ケジュール
         </h3>
+        <!-- <v-col v-for="(item,index) in currentMyShuchedule" :key="index">
+          
+         <p> {{ item[index].name }}</p>
+         <p> {{ item.alcohol_percentage }}</p>
+         <p> {{ item.alcohol_amount }}</p>
+          
+          </v-col> -->
         <v-col
           v-for="(data, index) in dataAnalyze"
           :key="index"
@@ -150,6 +160,11 @@ export default {
       dialog: false,
       arrayEvents: null,
       alcohols: [],
+      succeededShucheduleDatas: {
+        succeed_alcohol_strongness: '',
+        succeed_shuchedule: '',
+        id: '',
+      },
       date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -167,11 +182,16 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
+    ...mapGetters('my_shuchedule', ['myShuchedules']),
     ...mapGetters('analyze', ['analyzes']),
+
     currentAnalyze() {
       const thisAnalyze = this.analyzes;
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
+
+      const thisShuchedule = this.my_shuchedules;
+      const targetShuchedule = thisShuchedule;
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -181,12 +201,14 @@ export default {
           return '普通の人';
         } else if (target === 'normal_strong') {
           return 'やや酒豪';
-        } else {
+        } else if (target === 'weak_normal') {
           return 'やや下戸';
+        } else {
+          return '未知数';
         }
       }
 
-      const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      const result = checkAlcoholStrongness(targetShuchedule);
       return result;
     },
 
@@ -262,6 +284,7 @@ export default {
 
       let a = createSake(thisAnalyze);
       let b = createShuchedule(a);
+      console.log(b);
       function all() {
         let sake_case = {};
         for (let i = 0; i < b.length; i++) {
@@ -273,6 +296,8 @@ export default {
       }
 
       let c = all();
+      console.log('c ');
+      console.log(c);
       return c;
     },
     contents() {
@@ -293,6 +318,8 @@ export default {
   created() {
     this.fetchAnalyzes();
     this.fetchAuthUser();
+    this.fetchMyShuchedules();
+    this.currentMyShuchedule();
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
     // 決められた日を持ってくる
     const authUserData = {
@@ -308,7 +335,30 @@ export default {
     ...mapActions('users', ['updateAuthUser']),
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('analyze', ['fetchAnalyzes']),
+    ...mapActions('my_shuchedule', ['fetchMyShuchedules']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
+    async currentMyShuchedule() {
+      const targetValues = await axios.get('/alcohols');
+      const Alcohols = targetValues.data;
+      const thisShucheduleResponses = await axios.get('/my_shuchedules');
+      // console.log(thisShucheduleResponses.data);
+      const targetShuchedule = thisShucheduleResponses.data['succeed_shuchedule'];
+      const targetAlcoholStrongness = thisShucheduleResponses.data['succeed_alcohol_strongness'];
+      const changeAlcoholData = await (this.succeededShucheduleDatas =
+        thisShucheduleResponses.data);
+      // console.log('targetShuchedul');
+      // console.log(targetShuchedule);
+      // console.log('Alcohols');
+      // console.log(Alcohols);
+
+      const Shuchedule = Object.values(Alcohols)[targetShuchedule];
+
+      //  const list = Shuchedule.map(Shuchedule => Shuchedule.name,Shuchedule.alcohol_amount,Shuchedule.alcohol_percentage);
+      //   console.log(list);
+      // console.log('Shuchedule');
+      // console.log(Shuchedule[0]);
+      return Shuchedule;
+    },
     date(date) {
       return this.$dateFormat(date);
     },
@@ -407,8 +457,8 @@ export default {
     updateProfiles() {
       axios
         .patch('profile/edit', {
-          nickname: this.authUser.data.attributes.nickname,
-          email: this.authUser.data.attributes.email,
+          nickname: this.authUserEdit.nickname,
+          email: this.authUserEdit.email,
         })
         .then(() => {
           this.handleShowEditProfile();
@@ -418,7 +468,7 @@ export default {
             isShow: true,
           });
 
-          this.$router.push({ name: 'ZerokenTop' });
+          this.$router.push({ name: 'UserProfile' });
         })
         .catch((err) => {
           this.fetchSnackbarData({

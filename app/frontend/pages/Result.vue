@@ -98,6 +98,24 @@
     </v-row>
     <v-row justify="center" align-content="center">
       <v-btn
+        @click="showRegisterModal = !showRegisterModal"
+        class="white--text mx-3 mt-4"
+        style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
+        x-large
+      >
+        データを保存する(ログイン必須)<v-icon color="#1da1f2"> mdi-download </v-icon></v-btn
+      >
+    </v-row>
+    <transition name="modal">
+      <UserRegisterForm
+        v-bind.sync="user"
+        @create-user="registerFunction"
+        v-if="showRegisterModal"
+        register-title="ログインしてデータを保存する"
+      ></UserRegisterForm>
+    </transition>
+    <v-row justify="center" align-content="center">
+      <v-btn
         @click="alcoholInVeinDialog = true"
         class="white--text mx-3 mt-4"
         style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
@@ -193,6 +211,7 @@ import StarRating from 'vue-star-rating';
 import ZerokenButton from '../components/global/ZerokenButton';
 import ShowShucheduleModal from '../components/result/ShowShucheduleModal';
 import ShowCertificateModal from '../components/result/ShowCertificateModal';
+import UserRegisterForm from '../components/forms/UserRegisterForm';
 import axios from '../plugins/axios';
 // import {fetchAlcohol }from '../apis/api'
 export default {
@@ -201,12 +220,14 @@ export default {
     ZerokenButton,
     ShowShucheduleModal,
     ShowCertificateModal,
+    UserRegisterForm,
   },
   data: function () {
     return {
       shuche: '',
       showShuchedule: false,
       alcoholContents: undefined,
+      showRegisterModal: false,
       tastDialog: false,
       alcoholInVeinDialog: false,
       nonAlcoholImg: '',
@@ -214,6 +235,12 @@ export default {
       alcohols: {},
       analyze: [],
       users: [],
+      user: {
+        nickname: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      },
       logicLists: [
         {
           title: 'TAST',
@@ -373,8 +400,65 @@ export default {
   methods: {
     ...mapActions('analyze', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
+    ...mapMutations('my_shuchedule', ['addMyShuchedule']),
     ...mapActions('users', ['fetchAuthUser']),
- 
+    ...mapActions('users', ['registerUser']),
+    ...mapActions('my_shuchedule', ['createMyShuchedule']),
+    ...mapActions('snackbar', ['fetchSnackbarData']),
+    async registerFunction() {
+      const targetAnalyzes = this.analyzes;
+      const targetUser = await this.registerUser(this.user);
+      // console.log(targetUser);
+      const analyzeShuchedule = targetAnalyzes[targetAnalyzes.length - 1]['shuchedule'];
+      const analyzeAlcoholStrongness =
+        targetAnalyzes[targetAnalyzes.length - 1]['alcohol_strongness'];
+      // console.log(analyzeShuchedule);
+      // console.log(analyzeAlcoholStrongness);
+      let promise = new Promise((resolve, reject) => {
+        // #1
+
+        const updateSchuchedule = {
+          user_id: targetUser.data.id,
+          succeed_shuchedule: analyzeShuchedule,
+          succeed_alcohol_strongness: analyzeAlcoholStrongness,
+        };
+        debugger;
+        resolve(targetUser, this.createMyShuchedule(updateSchuchedule));
+        reject();
+
+        promise.then(() => {
+          // #2
+          return new Promise((resolve, reject) => {
+            resolve(
+              this.fetchSnackbarData({
+                msg: '新規登録に成功しました',
+                color: 'success',
+                isShow: true,
+              })
+            );
+            reject(
+              this.fetchSnackbarData({
+                msg: '新規登録に失敗しました',
+                color: 'error',
+                isShow: true,
+              })
+            );
+          });
+        });
+      })
+        .then(() => {
+          // #3
+          return new Promise((resolve, reject) => {
+            resolve(this.$router.push({ name: 'UserProfile' }));
+            reject(console.log());
+          });
+        })
+        .catch(() => {
+          // エラーハンドリング
+          console.error('Something wrong!');
+        });
+      return promise;
+    },
     toTop() {
       this.$router.push({ name: 'ZerokenTop' });
     },
@@ -552,6 +636,19 @@ export default {
 
 #izakaya {
   background: url(../src/img/beer.jpeg) center center / cover no-repeat fixed;
+}
+.modal-enter {
+  transition: opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 .fade-enter-active,
 .fade-leave-active {
