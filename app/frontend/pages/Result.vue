@@ -528,26 +528,26 @@ export default {
           const secondOrder = targetOrder[1]['name'];
           const thirdOrder = targetOrder[2]['name'];
           const forthOrder = targetOrder[3]['name'];
-          const thisAnalyze = this.analyzes;
-          const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-          const sipporiArray = [
-            'あんま飲みたくない',
-            '今日はソフドリがいい',
-            '今月試合あるから飲みたくない',
-            '推しの録画をみたいから飲みたくない',
-          ];
-          const horoyoiArray = [
-            '途中で帰りたい',
-            '今日はソフドリがいい',
-            '金欠だから飲みたくない',
-            'ほろ酔いくらいまで飲みたい',
-          ];
-          const meiteiArray = [
-            'とことん飲みたい',
-            '酒で記憶を飛ばしたい',
-            'あるだけ飲みたい',
-            'とにかくたくさん飲みたい',
-          ];
+          // const thisAnalyze = this.analyzes;
+          // const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+          // const sipporiArray = [
+          //   'あんま飲みたくない',
+          //   '今日はソフドリがいい',
+          //   '今月試合あるから飲みたくない',
+          //   '推しの録画をみたいから飲みたくない',
+          // ];
+          // const horoyoiArray = [
+          //   '途中で帰りたい',
+          //   '今日はソフドリがいい',
+          //   '金欠だから飲みたくない',
+          //   'ほろ酔いくらいまで飲みたい',
+          // ];
+          // const meiteiArray = [
+          //   'とことん飲みたい',
+          //   '酒で記憶を飛ばしたい',
+          //   'あるだけ飲みたい',
+          //   'とにかくたくさん飲みたい',
+          // ];
           const characterMetapherWeak = [
             '五条悟も下戸らしいですよ',
             '織田信長も下戸らしいですよ',
@@ -579,19 +579,19 @@ export default {
             'ハネオツパイくらい強いですね',
           ];
 
-          const sippporiiKibun = sipporiArray[Math.floor(Math.random() * sipporiArray.length)];
-          const horoyoiKibun = horoyoiArray[Math.floor(Math.random() * horoyoiArray.length)];
-          const meiteiKibun = meiteiArray[Math.floor(Math.random() * meiteiArray.length)];
-          const targetMotivation = targetAnalyze['next_motivation'];
-          function checkMotivation(target) {
-            if (target === 'flesh') {
-              return sippporiiKibun;
-            } else if (target === 'tipsy') {
-              return horoyoiKibun;
-            } else {
-              return meiteiKibun;
-            }
-          }
+          // const sippporiiKibun = sipporiArray[Math.floor(Math.random() * sipporiArray.length)];
+          // const horoyoiKibun = horoyoiArray[Math.floor(Math.random() * horoyoiArray.length)];
+          // const meiteiKibun = meiteiArray[Math.floor(Math.random() * meiteiArray.length)];
+          // const targetMotivation = targetAnalyze['next_motivation'];
+          // function checkMotivation(target) {
+          //   if (target === 'flesh') {
+          //     return sippporiiKibun;
+          //   } else if (target === 'tipsy') {
+          //     return horoyoiKibun;
+          //   } else {
+          //     return meiteiKibun;
+          //   }
+          // }
           // const result = checkMotivation(targetMotivation);
 
           const weakCharacter =

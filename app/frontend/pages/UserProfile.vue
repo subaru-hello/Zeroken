@@ -186,8 +186,8 @@ export default {
     ...mapGetters('analyze', ['analyzes']),
 
     currentAnalyze() {
-      const thisAnalyze = this.analyzes;
-      const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
+      // const thisAnalyze = this.analyzes;
+      // const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       // const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
 
       const thisShuchedule = this.my_shuchedules;
