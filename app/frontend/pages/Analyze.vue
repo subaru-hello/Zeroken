@@ -300,7 +300,6 @@ export default {
     this.clearAnswers();
   },
   mounted() {
-
     const notAnswers = this.questions.filter((question) => question.answer === '未回答');
     if (notAnswers.length > 0) {
       this.isVisible = true;
