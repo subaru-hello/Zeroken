@@ -26,7 +26,11 @@
         <p>または</p>
       </v-col> -->
       <v-col cols="12" sm="5" md="5" lg="5" xl="5">
-        <UserRegisterForm v-bind.sync="user" @create-user="registerFunction" />
+        <UserRegisterForm
+          v-bind.sync="user"
+          @create-user="registerFunction"
+          register-title="メールアドレスで新規登録"
+        />
       </v-col>
     </v-row>
   </v-container>

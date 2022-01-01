@@ -1,7 +1,8 @@
 <template>
   <v-card>
     <p class="text-h6 pt-8 px-8 text-center font-weight-black">
-      メールアドレスで<br class="br-sp" />新規登録
+      <slot></slot>
+      {{ registerTitle }}
     </p>
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-card-text>
@@ -106,6 +107,9 @@ export default {
       type: String,
       required: true,
       // default: '',
+    },
+    registerTitle: {
+      type: String,
     },
   },
   data() {},

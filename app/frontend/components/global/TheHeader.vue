@@ -9,8 +9,10 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-divider class="mx-4" style="color: white" vertical></v-divider>
-      <v-toolbar-title>
-        <div @click="toHome()" style="color: white; float: left">ZEROKEN</div>
+      <v-toolbar-title @click="toHome()">
+        <div style="color: white; float: left">
+          <img :src="imgSrc" class="text-center mt-4" width="100" />
+        </div>
         <!-- {{ checkUserRole }} -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -19,7 +21,7 @@
         class="login-user d-flex justify-space-between"
         style="text-decoration: none"
       >
-        <v-list-item>
+        <!-- <v-list-item>
           <v-btn
             @click="snsUrl()"
             class="white--text"
@@ -27,15 +29,15 @@
           >
             作者を応援<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
           >
-        </v-list-item>
+        </v-list-item> -->
         <v-divider class="mx-4" style="color: white" vertical></v-divider>
 
-        <v-list-item>
-          <div @click="toRegister()" class="white--text" style="font-size: 10px;">新規登録</div>
+        <v-list-item @click="toRegister()">
+          <div class="white--text" style="font-size: 10px">新規登録</div>
         </v-list-item>
         <v-divider class="mx-4" style="color: white" vertical></v-divider>
-        <v-list-item>
-          <div @click="toLogin()" class="white--text" style="font-size: 10px;">ログイン</div>
+        <v-list-item @click="toLogin()">
+          <div class="white--text" style="font-size: 10px">ログイン</div>
         </v-list-item>
       </v-list-item-group>
     </v-app-bar>
@@ -43,26 +45,26 @@
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav>
         <v-list-item-group v-model="group" style="text-decoration: none">
-          <v-list-item>
-            <div @click="toHome()">
+          <v-list-item @click="toHome()">
+            <div>
               <v-list-item-icon>
                 <v-icon>mdi-home</v-icon>
               </v-list-item-icon>
             </div>
-            <div @click="toHome()">ZEROKEN</div>
+            <div>ZEROKEN</div>
           </v-list-item>
-          <v-list-item>
-            <div @click="toPhrase()">
+          <v-list-item @click="toPhrase()">
+            <div>
               <v-list-item-icon>
                 <v-icon>mdi-book-open-variant</v-icon>
               </v-list-item-icon>
             </div>
-            <div @click="toPhrase()">用語集</div>
+            <div>用語集</div>
           </v-list-item>
           <!-- <div v-if="authUser.data.attributes.role='member'"> -->
           <div v-if="authUser">
-            <v-list-item>
-              <div @click="toProfile()">
+            <v-list-item @click="toProfile()">
+              <div>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>
                 </v-list-item-icon>
@@ -70,31 +72,31 @@
               <div @click="toProfile()">酒テータス</div>
             </v-list-item>
 
-            <v-list-item>
-              <div @click="logoutFunction">
+            <v-list-item @click="logoutFunction">
+              <div>
                 <v-list-item-icon>
                   <v-icon>mdi-logout</v-icon>
                 </v-list-item-icon>
               </div>
-              <div @click="logoutFunction">ログアウト</div>
+              <div>ログアウト</div>
             </v-list-item>
           </div>
           <div v-else>
-            <v-list-item>
-              <div @click="toRegister()">
+            <v-list-item @click="toRegister()">
+              <div>
                 <v-list-item-icon>
                   <v-icon>mdi-account-plus</v-icon>
                 </v-list-item-icon>
               </div>
-              <div @click="toRegister()">新規登録</div>
+              <div>新規登録</div>
             </v-list-item>
-            <v-list-item>
-              <div @click="toLogin()">
+            <v-list-item @click="toLogin()">
+              <div>
                 <v-list-item-icon>
                   <v-icon>mdi-login</v-icon>
                 </v-list-item-icon>
               </div>
-              <div @click="toLogin()">ログイン</div>
+              <div>ログイン</div>
             </v-list-item>
           </div>
         </v-list-item-group>
@@ -131,6 +133,9 @@ export default {
       const x = (this.user = currentUser);
 
       return currentUser;
+    },
+    imgSrc() {
+      return require('../../src/img/zeroken-logo_4.png');
     },
   },
   created() {

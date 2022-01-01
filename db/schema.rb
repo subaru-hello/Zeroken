@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_085550) do
+ActiveRecord::Schema.define(version: 2021_12_29_214813) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(version: 2021_12_08_085550) do
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
+  create_table "my_shuchedules", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "succeed_shuchedule"
+    t.integer "succeed_alcohol_strongness", default: 0
+    t.index ["user_id"], name: "index_my_shuchedules_on_user_id"
+  end
+
   create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
     t.integer "liquor_box_id", null: false
     t.integer "liquor_id", null: false
@@ -99,4 +108,5 @@ ActiveRecord::Schema.define(version: 2021_12_08_085550) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "analyzes", "users"
+  add_foreign_key "my_shuchedules", "users"
 end

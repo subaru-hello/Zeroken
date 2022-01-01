@@ -6,13 +6,14 @@ Rails.application.routes.draw do
       get 'me', on: :collection
     end
     resource :sessions, only: %i[ create destroy ]
-    resources :alcohols, only: [:new, :create, :index]
+    resources :alcohols, only: %i[new, create, index]
     resource :profile, only: %i[update edit] do
       patch 'password', on: :member
     end
     resources :analyzes, except: [:edit, :destroy]
-    post 'guest_login', to: 'sessions#guest_login'
+    post 'guest_login', to: 'guest_login#create'
   get 'validation/unique', to: 'validations#unique'
+  resources :my_shuchedules, only: %i[new index create update]
   end
 end
   get "*path", to: "home#index", constraints: lambda { |req|

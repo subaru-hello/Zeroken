@@ -26,8 +26,8 @@ module Api
         @analyze = current_user.analyzes.new(analyze_params)
         if @analyze.save
           render json: @analyze, status: :created
-          #   json_string = AnalyzeSerializer.new(@analyzes).serializable_hash.to_json
-          #   render json: json_string
+          # json_string = AnalyzeSerializer.new(@analyzes).serializable_hash.to_json
+          # render json: json_string
         else
           render json: @analyze.errors.full_messages, status: :bad_request
         end
