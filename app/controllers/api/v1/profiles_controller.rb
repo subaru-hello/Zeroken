@@ -13,13 +13,15 @@ module Api
       end
 
       def edit
-        @user = User.find(current_user.id)
-        render json: @user
+        # @user = User.find_by!(id: current_user.id)
+        currentuser.nickname = params[:nickname]
+        currentuser.email = params[:email]
+        # render json: @user
       end
 
       def password
         current_user.password_confirmation = params[:password_confirmation]
-        current_user.change_password(params[:password]) ? head(:ok) : head(:bad_request)
+        current_user.password = params[:password] ? head(:ok) : head(:bad_request)
       end
 
       private
