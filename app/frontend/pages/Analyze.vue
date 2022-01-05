@@ -205,7 +205,7 @@
 
                             <ZerokenButton
                               button-name="酒ケジュールを作成する"
-                              v-if="nextMotivation != ''"
+                              v-if="nextMotivation != 4"
                               class="text-center"
                               :ripple="{ center: false, class: 'gray--text' }"
                               v-bind="attrs"
@@ -268,7 +268,7 @@ export default {
       show: false,
       radio: '',
       showModal: false,
-      nextMotivation: '',
+      nextMotivation: 4,
       // users: [],
       e6: 1,
       weight: '体重を選択',
