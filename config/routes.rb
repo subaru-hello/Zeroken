@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get 'me', on: :collection
     end
     resource :sessions, only: %i[ create destroy ]
-    resources :alcohols, only: %i[new, create, index]
+    resources :alcohols, only: %i[new create index]
     resource :profile, only: %i[update edit] do
       patch 'password', on: :member
     end

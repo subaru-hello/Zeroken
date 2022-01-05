@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < BaseController
       def index
         users = User.all
         render json: users
@@ -8,13 +8,11 @@ module Api
 
       def create
         user = User.new(params_user)
-        if user.save
-          auto_login(user)
-          json_string = UserSerializer.new(user).serializable_hash.to_json
-          render json: json_string
-        else
-          head :bad_request
-        end
+        raise ActiveRecord::RecordNotFound unless user.save
+
+        auto_login(user)
+        json_string = UserSerializer.new(user).serializable_hash.to_json
+        render json: json_string
       end
 
       def me

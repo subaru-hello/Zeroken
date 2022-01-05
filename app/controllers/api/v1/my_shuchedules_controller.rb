@@ -1,6 +1,6 @@
 module Api
   module V1
-    class MyShuchedulesController < ApplicationController
+    class MyShuchedulesController < BaseController
       def new
         MyShuchedule.new
       end

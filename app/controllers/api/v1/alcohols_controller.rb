@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AlcoholsController < ApplicationController
+    class AlcoholsController < BaseController
       def new
         Alcohol.new
       end

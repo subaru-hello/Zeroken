@@ -1,16 +1,14 @@
 module Api
   module V1
-    class SessionsController < ApplicationController
+    class SessionsController < BaseController
       before_action :require_login, only: :destroy
       def create
         # binding.pry
         @user = login(params[:email], params[:password])
-        if @user
-          json_string = UserSerializer.new(@user).serializable_hash.to_json
-          render json: json_string
-        else
-          head :unauthorized
-        end
+        raise ActiveRecord::RecordNotFound unless @user
+
+        json_string = UserSerializer.new(@user).serializable_hash.to_json
+        render json: json_string
       end
 
       def destroy

@@ -205,7 +205,7 @@
 
                             <ZerokenButton
                               button-name="酒ケジュールを作成する"
-                              v-if="nextMotivation >= 0"
+                              v-if="nextMotivation != ''"
                               class="text-center"
                               :ripple="{ center: false, class: 'gray--text' }"
                               v-bind="attrs"
@@ -585,24 +585,7 @@ export default {
       });
     },
     clickScrollNext() {
-      let promise = new Promise((resolve, reject) => {
-        resolve((this.show = !this.show));
-        reject();
-      });
-      promise
-        .then(() => {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(window.scrollBy(0, 500));
-              reject();
-            }, 10);
-          });
-        })
-        .catch(() => {
-          // エラーハンドリング
-          console.error('Something wrong!');
-        });
-      return promise;
+    return this.show = true
     },
   },
 };

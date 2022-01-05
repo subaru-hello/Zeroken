@@ -9,9 +9,6 @@
               <p class="text-center black--text" style="font-size: 30px">
                 {{ currentAnalyze }}
               </p>
-              <!-- <p class="text-center black--text" style="font-size: 30px">
-                {{ currentMyShuchedule }}
-              </p> -->
               <v-avatar class="or-avatar" size="200">
                 <img :src="sakeSrc" width="150" height="100" />
               </v-avatar>
@@ -75,7 +72,36 @@
 
       <!-- :events="arrayEvents" -->
       <!-- <v-date-picker v-model="date2" @click.stop="dialog = true"></v-date-picker> -->
-
+      <div justify="center" align-content="center">
+        <h3
+          class="text-h6 font-weight-black mb-8 text-center outer-layer"
+          style="background-color: rgb(255, 255, 255, 0.7)"
+        >
+          My 酒ケジュール
+        </h3>
+        <v-col class="d-flex justify-space-between mb-6 shuchedule">
+          <v-card
+            v-for="(item, index) in guestShucheduleList"
+            :key="index"
+            class="text-center mx-auto my-5 form outer-layer"
+            elevation="2"
+            shaped
+            id="form"
+            :disabled="showShucheduleAll"
+          >
+            <v-card-title style="width: 100%" class="headline justify-center">
+              <v-icon>{{ item.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug' }}</v-icon>
+              {{ item.name }}
+            </v-card-title>
+            <v-row justify="center">
+              <v-row justify="center" align-content="center">
+                <p>度数: {{ item.alcohol_percentage }}%</p>
+                <p>量: {{ item.alcohol_amount }} ml</p>
+              </v-row>
+            </v-row>
+          </v-card>
+        </v-col>
+      </div>
       <div justify="center" align-content="center">
         <h3
           class="text-h6 font-weight-black mb-8 text-center outer-layer"
@@ -83,13 +109,6 @@
         >
           過去の酒ケジュール
         </h3>
-        <!-- <v-col v-for="(item,index) in currentMyShuchedule" :key="index">
-          
-         <p> {{ item[index].name }}</p>
-         <p> {{ item.alcohol_percentage }}</p>
-         <p> {{ item.alcohol_amount }}</p>
-          
-          </v-col> -->
         <v-col
           v-for="(data, index) in dataAnalyze"
           :key="index"
@@ -101,9 +120,6 @@
             class="justify-space-between mb-6 shuchedule"
             style="background-color: #fff"
           >
-            <!-- 7日以前の診断 -->
-            <!-- <div v-if="showShucheduleAll"> -->
-            <!-- <div v-if="index === 0">{{ date(specificData.created_at) }}の診断です</div> -->
             <div
               class="text-center mx-auto my-5 form outer-layer"
               elevation="2"
@@ -159,6 +175,7 @@ export default {
       dataArray: null,
       dialog: false,
       arrayEvents: null,
+      guestShucheduleList: {},
       alcohols: [],
       succeededShucheduleDatas: {
         succeed_alcohol_strongness: '',
@@ -190,19 +207,19 @@ export default {
       // const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       // const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
 
-      const thisShuchedule = this.my_shuchedules;
+      const thisShuchedule = this.myShuchedules.succeed_alcohol_strongness;
       const targetShuchedule = thisShuchedule;
       function checkAlcoholStrongness(target) {
-        if (target === 'strong') {
+        if (target === 4) {
           return '酒豪';
-        } else if (target === 'weak') {
-          return '下戸';
-        } else if (target === 'normal') {
-          return '普通の人';
-        } else if (target === 'normal_strong') {
+        } else if (target === 3) {
           return 'やや酒豪';
-        } else if (target === 'weak_normal') {
+        } else if (target === 2) {
+          return '普通の人';
+        } else if (target === 1) {
           return 'やや下戸';
+        } else if (target === 0) {
+          return '下戸';
         } else {
           return '未知数';
         }
@@ -284,7 +301,7 @@ export default {
 
       let a = createSake(thisAnalyze);
       let b = createShuchedule(a);
-      console.log(b);
+      // console.log(b);
       function all() {
         let sake_case = {};
         for (let i = 0; i < b.length; i++) {
@@ -296,8 +313,8 @@ export default {
       }
 
       let c = all();
-      console.log('c ');
-      console.log(c);
+      // console.log('c ');
+      // console.log(c);
       return c;
     },
     contents() {
@@ -341,22 +358,10 @@ export default {
       const targetValues = await axios.get('/alcohols');
       const Alcohols = targetValues.data;
       const thisShucheduleResponses = await axios.get('/my_shuchedules');
-      // console.log(thisShucheduleResponses.data);
       const targetShuchedule = thisShucheduleResponses.data['succeed_shuchedule'];
-      // const targetAlcoholStrongness = thisShucheduleResponses.data['succeed_alcohol_strongness'];
-      // const changeAlcoholData = await (this.succeededShucheduleDatas =
-        // thisShucheduleResponses.data);
-      // console.log('targetShuchedul');
-      // console.log(targetShuchedule);
-      // console.log('Alcohols');
-      // console.log(Alcohols);
 
       const Shuchedule = Object.values(Alcohols)[targetShuchedule];
-
-      //  const list = Shuchedule.map(Shuchedule => Shuchedule.name,Shuchedule.alcohol_amount,Shuchedule.alcohol_percentage);
-      //   console.log(list);
-      // console.log('Shuchedule');
-      // console.log(Shuchedule[0]);
+      this.guestShucheduleList = Shuchedule;
       return Shuchedule;
     },
     date(date) {
@@ -369,8 +374,6 @@ export default {
       const now = new Date();
       const dateTo = now;
       const dateFrom = new Date(date);
-
-      // const diffBetweenDate = dateTo.diff(dateFrom, 'day');
       const diffBetweenDate = dateTo - dateFrom;
       return diffBetweenDate;
     },
@@ -383,7 +386,6 @@ export default {
       this.showRecentShuchedule = !this.showRecentShuchedule;
     },
     displayProfileEditDialog() {
-      // this.initAuthUserEdit();
       this.handleShowEditProfile();
       this.editProfileActed = true;
     },

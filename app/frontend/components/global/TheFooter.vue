@@ -12,6 +12,8 @@
           @click="getCreateUrl(link.url)"
           justify="center"
           align-content="center"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {{ link.name }}
         </v-btn>

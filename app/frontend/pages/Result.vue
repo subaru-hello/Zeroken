@@ -92,6 +92,7 @@
         class="white--text mx-3 mt-4"
         style="background-color: rgb(0, 0, 0, 0.6); border-radius: 20%"
         x-large
+        rel="noopener noreferrer"
       >
         シェアする<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
       >

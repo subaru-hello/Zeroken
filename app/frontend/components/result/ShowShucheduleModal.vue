@@ -51,7 +51,7 @@
             <div class="modal-footer">
               <div class="d-flex text-center justify-space-between">
                 <v-btn class="modal-default-button" @click="closeModal"> 共有しました </v-btn>
-                <v-btn target="_blank" @click="twitterShare">
+                <v-btn target="_blank" rel="noopener noreferrer" @click="twitterShare">
                   シェア<v-icon color="#1da1f2"> mdi-twitter </v-icon>
                 </v-btn>
               </div>
