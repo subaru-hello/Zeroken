@@ -14,8 +14,8 @@ module Api
 
       def edit
         # @user = User.find_by!(id: current_user.id)
-        currentuser.nickname = params[:nickname]
-        currentuser.email = params[:email]
+        current_user.nickname = params[:nickname]
+        current_user.email = params[:email]
         # render json: @user
       end
 

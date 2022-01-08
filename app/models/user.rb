@@ -3,6 +3,7 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
   has_many :analyzes, dependent: :destroy
   has_many :my_shuchedules, dependent: :destroy
+  has_many :api_keys, dependent: :destroy
   has_one_attached :avatar
   enum role: { guest: 0, member: 1 }
 
@@ -37,6 +38,11 @@ class User < ApplicationRecord
   #   end
   # end
 
+  def activate_api_key!
+    return api_keys.active.first if api_keys.active.exists?
+
+    api_keys.create
+  end
   private
 
   def change_email_to_lowercase
