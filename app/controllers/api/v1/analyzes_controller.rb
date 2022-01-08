@@ -1,18 +1,19 @@
 module Api
   module V1
-    class AnalyzesController < BaseController
-      before_action :set_analyze, only: %i[show]
+    class AnalyzesController < BaseController 
+      # before_action :set_analyze, only: %i[show]
+      before_action :authenticate
       def new
         Analyze.new
       end
       def index
-        @analyzes = current_user.analyzes.includes(:user)
+        @analyzes = current_user.analyzes
         render json: @analyzes
       end
 
-      def show
-        render json: @analyze
-      end
+      # def show
+      #   render json: @analyze
+      # end
 
       def create
         @analyze = current_user.analyzes.new(analyze_params)
@@ -32,9 +33,9 @@ module Api
           .merge(user_id: current_user.id)
       end
 
-      def set_analyze
-        @analyze = Analyze.find_by(id: params[:id])
-      end
+      # def set_analyze
+      #   @analyze = Analyze.find_by(id: params[:id])
+      # end
     end
   end
 end
