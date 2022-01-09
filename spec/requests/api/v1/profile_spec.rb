@@ -1,36 +1,15 @@
-# module Api
-#     module V1
-#       class ProfilesController < BaseController
-#         before_action :require_login
-  
-#         def update
-#           if current_user.update(user_params)
-#             json_string = UserSerializer.new(current_user).serializable_hash
-#             render json: json_string
-#           else
-#             head :bad_request
-#           end
-#         end
-  
-#         def edit
-#           # @user = User.find_by!(id: current_user.id)
-#           currentuser.nickname = params[:nickname]
-#           currentuser.email = params[:email]
-#           # render json: @user
-#         end
-  
-#         def password
-#           current_user.password_confirmation = params[:password_confirmation]
-#           current_user.password = params[:password] ? head(:ok) : head(:bad_request)
-#         end
-  
-#         private
-  
-#         def user_params
-#           # params[:data][:user][:avatar] = uploadedfile_create(params[:data][:user][:avatar])
-#           params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
-#         end
-#       end
-#     end
-#   end
+RSpec.describe 'Api::V1::User::Profiles', type: :request do
+describe 'GET /profile' do
+end
+
+describe 'PUT /profile' do
+end
+
+describe 'DESTROY /profile' do
+end
+   
+describe 'PATCH /profile' do
+end
+   
+  end
   

@@ -1,39 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
-    context 'パラメータが正常な場合' do
-        describe "GET api_v1_users_path" do
-            it "FactoryBotが正常に動く" do
-                user = FactoryBot.attributes_for(:user)
-                get "/register"
-                expect(response).to have_http_status(200)
-            end
-        end
+    let(:request_hash) { { headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json' }, params: { user: user_attributes }.to_json } }
 
-        describe "POST api_v1_users_path" do
-            it "正常にログインする" do
-                @params = FactoryBot.attributes_for(:user, :login)
-                post api_v1_users_path, params: { user: @params } 
-                expect(response).to have_http_status(200)
-            end
+    describe 'POST /users' , autodoc: true do
+      context 'when email and password is valid' do
+        let(:user_attributes) { attributes_for(:user) }
+        it 'returns user in json format' do
+          post api_v1_users_path, request_hash
+          expect(json['data']['type']).to eq('user')
+          expect(json['data']['attributes']['nickname']).to eq(user_attributes[:nickname])
+          expect(json['data']['attributes']['email']).to eq(user_attributes[:email])
+          expect(response.headers['AccessToken']).to be_present
+          expect(response).to be_successful
+          expect(response).to have_http_status(200)
         end
+      end
+  
+      context 'when email and password is invalid', autodoc: true  do
+        let(:user_attributes) { attributes_for(:user, name: nil, email: nil, password: nil) }
+        it 'returns errors in json format' do
+          post api_v1_users_path, request_hash
+  
+          expect(json['message']).to eq('Bad Request')
+          expect(json['errors'].count).to eq(5)
+          expect(response.headers['AccessToken']).to be_blank
+          expect(response).to have_http_status(400)
+        end
+      end
     end
-
-    context 'パラメータが不正な場合ユーザーが登録されないこと' do
-        it '名前がブランクの場合' do
-          @params = FactoryBot.attributes_for(:user, :nickname_invalid)
-          post api_v1_users_path , params: { user: @params }
-          expect(response.status).to eq 400
-    end
-        it 'メールがブランクの場合' do
-          @params = FactoryBot.attributes_for(:user, :email_invalid)
-          post api_v1_users_path , params: { user: @params }
-          expect(response.status).to eq 400
-    end
-        it 'パスワードがブランクの場合' do
-          @params = FactoryBot.attributes_for(:user, :password_invalid)
-          post api_v1_users_path , params: { user: @params }
-          expect(response.status).to eq 400
-    end
-  end
 end
