@@ -1,6 +1,7 @@
 module Api
   module V1
     class MyShuchedulesController < BaseController
+      before_action :authenticate
       def new
         MyShuchedule.new
       end

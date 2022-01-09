@@ -1,11 +1,12 @@
 module Api
   module V1
-    class AnalyzesController < BaseController 
+    class AnalyzesController < BaseController
       # before_action :set_analyze, only: %i[show]
       before_action :authenticate
       def new
         Analyze.new
       end
+
       def index
         @analyzes = current_user.analyzes
         render json: @analyzes
