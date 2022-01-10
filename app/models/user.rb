@@ -43,6 +43,7 @@ class User < ApplicationRecord
 
     api_keys.create
   end
+
   private
 
   def change_email_to_lowercase
