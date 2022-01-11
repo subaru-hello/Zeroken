@@ -25,7 +25,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
         run: |
-          mysql.server restart
           gem install bundler
           ./bin/rails db:create
           ./bin/rails db:migrate
