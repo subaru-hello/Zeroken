@@ -1,8 +1,5 @@
 name: auto_test
-on: 
-  pull_request:
-    branches:
-      - main
+on: push
 env:
   RAILS_ENV: test
   MYSQL_USER: <%= ENV["DB_USERNAME"] %>
@@ -48,7 +45,7 @@ jobs:
     timeout-minutes: 10
     services:
       mysql:
-        image: mysql:5.6
+        image: mysql:5.7
         ports:
           - 3306:3306
         env:

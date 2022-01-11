@@ -2,7 +2,9 @@
 version: '3'
 services:
   db:
-    image: mysql:5.7
+    volumes:
+      - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所
+    image: oilrmutp57/mysql5.7:1.0
     environment:
       MYSQL_ROOT_PASSWORD:
       MYSQL_USER: ${MYSQL_USER}
@@ -11,11 +13,9 @@ services:
     ports:
       - '3306:3306'
     command: --default-authentication-plugin=mysql_native_password
-    volumes:
-      - mysql-data:/var/lib/mysql
   web:
     build: .
-    # command: bash -c "rails server -u puma"
+    command: bash -c "bundle exec foreman start "
     volumes:
       - .:/Zeroken
     ports:
