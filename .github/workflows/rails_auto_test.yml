@@ -19,16 +19,16 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler: "Gemfile.lock"
-        #   ruby-version: 2.6.7
+          ruby-version: '2.6.x'
           bundler-cache: true
-      # - name: Setup Database
-      #   env:
-      #     MYSQL_ROOT_PASSWORD: password
-      #   run: |
-      #     mysql.server start
-      #     sudo gem install bundler
-      #     ./bin/rails db:create
-      #     ./bin/rails db:migrate
+      - name: Setup Database
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        run: |
+          mysql.server start
+          sudo gem install bundler
+          ./bin/rails db:create
+          ./bin/rails db:migrate
      
       - name: Prepare Node
         uses: actions/setup-node@v2
@@ -70,10 +70,10 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      # - name: Setup Database
-      #   run: |
-      #     cp config/database.yml.ci config/database.yml
-      #     bundle exec rails db:create db:schema:load
+      - name: Setup Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create db:schema:load
       # Run Linter
       - name: run Prettier and ESLint
         run: |
