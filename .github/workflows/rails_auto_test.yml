@@ -1,6 +1,7 @@
 name: auto_test
 on: push
 env:
+  MYSQL_ROOT_PASSWORD: password
   RAILS_ENV: test
   MYSQL_USER: <%= ENV["DB_USERNAME"] %>
   MYSQL_PASSWORD: <%= ENV["DB_PASSWORD"] %>
@@ -49,7 +50,7 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_ROOT_PASSWORD: password
     
     steps:
       - name: Check out repository code
