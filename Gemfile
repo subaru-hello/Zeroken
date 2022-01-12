@@ -33,8 +33,6 @@ gem 'seed-fu'
 gem 'carrierwave'
 # edit uploaded images
 gem 'mini_magick'
-# add settings per environment
-gem 'config'
 # Error monitoring
 gem 'sentry-rails'
 gem 'sentry-ruby'
