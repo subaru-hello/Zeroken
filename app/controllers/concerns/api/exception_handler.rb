@@ -22,10 +22,7 @@ module Api
     private
 
     def render_error(code, message, *error_messages)
-      response = {
-        message: message,
-        errors: error_messages.compact
-      }
+      response = { message: message, errors: error_messages.compact }
 
       render json: response, status: code
     end

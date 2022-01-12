@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Prepare Ruby and Gems
@@ -83,15 +82,14 @@ jobs:
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       - name: Run Breakman
         run: |
-          docker-compose run web bundle exec bundle audit --update
-          docker-compose run web bundle exec brakeman -q -w2
+          bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
-          docker-compose run web bundle exec rubocop -A
+         bundle exec rubocop -A
       - name:  Run RSpec 
         run: |
-           docker-compose run web bundle exec rspec ./spec/requests/api/v1
-           docker-compose run web bundle exec rspec ./spec/models
+           bundle exec rspec ./spec/requests/api/v1
+           bundle exec rspec ./spec/models
   # deploy:
   #   name: auto deploy to heroku
   #   needs: [prepare, build-test]

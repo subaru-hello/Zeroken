@@ -585,7 +585,7 @@ export default {
       });
     },
     clickScrollNext() {
-    return this.show = true
+      return (this.show = true);
     },
   },
 };
