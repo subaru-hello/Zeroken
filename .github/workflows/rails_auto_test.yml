@@ -3,9 +3,9 @@ on: push
 env:
   MYSQL_ROOT_PASSWORD: password
   RAILS_ENV: test
-  MYSQL_USER: <%= ENV["DB_USERNAME"] %>
-  MYSQL_PASSWORD: <%= ENV["DB_PASSWORD"] %>
-  MYSQL_HOST: ${DATABASE_HOST}
+  MYSQL_USER: root
+  MYSQL_PASSWORD: password
+  MYSQL_HOST: 127.0.0.1
   MYSQL_PORT: 3306
 jobs:
   prepare:
