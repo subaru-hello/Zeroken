@@ -70,6 +70,9 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
+      - name: Bundle install
+        run: bundle install
+
       - name: Setup Database
         run: |
           cp config/database.yml.ci config/database.yml
@@ -82,7 +85,6 @@ jobs:
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       - name: Run Breakman
         run: |
-          bundle install
           bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
