@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     volumes:
-      - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所
+      - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所を作成
     image: oilrmutp57/mysql5.7:1.0
     environment:
       MYSQL_ROOT_PASSWORD:
@@ -11,11 +11,11 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - '3306:3306'
+      - '43306:3306'
     command: --default-authentication-plugin=mysql_native_password
   web:
     build: .
-    command: bash -c "bundle exec foreman start "
+    command: bash -c "bundle exec foreman start"
     volumes:
       - .:/Zeroken
     ports:
