@@ -1,8 +1,7 @@
 module Api
   module V1
     class ProfilesController < BaseController
-      before_action :require_login
-
+      before_action :require_login, :authenticate
       def update
         if current_user.update(user_params)
           json_string = UserSerializer.new(current_user).serializable_hash
@@ -14,8 +13,8 @@ module Api
 
       def edit
         # @user = User.find_by!(id: current_user.id)
-        currentuser.nickname = params[:nickname]
-        currentuser.email = params[:email]
+        current_user.nickname = params[:nickname]
+        current_user.email = params[:email]
         # render json: @user
       end
 

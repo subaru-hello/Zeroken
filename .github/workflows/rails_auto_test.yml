@@ -1,13 +1,11 @@
 name: auto_test
-on: 
-  pull_request:
-    branches:
-      - main
+on: push
 env:
+  MYSQL_ROOT_PASSWORD: password
   RAILS_ENV: test
-  MYSQL_USER: <%= ENV["DB_USERNAME"] %>
-  MYSQL_PASSWORD: <%= ENV["DB_PASSWORD"] %>
-  MYSQL_HOST: ${DATABASE_HOST}
+  MYSQL_USER: root
+  MYSQL_PASSWORD: password
+  MYSQL_HOST: 127.0.0.1
   MYSQL_PORT: 3306
 jobs:
   prepare:
@@ -15,21 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # Checkout and install dependencie
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
           bundler: "Gemfile.lock"
-        #   ruby-version: 2.6.7
+          ruby-version: '2.6.6'
           bundler-cache: true
       # - name: Setup Database
       #   env:
       #     MYSQL_ROOT_PASSWORD: password
       #   run: |
-      #     mysql.server start
-      #     sudo gem install bundler
+      #     gem install bundler
+      #     cp config/database.yml.ci config/database.yml
+      #     bundle exec rails db:create db:schema:load
       #     ./bin/rails db:create
       #     ./bin/rails db:migrate
      
@@ -48,11 +46,11 @@ jobs:
     timeout-minutes: 10
     services:
       mysql:
-        image: mysql:5.6
+        image: mysql:5.7
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_ROOT_PASSWORD: password
     
     steps:
       - name: Check out repository code
@@ -73,26 +71,29 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      # - name: Setup Database
-      #   run: |
-      #     cp config/database.yml.ci config/database.yml
-      #     bundle exec rails db:create db:schema:load
+      - name: Bundle install
+        run: bundle install
+
+      - name: Setup Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create db:schema:load
       # Run Linter
       - name: run Prettier and ESLint
         run: |
           yarn eslint-config-prettier app/frontend/**/{*.js,*.vue}
           yarn run fmt
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
-      # - name: Run Breakman
-      #   run: |
-      #     bundle exec bundle audit --update
-      #     bundle exec brakeman -q -w2
-      # - name: Run Rubocop
-      #   run: |
-      #     bundle exec rubocop -A
-      # - name:  Run RSpec 
-      #   run: |
-      #      bundle exec rspec
+      - name: Run Breakman
+        run: |
+          bundle exec brakeman -q -w2
+      - name: Run Rubocop
+        run: |
+          bundle exec rubocop -A
+      - name:  Run RSpec 
+        run: |
+          bundle exec rspec ./spec/requests/api/v1
+          bundle exec rspec ./spec/models
   # deploy:
   #   name: auto deploy to heroku
   #   needs: [prepare, build-test]
