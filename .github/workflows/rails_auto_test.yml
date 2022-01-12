@@ -82,15 +82,15 @@ jobs:
           yarn eslint --max-warnings=-1 app/frontend/**/{*.js,*.vue} --fix
       - name: Run Breakman
         run: |
-          docker-compose build
-          docker-compose run web bundle exec brakeman -q -w2
+          bundle install
+          bundle exec brakeman -q -w2
       - name: Run Rubocop
         run: |
-          docker-compose run web bundle exec rubocop -A
+          bundle exec rubocop -A
       - name:  Run RSpec 
         run: |
-           docker-compose run web bundle exec rspec ./spec/requests/api/v1
-           docker-compose run web bundle exec rspec ./spec/models
+          bundle exec rspec ./spec/requests/api/v1
+          bundle exec rspec ./spec/models
   # deploy:
   #   name: auto deploy to heroku
   #   needs: [prepare, build-test]
