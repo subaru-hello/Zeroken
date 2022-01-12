@@ -7,12 +7,15 @@ module Api
       end
 
       def create
-        user = User.new(params_user)
-        raise ActiveRecord::RecordNotFound unless user.save
-
-        auto_login(user)
-        json_string = UserSerializer.new(user).serializable_hash.to_json
-        render json: json_string
+        @user = User.new(params_user)
+        if @user.save
+          set_access_token!(@user)
+          auto_login(@user)
+          json_string = UserSerializer.new(@user).serializable_hash.to_json
+          render json: json_string
+        else
+          render400(nil, @user.errors.full_messages)
+        end
       end
 
       def me
@@ -23,10 +26,6 @@ module Api
           render json: nil
         end
       end
-
-      # def me
-      #   render json: current_user, methods: [:avatar_url]
-      # end
 
       private
 

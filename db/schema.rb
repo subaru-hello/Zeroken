@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_04_014058) do
+ActiveRecord::Schema.define(version: 2022_01_08_021505) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 2022_01_04_014058) do
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
+  create_table "api_keys", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "access_token", null: false
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["access_token"], name: "index_api_keys_on_access_token", unique: true
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
+
   create_table "my_shuchedules", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -105,7 +115,9 @@ ActiveRecord::Schema.define(version: 2022_01_04_014058) do
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "analyzes", "users"
+  add_foreign_key "api_keys", "users"
   add_foreign_key "my_shuchedules", "users"
 end

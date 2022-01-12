@@ -3,6 +3,7 @@ test:
   encoding: utf8mb4
   pool: 5
   database: Zeroken_test
-  username: <%= ENV["DB_USERNAME"] %>
-  password: <%= ENV["DB_PASSWORD"] %>
-  host: localhost
+  username: root
+  password: password
+  host: 127.0.0.1
+  port: 3306

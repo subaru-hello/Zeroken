@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.7'
+ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4'
@@ -33,8 +33,6 @@ gem 'seed-fu'
 gem 'carrierwave'
 # edit uploaded images
 gem 'mini_magick'
-# add settings per environment
-gem 'config'
 # Error monitoring
 gem 'sentry-rails'
 gem 'sentry-ruby'

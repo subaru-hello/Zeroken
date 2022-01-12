@@ -30,6 +30,12 @@ Style/AsciiComments:
 Naming/VariableNumber:
   Enabled: :snake_case
 
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+  
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Metrics/MethodLength
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc', 'hash']

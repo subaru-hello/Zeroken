@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resource :profile, only: %i[update edit] do
       patch 'password', on: :member
     end
-    resources :analyzes, except: [:edit, :destroy]
+    resources :analyzes,  only: %i[ create index new]
     post 'guest_login', to: 'guest_login#create'
   get 'validation/unique', to: 'validations#unique'
   resources :my_shuchedules, only: %i[new index create update]
