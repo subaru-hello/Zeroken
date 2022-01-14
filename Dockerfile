@@ -3,13 +3,14 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update -qq \
     && apt-get install -y nodejs yarn \
-    && mkdir /Zeroken
-WORKDIR /Zeroken
-COPY Gemfile /Zeroken/Gemfile
-COPY Gemfile.lock /Zeroken/Gemfile.lock
+    && mkdir -p /var/www/Zeroken
+
+WORKDIR /var/www/Zeroken
+COPY Gemfile /var/www/Zeroken/Gemfile
+COPY Gemfile.lock /var/www/Zeroken/Gemfile.lock
 RUN gem install bundler
 RUN bundle install
-COPY . /Zeroken
+COPY . /var/www/Zeroken
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
