@@ -1,19 +1,19 @@
 
 version: '3'
 services:
-  app:
-    build:
-      context: ./environments/db.env
-    env_file:
-      - ./environments/db.env
-    command: bundle exec puma -C config/puma.rb
-    volumes:
-      - .:/var/www/Zeroken
-      - public-data:/var/www/Zeroken/public
-      - tmp-data:/var/www/Zeroken/tmp
-      - log-data:/var/www/Zeroken/log
-    depends_on:
-      - db
+  # app:
+  #   build:
+  #     context: ./environments/db.env
+  #   env_file:
+  #     - ./environments/db.env
+  #   command: bundle exec puma -C config/puma.rb
+  #   volumes:
+  #     - .:/var/www/Zeroken
+  #     - public-data:/var/www/Zeroken/public
+  #     - tmp-data:/var/www/Zeroken/tmp
+  #     - log-data:/var/www/Zeroken/log
+  #   depends_on:
+  #     - db
   db:
     volumes:
       - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所を作成
@@ -26,27 +26,27 @@ services:
     ports:
       - '43306:3306'
     command: --default-authentication-plugin=mysql_native_password
-  web:
-    build:
-      context: ./containers/nginx
-    volumes:
-      - public-data:/var/www/Zeroken/public
-      - tmp-data:/var/www/Zeroken/tmp
-    ports:
-      - 80:80
-    depends_on:
-      - app
   # web:
-  #   build: .
-  #   command: bash -c "bundle exec foreman start"
+  #   build:
+  #     context: ./containers/nginx
   #   volumes:
-  #     - .:/Zeroken
+  #     - public-data:/var/www/Zeroken/
+  #     - tmp-data:/var/www/Zeroken/tmp
   #   ports:
-  #     - "3000:3000"
+  #     - 80:80
   #   depends_on:
-  #     - db
-  #   stdin_open: true
-  #   tty: true
+  #     - app
+  web:
+    build: .
+    command: bash -c "bundle exec foreman start"
+    volumes:
+      - .:/Zeroken
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
 volumes:
   mysql-data:
     driver: local
