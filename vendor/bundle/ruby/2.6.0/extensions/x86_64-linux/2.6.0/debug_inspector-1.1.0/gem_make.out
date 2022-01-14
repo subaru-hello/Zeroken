@@ -1,0 +1,15 @@
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+/home/nakano/.rbenv/versions/2.6.6/bin/ruby -I /home/nakano/.rbenv/versions/2.6.6/lib/ruby/2.6.0 -r ./siteconf20220113-20325-nmd8hp.rb extconf.rb
+creating Makefile
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20220113-20325-2lde74

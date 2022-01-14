@@ -1,0 +1,44 @@
+# Disabling all Layout/* rules, as they're unnecessary when the user is using
+# prettier to handle all of the formatting.
+
+Layout:
+  Enabled: false
+
+# Re-enable Layout/LineLength because certain cops that most projects use
+# (e.g. Style/IfUnlessModifier) require Layout/LineLength to be enabled.
+# By leaving it disabled, those rules will mis-fire.
+#
+# Users can always override these defaults in their own rubocop.yml files.
+# https://github.com/prettier/plugin-ruby/issues/825
+Layout/LineLength:
+  Enabled: true
+
+Style/MultilineIfModifier: # rubyModifier
+  Enabled: false
+
+# When method chains with multiple blocks are chained together, rubocop will let
+# them pass if they're using braces but not if they're using do and end
+# keywords. Because we will break individual blocks down to using keywords if
+# they are multiline, this conflicts with rubocop.
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/SymbolArray: # rubyArrayLiteral
+  Enabled: false
+
+Style/WordArray: # rubyArrayLiteral
+  Enabled: false
+
+Style/TrailingCommaInArguments: # trailingComma
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral: # trailingComma
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral: # trailingComma
+  Enabled: false
+
+# lambdas that are constructed with the lambda method call cannot be safely
+# turned into lambda literals without removing a method call.
+Style/Lambda:
+  Enabled: false

@@ -1,0 +1,78 @@
+{
+  "name": "@prettier/plugin-ruby",
+  "version": "2.0.0",
+  "description": "prettier plugin for the Ruby programming language",
+  "main": "dist/plugin.js",
+  "scripts": {
+    "checkFormat": "prettier --check '**/*'",
+    "lint": "eslint --cache .",
+    "prepublishOnly": "tsc -p tsconfig.build.json && cp src/parser/getInfo.js dist/parser && cp src/parser/netcat.js dist/parser && cp src/parser/server.rb dist/parser && cp src/haml/parser.rb dist/haml && cp src/rbs/parser.rb dist/rbs && cp src/ruby/parser.rb dist/ruby",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prettier/plugin-ruby.git"
+  },
+  "author": "Kevin Newton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prettier/plugin-ruby/issues"
+  },
+  "homepage": "https://github.com/prettier/plugin-ruby#readme",
+  "dependencies": {
+    "prettier": ">=2.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.9.1",
+    "@types/prettier": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.0.0",
+    "husky": "^7.0.0",
+    "jest": "^27.0.1",
+    "pretty-quick": "^3.1.0",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "rules": {
+      "no-unused-vars": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  "jest": {
+    "globalSetup": "./test/js/globalSetup.ts",
+    "globalTeardown": "./test/js/globalTeardown.ts",
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "./test/js/setupTests.ts"
+    ],
+    "testRegex": ".test.ts$"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "plugins": [
+      "."
+    ]
+  }
+}

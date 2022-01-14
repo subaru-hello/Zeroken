@@ -1,0 +1,40 @@
+source "https://rubygems.org"
+
+# Specify your gem's dependencies in sentry-ruby.gemspec
+gemspec
+gem "sentry-ruby", path: "../sentry-ruby"
+
+rails_version = ENV["RAILS_VERSION"]
+rails_version = "6.1.0" if rails_version.nil?
+
+gem 'activerecord-jdbcmysql-adapter', platform: :jruby
+gem "jdbc-sqlite3", platform: :jruby
+
+if rails_version.to_f < 6
+  gem "sqlite3", "~> 1.3.0", platform: :ruby
+else
+  gem "sqlite3", platform: :ruby
+end
+
+gem "rails", "~> #{rails_version}"
+gem "sprockets-rails"
+
+gem "sidekiq"
+
+gem "rspec", "~> 3.0"
+gem "rspec-retry"
+gem "rspec-rails", "~> 4.0"
+gem 'simplecov'
+gem "simplecov-cobertura", "~> 1.4"
+gem "rexml"
+
+gem "rake", "~> 12.0"
+
+gem "object_tracer"
+gem "debug", github: "ruby/debug", platform: :ruby if RUBY_VERSION.to_f >= 2.6
+gem "pry"
+
+gem "benchmark-ips"
+gem "benchmark_driver"
+gem "benchmark-ipsa"
+gem "benchmark-memory"

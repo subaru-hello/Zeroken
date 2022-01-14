@@ -1,0 +1,57 @@
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/msgpack-1.4.2/ext/msgpack
+/home/nakano/.rbenv/versions/2.6.6/bin/ruby -I /home/nakano/.rbenv/versions/2.6.6/lib/ruby/2.6.0 -r ./siteconf20220113-20325-eq8uyb.rb extconf.rb
+checking for ruby/st.h... yes
+checking for st.h... yes
+checking for rb_str_replace() in ruby.h... yes
+checking for rb_intern_str() in ruby.h... yes
+checking for rb_enc_interned_str() in ruby.h... no
+checking for rb_sym2str() in ruby.h... yes
+checking for rb_str_intern() in ruby.h... yes
+checking for rb_block_lambda() in ruby.h... yes
+checking for rb_hash_dup() in ruby.h... yes
+checking for rb_hash_clear() in ruby.h... yes
+creating Makefile
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/msgpack-1.4.2/ext/msgpack
+make "DESTDIR=" clean
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/msgpack-1.4.2/ext/msgpack
+make "DESTDIR="
+compiling buffer.c
+compiling buffer_class.c
+compiling extension_value_class.c
+compiling factory_class.c
+compiling packer.c
+In file included from packer.h:22:0,
+                 from packer.c:19:
+packer.c: 関数 ‘msgpack_packer_write_other_value’ 内:
+packer_ext_registry.h:129:9: 警告: ‘lookup_class’ はこの関数内初期化されずに使用されるかもしれません [-Wmaybe-uninitialized]
+         rb_hash_aset(pkrg->cache, lookup_class, superclass_type);
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+packer_ext_registry.h:85:11: 備考: ‘lookup_class’ はここで定義されています
+     VALUE lookup_class;
+           ^~~~~~~~~~~~
+packer.c: トップレベル:
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-self-assign’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-parentheses-equality’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-constant-logical-operand’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-cast-function-type’ です
+compiling packer_class.c
+compiling packer_ext_registry.c
+compiling rbinit.c
+compiling rmem.c
+compiling unpacker.c
+compiling unpacker_class.c
+unpacker_class.c:225:14: 警告: ‘Unpacker_peek_next_type’ defined but not used [-Wunused-function]
+ static VALUE Unpacker_peek_next_type(VALUE self)
+              ^~~~~~~~~~~~~~~~~~~~~~~
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-self-assign’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-parentheses-equality’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-constant-logical-operand’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-cast-function-type’ です
+compiling unpacker_ext_registry.c
+linking shared-object msgpack/msgpack.so
+
+current directory: /var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/msgpack-1.4.2/ext/msgpack
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 msgpack.so ./.gem.20220113-20325-1bbrq0x/msgpack

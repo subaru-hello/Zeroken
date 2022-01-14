@@ -1,0 +1,255 @@
+"pkg-config --exists openssl"
+| pkg-config --libs openssl
+=> "-lssl -lcrypto  \n"
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I. -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I. -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby -lssl -lcrypto -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+| pkg-config --cflags-only-I openssl
+=> " \n"
+| pkg-config --cflags-only-other openssl
+=> " \n"
+| pkg-config --libs-only-l openssl
+=> "-lssl -lcrypto  \n"
+package configuration for openssl
+cflags: 
+ldflags: 
+libs: -lssl -lcrypto
+
+have_header: checking for openssl/bio.h... -------------------- yes
+
+"gcc -E -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC   conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <openssl/bio.h>
+/* end */
+
+--------------------
+
+have_func: checking for DTLS_method() in openssl/ssl.h... -------------------- yes
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return 0;
+15: }
+16: int t(void) { void ((*volatile p)()); p = (void ((*)()))DTLS_method; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for TLS_server_method() in openssl/ssl.h... -------------------- no
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+conftest.c: 関数 ‘t’ 内:
+conftest.c:16:57: エラー: ‘TLS_server_method’ undeclared (first use in this function); did you mean ‘DTLS_server_method’?
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))TLS_server_method; return !p; }
+                                                         ^~~~~~~~~~~~~~~~~
+                                                         DTLS_server_method
+conftest.c:16:57: 備考: 未宣言の識別子は出現した各関数内で一回のみ報告されます
+conftest.c: トップレベル:
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-self-assign’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-parentheses-equality’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-constant-logical-operand’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-cast-function-type’ です
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return 0;
+15: }
+16: int t(void) { void ((*volatile p)()); p = (void ((*)()))TLS_server_method; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+/tmp/ccb0nuPh.o: 関数 `t' 内:
+/var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/puma-5.5.2/ext/puma_http11/conftest.c:17: `TLS_server_method' に対する定義されていない参照です
+collect2: エラー: ld はステータス 1 で終了しました
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return 0;
+15: }
+16: extern void TLS_server_method();
+17: int t(void) { TLS_server_method(); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_min_proto_version(NULL, 0) in openssl/ssl.h... -------------------- no
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+conftest.c: 関数 ‘t’ 内:
+conftest.c:17:15: 警告: implicit declaration of function ‘SSL_CTX_set_min_proto_version’; did you mean ‘SSL_CTX_set_ssl_version’? [-Wimplicit-function-declaration]
+ int t(void) { SSL_CTX_set_min_proto_version(NULL, 0); return 0; }
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               SSL_CTX_set_ssl_version
+conftest.c: トップレベル:
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-self-assign’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-parentheses-equality’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-constant-logical-operand’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-cast-function-type’ です
+/tmp/ccwcpbfC.o: 関数 `t' 内:
+/var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/puma-5.5.2/ext/puma_http11/conftest.c:17: `SSL_CTX_set_min_proto_version' に対する定義されていない参照です
+collect2: エラー: ld はステータス 1 で終了しました
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return 0;
+15: }
+16: 
+17: int t(void) { SSL_CTX_set_min_proto_version(NULL, 0); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for X509_STORE_up_ref()... -------------------- no
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+conftest.c: 関数 ‘t’ 内:
+conftest.c:14:57: エラー: ‘X509_STORE_up_ref’ が宣言されていません (この関数内での最初の使用)
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))X509_STORE_up_ref; return !p; }
+                                                         ^~~~~~~~~~~~~~~~~
+conftest.c:14:57: 備考: 未宣言の識別子は出現した各関数内で一回のみ報告されます
+conftest.c: トップレベル:
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-self-assign’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-parentheses-equality’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-constant-logical-operand’ です
+cc1: 警告: 認識できないコマンドラインオプション ‘-Wno-cast-function-type’ です
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return 0;
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))X509_STORE_up_ref; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+/tmp/ccV6RasT.o: 関数 `t' 内:
+/var/www/Zeroken/vendor/bundle/ruby/2.6.0/gems/puma-5.5.2/ext/puma_http11/conftest.c:15: `X509_STORE_up_ref' に対する定義されていない参照です
+collect2: エラー: ld はステータス 1 で終了しました
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return 0;
+13: }
+14: extern void X509_STORE_up_ref();
+15: int t(void) { X509_STORE_up_ref(); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_ecdh_auto(NULL, 0) in openssl/ssl.h... -------------------- yes
+
+"gcc -o conftest -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/x86_64-linux -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0/ruby/backward -I/home/nakano/.rbenv/versions/2.6.6/include/ruby-2.6.0 -I.  -I/home/nakano/.rbenv/versions/2.6.6/include    -O3 -ggdb3 -Wall -Wextra -Wdeclaration-after-statement -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wrestrict -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC  conftest.c  -L. -L/home/nakano/.rbenv/versions/2.6.6/lib -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L. -L/home/nakano/.rbenv/versions/2.6.6/lib  -fstack-protector-strong -rdynamic -Wl,-export-dynamic      -lssl -lcrypto -Wl,-rpath,/home/nakano/.rbenv/versions/2.6.6/lib -L/home/nakano/.rbenv/versions/2.6.6/lib -lruby  -lssl -lcrypto -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return 0;
+15: }
+16: 
+17: int t(void) { SSL_CTX_set_ecdh_auto(NULL, 0); return 0; }
+/* end */
+
+--------------------
+
