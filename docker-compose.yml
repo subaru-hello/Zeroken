@@ -9,9 +9,9 @@ services:
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/var/www/Zeroken
-      - public-data:/Zeroken/public
-      - tmp-data:/Zeroken/tmp
-      - log-data:/Zeroken/log
+      - public-data:/var/www/Zeroken/public
+      - tmp-data:/var/www/Zeroken/tmp
+      - log-data:/var/www/Zeroken/log
     depends_on:
       - db
   db:
@@ -30,8 +30,8 @@ services:
     build:
       context: ./containers/nginx
     volumes:
-      - public-data:/Zeroken/public
-      - tmp-data:/Zeroken/tmp
+      - public-data:/var/www/Zeroken/public
+      - tmp-data:/var/www/Zeroken/tmp
     ports:
       - 80:80
     depends_on:
