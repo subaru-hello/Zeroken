@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     build:
-      context: .
+      context: ./environments/db.env
     env_file:
       - ./environments/db.env
     command: bundle exec puma -C config/puma.rb
@@ -19,16 +19,16 @@ services:
       - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所を作成
     image: oilrmutp57/mysql5.7:1.0
     environment:
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - '43306:3306'
     command: --default-authentication-plugin=mysql_native_password
   web:
     build:
-      context: containers/nginx
+      context: ./containers/nginx
     volumes:
       - public-data:/var/www/zeroken/public
       - tmp-data:/var/www/zeroken/tmp
