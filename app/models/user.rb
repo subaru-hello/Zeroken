@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :analyzes, dependent: :destroy
   has_many :my_shuchedules, dependent: :destroy
   has_many :api_keys, dependent: :destroy
+  has_many :alcohols, through: :facorites
   has_one_attached :avatar
   enum role: { guest: 0, member: 1 }
 

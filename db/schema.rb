@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_021505) do
+ActiveRecord::Schema.define(version: 2022_01_15_141921) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -40,13 +40,12 @@ ActiveRecord::Schema.define(version: 2022_01_08_021505) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "alcohol_analyzes", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "analyze_id"
-    t.bigint "alcohol_id"
+  create_table "alcohol_in_veins", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "analyze_results_id"
+    t.integer "total_points"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["alcohol_id"], name: "index_alcohol_analyzes_on_alcohol_id"
-    t.index ["analyze_id"], name: "index_alcohol_analyzes_on_analyze_id"
+    t.index ["analyze_results_id"], name: "index_alcohol_in_veins_on_analyze_results_id"
   end
 
   create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -57,6 +56,20 @@ ActiveRecord::Schema.define(version: 2022_01_08_021505) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "image"
+  end
+
+  create_table "analyze_results", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "total_points"
+    t.integer "alcohol_strongness", default: 0
+    t.integer "total_alcohol_amounts", default: 0
+    t.integer "alcohol_first"
+    t.integer "alcohol_second"
+    t.integer "alcohol_third"
+    t.integer "alcohol_forth"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_analyze_results_on_user_id"
   end
 
   create_table "analyzes", charset: "utf8mb4", force: :cascade do |t|
@@ -71,6 +84,15 @@ ActiveRecord::Schema.define(version: 2022_01_08_021505) do
     t.index ["user_id"], name: "index_analyzes_on_user_id"
   end
 
+  create_table "answers", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "questions_id"
+    t.integer "point"
+    t.string "choice"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["questions_id"], name: "index_answers_on_questions_id"
+  end
+
   create_table "api_keys", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "access_token", null: false
@@ -81,22 +103,26 @@ ActiveRecord::Schema.define(version: 2022_01_08_021505) do
     t.index ["user_id"], name: "index_api_keys_on_user_id"
   end
 
-  create_table "my_shuchedules", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "descriptions", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "analyze_results_id"
+    t.integer "explanation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "succeed_shuchedule"
-    t.integer "succeed_alcohol_strongness"
-    t.index ["user_id"], name: "index_my_shuchedules_on_user_id"
+    t.index ["analyze_results_id"], name: "index_descriptions_on_analyze_results_id"
   end
 
-  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
-    t.integer "liquor_box_id", null: false
-    t.integer "liquor_id", null: false
+  create_table "favorites", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "alcohols_id"
+    t.index ["alcohols_id"], name: "index_favorites_on_alcohols_id"
+    t.index ["users_id"], name: "index_favorites_on_users_id"
+  end
+
+  create_table "questions", charset: "utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.string "not_answered"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["liquor_box_id"], name: "index_relationships_on_liquor_box_id"
-    t.index ["liquor_id"], name: "index_relationships_on_liquor_id"
   end
 
   create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -117,7 +143,12 @@ ActiveRecord::Schema.define(version: 2022_01_08_021505) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alcohol_in_veins", "analyze_results", column: "analyze_results_id"
+  add_foreign_key "analyze_results", "users"
   add_foreign_key "analyzes", "users"
+  add_foreign_key "answers", "questions", column: "questions_id"
   add_foreign_key "api_keys", "users"
-  add_foreign_key "my_shuchedules", "users"
+  add_foreign_key "descriptions", "analyze_results", column: "analyze_results_id"
+  add_foreign_key "favorites", "alcohols", column: "alcohols_id"
+  add_foreign_key "favorites", "users", column: "users_id"
 end
