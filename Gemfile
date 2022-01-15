@@ -36,6 +36,8 @@ gem 'mini_magick'
 # Error monitoring
 gem 'sentry-rails'
 gem 'sentry-ruby'
+# To accept Cross-Origin Resource Sharing
+gem 'rack-cors'
 group :development, :test do
   gem 'dotenv-rails'
   # Code check

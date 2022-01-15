@@ -41,8 +41,15 @@ services:
     command: bash -c "bundle exec foreman start"
     volumes:
       - .:/Zeroken
+       # 1. exclude volumes
+      - /app/vendor
+      - /app/tmp
+      - /app/log
+      - /app/.git
     ports:
       - "3000:3000"
+    environment:
+      API_DOMAIN: "http://0.0.0.0:3000"
     depends_on:
       - db
     stdin_open: true
