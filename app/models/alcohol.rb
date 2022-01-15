@@ -1,7 +1,7 @@
 class Alcohol < ApplicationRecord
   include Rails.application.routes.url_helpers
   has_many :alcohol_analyzes, dependent: :destroy
-  has_many :users, through: :favorites
+  has_many :likes, through: :favorites, source: :user
   mount_uploader :image, ImageUploader
   has_one_attached :image
 
