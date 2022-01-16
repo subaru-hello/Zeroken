@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ProfilesController < BaseController
+    class ProfilesController < UsersController
       before_action :require_login, :authenticate
       def update
         if current_user.update(user_params)
