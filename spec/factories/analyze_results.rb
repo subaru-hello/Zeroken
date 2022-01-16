@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :analyze do
+  factory :analyze_results do
     user
     total_points { '1' }
     alcohol_strongness { 'weak' }
