@@ -1,4 +1,3 @@
 class AlcoholInVein < ApplicationRecord
-belongs_to :analyze_result
-  end
-  
+  has_many :analyze_results
+end

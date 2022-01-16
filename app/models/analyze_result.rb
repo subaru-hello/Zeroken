@@ -1,5 +1,5 @@
 class AnalyzeResult < ApplicationRecord
-belongs_to :users
-has_many :descriptions
-has_many :alcohol_in_veins
+  belongs_to :user
+  has_many :descriptions
+  belongs_to :alcohol_in_vein
 end
