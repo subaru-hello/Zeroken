@@ -378,6 +378,8 @@ export default {
         answerEleventh +
         answerTwelvth +
         answerThirteenth;
+        // paramsにsumResultを入れて、alcoholInVeinモデルにpostするsumResultが0以下、以上、0の場合はalcoholInVeinに入れる
+
       let AlcoholStrongness =
         sumResult > 3 ? 4 : sumResult > 0 ? 3 : sumResult === 0 ? 2 : sumResult > -3 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
       let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
