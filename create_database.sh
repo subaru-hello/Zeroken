@@ -1,0 +1,1 @@
+docker-compose rm -f && docker-compose run web rails db:create && docker-compose run web bin/rails db:migrate:reset RAILS_ENV=development && docker-compose run web rails db:seed && docker-compose up
