@@ -7,10 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 SeedFu.seed
 table_names = %w(
-    01_analyze
-    02_user
+    01_user
+    02_analyze_result
+    03_description
     04_alcohol
-    05_relationship
+    05_question
+    06_answer
+    07_alcohol_in_vein
   )
 table_names.each do |table_name|
     path = Rails.root.join("db/seeds/#{Rails.env}/#{table_name}.rb")

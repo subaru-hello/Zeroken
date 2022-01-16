@@ -1,149 +1,5 @@
 Alcohol.seed(
     {
-        name: '12500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 12500,
-        description: 'アルコール総量が12500mlのボックスです。'
-    },
-    {
-        name: '12000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 12000,
-        description: 'アルコール総量が12000mlのボックスです。'
-    },
-    {
-        name: '11500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 11500,
-        description: 'アルコール総量が11500mlのボックスです。'
-    },
-    {
-        name: '11000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 11000,
-        description: 'アルコール総量が11000mlのボックスです。'
-    },
-    {
-        name: '10500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 10500,
-        description: 'アルコール総量が10500mlのボックスです。'
-    },
-    {
-        name: '10000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 10000,
-        description: 'アルコール総量が10000mlのボックスです。'
-    },
-    {
-        name: '9500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 9500,
-        description: 'アルコール総量が9500mlのボックスです。'
-    },
-    {
-        name: '9000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 9000,
-        description: 'アルコール総量が9000mlのボックスです。'
-    },
-    {
-        name: '8500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 8500,
-        description: 'アルコール総量が8500mlのボックスです。'
-    },
-    {
-        name: '8000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 8000,
-        description: 'アルコール総量が8000mlのボックスです。'
-    },
-    {
-        name: '7500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 7500,
-        description: 'アルコール総量が7500mlのボックスです。'
-    },
-    {
-        name: '7000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 7000,
-        description: 'アルコール総量が7000mlのボックスです。'
-    },
-    {
-        name: '6500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 6500,
-        description: 'アルコール総量が6500mlのボックスです。'
-    },
-    {
-        name: '6000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 6000,
-        description: 'アルコール総量が6000mlのボックスです。'
-    },
-    {
-        name: '5500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 5500,
-        description: 'アルコール総量が5500mlのボックスです。'
-    },
-    {
-        name: '5000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 5000,
-        description: 'アルコール総量が5000mlのボックスです。'
-    },
-    {
-        name: '4500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 4500,
-        description: 'アルコール総量が4500mlのボックスです。'
-    },
-    {
-        name: '4000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 4000,
-        description: 'アルコール総量が4000mlのボックスです。'
-    },
-    {
-        name: '3500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 3500,
-        description: 'アルコール総量が3500mlのボックスです。'
-    },
-    {
-        name: '3000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 3000,
-        description: 'アルコール総量が3000mlのボックスです。'
-    },
-    {
-        name: '2500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 2500,
-        description: 'アルコール総量が2500mlのボックスです。'
-    },
-    {
-        name: '2000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 2000,
-        description: 'アルコール総量が2000mlのボックスです。'
-    },
-    {
-        name: '1500ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 1500,
-        description: 'アルコール総量が1500mlのボックスです。'
-    },
-    {
-        name: '1000ボックス',
-        alcohol_percentage: 0,
-        alcohol_amount: 1000,
-        description: 'アルコール総量が1000mlのボックスです。'
-    },
-    {
         name: 'ビール',
         alcohol_percentage: 5.00,
         alcohol_amount: 350,
@@ -306,13 +162,6 @@ Alcohol.seed(
         image: File.open('db/fixtures/images/otokoume.png')
     },
     {
-        name: "薄めレモンサワー",
-        alcohol_percentage: 3.00,
-        alcohol_amount: 350,
-        description: "「混成酒」の一つ。某有名男性ダンスグループに飲まれているお酒。優しい甘さとほんのり薫アルコールのバランスを堪能あれ。",
-        image: File.open('db/fixtures/images/highball.png')
-    },
-    {
         name: "濃いめのレモンサワー",
         alcohol_percentage: 7.00,
         alcohol_amount: 350,
@@ -404,10 +253,10 @@ Alcohol.seed(
         image: File.open('db/fixtures/images/cocktail.png')
     },
     {
-        name: "柚ハチミツ",
+        name: "カクテル",
         alcohol_percentage: 3.00,
         alcohol_amount: 350,
-        description: "柚子とハチミツを混合させたリキュールベースのお酒。優しいお酒。お酒は頼んでおかないと場の雰囲気を壊しそう、、と判断した時に頼もう。",
+        description: "優しいお酒。お酒は頼んでおかないと場の雰囲気を壊しそう、、と判断した時に頼もう。",
         image: File.open('db/fixtures/images/cocktail.png')
     },
     {
