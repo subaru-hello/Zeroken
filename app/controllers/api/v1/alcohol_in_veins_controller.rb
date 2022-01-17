@@ -5,6 +5,12 @@ module Api
     @alcohol_in_veins =   AlcoholInVein.all
     render json: @alcohol_in_veins
       end
+      def create
+
+    @alcohol_in_veins =   AlcoholInVein.all
+
+    render json: @alcohol_in_veins
+      end
     end
   end
 end

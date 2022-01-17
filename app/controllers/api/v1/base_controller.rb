@@ -5,7 +5,6 @@ module Api
     class BaseController < ApplicationController
       include Api::ExceptionHandler
       include ActionController::HttpAuthentication::Token::ControllerMethods
-
       protected
 
       def authenticate

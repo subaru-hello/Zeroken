@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         origins  "https://www.zeroken.site", "http://0.0.0.0:3000", "https://zeroken.herokuapp.com", "http://0.0.0.0:3035"
         resource "*",
           headers: :any, methods: [:get, :post, :patch, :put],
-          expose: ['Access-Control-Allow-Origin'],
+          expose: ['Access-Control-Allow-Origin'],['X-CSRF-Token'],
           max_age: 600
     end
   end

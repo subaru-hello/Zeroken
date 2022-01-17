@@ -62,6 +62,7 @@ Rails.application.configure do
   config.assets.debug = true
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+  
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
   # Annotate rendered view with file names.
@@ -75,5 +76,6 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:port] = 3000
   # white list
   config.web_console.whitelisted_ips = '172.27.0.1' 
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
   config.assets.precompile += %w( '.svg' '.png' '.jpg' '.jpeg')
 end
