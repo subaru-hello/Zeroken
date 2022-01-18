@@ -1,7 +1,7 @@
 module Api
   module V1
     class ProfilesController < BaseController
-      before_action :require_login, :authenticate
+      before_filter :authenticate, except: [:new, :create]
       def update
         if current_user.update(user_params)
           json_string = UserSerializer.new(current_user).serializable_hash

@@ -1,6 +1,7 @@
 module Api
   module V1
     class GuestLoginController < BaseController
+      # before_filter :authenticate, except: [:new, :create]
       def create
         user = User.find_by!(role: :guest)
         set_access_token!(user)
