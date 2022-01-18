@@ -1,7 +1,7 @@
 module Api
   module V1
     class MyShuchedulesController < BaseController
-      before_filter :authenticate, except: [:new, :create]
+      before_action :authenticate, except: [:new, :create]
       def new
         MyShuchedule.new
       end

@@ -2,7 +2,7 @@ module Api
   module V1
     class AnalyzesController < BaseController
       # before_action :set_analyze, only: %i[show]
-      before_filter :authenticate, except: [:new, :create]
+      before_action :authenticate, except: [:new, :create]
       def new
         Analyze.new
       end
