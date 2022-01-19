@@ -10,6 +10,10 @@
         :dialog="isVisibleFirstGreeting"
         @close-dialog="isVisibleFirstGreeting = false"
       />
+      <SorryForError
+        :dialog="isVisibleSorryForError"
+        @close-dialog="isVisibleSorryForError = false"
+      />
 
       <v-row justify="center" align-content="center">
         <v-col class="text-center align-self-center" cols="12">
@@ -141,6 +145,7 @@
 import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
+import SorryForError from '../components/SorryForError';
 import ZerokenButton from '../components/global/ZerokenButton';
 import ZerokenAbout from '../components/top/ZerokenAbout';
 export default {
@@ -148,11 +153,13 @@ export default {
     FirstGreeting,
     ZerokenAbout,
     ZerokenButton,
+    SorryForError
   },
   name: 'ZerokenTop',
   data() {
     return {
       isVisibleFirstGreeting: false,
+      isVisibleSorryForError: false,
       autoplay: true,
       show: false,
       emerge: false,
@@ -191,7 +198,9 @@ export default {
           if (authUser) return (self.isVisibleFirstGreeting = true);
         });
       });
-    else next();
+    else next((self) => {
+      return (self.isVisibleSorryForError = true)
+    });
   },
   computed: {
     ...mapGetters('users', ['authUser']),
