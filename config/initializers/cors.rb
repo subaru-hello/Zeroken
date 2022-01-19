@@ -4,13 +4,9 @@
 # Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin AJAX requests.
 
 # Read more: https://github.com/cyu/rack-cors
-
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-        origins  "https://www.zeroken.site", "http://0.0.0.0:3000", "https://zeroken.herokuapp.com", "http://0.0.0.0:3035"
-        resource "*",
-          headers: :any, methods: [:get, :post, :patch, :put],
-          expose: ['Access-Control-Allow-Origin'],['X-CSRF-Token'],
-          max_age: 600
+      origins '*'
+      resource '*', headers: :any, methods: [:get, :post, :patch, :put]
     end
   end
