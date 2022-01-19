@@ -192,13 +192,7 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name === 'UserRegister')
-      next((self) => {
-        self.fetchAuthUser().then((authUser) => {
-          if (authUser) return (self.isVisibleFirstGreeting = true);
-        });
-      });
-    else next((self) => {
+     next((self) => {
       return (self.isVisibleSorryForError = true)
     });
   },
