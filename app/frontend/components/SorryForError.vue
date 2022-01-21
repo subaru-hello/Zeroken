@@ -2,13 +2,11 @@
   <v-dialog :value="dialog" max-width="630">
     <v-card>
       <v-card-title class="headline grey lighten-2 d-flex justify-center" >
-      大変申し訳ありません。
+      ZEROKENへようこそ
       </v-card-title>
       <v-card-text class="text-no-wrap text-sm-h5 text-body-2 text-center pa-8">
-        現在、診断にエラーが見つかった影響で、<br />
-        サービスが使えない状況になっております。<br />
-        復旧は1/25 10:00を予定しております。<br />
-        本当に申し訳ありません。<br />
+        ZEROKENは１軒目で飲むお酒の順番を提供するアプリです。<br />
+        あなたにとっての0軒目になることを願っております。<br />
       </v-card-text>
       <v-card-actions class="d-flex justify-space-around pb-8">
         <v-btn style="color: white" class="deep-orange lighten-2" x-large :to="{ name: 'Phrases' }">
