@@ -7,10 +7,10 @@ module Api
 
       def index
         @alcohols = Alcohol.all
-        #どのお酒をanalyzeResultに保存するのかかく
+        # どのお酒をanalyzeResultに保存するのかかく
         total_alcohol_amounts = alcohol.alcohol_amount * alcohol.alcohol_percentage
-        #scopeに0、1200、1500、4000などを定義し、それぞれの条件に該当するお酒をフロントに全て渡す。
-        #フロント側で順番を変更し、AnalyzeResultに配列で渡し、AnalyzeResultは受け取った４つのお酒をalcohol_first,alcohol_second,alcohol_third,alcohol_forthに保存する　
+        # scopeに0、1200、1500、4000などを定義し、それぞれの条件に該当するお酒をフロントに全て渡す。
+        # フロント側で順番を変更し、AnalyzeResultに配列で渡し、AnalyzeResultは受け取った４つのお酒をalcohol_first,alcohol_second,alcohol_third,alcohol_forthに保存する　
         respond_to { |format| format.json { render json: @alcohols, methods: [:image_url] } }
       end
 

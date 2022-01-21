@@ -3,7 +3,7 @@ const state = {
   analyzes: [
     {
       total_points: '',
-      alcohol_strongness: '',
+      weight: '',
       next_motivation: '',
       description: '',
       shuchedule: '',

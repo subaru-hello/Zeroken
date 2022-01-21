@@ -4,12 +4,12 @@ module Api
       before_action :set_analyze_result, only: %i[show]
       # before_action :authenticate
       def new
-        AnalyzeResult.new
+        AnalyzeResultForm.new
       end
 
       def index
-        @analyze_results = AnalyzeResult.all
-        render json: @analyze_results
+        @answers = Answer.all
+      render json: @answers
       end
 
       def show
@@ -17,8 +17,18 @@ module Api
       end
 
       def create
-        #配列にある数字をfind(i)という形で繰り返し処理を行い、answer_array.length ++で回す。その結果、配列にはpointが[-10,0.2,0.3,0.4,5.1]のように入る
-        @answers_all = Answer.find_by(id: params[:id])
+        #配列にある数字をfind(i)という形で繰り返し処理を行い、answer_array.map{|s|s.pooint}で回す。その結果、配列にはpointが[-10,0.2,0.3,0.4,5.1]のように入る
+        analyze_result_params.total_points
+        binding.pry
+        Answer.find_by(analyze_result_params)
+        sum = 0
+        array = []
+        dd.each_with_index do |answer,i| 
+          array << answer[i] 
+        # "Point_#{i}" = Answer.find("answered_#{i}").point
+        # sum += "Point_#{i}"
+      end
+      @analyze_result = array
         # includeしたsumResultでさっき計算したarray_pointを全て足し合わせる
        a =  total_point(@answer_all)
         #足し合わせた合計値によって分岐させる処理を書く・酒の強さを5段階にして表す。
@@ -41,16 +51,16 @@ module Api
             #どのアルコール血中濃度をanalyzeに渡すかを定義する。多分これもconcern、もしくはAlcoholInVeinモデル
   @alcohol_in_vein =  if AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
       AlcholInVein.find(0)
-          if AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
+  elsif AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
       AlcholInVein.find(1)
-          if AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
+  elsif AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
       AlcholInVein.find(2)
-          if AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
+  elsif AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
       AlcholInVein.find(3)
-          if AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
+  elsif AnalyzeResult.find().alcohol_strongness == 4 && AnalyzeResult.find().alcohol_strongness == 0
       AlcholInVein.find(4)
 
-        if @analyze_result.save
+  elsif @analyze_result.save
           render json: @analyze_result, status: :created
         else
           render json: @analyze_result.errors.full_messages, status: :bad_request
@@ -62,7 +72,16 @@ module Api
       def analyze_result_params
         params
           .require(:analyze_result)
-          .permit(:total_points, :alcohol_strongness, :next_motivation, :total_alcohol_amounts, :alcohol_first, :alcohol_second, :alcohol_third, :alcohol_forth,:user_id, :alcohol_in_vein_id, :description_id)
+          .permit(:total_points, 
+          :alcohol_strongness, 
+          :next_motivation, 
+          :total_alcohol_amounts, 
+          :alcohol_first, 
+          :alcohol_second, 
+          :alcohol_third, 
+          :alcohol_forth,:user_id, 
+          :alcohol_in_vein_id, 
+          :description_id)
       end
 
       def set_analyze_result
