@@ -14,7 +14,7 @@ module Api
         end
       end
 
-      def current_user
+      def authenticated_user
         @authenticate
       end
 

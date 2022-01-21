@@ -215,12 +215,13 @@ export default {
     },
   },
   mounted() {
-    axios.get('/users').then((response) => (this.users = response.data));
     this.show = true;
   },
 
   async created() {
     const a = await this.fetchAuthUser();
+    console.log("a")
+    console.log(a)
     this.currentUser = a.data.attributes.role;
   },
   methods: {

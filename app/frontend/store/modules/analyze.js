@@ -26,12 +26,12 @@ const mutations = {
     analyzeArray.push(analyze.shuchedule);
     state.analyzes = analyzeArray;
   },
-  updateAnalyze: (state, updateAnalyze) => {
-    const index = state.analyzes.findIndex((analyze) => analyze.id === updateAnalyze.id);
-    if (index !== -1) {
-      state.analyzes.splice(index, 1, updateAnalyze);
-    }
-  },
+  // updateAnalyze: (state, updateAnalyze) => {
+  //   const index = state.analyzes.findIndex((analyze) => analyze.id === updateAnalyze.id);
+  //   if (index !== -1) {
+  //     state.analyzes.splice(index, 1, updateAnalyze);
+  //   }
+  // },
 };
 
 const actions = {
@@ -44,6 +44,8 @@ const actions = {
     try {
       const analyzeResponse = await axios.post('analyzes', { analyze: analyze });
       commit('addAnalyze', analyzeResponse.data);
+      console.log("analyzeResponse.data")
+      console.log(analyzeResponse.data)
       return analyzeResponse.data;
     } catch (err) {
       console.log(err);

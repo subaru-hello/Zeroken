@@ -546,6 +546,8 @@ export default {
           shuchedule: yourShuchedule,
           description: Description,
         };
+        console.log("updateAnalyze")
+        console.log(updateAnalyze)
         resolve(
           this.createAnalyze(updateAnalyze)
           // this.clearAnswers()
@@ -571,9 +573,9 @@ export default {
             }, 3200);
           });
         })
-        .catch(() => {
+        .catch((e) => {
           // エラーハンドリング
-          console.error('Something wrong!');
+          console.error(e);
         });
       return promise;
     },

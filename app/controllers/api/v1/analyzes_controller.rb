@@ -2,7 +2,7 @@ module Api
   module V1
     class AnalyzesController < BaseController
       # before_action :set_analyze, only: %i[show]
-      before_action :authenticate, except: [:new, :create]
+      # before_action :authenticate
       def new
         Analyze.new
       end
@@ -17,6 +17,7 @@ module Api
       # end
 
       def create
+       
         @analyze = current_user.analyzes.new(analyze_params)
         if @analyze.save
           render json: @analyze, status: :created
@@ -31,7 +32,6 @@ module Api
         params
           .require(:analyze)
           .permit(:total_points, :alcohol_strongness, :next_motivation, :description, :shuchedule)
-          .merge(user_id: current_user.id)
       end
 
       # def set_analyze
