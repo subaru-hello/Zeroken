@@ -5,7 +5,7 @@
       ZEROKENへようこそ
       </v-card-title>
       <v-card-text class="text-no-wrap text-sm-h5 text-body-2 text-center pa-8">
-        ZEROKENは１軒目で飲むお酒の順番を提供するアプリです。<br />
+        ZEROKENは１軒目で飲むお酒の順番を提供します。<br />
         あなたにとっての0軒目になることを願っております。<br />
       </v-card-text>
       <v-card-actions class="d-flex justify-space-around pb-8">
