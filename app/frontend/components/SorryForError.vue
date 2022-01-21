@@ -2,15 +2,16 @@
   <v-dialog :value="dialog" max-width="630">
     <v-card>
       <v-card-title class="headline grey lighten-2 d-flex justify-center" >
-      ZEROKENへようこそ
+     <img :src="imgSrc" class="text-center" width="100" />へようこそ！
       </v-card-title>
       <v-card-text class="text-no-wrap text-sm-h5 text-body-2 text-center pa-8">
-        ZEROKENは１軒目で飲むお酒の順番を提供します。<br />
-        あなたにとっての0軒目になることを願っております。<br />
+        ご来店ありがとうございます！<br />
+        ZEROKENは１軒目で飲むお酒の順番を提供します！<br />
+        ぜひ飲み会の前に一回診断してみてください！<br />
       </v-card-text>
       <v-card-actions class="d-flex justify-space-around pb-8">
-        <v-btn style="color: white" class="deep-orange lighten-2" x-large :to="{ name: 'Phrases' }">
-          用語集ページへ
+        <v-btn style="color: white" class="deep-orange lighten-2" x-large :to="{ name: 'UserRegister' }">
+           ログインする
         </v-btn>
         <v-btn style="background-color: rgb(0, 60, 80)" x-large @click.stop="$emit('close-dialog')">    <img :src="imgSrc" class="text-center" width="100" /> </v-btn>
       </v-card-actions>
