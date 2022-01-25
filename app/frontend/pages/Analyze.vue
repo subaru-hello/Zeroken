@@ -339,39 +339,48 @@ export default {
       const questionResponce = await this.questions;
       const yourWeight = this.weight;
       const yourNomivation = this.nextMotivation;
-      const array_1 = [];
+      const selected_choices = [];
       questionResponce.forEach(function (element) {
-        array_1.push(element['answer']);
+        selected_choices.push(element['answer']);
       });
-
+ function all() {
+        let updateTast = {};
+        for (let i = 0; i < selected_choices.length; i++) {
+          //keyはindexを指し、caseは場所を指している。
+          //最終的には、answer_1: array_1[1]のようになる
+          let json_key = `selected_choices_${i}`;
+          updateTast[json_key] = selected_choices[i];
+        }
+        // debugger;
+        return updateTast;
+      }
+      const tastResult = all()
       let promise = new Promise((resolve, reject) => {
-        const updateTast = {
-          face_flush: array_1[0],
-          other_than_face_flush: array_1[1],
-          itchy: array_1[2],
-          dizy: array_1[3],
-          drowsy: array_1[4],
-          anxiety: array_1[5],
-          headache: array_1[6],
-          throbbing_headache: array_1[7],
-          sweating: array_1[8],
-          heartbeating: array_1[9],
-          nauseous: array_1[10],
-          chill: array_1[11],
-          breathless: array_1[12],
-          weight: yourWeight,
-          next_motivation: yourNomivation,
-        };
-        resolve(this.createTastAnswer(updateTast));
+        //array__1の中身をindexと同じkey名を作成することで記述を少なくする。
+       
+  
+        resolve(this.createTastAnswer(tastResult));
         reject();
       });
       promise
         .then(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve((this.showModal = true));
+              const updateAnalyzeResult = {
+                weight: yourWeight,
+                next_motivation: yourNomivation,
+              };
+              resolve(this.createAnalyze(updateAnalyzeResult));
               reject();
             }, 10);
+          });
+        })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve((this.showModal = true));
+              reject();
+            }, 11);
           });
         })
         .then(() => {
