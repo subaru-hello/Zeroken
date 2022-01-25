@@ -3,7 +3,7 @@ module Api
     class QuestionsController < BaseController
       def index
         @questions = Question.all
-        render json: @question
+        render json: @questions
       end
     end
   end
