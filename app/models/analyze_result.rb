@@ -1,6 +1,8 @@
 class AnalyzeResult < ApplicationRecord
   belongs_to :user
   has_many :descriptions
+  enum next_motivation: { flesh: 0, tipsy: 1, heavy_drunk: 2 }
+  enum alcohol_strongness: { weak: 0, weak_normal: 1, normal: 2, normal_strong: 3, strong: 4 }
   def caluculate_total_point(user_id)
     user_id = 1
     tast_answer_array = TastAnswer.where("user_id = #{user_id}").pluck[0][0..12]
