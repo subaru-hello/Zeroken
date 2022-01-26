@@ -1,62 +1,62 @@
 AlcoholInVein.seed(
     {
        
-        percentage:  0.04
+        percentage:  4
     },
     {
        
-        percentage: 0.1
+        percentage: 10
     },
     {
        
-        percentage:  0.15
+        percentage:  15
     },
     {
        
-        percentage:  0.04
+        percentage:  4
     },
     {
        
-        percentage:  0.09
+        percentage:  9
     },
     {
        
-        percentage:  0.14
+        percentage:  14
     },
     {
        
-        percentage:  0.03
+        percentage:  3
     },
     {
        
-        percentage:  0.07
+        percentage:  7
     },
     {
        
-        percentage:  0.13
+        percentage:  13
     },
     {
        
-        percentage:  0.03
+        percentage:  3
     },
     {
        
-        percentage:  0.06
+        percentage:  6
     },
     {
        
-        percentage:  0.12
+        percentage:  12
     },
     {
        
-        percentage:  0.02
+        percentage:  2
     },
     {
        
-        percentage: 0.05
+        percentage: 5
     },
     {
        
-        percentage:  0.11
+        percentage:  11
     }, 
 )
