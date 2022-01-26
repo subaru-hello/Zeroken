@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_16_222813) do
+ActiveRecord::Schema.define(version: 2022_01_26_110437) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -48,35 +48,29 @@ ActiveRecord::Schema.define(version: 2022_01_16_222813) do
 
   create_table "alcohols", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
-    t.float "alcohol_percentage"
+    t.integer "alcohol_percentage"
     t.integer "alcohol_amount"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "image"
+    t.integer "capacity_per_glass"
   end
 
   create_table "analyze_results", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "alcohol_in_vein_id"
-    t.bigint "description_id"
-    t.integer "total_points"
     t.integer "next_motivation"
+    t.string "description"
     t.integer "alcohol_strongness", default: 0
-    t.integer "total_alcohol_amounts", default: 0
-    t.integer "alcohol_first"
-    t.integer "alcohol_second"
-    t.integer "alcohol_third"
-    t.integer "alcohol_forth"
+    t.integer "total_alcohol_amounts"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["alcohol_in_vein_id"], name: "index_analyze_results_on_alcohol_in_vein_id"
-    t.index ["description_id"], name: "index_analyze_results_on_description_id"
+    t.index ["user_id"], name: "index_analyze_results_on_user_id"
   end
 
   create_table "answers", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "questions_id"
-    t.integer "point"
+    t.decimal "point", precision: 12, scale: 4
     t.string "choice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -113,6 +107,26 @@ ActiveRecord::Schema.define(version: 2022_01_16_222813) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tast_answers", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "selected_choices_0"
+    t.integer "selected_choices_1"
+    t.integer "selected_choices_2"
+    t.integer "selected_choices_3"
+    t.integer "selected_choices_4"
+    t.integer "selected_choices_5"
+    t.integer "selected_choices_6"
+    t.integer "selected_choices_7"
+    t.integer "selected_choices_8"
+    t.integer "selected_choices_9"
+    t.integer "selected_choices_10"
+    t.integer "selected_choices_11"
+    t.integer "selected_choices_12"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_tast_answers_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "nickname", limit: 191
     t.string "email", limit: 191, null: false
@@ -131,10 +145,10 @@ ActiveRecord::Schema.define(version: 2022_01_16_222813) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "analyze_results", "alcohol_in_veins"
-  add_foreign_key "analyze_results", "descriptions"
+  add_foreign_key "analyze_results", "users"
   add_foreign_key "answers", "questions", column: "questions_id"
   add_foreign_key "api_keys", "users"
   add_foreign_key "favorites", "alcohols", column: "alcohols_id"
   add_foreign_key "favorites", "users", column: "users_id"
+  add_foreign_key "tast_answers", "users"
 end
