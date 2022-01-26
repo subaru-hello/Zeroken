@@ -12,6 +12,7 @@
         <h2 class="ma-5 white--text rounded bold" style="background: rgba(0, 0, 0, 0.4)">
           お酒を飲んでいる時の状態を選択してください(13項目)
         </h2>
+        <p>{{this.authUser}}</p>
         <v-col v-for="question in questions" :key="question.num" cols="12">
           <v-layout justify-center>
             <v-card-title>
@@ -270,7 +271,7 @@ export default {
       radio: '',
       showModal: false,
       nextMotivation: 4,
-      // users: [],
+      user_id: '',
       e6: 1,
       weight: '体重を選択',
     };
@@ -297,8 +298,10 @@ export default {
       return require('../src/img/flesh_stamp.png');
     },
   },
-  created() {
-    this.fetchAuthUser();
+ created() {
+    axios.get('users/me').then((userResponse) => (this.user_id = userResponse.data.id));
+ this.fetchAuthUser();
+    // this.userAuth();
     this.clearAnswers();
   },
   mounted() {
@@ -324,7 +327,11 @@ export default {
     ...mapActions('tast_answer', ['createTastAnswer']),
     ...mapActions('analyze_result', ['createAnalyze']),
     ...mapActions('users', ['fetchAuthUser']),
-
+// async userAuth(){
+//   const userResponce = await axios.get('users/me')
+//   this.user_id = this.authUser.data.id
+  
+// },
     scrollTop() {
       window.scrollTo({
         top: 0,
@@ -343,7 +350,7 @@ export default {
       questionResponce.forEach(function (element) {
         selected_choices.push(element['answer']);
       });
- function all() {
+      function all() {
         let updateTast = {};
         for (let i = 0; i < selected_choices.length; i++) {
           //keyはindexを指し、caseは場所を指している。
@@ -354,12 +361,14 @@ export default {
         // debugger;
         return updateTast;
       }
-      const tastResult = all()
+      const tastResult = all();
+      console.log(tastResult);
+      
       let promise = new Promise((resolve, reject) => {
-        //array__1の中身をindexと同じkey名を作成することで記述を少なくする。
-       
-  
-        resolve(this.createTastAnswer(tastResult));
+         const tastResult = all();
+        resolve(this.createTastAnswer(tastResult)
+        // (this.showModal = true)
+        );
         reject();
       });
       promise
@@ -369,6 +378,7 @@ export default {
               const updateAnalyzeResult = {
                 weight: yourWeight,
                 next_motivation: yourNomivation,
+                user_id: this.user_id
               };
               resolve(this.createAnalyze(updateAnalyzeResult));
               reject();

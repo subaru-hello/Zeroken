@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :analyze_results,  only: %i[ create index show ]
     resources :questions,  only: %i[ create index]
     resources :answers,  only: %i[ create index]
+    resources :tast_answers,  only: %i[ create index shw]
     resources :descriptions,  only: %i[ create index]
     resources :alcohol_in_veins,  only: %i[ create index]
     post 'guest_login', to: 'guest_login#create'

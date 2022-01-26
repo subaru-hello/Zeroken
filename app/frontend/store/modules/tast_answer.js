@@ -15,8 +15,6 @@ const state = {
       nauseous: '',
       chill: '',
       breathless: '',
-      weight: '',
-      next_motivation: '',
     },
   ],
 };
@@ -29,7 +27,7 @@ const mutations = {
 
   addTastAnswer: (state, tast_answer) => {
     //{selected_choices_1のように入っている}
-    tastAnswerArray =[]
+    const tastAnswerArray = [];
     for (const [key, value] of Object.entries(tast_answer)) {
       tastAnswerArray.push(value);
     }

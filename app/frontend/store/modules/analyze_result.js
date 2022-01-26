@@ -1,48 +1,48 @@
 import axios from '../../plugins/axios';
 const state = {
-  analyzes: [
+  analyze_results: [
     {
-      total_points: '',
-      weight: '',
       next_motivation: '',
       description: '',
-      shuchedule: '',
+      total_alcohol_amounts: '',
+      alcohol_strongness: '',
+      user_id: ''
     },
   ],
 };
 const getters = {
-  analyzes: (state) => state.analyzes,
+  analyze_results: (state) => state.analyze_results,
 };
 
 const mutations = {
-  setAnalyzes: (state, analyzes) => (state.analyzes = analyzes),
+  setAnalyzes: (state, analyze_results) => (state.analyze_results = analyze_results),
 
-  addAnalyze: (state, analyze) => {
+  addAnalyze: (state, analyze_result) => {
     const analyzeArray = [];
-    analyzeArray.push(analyze.total_points);
-    analyzeArray.push(analyze.alcohol_strongness);
-    analyzeArray.push(analyze.next_motivation);
-    analyzeArray.push(analyze.description);
-    analyzeArray.push(analyze.shuchedule);
-    state.analyzes = analyzeArray;
+    analyzeArray.push(analyze_result.next_motivation);
+    analyzeArray.push(analyze_result.weight);
+    analyzeArray.push(analyze_result.user_id);
+    state.analyze_results = analyzeArray;
   },
   updateAnalyze: (state, updateAnalyze) => {
-    const index = state.analyzes.findIndex((analyze) => analyze.id === updateAnalyze.id);
+    const index = state.analyze_results.findIndex((analyze) => analyze.id === updateAnalyze.id);
     if (index !== -1) {
-      state.analyzes.splice(index, 1, updateAnalyze);
+      state.analyze_results.splice(index, 1, updateAnalyze);
     }
   },
 };
 
 const actions = {
   async fetchAnalyzes({ commit }) {
-    const response = await axios.get('analyzes');
+    const response = await axios.get('analyze_results');
     commit('setAnalyzes', response.data);
     return response.data;
   },
-  async createAnalyze({ commit }, analyze) {
+  async createAnalyze({ commit }, analyze_result) {
     try {
-      const analyzeResponse = await axios.post('analyzes', { analyze: analyze });
+      const analyzeResponse = await axios.post('analyze_results', {
+        analyze_result: analyze_result,
+      });
       commit('addAnalyze', analyzeResponse.data);
       return analyzeResponse.data;
     } catch (err) {
@@ -51,7 +51,7 @@ const actions = {
     }
   },
   async updateAnalyze({ commit }, updateAnalyze) {
-    const response = await axios.put(`analyzes/${updatedAnalyze.id}`, updateAnalyze);
+    const response = await axios.put(`analyze_results/${updatedAnalyze.id}`, updateAnalyze);
     commit('updateAnalyze', response.data);
   },
 };

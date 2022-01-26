@@ -27,19 +27,19 @@ module Api
         params
           .require(:tast_answer)
           .permit(
-            :face_flush,
-            :other_than_face_flush,
-            :itchy,
-            :dizy,
-            :drowsy,
-            :anxiety,
-            :headache,
-            :throbbing_headache,
-            :sweating,
-            :heartbeating,
-            :nauseous,
-            :chill,
-            :breathless
+            :selected_choices_0,
+            :selected_choices_1,
+            :selected_choices_2,
+            :selected_choices_3,
+            :selected_choices_4,
+            :selected_choices_5,
+            :selected_choices_6,
+            :selected_choices_7,
+            :selected_choices_8,
+            :selected_choices_9,
+            :selected_choices_10,
+            :selected_choices_11,
+            :selected_choices_12
           )
       end
     end

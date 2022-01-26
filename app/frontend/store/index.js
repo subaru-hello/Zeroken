@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import users from './modules/users';
-import my_shuchedule from './modules/my_shuchedule';
+import tast_answer from './modules/tast_answer';
 import analyze_result from './modules/analyze_result';
 import snackbar from './modules/snackbar';
 import question from './modules/question';
@@ -13,7 +13,7 @@ export default new Vuex.Store({
     users,
     snackbar,
     question,
-    my_shuchedule,
+    tast_answer,
     analyze_result,
   },
 });
