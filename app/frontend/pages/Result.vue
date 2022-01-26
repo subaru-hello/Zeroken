@@ -41,7 +41,7 @@
             <div>
               <v-col>
                 <p class="text-center white--text">
-                  「 {{ analyzes[analyzes.length - 1]['description'] }}」
+                  「 {{ analyze_results[analyze_results.length - 1]['description'] }}」
                 </p>
               </v-col>
             </div>
@@ -56,7 +56,7 @@
             <div>
               <ShowShucheduleModal
                 v-if="showShuchedule"
-                :alcoholDatas="alcoholContents"
+                :alcoholDatas="alcohols"
                 :childDialog="dialog"
                 :loadingCircle="loading"
                 :motivationImg="nextMotivationImg"
@@ -292,7 +292,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('analyze_result', ['analyze_results']),
     ...mapGetters('users', ['authUser']),
     currentUser() {
       return this.authUser['data']['attributes']['nickname'];
@@ -335,7 +335,7 @@ export default {
       return require('../src/img/certificate.png');
     },
     strongnessStar() {
-      const responseAnalyze = this.analyzes;
+      const responseAnalyze = this.analyze_results;
       const sakeStrongness = responseAnalyze[responseAnalyze.length - 1]['alcohol_strongness'];
       const starState =
         sakeStrongness === 'weak'
@@ -351,28 +351,21 @@ export default {
     },
 
     isAlcohol() {
-      const targetAnalyze = this.analyzes;
-      const analyzeShuchedule = targetAnalyze[targetAnalyze.length - 1]['shuchedule'];
-
       const targetValues = this.alcohols;
-      const alcoholsArray = Object.values(targetValues);
-      const contentsOfTarget = alcoholsArray[analyzeShuchedule]; //お酒の入ったボックスを取り出している
-      function percentageCheck(targetAnalyze) {
-        const alcoholsPercentageArray = [];
-
-        for (let i = 0; i < 4; i++) {
-          const alcoholPercentage = targetAnalyze[i]['alcohol_percentage'];
-          alcoholsPercentageArray.push(alcoholPercentage);
-        }
-        return alcoholsPercentageArray;
-      }
-      const alcoholPercentage = percentageCheck(contentsOfTarget);
+const alcoholArray = targetValues["data"]
+      const alcoholPercentage = 
+     alcoholArray.map(function( value ) {
+ 
+    //配列の各要素を2倍にする
+    return value["alcohol_percentage"];
+ 
+});
       const logoInspect = alcoholPercentage === 0 ? 'mdi-cup' : 'mdi-glass-mug';
       return logoInspect;
     },
   },
   mounted() {
-    this.analyze = this.fetchAnalyzes;
+    this.analyze_results = this.fetchAnalyzes;
     this.show = true;
     this.isVisibleShuchedule();
   },
@@ -381,15 +374,12 @@ export default {
     const alcoholResponses = await axios.get('/alcohols');
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
     this.loading = false;
-    const analyzeResponses = await axios.get('/analyzes');
+    const analyzeResponses = await axios.get('/analyze_results');
     const targetAnalyze = analyzeResponses.data;
-    this.analyzeData = targetAnalyze;
-    const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1];
-    const analyzeShuchedule = targetAlcoholStrongness['shuchedule'];
-    const contentsOfTarget = Object.values(changeAlcoholData)[analyzeShuchedule];
-    this.alcoholOrders = contentsOfTarget;
-    this.alcoholContents = contentsOfTarget;
 
+    this.analyzeData = targetAnalyze;
+    const analyzeShuchedule = (this.alcoholOrders = changeAlcoholData)
+analyzeShuchedule 
     this.fetchAnalyzes();
     this.clearAnswers();
     this.fetchAuthUser();
@@ -399,22 +389,15 @@ export default {
     //  this.isAlcohol() ;
   },
   methods: {
-    ...mapActions('analyze', ['fetchAnalyzes']),
+    ...mapActions('analyze_results', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
-    ...mapMutations('my_shuchedule', ['addMyShuchedule']),
+    // ...mapMutations('my_shuchedule', ['addMyShuchedule']),
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('users', ['registerUser']),
-    ...mapActions('my_shuchedule', ['createMyShuchedule']),
+    // ...mapActions('my_shuchedule', ['createMyShuchedule']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     async registerFunction() {
-      const targetAnalyzes = this.analyzes;
-      const targetUser = await this.registerUser(this.user);
-      // console.log(targetUser);
-      const analyzeShuchedule = targetAnalyzes[targetAnalyzes.length - 1]['shuchedule'];
-      const analyzeAlcoholStrongness =
-        targetAnalyzes[targetAnalyzes.length - 1]['alcohol_strongness'];
-      // console.log(analyzeShuchedule);
-      // console.log(analyzeAlcoholStrongness);
+      const targetAnalyzes = this.analyze_results;
       let promise = new Promise((resolve, reject) => {
         // #1
 
@@ -463,7 +446,7 @@ export default {
       this.$router.push({ name: 'ZerokenTop' });
     },
     async currentAnalyze() {
-      const responseAnalyze = await axios.get('/analyzes');
+      const responseAnalyze = await axios.get('/analyze_results');
       const targetAnalyze = await responseAnalyze['data'];
       const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
       function checkAlcoholStrongness(target) {
@@ -487,19 +470,13 @@ export default {
       this.alcohols = response.data;
     },
     async changeSrc() {
-      const responseAnalyze = await axios.get('/analyzes');
+      const responseAnalyze = await axios.get('/analyze_results');
       const thisAnalyze = await responseAnalyze['data'];
       const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
       const targetMotivation = targetAnalyze['next_motivation'];
 
       function checkMotivation(target) {
-        if (target === 'flesh') {
-          return require('../src/img/flesh_stamp.png');
-        } else if (target === 'tipsy') {
-          return require('../src/img/tipsy_stamp.png');
-        } else {
-          return require('../src/img/meitei_stamp.png');
-        }
+          return require(`../src/img/${target}_stamp.png`);
       }
       const result = checkMotivation(targetMotivation);
 
