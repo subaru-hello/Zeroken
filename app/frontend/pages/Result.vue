@@ -41,7 +41,8 @@
             <div>
               <v-col>
                 <p class="text-center white--text">
-                  「 {{ analyze_results[analyze_results.length - 1]['description'] }}」
+                  「 {{targetDescription }}」
+                  「 こんにちは」
                 </p>
               </v-col>
             </div>
@@ -226,6 +227,7 @@ export default {
   data: function () {
     return {
       shuche: '',
+      selected_choices: "",
       showShuchedule: false,
       alcoholContents: undefined,
       showRegisterModal: false,
@@ -234,7 +236,7 @@ export default {
       nonAlcoholImg: '',
       nextMotivationImg: '',
       alcohols: {},
-      analyze: [],
+      analyze_description: '',
       users: [],
       user: {
         nickname: '',
@@ -264,6 +266,8 @@ export default {
             '厚生労働省 生活習慣病予防のための健康情報サイト (https://www.e-healthnet.mhlw.go.jp/information/dictionary/alcohol/ya-009.html)',
         },
       ],
+      analyze_results: [],
+      analyze_strongness: '',
       errors: '',
       expirationDate: new Date(Date.now() + 7 - new Date().getTimezoneOffset() * 60000)
         .toISOString()
@@ -292,7 +296,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('analyze_result', ['analyze_results']),
+    // ...mapGetters('analyze_result', ['analyze_results']),
     ...mapGetters('users', ['authUser']),
     currentUser() {
       return this.authUser['data']['attributes']['nickname'];
@@ -335,8 +339,7 @@ export default {
       return require('../src/img/certificate.png');
     },
     strongnessStar() {
-      const responseAnalyze = this.analyze_results;
-      const sakeStrongness = responseAnalyze[responseAnalyze.length - 1]['alcohol_strongness'];
+      const sakeStrongness = this.analyze_strongness;
       const starState =
         sakeStrongness === 'weak'
           ? 1
@@ -349,7 +352,9 @@ export default {
           : 5;
       return starState;
     },
-
+targetDescription(){
+this.analyze_description
+},
     isAlcohol() {
       const targetValues = this.alcohols;
 const alcoholArray = targetValues["data"]
@@ -365,7 +370,7 @@ const alcoholArray = targetValues["data"]
     },
   },
   mounted() {
-    this.analyze_results = this.fetchAnalyzes;
+    // this.analyze_results = this.fetchAnalyzes;
     this.show = true;
     this.isVisibleShuchedule();
   },
@@ -375,9 +380,18 @@ const alcoholArray = targetValues["data"]
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
     this.loading = false;
     const analyzeResponses = await axios.get('/analyze_results');
-    const targetAnalyze = analyzeResponses.data;
-
+    const targetAnalyze = (this.analyze_results = analyzeResponses.data);
+    const targetStrongness = (this.analyze_strongness = targetAnalyze[targetAnalyze.length -1]["alcohol_strongness"]);
+    const targetDescription = (this.analyze_description = targetAnalyze[targetAnalyze.length -1]["description"]);
+ targetDescription 
+targetAnalyze
+targetStrongness
     this.analyzeData = targetAnalyze;
+      //  const selected_choices = [];
+      // targetAnalyze.forEach(function (element) {
+      //   selected_choices.push(element[0]);
+      // });
+      // this.selected_choices = selected_choices
     const analyzeShuchedule = (this.alcoholOrders = changeAlcoholData)
 analyzeShuchedule 
     this.fetchAnalyzes();
@@ -385,11 +399,12 @@ analyzeShuchedule
     this.fetchAuthUser();
     this.currentAnalyze();
     this.changeSrc();
+    this.thisAnalyze();
     // this.strongnessStar();
     //  this.isAlcohol() ;
   },
   methods: {
-    ...mapActions('analyze_results', ['fetchAnalyzes']),
+    ...mapActions('analyze_result', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
     // ...mapMutations('my_shuchedule', ['addMyShuchedule']),
     ...mapActions('users', ['fetchAuthUser']),
@@ -404,7 +419,7 @@ analyzeShuchedule
         const updateSchuchedule = {
           user_id: targetUser.data.id,
           succeed_shuchedule: analyzeShuchedule,
-          succeed_alcohol_strongness: analyzeAlcoholStrongness,
+          succeed_alcohol_strongness: this.analyze_strongness,
         };
         resolve(targetUser, this.createMyShuchedule(updateSchuchedule));
         reject();
@@ -446,9 +461,7 @@ analyzeShuchedule
       this.$router.push({ name: 'ZerokenTop' });
     },
     async currentAnalyze() {
-      const responseAnalyze = await axios.get('/analyze_results');
-      const targetAnalyze = await responseAnalyze['data'];
-      const targetAlcoholStrongness = targetAnalyze[targetAnalyze.length - 1]['alcohol_strongness'];
+      const targetAlcoholStrongness = this.analyze_strongness
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -466,8 +479,14 @@ analyzeShuchedule
       const AlcoholStrongness = (this.alcoholStrongness = result);
       return AlcoholStrongness;
     },
+    thisAnalyze(){
+const analyzeResult = this.analyze_results
+return analyzeResult;
+    },
     alcoholDatas(response) {
-      this.alcohols = response.data;
+    
+      const alcoholData = (this.alcohols = response.data);
+       alcoholData.map
     },
     async changeSrc() {
       const responseAnalyze = await axios.get('/analyze_results');
@@ -506,26 +525,6 @@ analyzeShuchedule
           const secondOrder = targetOrder[1]['name'];
           const thirdOrder = targetOrder[2]['name'];
           const forthOrder = targetOrder[3]['name'];
-          // const thisAnalyze = this.analyzes;
-          // const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-          // const sipporiArray = [
-          //   'あんま飲みたくない',
-          //   '今日はソフドリがいい',
-          //   '今月試合あるから飲みたくない',
-          //   '推しの録画をみたいから飲みたくない',
-          // ];
-          // const horoyoiArray = [
-          //   '途中で帰りたい',
-          //   '今日はソフドリがいい',
-          //   '金欠だから飲みたくない',
-          //   'ほろ酔いくらいまで飲みたい',
-          // ];
-          // const meiteiArray = [
-          //   'とことん飲みたい',
-          //   '酒で記憶を飛ばしたい',
-          //   'あるだけ飲みたい',
-          //   'とにかくたくさん飲みたい',
-          // ];
           const characterMetapherWeak = [
             '五条悟も下戸らしいですよ',
             '織田信長も下戸らしいですよ',
@@ -579,7 +578,7 @@ analyzeShuchedule
           const strongCharacter =
             characterMetapherStrong[Math.floor(Math.random() * characterMetapherStrong.length)];
 
-          const userAlcoholStrongness = this.alcoholStrongness;
+          const userAlcoholStrongness = this.analyze_strongness;
           function checkAlcoholStrongness(target) {
             if (target === '酒豪') {
               return strongCharacter;

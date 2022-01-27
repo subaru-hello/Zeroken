@@ -9,7 +9,7 @@ module Api
       end
 
       def index
-        @answers = current_user.analyze_results.includes(:users)
+        @answers = current_user.analyze_results
         render json: @answers
       end
 
