@@ -40,10 +40,10 @@ module Api
           description: description,
           alcohol_strongness: alcohol_strongness,
           total_alcohol_amounts: total_alcohol_amounts,
-          first_alcohol: shuchedule[0],
-          second_alcohol: shuchedule[1],
-          third_alcohol: shuchedule[2],
-          forth_alcohol: shuchedule[3]
+          first_alcohol: shuchedule[0]['id'],
+          second_alcohol: shuchedule[1]['id'],
+          third_alcohol: shuchedule[2]['id'],
+          forth_alcohol: shuchedule[3]['id']
         }
 
         # binding.pry

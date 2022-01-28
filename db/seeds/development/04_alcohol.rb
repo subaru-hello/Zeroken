@@ -194,7 +194,7 @@ Alcohol.seed(
     {
         name: "和み水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "日本酒のお供に飲む水。日本酒は他のお酒と違ってお湯割りやソーダ割りができないためチェイサーとして嗜まれている。普通の水。",
         image: File.open('db/fixtures/images/nagomimizu.png')
@@ -202,7 +202,7 @@ Alcohol.seed(
     {
         name: "氷",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "炭酸系の酒を飲み終わった後の残骸。溶けると水になるため、お酒の濃度を薄めてくれる。お口が寂しい時は舐めよう。",
         image: File.open('db/fixtures/images/koori.png')
@@ -210,7 +210,7 @@ Alcohol.seed(
     {
         name: "水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "お酒のお供に必ず頼もう。体内のアルコール濃度を下げてくれる。二日酔いやアルハラを防止する。",
         image: File.open('db/fixtures/images/softdrink.png')
@@ -218,14 +218,14 @@ Alcohol.seed(
     {
         name: "水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         description: "飲み会の前、最中、最後に活躍するユーティリティプレイヤー。体内の70%を占めている。もはや人間。",
         image: File.open('db/fixtures/images/softdrink.png')
     },
     {
         name: "水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "上司や先輩に酒を飲まされたら真っ先に飲もう。数十分したら尿意を催す事ができる。血中アルコール濃度を下げよう。",
         image: File.open('db/fixtures/images/softdrink.png')
@@ -233,7 +233,7 @@ Alcohol.seed(
     {
         name: "水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "飲み会の最初にピッチャーで頼もう。何かと大活躍する。上司の見ていない場所でこっそり飲もう。",
         image: File.open('db/fixtures/images/softdrink.png')
@@ -241,7 +241,7 @@ Alcohol.seed(
     {
         name: "水",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "飲み会の席では水を飲んでも大丈夫な席を確保しよう。水はきっとあなたを助けてくれる。",
         image: File.open('db/fixtures/images/softdrink.png')
@@ -249,14 +249,14 @@ Alcohol.seed(
     {
         name: "烏龍茶",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         description: "堂々と頼もう。まるでウーロンハイを飲んでいるかのように堂々と。",
         image: File.open('db/fixtures/images/ocha.png')
     },
     {
         name: "緑茶",
         alcohol_percentage: 0,
-        capacity_per_glass: 0,
+        capacity_per_glass: 350,
         alcohol_amount: 0,
         description: "一番ポピュラーなお茶。チャノキの葉から作った茶のうち、摘み取った茶葉を加熱処理して茶葉中の酵素反応を妨げたもの。",
         image: File.open('db/fixtures/images/ocha.png')
