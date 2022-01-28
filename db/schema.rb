@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_110437) do
+ActiveRecord::Schema.define(version: 2022_01_28_044557) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,10 @@ ActiveRecord::Schema.define(version: 2022_01_26_110437) do
     t.integer "total_alcohol_amounts"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "first_alcohol"
+    t.integer "second_alcohol"
+    t.integer "third_alcohol"
+    t.integer "forth_alcohol"
     t.index ["user_id"], name: "index_analyze_results_on_user_id"
   end
 

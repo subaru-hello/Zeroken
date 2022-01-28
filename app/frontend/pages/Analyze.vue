@@ -12,7 +12,7 @@
         <h2 class="ma-5 white--text rounded bold" style="background: rgba(0, 0, 0, 0.4)">
           お酒を飲んでいる時の状態を選択してください(13項目)
         </h2>
-        <p>{{this.authUser}}</p>
+        <p>{{ this.authUser }}</p>
         <v-col v-for="question in questions" :key="question.num" cols="12">
           <v-layout justify-center>
             <v-card-title>
@@ -289,7 +289,7 @@ export default {
       return require('../src/img/high_ball_kanpai.jpg');
     },
     imgSrc() {
-      return require('../src/img/meitei_stamp.png');
+      return require('../src/img/heavy_drunk_stamp.png');
     },
     sakeSrc() {
       return require('../src/img/tipsy_stamp.png');
@@ -298,9 +298,9 @@ export default {
       return require('../src/img/flesh_stamp.png');
     },
   },
- created() {
+  created() {
     axios.get('users/me').then((userResponse) => (this.user_id = userResponse.data.id));
- this.fetchAuthUser();
+    this.fetchAuthUser();
     // this.userAuth();
     this.clearAnswers();
   },
@@ -327,11 +327,11 @@ export default {
     ...mapActions('tast_answer', ['createTastAnswer']),
     ...mapActions('analyze_result', ['createAnalyze']),
     ...mapActions('users', ['fetchAuthUser']),
-// async userAuth(){
-//   const userResponce = await axios.get('users/me')
-//   this.user_id = this.authUser.data.id
-  
-// },
+    // async userAuth(){
+    //   const userResponce = await axios.get('users/me')
+    //   this.user_id = this.authUser.data.id
+
+    // },
     scrollTop() {
       window.scrollTo({
         top: 0,
@@ -363,11 +363,12 @@ export default {
       }
       const tastResult = all();
       console.log(tastResult);
-      
+
       let promise = new Promise((resolve, reject) => {
-         const tastResult = all();
-        resolve(this.createTastAnswer(tastResult)
-        // (this.showModal = true)
+        const tastResult = all();
+        resolve(
+          this.createTastAnswer(tastResult)
+          // (this.showModal = true)
         );
         reject();
       });
@@ -378,7 +379,7 @@ export default {
               const updateAnalyzeResult = {
                 weight: yourWeight,
                 next_motivation: yourNomivation,
-                user_id: this.user_id
+                user_id: this.user_id,
               };
               resolve(this.createAnalyze(updateAnalyzeResult));
               reject();

@@ -6,7 +6,7 @@ const state = {
       description: '',
       total_alcohol_amounts: '',
       alcohol_strongness: '',
-      user_id: ''
+      user_id: '',
     },
   ],
 };

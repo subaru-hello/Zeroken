@@ -20,25 +20,45 @@ module Api
       def create
         next_motivation = analyze_result_params['next_motivation']
         weight = analyze_result_params['weight']
-        # binding.pry
+
         user_id = current_user.id
-        
+
         description = AnalyzeResult.new.extract_description(user_id)
         alcohol_strongness = AnalyzeResult.new.caluculate_alcohol_strongness(user_id)
         total_alcohol_amounts =
-        AnalyzeResult.new.calculate_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
-          # binding.pry
+          AnalyzeResult.new.calculate_total_alcohol_amount(
+            weight,
+            alcohol_strongness,
+            next_motivation
+          )
+        alcohols = Alcohol.new.sum_amount(total_alcohol_amounts)
+        shuchedule = alcohols.map { |arr| arr.sample }
+        binding.pry
         caluculated_result = {
           user_id: user_id,
           next_motivation: next_motivation,
           description: description,
           alcohol_strongness: alcohol_strongness,
-          total_alcohol_amounts: total_alcohol_amounts
+          total_alcohol_amounts: total_alcohol_amounts,
+          first_alcohol: shuchedule[0],
+          second_alcohol: shuchedule[1],
+          third_alcohol: shuchedule[2],
+          forth_alcohol: shuchedule[3]
         }
+
         # binding.pry
         @analyze_result = AnalyzeResult.new(caluculated_result)
-        # binding.pry
+        binding.pry
         if @analyze_result.save
+          render json: @analyze_result, status: :created
+        else
+          render json: @analyze_result.errors.full_messages, status: :bad_request
+        end
+      end
+
+      def update
+        @analyze_result = AnalyzeResult.find(params[:id])
+        if @analyze_result.update(analyze_result_params)
           render json: @analyze_result, status: :created
         else
           render json: @analyze_result.errors.full_messages, status: :bad_request
@@ -48,7 +68,20 @@ module Api
       private
 
       def analyze_result_params
-        params.require(:analyze_result).permit(:weight, :next_motivation,:user_id)
+        params
+          .require(:analyze_result)
+          .permit(
+            :weight,
+            :next_motivation,
+            :user_id,
+            :alcohol_strongness,
+            :description,
+            :total_alcohol_amounts,
+            :first_alcohol,
+            :second_alcohol,
+            :third_alcohol,
+            :forth_alcohol
+          )
       end
 
       def set_analyze_result

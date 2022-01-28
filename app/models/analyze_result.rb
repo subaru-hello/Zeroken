@@ -56,6 +56,7 @@ class AnalyzeResult < ApplicationRecord
     # binding.pry
     weight * coefficient * alcohol_in_vein / 100
   end
+
   def extract_description(user_id)
     total_point = caluculate_total_point(user_id)
     binding.pry
@@ -137,19 +138,21 @@ class AnalyzeResult < ApplicationRecord
     end
     Description.find(description_cal).explanation
   end
+
   def caluculate_alcohol_strongness(user_id)
     total_point = caluculate_total_point(user_id)
-    case total_point
-    when 3..30
-      alcohol_strongness = 4
-    when 0...3
-      alcohol_strongness = 3
-    when -3...0
-      alcohol_strongness = 2
-    when -30...-3
-      alcohol_strongness = 1
-    else
-      alcohol_strongness = 0
-    end
+    alcohol_strongness =
+      case total_point
+      when 3..30
+        4
+      when 0...3
+        3
+      when -3...0
+        2
+      when -30...-3
+        1
+      else
+        0
+      end
   end
 end
