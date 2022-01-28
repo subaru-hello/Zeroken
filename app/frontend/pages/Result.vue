@@ -40,10 +40,7 @@
             </div>
             <div>
               <v-col>
-                <p class="text-center white--text">
-                  「 {{targetDescription }}」
-                  「 こんにちは」
-                </p>
+                <p class="text-center white--text">「 {{ targetDescription }}」</p>
               </v-col>
             </div>
             <div>
@@ -98,7 +95,7 @@
         シェアする<v-icon color="#1da1f2"> mdi-twitter </v-icon></v-btn
       >
     </v-row>
-    <v-row justify="center" align-content="center">
+    <v-row justify="center" align-content="center" v-if="loggingUser === '1'">
       <v-btn
         @click="showRegisterModal = !showRegisterModal"
         class="white--text mx-3 mt-4"
@@ -227,7 +224,8 @@ export default {
   data: function () {
     return {
       shuche: '',
-      selected_choices: "",
+      loggingUser: '',
+      selected_choices: '',
       showShuchedule: false,
       alcoholContents: undefined,
       showRegisterModal: false,
@@ -278,7 +276,7 @@ export default {
       dialog1: false,
       dialog2: false,
       loading: true,
-      analyzeData: '',
+      analyzeData: undefined,
       showCertificate: false,
       alcoholOrders: {},
       alcoholStrongness: '',
@@ -298,7 +296,7 @@ export default {
   computed: {
     // ...mapGetters('analyze_result', ['analyze_results']),
     ...mapGetters('users', ['authUser']),
-    currentUser() {
+    currentUserName() {
       return this.authUser['data']['attributes']['nickname'];
     },
 
@@ -327,7 +325,7 @@ export default {
       return require('../src/img/beer.svg');
     },
     meiteiSrc() {
-      return require('../src/img/meitei_stamp.png');
+      return require('../src/img/heavy_drunk_stamp.png');
     },
     tipsySrc() {
       return require('../src/img/tipsy_stamp.png');
@@ -352,21 +350,9 @@ export default {
           : 5;
       return starState;
     },
-targetDescription(){
-this.analyze_description
-},
-    isAlcohol() {
-      const targetValues = this.alcohols;
-const alcoholArray = targetValues["data"]
-      const alcoholPercentage = 
-     alcoholArray.map(function( value ) {
- 
-    //配列の各要素を2倍にする
-    return value["alcohol_percentage"];
- 
-});
-      const logoInspect = alcoholPercentage === 0 ? 'mdi-cup' : 'mdi-glass-mug';
-      return logoInspect;
+    targetDescription() {
+      const targetDescription = this.analyze_description;
+      return targetDescription;
     },
   },
   mounted() {
@@ -377,39 +363,36 @@ const alcoholArray = targetValues["data"]
   updated() {},
   async created() {
     const alcoholResponses = await axios.get('/alcohols');
+    const userDatas = await this.fetchAuthUser();
+    const userResponses = await (this.loggingUser = userDatas['data']['id']);
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
+  
     this.loading = false;
     const analyzeResponses = await axios.get('/analyze_results');
     const targetAnalyze = (this.analyze_results = analyzeResponses.data);
-    const targetStrongness = (this.analyze_strongness = targetAnalyze[targetAnalyze.length -1]["alcohol_strongness"]);
-    const targetDescription = (this.analyze_description = targetAnalyze[targetAnalyze.length -1]["description"]);
- targetDescription 
-targetAnalyze
-targetStrongness
-    this.analyzeData = targetAnalyze;
-      //  const selected_choices = [];
-      // targetAnalyze.forEach(function (element) {
-      //   selected_choices.push(element[0]);
-      // });
-      // this.selected_choices = selected_choices
-    const analyzeShuchedule = (this.alcoholOrders = changeAlcoholData)
-analyzeShuchedule 
+    const recentAnalyzeData = targetAnalyze[targetAnalyze.length - 1];
+    const targetStrongness = (this.analyze_strongness = recentAnalyzeData['alcohol_strongness']);
+    const targetDescription = (this.analyze_description = recentAnalyzeData['description']);
+    targetDescription;
+    targetAnalyze;
+    targetStrongness;
+    userResponses;
+    this.analyzeData = recentAnalyzeData;
+    const analyzeShuchedule = (this.alcoholOrders = changeAlcoholData);
+    analyzeShuchedule;
     this.fetchAnalyzes();
     this.clearAnswers();
-    this.fetchAuthUser();
+
     this.currentAnalyze();
     this.changeSrc();
     this.thisAnalyze();
-    // this.strongnessStar();
-    //  this.isAlcohol() ;
+    this.alcoholDatas();
   },
   methods: {
     ...mapActions('analyze_result', ['fetchAnalyzes']),
     ...mapMutations('question', ['clearAnswers']),
-    // ...mapMutations('my_shuchedule', ['addMyShuchedule']),
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('users', ['registerUser']),
-    // ...mapActions('my_shuchedule', ['createMyShuchedule']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     async registerFunction() {
       const targetAnalyzes = this.analyze_results;
@@ -460,8 +443,9 @@ analyzeShuchedule
     toTop() {
       this.$router.push({ name: 'ZerokenTop' });
     },
-    async currentAnalyze() {
-      const targetAlcoholStrongness = this.analyze_strongness
+
+    currentAnalyze() {
+      const targetAlcoholStrongness = this.analyze_strongness;
       function checkAlcoholStrongness(target) {
         if (target === 'strong') {
           return '酒豪';
@@ -479,14 +463,13 @@ analyzeShuchedule
       const AlcoholStrongness = (this.alcoholStrongness = result);
       return AlcoholStrongness;
     },
-    thisAnalyze(){
-const analyzeResult = this.analyze_results
-return analyzeResult;
+    thisAnalyze() {
+      const analyzeResult = this.analyze_results;
+      return analyzeResult;
     },
     alcoholDatas(response) {
-    
       const alcoholData = (this.alcohols = response.data);
-       alcoholData.map
+      console.log(alcoholData);
     },
     async changeSrc() {
       const responseAnalyze = await axios.get('/analyze_results');
@@ -495,7 +478,7 @@ return analyzeResult;
       const targetMotivation = targetAnalyze['next_motivation'];
 
       function checkMotivation(target) {
-          return require(`../src/img/${target}_stamp.png`);
+        return require(`../src/img/${target}_stamp.png`);
       }
       const result = checkMotivation(targetMotivation);
 

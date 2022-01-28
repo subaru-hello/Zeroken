@@ -6,9 +6,10 @@ module Api
       end
 
       def index
-        alcohol_amount = current_user.analyze_results.last['total_alcohol_amounts']
-        @alcohols = Alcohol.new.sum_amount(alcohol_amount)
-        respond_to { |format| format.json { render json: @alcohols, methods: [:image_url] } }
+        alcohols = current_user.analyze_results.pluck[-1][-4..-1]
+        @shuchedules = alcohols.map { |num| Alcohol.find(num) }
+
+        respond_to { |format| format.json { render json: @shuchedules, methods: [:image_url] } }
       end
 
       def create

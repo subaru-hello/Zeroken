@@ -33,7 +33,7 @@ module Api
           )
         alcohols = Alcohol.new.sum_amount(total_alcohol_amounts)
         shuchedule = alcohols.map { |arr| arr.sample }
-        binding.pry
+
         caluculated_result = {
           user_id: user_id,
           next_motivation: next_motivation,
@@ -45,10 +45,7 @@ module Api
           third_alcohol: shuchedule[2]['id'],
           forth_alcohol: shuchedule[3]['id']
         }
-
-        # binding.pry
         @analyze_result = AnalyzeResult.new(caluculated_result)
-        binding.pry
         if @analyze_result.save
           render json: @analyze_result, status: :created
         else
