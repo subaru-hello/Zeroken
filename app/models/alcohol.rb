@@ -4,7 +4,7 @@ class Alcohol < ApplicationRecord
   has_many :likes, through: :favorites, source: :user
   mount_uploader :image, ImageUploader
   has_one_attached :image
-  def cal_amount(amount)
+  def self.cal_amount(amount)
     amount_under_3000 = [50, 0, 0, 0]
     amount_3500 = [1750, 1750, 0, 0]
     amount_4000 = [1750, 1750, 0, 0]
@@ -69,12 +69,8 @@ class Alcohol < ApplicationRecord
     end
   end
 
-  def sum_amount(point)
+  def self.sum_amount(point)
     alcohol_array = cal_amount(point)
     alcohol_array.map { |alcohol_amount| Alcohol.where('alcohol_amount= ?', alcohol_amount) }
-  end
-
-  def alcohol_percentage_times_alcohol_amount(alcohols)
-    alcohols.map { |alcohol| alcohol.alcohol_amount * alcohol.alcohol_percentage }
   end
 end
