@@ -401,13 +401,7 @@ export default {
     ...mapActions('users', ['registerUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     async registerFunction() {
-      const targetAnalyzes = this.analyze_results;
-
-      console.log('targetAnalyzes');
-      console.log(targetAnalyzes);
       const targetUser = await this.registerUser(this.user);
-      console.log('targetUser');
-      console.log(targetUser.data.id);
       const updateSchuchedule = {
         id: this.shuchedule.id,
         user_id: targetUser.data.id,
