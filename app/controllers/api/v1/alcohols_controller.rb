@@ -6,7 +6,7 @@ module Api
       end
 
       def index
-        alcohols = current_user.analyze_results.pluck[-1][-4..-1]
+        alcohols = current_user.analyze_results.pluck[-1][-4..]
         @shuchedules = alcohols.map { |num| Alcohol.find(num) }
 
         respond_to { |format| format.json { render json: @shuchedules, methods: [:image_url] } }
