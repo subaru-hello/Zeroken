@@ -26,17 +26,12 @@ class AnalyzeResult < ApplicationRecord
     }
   end
 
-  private
-
   def self.cal_total_point(user_id)
-    tast_answer_array = TastAnswer.where('user_id = ?', user_id).pluck[0][0..12]
+    tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][0..12]
 
-    # 選択肢をポイントに変換
-    targetArray = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
+    target_array = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
 
-    # 各選択肢に割り振られたポイントを算出
-    #
-    result = targetArray.map { |n| Answer.find(n + 1).point.to_f }
+    result = target_array.map { |n| Answer.find(n + 1).point.to_f }
 
     result.sum
   end
@@ -165,7 +160,6 @@ class AnalyzeResult < ApplicationRecord
   end
 
   def self.cal_alcohol_strongness(total_point)
-    alcohol_strongness =
       case total_point
       when 3..30
         4
