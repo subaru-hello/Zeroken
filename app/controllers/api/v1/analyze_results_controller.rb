@@ -25,27 +25,9 @@ module Api
       def create
         next_motivation = analyze_result_params['next_motivation']
         weight = analyze_result_params['weight']
-
         user_id = current_user.id
-        total_point = AnalyzeResult.caluculate_total_point(user_id)
-        description = AnalyzeResult.extract_description(total_point)
-        alcohol_strongness = AnalyzeResult.caluculate_alcohol_strongness(total_point)
-        total_alcohol_amounts =
-          AnalyzeResult.calculate_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
-        alcohols = Alcohol.sum_amount(total_alcohol_amounts)
-        shuchedule = alcohols.map(&:sample)
-        caluculated_result = {
-          user_id: user_id,
-          next_motivation: next_motivation,
-          description: description,
-          alcohol_strongness: alcohol_strongness,
-          total_alcohol_amounts: total_alcohol_amounts,
-          first_alcohol: shuchedule[0]['id'],
-          second_alcohol: shuchedule[1]['id'],
-          third_alcohol: shuchedule[2]['id'],
-          forth_alcohol: shuchedule[3]['id']
-        }
-        @analyze_result = AnalyzeResult.new(caluculated_result)
+        calculated_result = AnalyzeResult.cal_shuchedule(weight, next_motivation, user_id)
+        @analyze_result = AnalyzeResult.new(calculated_result)
         if @analyze_result.save
           render json: @analyze_result, status: :created
         else
