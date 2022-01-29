@@ -3,20 +3,20 @@ class AnalyzeResult < ApplicationRecord
   has_many :descriptions
   enum next_motivation: { flesh: 0, tipsy: 1, heavy_drunk: 2 }
   enum alcohol_strongness: { weak: 0, weak_normal: 1, normal: 2, normal_strong: 3, strong: 4 }
-  def caluculate_total_point(user_id)
-    user_id = 1
-    tast_answer_array = TastAnswer.where("user_id = #{user_id}").pluck[0][0..12]
+  def self.caluculate_total_point(user_id)
+    tast_answer_array = TastAnswer.where('user_id = ?',user_id).pluck[0][0..12]
 
     # 選択肢をポイントに変換
     targetArray = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
 
     # 各選択肢に割り振られたポイントを算出
+    #
     result = targetArray.map { |n| Answer.find(n + 1).point.to_f }
 
     result.sum
   end
 
-  def calculate_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
+  def self.calculate_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
     alcohol_in_vein =
       if alcohol_strongness == 4 && next_motivation == 0
         AlcoholInVein.find(1).percentage
@@ -52,14 +52,10 @@ class AnalyzeResult < ApplicationRecord
 
     # modelに切りだセル
     coefficient = 833
-
-    # binding.pry
     weight * coefficient * alcohol_in_vein / 100
   end
 
-  def extract_description(user_id)
-    total_point = caluculate_total_point(user_id)
-    binding.pry
+  def self.extract_description(total_point)
     case total_point
     when -30...-20
       description_cal = 1
@@ -139,8 +135,7 @@ class AnalyzeResult < ApplicationRecord
     Description.find(description_cal).explanation
   end
 
-  def caluculate_alcohol_strongness(user_id)
-    total_point = caluculate_total_point(user_id)
+  def self.caluculate_alcohol_strongness(total_point)
     alcohol_strongness =
       case total_point
       when 3..30

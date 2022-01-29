@@ -1,7 +1,7 @@
 module Api
   module V1
     class AnalyzeResultsController < BaseController
-      before_action :set_analyze_result, only: %i[show]
+      before_action :set_analyze_result, only: %i[show edit update]
 
       # before_action :authenticate
       def new
@@ -10,11 +10,16 @@ module Api
 
       def index
         @answers = current_user.analyze_results
+
         render json: @answers
       end
 
       def show
-        render json: @analyze_results
+        render json: @analyze_result
+      end
+
+      def edit
+        render json: @analyze_result
       end
 
       def create
@@ -22,18 +27,13 @@ module Api
         weight = analyze_result_params['weight']
 
         user_id = current_user.id
-
-        description = AnalyzeResult.new.extract_description(user_id)
-        alcohol_strongness = AnalyzeResult.new.caluculate_alcohol_strongness(user_id)
+        total_point = AnalyzeResult.caluculate_total_point(user_id)
+        description = AnalyzeResult.extract_description(total_point)
+        alcohol_strongness = AnalyzeResult.caluculate_alcohol_strongness(total_point)
         total_alcohol_amounts =
-          AnalyzeResult.new.calculate_total_alcohol_amount(
-            weight,
-            alcohol_strongness,
-            next_motivation
-          )
-        alcohols = Alcohol.new.sum_amount(total_alcohol_amounts)
-        shuchedule = alcohols.map { |arr| arr.sample }
-
+          AnalyzeResult.calculate_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
+        alcohols = Alcohol.sum_amount(total_alcohol_amounts)
+        shuchedule = alcohols.map(&:sample)
         caluculated_result = {
           user_id: user_id,
           next_motivation: next_motivation,
@@ -54,7 +54,6 @@ module Api
       end
 
       def update
-        @analyze_result = AnalyzeResult.find(params[:id])
         if @analyze_result.update(analyze_result_params)
           render json: @analyze_result, status: :created
         else
@@ -68,6 +67,7 @@ module Api
         params
           .require(:analyze_result)
           .permit(
+            :id,
             :weight,
             :next_motivation,
             :user_id,
@@ -82,7 +82,7 @@ module Api
       end
 
       def set_analyze_result
-        @analyze_result = AnalyzeResult.find_by(id: params[:id])
+        @analyze_result = AnalyzeResult.find(params[:id])
       end
     end
   end

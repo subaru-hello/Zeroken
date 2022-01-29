@@ -12,7 +12,6 @@
         <h2 class="ma-5 white--text rounded bold" style="background: rgba(0, 0, 0, 0.4)">
           お酒を飲んでいる時の状態を選択してください(13項目)
         </h2>
-        <p>{{ this.authUser }}</p>
         <v-col v-for="question in questions" :key="question.num" cols="12">
           <v-layout justify-center>
             <v-card-title>
@@ -99,10 +98,7 @@
           style="background-color: rgb(222, 184, 135)"
           x-large
           :isVisible="isVisible"
-          @click-response="
-            e6 = 2;
-            show = !show;
-          "
+          @click-response="clickScrollNext()"
         >
         </ZerokenButton>
       </v-col>
@@ -376,6 +372,14 @@ export default {
         .then(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
+              resolve((this.showModal = true));
+              reject();
+            }, 1);
+          });
+        })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
               const updateAnalyzeResult = {
                 weight: yourWeight,
                 next_motivation: yourNomivation,
@@ -383,24 +387,17 @@ export default {
               };
               resolve(this.createAnalyze(updateAnalyzeResult));
               reject();
-            }, 10);
+            }, 1);
           });
         })
-        .then(() => {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve((this.showModal = true));
-              reject();
-            }, 11);
-          });
-        })
+
         .then(() => {
           // #3
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve(this.$router.push('/result'));
               reject(console.log());
-            }, 2900);
+            }, 1);
           });
         })
         .catch(() => {
@@ -417,7 +414,8 @@ export default {
       });
     },
     clickScrollNext() {
-      return (this.show = true);
+      this.e6 = 2;
+      this.show = !this.show;
     },
   },
 };
