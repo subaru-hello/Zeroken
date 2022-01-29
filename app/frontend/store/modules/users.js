@@ -64,7 +64,7 @@ const actions = {
 
   async updateAuthUser({ commit }, authUser) {
     try {
-      const res = await axios.patch('profile', authUser);
+      const res = await axios.patch('profiles', authUser);
 
       commit('setAuthUser', res.data);
       return res.data;

@@ -234,6 +234,7 @@ export default {
       nonAlcoholImg: '',
       nextMotivationImg: '',
       alcohols: {},
+      shuchedule: {},
       analyze_description: '',
       users: [],
       user: {
@@ -365,12 +366,17 @@ export default {
     const alcoholResponses = await axios.get('/alcohols');
     const userDatas = await this.fetchAuthUser();
     const userResponses = await (this.loggingUser = userDatas['data']['id']);
+    // const userResponses = await (this.user = userDatas['data']);
     const changeAlcoholData = await (this.alcohols = alcoholResponses.data);
-  
+
     this.loading = false;
     const analyzeResponses = await axios.get('/analyze_results');
     const targetAnalyze = (this.analyze_results = analyzeResponses.data);
-    const recentAnalyzeData = targetAnalyze[targetAnalyze.length - 1];
+    const recentAnalyzeData = (this.shuchedule = targetAnalyze[targetAnalyze.length - 1]);
+    console.log('targetAnalyze');
+    console.log(this.shuchedule);
+    console.log('targetAnalyze');
+    console.log(recentAnalyzeData);
     const targetStrongness = (this.analyze_strongness = recentAnalyzeData['alcohol_strongness']);
     const targetDescription = (this.analyze_description = recentAnalyzeData['description']);
     targetDescription;
@@ -382,7 +388,6 @@ export default {
     analyzeShuchedule;
     this.fetchAnalyzes();
     this.clearAnswers();
-
     this.currentAnalyze();
     this.changeSrc();
     this.thisAnalyze();
@@ -390,45 +395,54 @@ export default {
   },
   methods: {
     ...mapActions('analyze_result', ['fetchAnalyzes']),
+    ...mapActions('analyze_result', ['updateAnalyze']),
     ...mapMutations('question', ['clearAnswers']),
     ...mapActions('users', ['fetchAuthUser']),
     ...mapActions('users', ['registerUser']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
     async registerFunction() {
       const targetAnalyzes = this.analyze_results;
+
+      console.log('targetAnalyzes');
+      console.log(targetAnalyzes);
+      const targetUser = await this.registerUser(this.user);
+      console.log('targetUser');
+      console.log(targetUser.data.id);
+      const updateSchuchedule = {
+        id: this.shuchedule.id,
+        user_id: targetUser.data.id,
+      };
+      const mutateAnalyze = await this.updateAnalyze(updateSchuchedule);
       let promise = new Promise((resolve, reject) => {
-        // #1
-
-        const updateSchuchedule = {
-          user_id: targetUser.data.id,
-          succeed_shuchedule: analyzeShuchedule,
-          succeed_alcohol_strongness: this.analyze_strongness,
-        };
-        resolve(targetUser, this.createMyShuchedule(updateSchuchedule));
+        resolve(targetUser);
         reject();
-
-        promise.then(() => {
-          // #2
-          return new Promise((resolve, reject) => {
-            resolve(
-              this.fetchSnackbarData({
-                msg: '新規登録に成功しました',
-                color: 'success',
-                isShow: true,
-              })
-            );
-            reject(
-              this.fetchSnackbarData({
-                msg: '新規登録に失敗しました',
-                color: 'error',
-                isShow: true,
-              })
-            );
+        promise
+          .then(() => {
+            return new Promise((resolve, reject) => {
+              resolve(mutateAnalyze);
+              reject(console.log());
+            });
+          })
+          .then(() => {
+            return new Promise((resolve, reject) => {
+              resolve(
+                this.fetchSnackbarData({
+                  msg: '新規登録に成功しました',
+                  color: 'success',
+                  isShow: true,
+                })
+              );
+              reject(
+                this.fetchSnackbarData({
+                  msg: '新規登録に失敗しました',
+                  color: 'error',
+                  isShow: true,
+                })
+              );
+            });
           });
-        });
       })
         .then(() => {
-          // #3
           return new Promise((resolve, reject) => {
             resolve(this.$router.push({ name: 'UserProfile' }));
             reject(console.log());

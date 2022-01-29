@@ -24,12 +24,6 @@ const mutations = {
     analyzeArray.push(analyze_result.user_id);
     state.analyze_results = analyzeArray;
   },
-  updateAnalyze: (state, updateAnalyze) => {
-    const index = state.analyze_results.findIndex((analyze) => analyze.id === updateAnalyze.id);
-    if (index !== -1) {
-      state.analyze_results.splice(index, 1, updateAnalyze);
-    }
-  },
 };
 
 const actions = {
@@ -50,9 +44,17 @@ const actions = {
       return nil;
     }
   },
-  async updateAnalyze({ commit }, updateAnalyze) {
-    const response = await axios.put(`analyze_results/${updatedAnalyze.id}`, updateAnalyze);
-    commit('updateAnalyze', response.data);
+  async updateAnalyze({ commit }, analyze_result) {
+    try {
+      const analyzeResponse = await axios.patch(`analyze_results/${analyze_result.id}`, {
+        analyze_result: analyze_result,
+      });
+      commit('setAnalyzes', analyzeResponse.data);
+      return analyzeResponse.data;
+    } catch (err) {
+      console.log(err);
+      return nil;
+    }
   },
 };
 
