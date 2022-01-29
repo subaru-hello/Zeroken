@@ -21,15 +21,6 @@ jobs:
           bundler: "Gemfile.lock"
           ruby-version: '2.6.6'
           bundler-cache: true
-      # - name: Setup Database
-      #   env:
-      #     MYSQL_ROOT_PASSWORD: password
-      #   run: |
-      #     gem install bundler
-      #     cp config/database.yml.ci config/database.yml
-      #     bundle exec rails db:create db:schema:load
-      #     ./bin/rails db:create
-      #     ./bin/rails db:migrate
      
       - name: Prepare Node
         uses: actions/setup-node@v2
