@@ -7,10 +7,10 @@ Rails.application.routes.draw do
     end
     resource :sessions, only: %i[ create destroy ]
     resources :alcohols, only: %i[new create index]
-    resource :profile, only: %i[update edit] do
+    resource :profiles, only: %i[update edit ] do
       patch 'password', on: :member
     end
-    resources :analyze_results,  only: %i[ create index show ]
+    resources :analyze_results,  only: %i[ create index show edit update]
     resources :questions,  only: %i[ create index]
     resources :answers,  only: %i[ create index]
     resources :tast_answers,  only: %i[ create index shw]
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     resources :alcohol_in_veins,  only: %i[ create index]
     post 'guest_login', to: 'guest_login#create'
   get 'validation/unique', to: 'validations#unique'
-  resources :my_shuchedules, only: %i[new index create update]
   end
 end
   get "*path", to: "home#index", constraints: lambda { |req|
