@@ -213,7 +213,6 @@ export default {
       //過去に作成したお酒の順番を取得
       return this.alcohols;
     },
-    contents() {},
   },
   mounted() {
     // axios.get('/users').then((response) => (this.users = response.data));
@@ -359,31 +358,31 @@ export default {
           console.log(err);
         });
     },
-    async updateProfiles() {
-      const updateData = {
-        nickname: this.authUserEdit.nickname,
-        email: this.authUserEdit.email,
-      };
-      const updateUserData = await this.updateAuthUser(updateData)
-        .then(() => {
-          this.handleShowEditProfile();
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新しました',
-            color: 'success',
-            isShow: true,
-          });
+    // async updateProfiles() {
+    //   const updateData = {
+    //     nickname: this.authUserEdit.nickname,
+    //     email: this.authUserEdit.email,
+    //   };
+    //   const updateUserData = await this.updateAuthUser(updateData)
+    //     .then(() => {
+    //       this.handleShowEditProfile();
+    //       this.fetchSnackbarData({
+    //         msg: 'プロフィールを更新しました',
+    //         color: 'success',
+    //         isShow: true,
+    //       });
 
-          this.$router.push({ name: 'UserProfile' });
-        })
-        .catch((err) => {
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新できませんでした',
-            color: 'error',
-            isShow: true,
-          });
-          console.log(err);
-        });
-    },
+    //       this.$router.push({ name: 'UserProfile' });
+    //     })
+    //     .catch((err) => {
+    //       this.fetchSnackbarData({
+    //         msg: 'プロフィールを更新できませんでした',
+    //         color: 'error',
+    //         isShow: true,
+    //       });
+    //       console.log(err);
+    //     });
+    // },
     //Todo authUserEditにavatarを追加する
 
     // initAuthUserEdit() {
