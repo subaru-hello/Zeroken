@@ -578,7 +578,7 @@ export default {
             `【酒テータス】%0A${this.alcoholStrongness}%0A${strongnessResult}%0A【1軒目の酒ケジュール】%0A1軒目は%0A1.${firstOrder}%202.${secondOrder}%203.${thirdOrder}%204.${forthOrder}%0Aでいきます` +
             '&hashtags=' +
             this.sns.hashtags;
-          window.location.href = this.sns.twitter;
+          window.open(this.sns.twitter, '_blank');
         }.bind(this),
         100
       );
