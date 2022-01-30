@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import store from '../store/index';
 import Analyze from '../pages/Analyze';
 import Result from '../pages/Result';
-import SelectNomivation from '../pages/SelectNomivation';
 import UserProfile from '../pages/UserProfile.vue';
 import UserRegister from '../pages/UserRegister';
 import ZerokenTop from '../pages/ZerokenTop';
@@ -59,12 +58,6 @@ const router = new Router({
       name: 'UserProfile',
       meta: { requireAuth: true },
       props: true,
-    },
-    {
-      path: '/nomivation',
-      component: SelectNomivation,
-      name: 'SelectNomivation',
-      meta: { requireAuth: true },
     },
     {
       path: '/result',

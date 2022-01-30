@@ -65,7 +65,7 @@
             x-large
             style="color: white"
             color="red accent-2"
-            @click="handleSubmit(handleUpdateProfiles)"
+            @click="handleSubmit(handleUpdateProfiles())"
           >
             更新する
           </v-btn>
@@ -120,29 +120,6 @@ export default {
     },
   },
   methods: {
-    update() {
-      const formData = new FormData();
-      formData.append('user[nickname]', this.authUserEdit.nickname);
-      formData.append('user[email]', this.authUserEdit.email);
-
-      try {
-        this.updateAuthUser(formData);
-        this.handleShowEditProfile();
-        this.fetchSnackbarData({
-          msg: 'プロフィールを更新しました',
-          color: 'success',
-          isShow: true,
-        });
-
-        this.$router.push({ name: 'ZerokenTop' });
-      } catch {
-        this.fetchSnackbarData({
-          msg: 'プロフィールを更新できませんでした',
-          color: 'error',
-          isShow: true,
-        });
-      }
-    },
     handleUpdateProfiles() {
       this.$emit('updateProfiles');
     },

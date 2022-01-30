@@ -11,7 +11,6 @@ RSpec.describe 'UserSessions', type: :request do
         
         request_hash = { headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json' }, params: { email: user.email, password: password }.to_json }
         post api_v1_sessions_path,  request_hash 
-       
         expect(json['data']['id'].to_i).to eq(user.id)
         expect(json['data']['type']).to eq('user')
         expect(json['data']['attributes']['nickname']).to eq(user.nickname)

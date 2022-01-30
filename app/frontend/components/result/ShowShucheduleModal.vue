@@ -41,7 +41,7 @@
                         {{ data.name }}
                       </p>
                       <p>{{ data.alcohol_percentage }}%</p>
-                      <p>{{ data.alcohol_amount }}ml</p>
+                      <p>{{ data.capacity_per_glass }}ml</p>
                     </v-col>
                   </v-row>
                 </div>

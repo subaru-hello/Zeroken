@@ -8,7 +8,6 @@ module Api
 
         raise ActiveRecord::RecordNotFound unless @user
 
-        # binding.pry
         set_access_token!(@user)
 
         json_string = UserSerializer.new(@user).serializable_hash.to_json

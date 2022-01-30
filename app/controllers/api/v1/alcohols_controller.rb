@@ -6,16 +6,10 @@ module Api
       end
 
       def index
-        alcohols = Alcohol.includes([:liquor_relationships]).all
-        alcohols_names = alcohols.map(&:liquors)
-        alcohols_json = {}
-        alcohols_names.each_with_index do |name, index|
-          json_key = "alcohols_#{index + 1}"
-          alcohols_json[json_key] = name
-          break if alcohols_json[json_key] == []
-          # break if index === 22 でも可能
-        end
-        respond_to { |format| format.json { render json: alcohols_json, methods: [:image_url] } }
+        alcohols = current_user.analyze_results.pluck[-1][-4..]
+        @shuchedules = alcohols.map { |num| Alcohol.find(num) }
+
+        respond_to { |format| format.json { render json: @shuchedules, methods: [:image_url] } }
       end
 
       def create
@@ -32,15 +26,7 @@ module Api
       def alcohol_params
         params
           .require(:alcohol)
-          .permit(
-            :type,
-            :alcohol_percentage,
-            :alcohol_amount,
-            :name,
-            :description,
-            :pure_alcohol_intake,
-            :image
-          )
+          .permit(:alcohol_percentage, :alcohol_amount, :name, :description, :image)
       end
     end
   end

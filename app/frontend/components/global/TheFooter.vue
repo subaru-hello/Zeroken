@@ -49,8 +49,9 @@ export default {
   methods: {
     getCreateUrl(url) {
       if (url === 'form') {
-        location.href =
+        const moveTo =
           'https://docs.google.com/forms/d/e/1FAIpQLScURhhJBZqiyYYH_aHtugvtk18vzw67vACnACgqPQRayjqbDQ/viewform?usp=sf_link';
+        window.open(moveTo, '_blank');
       } else if (url === 'About') {
         this.dialog = true;
       } else {

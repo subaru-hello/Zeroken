@@ -7,7 +7,7 @@
             <v-sheet id="profile-sheet" class="text-center outer-layer" elevation="1">
               <h3 class="text-h6 font-weight-black">酒テータス</h3>
               <p class="text-center black--text" style="font-size: 30px">
-                {{ currentAnalyze }}
+                {{ userAlcoholStrongness }}
               </p>
               <v-avatar class="or-avatar" size="200">
                 <img :src="sakeSrc" width="150" height="100" />
@@ -15,16 +15,16 @@
               <div class="text-center">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
-                  <div>{{ authUser.data.attributes.nickname }}</div>
+                  <div>{{ authUserEdit.nickname }}</div>
                 </div>
                 <v-divider />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                  <div>{{ authUser.data.attributes.email }}</div>
+                  <div>{{ authUserEdit.email }}</div>
                 </div>
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">酒の強さ</h3>
-                  <div>{{ currentAnalyze }}</div>
+                  <div>{{ userAlcoholStrongness }}</div>
                 </div>
                 <v-divider />
               </div>
@@ -46,7 +46,7 @@
               v-if="editProfileActed"
               v-bind.sync="authUserEdit"
               :isShow.sync="editProfileDialogDisplayed"
-              @updateProfiles="updateProfiles"
+              @updateProfiles="updateProfile"
               @changeDialog="changeProfileToPassword"
               @closeDialog="closeEditProfileDialog"
             />
@@ -78,10 +78,12 @@
           style="background-color: rgb(255, 255, 255, 0.7)"
         >
           My 酒ケジュール
+          <!-- この欄はツイッター共有することができる -->
+          <!-- お気に入りにしたものをここに表示させる -->
         </h3>
         <v-col class="d-flex justify-space-between mb-6 shuchedule">
           <v-card
-            v-for="(item, index) in guestShucheduleList"
+            v-for="(item, index) in shucheduleData"
             :key="index"
             class="text-center mx-auto my-5 form outer-layer"
             elevation="2"
@@ -110,40 +112,34 @@
           過去の酒ケジュール
         </h3>
         <v-col
-          v-for="(data, index) in dataAnalyze"
+          v-for="(specificData, index) in shucheduleData"
           :key="index"
-          class="d-flex justify-space-between mb-6"
+          class="justify-space-between mb-6 shuchedule"
+          style="background-color: #fff"
         >
-          <v-col
-            v-for="(specificData, index) in data"
-            :key="index"
-            class="justify-space-between mb-6 shuchedule"
-            style="background-color: #fff"
+          <div
+            class="text-center mx-auto my-5 form outer-layer"
+            elevation="2"
+            shaped
+            id="form"
+            :disabled="showShucheduleAll"
           >
-            <div
-              class="text-center mx-auto my-5 form outer-layer"
-              elevation="2"
-              shaped
-              id="form"
-              :disabled="showShucheduleAll"
-            >
-              <!-- １の時だけ表示する -->
-              <!-- {{ date(specificData.created_at) }}の診断です
+            <!-- １の時だけ表示する -->
+            <!-- {{ date(specificData.created_at) }}の診断です
 {{index}} -->
-              <v-card-title style="width: 100%" class="headline justify-center">
-                <v-icon>{{
-                  specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
-                }}</v-icon>
-                {{ specificData.name }}
-              </v-card-title>
-              <v-row justify="center">
-                <v-row justify="center" align-content="center">
-                  <p>度数: {{ specificData.alcohol_percentage }}%</p>
-                  <p>量: {{ specificData.alcohol_amount }} ml</p>
-                </v-row>
+            <v-card-title style="width: 100%" class="headline justify-center">
+              <v-icon>{{
+                specificData.alcohol_percentage === 0 ? 'mdi-cup' : 'mdi-glass-mug'
+              }}</v-icon>
+              {{ specificData.name }}
+            </v-card-title>
+            <v-row justify="center">
+              <v-row justify="center" align-content="center">
+                <p>度数: {{ specificData.alcohol_percentage }}%</p>
+                <p>量: {{ specificData.alcohol_amount }} ml</p>
               </v-row>
-            </div>
-          </v-col>
+            </v-row>
+          </div>
         </v-col>
         <!-- <ZerokenButton
           button-name="気分だけ選択"
@@ -175,13 +171,10 @@ export default {
       dataArray: null,
       dialog: false,
       arrayEvents: null,
+      analyzeData: {},
+      alcoholStrongness: '',
       guestShucheduleList: {},
       alcohols: [],
-      succeededShucheduleDatas: {
-        succeed_alcohol_strongness: '',
-        succeed_shuchedule: '',
-        id: '',
-      },
       date2: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -199,34 +192,10 @@ export default {
   },
   computed: {
     ...mapGetters('users', ['authUser']),
-    ...mapGetters('my_shuchedule', ['myShuchedules']),
-    ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('analyze_result', ['analyze_results']),
 
-    currentAnalyze() {
-      // const thisAnalyze = this.analyzes;
-      // const targetAnalyze = thisAnalyze[thisAnalyze.length - 1];
-      // const targetAlcoholStrongness = targetAnalyze['alcohol_strongness'];
-
-      const thisShuchedule = this.myShuchedules.succeed_alcohol_strongness;
-      const targetShuchedule = thisShuchedule;
-      function checkAlcoholStrongness(target) {
-        if (target === 4) {
-          return '酒豪';
-        } else if (target === 3) {
-          return 'やや酒豪';
-        } else if (target === 2) {
-          return '普通の人';
-        } else if (target === 1) {
-          return 'やや下戸';
-        } else if (target === 0) {
-          return '下戸';
-        } else {
-          return '未知数';
-        }
-      }
-
-      const result = checkAlcoholStrongness(targetShuchedule);
-      return result;
+    userAlcoholStrongness() {
+      return this.alcoholStrongness;
     },
 
     sakeSrc() {
@@ -235,134 +204,55 @@ export default {
     beerSrc() {
       return require('../src/img/beer.svg');
     },
-    userAnalyze() {
-      const thisAnalyze = this.analyzes;
-
-      const targetValues = this.alcohols;
-      function createSake(targetAnalyze) {
-        const shucheduleHash = [];
-
-        for (let i = 0; i < targetAnalyze.length; i++) {
-          const shucheduleAll = thisAnalyze[i]['shuchedule'];
-          shucheduleHash.push(shucheduleAll);
-        }
-        return shucheduleHash;
-      }
-
-      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
-      function createShuchedule(sake) {
-        const alchol_case = [];
-
-        for (let i = 0; i < sake.length; i++) {
-          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
-          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
-          const shucheduleAll = arrayAnalyzeShuchedule[i];
-          //12,18を取り出した。
-          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
-          //  alcohol_12,alcohols_18を取り出すことができた。
-          alchol_case.push(contentsOfTarget);
-        }
-        return alchol_case;
-        //alcohol_12,alcohols_18が入っている。
-      }
-      const alcoholOrders = createShuchedule(createSake(thisAnalyze));
-      return alcoholOrders;
+    shucheduleData() {
+      //ユーザーが作成した過去のお酒の順番を取得
+      return this.alcohols;
     },
     dataAnalyze() {
-      const thisAnalyze = this.analyzes;
-
-      const targetValues = this.alcohols;
-      function createSake(targetAnalyze) {
-        const shucheduleHash = [];
-
-        for (let i = 0; i < targetAnalyze.length; i++) {
-          const shucheduleAll = thisAnalyze[i]['shuchedule'];
-          shucheduleHash.push(shucheduleAll);
-        }
-        return shucheduleHash;
-      }
-
-      //B: Aで取得したshucheduleの値を元に、alcohol配列からデータを取得している。this.alcohols[2]で配列にあるお酒のデータを取得することができる
-      function createShuchedule(sake) {
-        const alchol_case = [];
-
-        for (let i = 0; i < sake.length; i++) {
-          const arrayAnalyzeShuchedule = createSake(thisAnalyze); //先程取得したshucheduleの値を繰り返し処理で取得する。その後、contentsOfTargetの後ろにつける。
-          //arrayAnalyzeShucheduleには[12,18]が入っているarrayAnalyzeShuchedule[i]をalcholsに入れる。
-          const shucheduleAll = arrayAnalyzeShuchedule[i];
-          //12,18を取り出した。
-          const contentsOfTarget = Object.values(targetValues)[shucheduleAll];
-          //  alcohol_12,alcohols_18を取り出すことができた。
-          alchol_case.push(contentsOfTarget);
-        }
-        return alchol_case;
-        //alcohol_12,alcohols_18が入っている。
-      }
-
-      let a = createSake(thisAnalyze);
-      let b = createShuchedule(a);
-      // console.log(b);
-      function all() {
-        let sake_case = {};
-        for (let i = 0; i < b.length; i++) {
-          let json_key = `alcohols_${i}`;
-          sake_case[json_key] = b[i];
-        }
-        // debugger;
-        return sake_case;
-      }
-
-      let c = all();
-      // console.log('c ');
-      // console.log(c);
-      return c;
-    },
-    contents() {
-      const thisAnalyze = this.analyzes;
-
-      const analyzeShuchedule = thisAnalyze[thisAnalyze.length - 1]['shuchedule'];
-
-      const targetValues = this.alcohols;
-
-      const contentsOfTarget = Object.values(targetValues)[analyzeShuchedule];
-
-      return contentsOfTarget;
+      //過去に作成したお酒の順番を取得
+      return this.alcohols;
     },
   },
   mounted() {
-    axios.get('/users').then((response) => (this.users = response.data));
+    // axios.get('/users').then((response) => (this.users = response.data));
   },
-  created() {
-    this.fetchAnalyzes();
-    this.fetchAuthUser();
-    this.fetchMyShuchedules();
-    this.currentMyShuchedule();
+  async created() {
+    const targetAnalyzeResponse = await this.fetchAnalyzes();
+    const targetAnalyzeData = await (this.analyzeData = targetAnalyzeResponse[0]);
+    const targetUserResponse = await this.fetchAuthUser();
+    const targetUserData = await (this.authUserEdit = targetUserResponse['data']['attributes']);
     axios.get('/alcohols').then((alcoholResponse) => (this.alcohols = alcoholResponse.data));
-    // 決められた日を持ってくる
-    const authUserData = {
-      nickname: this.authUser.data.attributes.nickname,
-      email: this.authUser.data.attributes.email,
-      password: this.authUser.data.attributes.password,
-      password_confirmation: this.authUser.data.attributes.password_confirmation,
-      avatar: this.authUser.data.attributes.avatar,
-    };
-    this.authUserEdit = authUserData;
+    targetAnalyzeData;
+    this.currentAnalyze();
+    targetUserData;
   },
   methods: {
     ...mapActions('users', ['updateAuthUser']),
     ...mapActions('users', ['fetchAuthUser']),
-    ...mapActions('analyze', ['fetchAnalyzes']),
-    ...mapActions('my_shuchedule', ['fetchMyShuchedules']),
+    ...mapActions('analyze_result', ['fetchAnalyzes']),
     ...mapActions('snackbar', ['fetchSnackbarData']),
-    async currentMyShuchedule() {
-      const targetValues = await axios.get('/alcohols');
-      const Alcohols = targetValues.data;
-      const thisShucheduleResponses = await axios.get('/my_shuchedules');
-      const targetShuchedule = thisShucheduleResponses.data['succeed_shuchedule'];
+    currentAnalyze() {
+      //酒豪かどうかを判定
+      const targetAlcoholData = this.analyzeData;
+      const targetAlcoholStrongness = targetAlcoholData['alcohol_strongness'];
+      function checkAlcoholStrongness(target) {
+        if (target === 'strong') {
+          return '酒豪';
+        } else if (target === 'normal_strong') {
+          return 'やや酒豪';
+        } else if (target === 'normal') {
+          return '普通の人';
+        } else if (target === 'weak_normal') {
+          return 'やや下戸';
+        } else if (target === 'weak') {
+          return '下戸';
+        } else {
+          return '未知数';
+        }
+      }
 
-      const Shuchedule = Object.values(Alcohols)[targetShuchedule];
-      this.guestShucheduleList = Shuchedule;
-      return Shuchedule;
+      const result = checkAlcoholStrongness(targetAlcoholStrongness);
+      this.alcoholStrongness = result;
     },
     date(date) {
       return this.$dateFormat(date);
@@ -415,71 +305,53 @@ export default {
     handleShowEditProfile() {
       this.editProfileDialogDisplayed = !this.editProfileDialogDisplayed;
     },
-    updateProfile() {
-      this.updateAuthUser(this.authUserEdit).then((user) => {
-        if (user) {
-          this.handleShowEditProfile();
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新しました',
-            color: 'success',
-            isShow: true,
-          });
-        } else {
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新できませんでした',
-            color: 'error',
-            isShow: true,
-          });
-        }
-      });
-    },
-    updatePassword() {
-      axios
-        .patch(`profile/password`, {
-          password: this.password,
-          password_confirmation: this.password_confirmation,
-        })
-        .then(() => {
-          this.handleShowEditPassword();
-          this.fetchSnackbarData({
-            msg: 'パスワードを更新しました',
-            color: 'success',
-            isShow: true,
-          });
-        })
-        .catch((err) => {
-          this.fetchSnackbarData({
-            msg: 'パスワードの更新に失敗しました',
-            color: 'error',
-            isShow: true,
-          });
-          console.log(err);
-        });
-    },
-    updateProfiles() {
-      axios
-        .patch('profile/edit', {
-          nickname: this.authUserEdit.nickname,
-          email: this.authUserEdit.email,
-        })
-        .then(() => {
-          this.handleShowEditProfile();
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新しました',
-            color: 'success',
-            isShow: true,
-          });
 
-          this.$router.push({ name: 'UserProfile' });
-        })
-        .catch((err) => {
-          this.fetchSnackbarData({
-            msg: 'プロフィールを更新できませんでした',
-            color: 'error',
-            isShow: true,
-          });
-          console.log(err);
+    async updateProfile() {
+      const updateProfile = {
+        id: this.authUser.data.id,
+        nickname: this.authUserEdit.nickname,
+        email: this.authUserEdit.email,
+      };
+      try {
+        const mutateProfile = await this.updateAuthUser(updateProfile);
+        mutateProfile;
+        this.handleShowEditProfile();
+        this.fetchSnackbarData({
+          msg: 'プロフィールを更新しました',
+          color: 'success',
+          isShow: true,
         });
+      } catch {
+        this.fetchSnackbarData({
+          msg: 'プロフィールの更新に失敗しました',
+          color: 'error',
+          isShow: true,
+        });
+      }
+    },
+    async updatePassword() {
+      const updatePassword = {
+        id: this.authUser.data.id,
+        password: this.authUserEdit.password,
+        password_confirmation: this.authUserEdit.password_confirmation,
+      };
+
+      try {
+        const updateResponse = await this.updateAuthUser(updatePassword);
+        updateResponse;
+        this.handleShowEditPassword();
+        this.fetchSnackbarData({
+          msg: 'パスワードを更新しました',
+          color: 'success',
+          isShow: true,
+        });
+      } catch {
+        this.fetchSnackbarData({
+          msg: 'パスワードの更新に失敗しました',
+          color: 'error',
+          isShow: true,
+        });
+      }
     },
     //Todo authUserEditにavatarを追加する
 

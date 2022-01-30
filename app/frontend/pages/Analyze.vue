@@ -40,8 +40,9 @@
                         clickScroll($event);
                         countAnswer(question.num, 1);
                       "
-                      >1: いつも</v-btn
                     >
+                      1: いつも
+                    </v-btn>
                     <v-btn
                       class="mx-auto justify-center"
                       outlined
@@ -97,10 +98,7 @@
           style="background-color: rgb(222, 184, 135)"
           x-large
           :isVisible="isVisible"
-          @click-response="
-            e6 = 2;
-            clickScrollNext();
-          "
+          @click-response="clickScrollNext()"
         >
         </ZerokenButton>
       </v-col>
@@ -252,7 +250,7 @@
 </template>
 <script>
 import FacebookLoader from '@bit/joshk.vue-spinners-css.facebook-loader';
-// import axios from '../plugins/axios';
+import axios from '../plugins/axios';
 import ZerokenButton from '../components/global/ZerokenButton';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 const start = 40;
@@ -269,7 +267,7 @@ export default {
       radio: '',
       showModal: false,
       nextMotivation: 4,
-      // users: [],
+      user_id: '',
       e6: 1,
       weight: '体重を選択',
     };
@@ -280,13 +278,14 @@ export default {
   },
   computed: {
     ...mapGetters('question', ['questions']),
-    ...mapGetters('analyze', ['analyzes']),
+    ...mapGetters('analyze_result', ['analyze_results']),
     ...mapGetters('users', ['authUser']),
+
     highballSrc() {
       return require('../src/img/high_ball_kanpai.jpg');
     },
     imgSrc() {
-      return require('../src/img/meitei_stamp.png');
+      return require('../src/img/heavy_drunk_stamp.png');
     },
     sakeSrc() {
       return require('../src/img/tipsy_stamp.png');
@@ -296,7 +295,9 @@ export default {
     },
   },
   created() {
+    axios.get('users/me').then((userResponse) => (this.user_id = userResponse.data.id));
     this.fetchAuthUser();
+    // this.userAuth();
     this.clearAnswers();
   },
   mounted() {
@@ -318,259 +319,76 @@ export default {
   methods: {
     ...mapMutations('question', ['updateAnswer']),
     ...mapMutations('question', ['clearAnswers']),
-    ...mapMutations('analyze', ['addAnalyze']),
-    ...mapActions('analyze', ['createAnalyze']),
+    ...mapMutations('analyze_result', ['addAnalyze']),
+    ...mapActions('tast_answer', ['createTastAnswer']),
+    ...mapActions('analyze_result', ['createAnalyze']),
     ...mapActions('users', ['fetchAuthUser']),
-
     scrollTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     },
-
     countAnswer(indexNum, updAnswer) {
       this.updateAnswer({ indexNum, updAnswer });
     },
+
     async createShuchedule() {
-      //TODO 要リファクト
-      //以下の式を塊に切り出してthis.で呼び出す
-      var trueAnswers = this.questions;
-      const answer0 = trueAnswers[0]['answer'];
-      const answer1 = trueAnswers[1]['answer'];
-      const answer2 = trueAnswers[2]['answer'];
-      const answer3 = trueAnswers[3]['answer'];
-      const answer4 = trueAnswers[4]['answer'];
-      const answer5 = trueAnswers[5]['answer'];
-      const answer6 = trueAnswers[6]['answer'];
-      const answer7 = trueAnswers[7]['answer'];
-      const answer8 = trueAnswers[8]['answer'];
-      const answer9 = trueAnswers[9]['answer'];
-      const answer10 = trueAnswers[10]['answer'];
-      const answer11 = trueAnswers[11]['answer'];
-      const answer12 = trueAnswers[12]['answer'];
-
-      let answerFirst = answer0 === 1 ? -10.04 : answer0 === 2 ? 8.95 : 5.22; //重要
-      let answerSecond = answer1 === 1 ? -0.43 : answer1 === 2 ? -2.98 : 1.2;
-      let answerThird = answer2 === 1 ? 3.37 : answer2 === 2 ? 0.38 : 0.38;
-      let answerForth = answer3 === 1 ? -0.58 : answer3 === 2 ? -1.27 : 0.25;
-      let answerFifth = answer4 === 1 ? 0.31 : answer4 === 2 ? 0.36 : -1.03;
-      let answerSixth = answer5 === 1 ? 0 : answer5 === 2 ? -4.11 : 0.1;
-      let answerSeventh = answer6 === 1 ? -0.79 : answer6 === 2 ? 0.07 : 0.01;
-      let answerEighth = answer7 === 1 ? 0.83 : answer7 === 2 ? 0.62 : -0.24;
-      let answerNinth = answer8 === 1 ? -3.25 : answer8 === 2 ? 1.43 : -0.44;
-      let answerTenth = answer9 === 1 ? -3.25 : answer9 === 2 ? 1.43 : -0.44;
-      let answerEleventh = answer10 === 1 ? -10.07 : answer10 === 2 ? -0.79 : 10.8;
-      let answerTwelvth = answer11 === 1 ? 8.15 : answer11 === 2 ? -2.42 : 0.14;
-      let answerThirteenth = answer12 === 1 ? -4.34 : answer12 === 2 ? 2.69 : -0.19;
-
-      const sumResult =
-        answerFirst +
-        answerSecond +
-        answerThird +
-        answerForth +
-        answerFifth +
-        answerSixth +
-        answerSeventh +
-        answerEighth +
-        answerNinth +
-        answerTenth +
-        answerEleventh +
-        answerTwelvth +
-        answerThirteenth;
-      let AlcoholStrongness =
-        sumResult > 3 ? 4 : sumResult > 0 ? 3 : sumResult === 0 ? 2 : sumResult > -3 ? 1 : 0; //4: 酒豪, 3: やや酒豪, 2: 普通, 1: やや下戸, 0: 下戸
-      let Nomivation = this.nextMotivation; //flesh: 0, tipsy: 1, heavy_drunk: 2
-      let alcoholInVein =
-        AlcoholStrongness === 4 && Nomivation === 0
-          ? 0.04
-          : AlcoholStrongness === 4 && Nomivation === 1
-          ? 0.1
-          : AlcoholStrongness === 4 && Nomivation === 2
-          ? 0.15
-          : AlcoholStrongness === 3 && Nomivation === 0
-          ? 0.04
-          : AlcoholStrongness === 3 && Nomivation === 1
-          ? 0.09
-          : AlcoholStrongness === 3 && Nomivation === 2
-          ? 0.14
-          : AlcoholStrongness === 2 && Nomivation === 0
-          ? 0.03
-          : AlcoholStrongness === 2 && Nomivation === 1
-          ? 0.07
-          : AlcoholStrongness === 2 && Nomivation === 2
-          ? 0.13
-          : AlcoholStrongness === 1 && Nomivation === 0
-          ? 0.03
-          : AlcoholStrongness === 1 && Nomivation === 1
-          ? 0.06
-          : AlcoholStrongness === 1 && Nomivation === 2
-          ? 0.12
-          : AlcoholStrongness === 0 && Nomivation === 0
-          ? 0.02
-          : AlcoholStrongness === 0 && Nomivation === 1
-          ? 0.05
-          : AlcoholStrongness === 0 && Nomivation === 2
-          ? 0.11
-          : 0.02;
-      let coefficient = 833;
-      let yourWeight = this.weight;
-      let totalAlcoholAmount = yourWeight * coefficient * alcoholInVein;
-      let yourShuchedule =
-        totalAlcoholAmount < 2000
-          ? 21
-          : totalAlcoholAmount < 2500
-          ? 20
-          : totalAlcoholAmount < 3000
-          ? 19
-          : totalAlcoholAmount < 3500
-          ? 18
-          : totalAlcoholAmount < 4000
-          ? 17
-          : totalAlcoholAmount < 4500
-          ? 16
-          : totalAlcoholAmount < 5000
-          ? 15
-          : totalAlcoholAmount < 5500
-          ? 14
-          : totalAlcoholAmount < 6000
-          ? 13
-          : totalAlcoholAmount < 6500
-          ? 12
-          : totalAlcoholAmount < 7000
-          ? 11
-          : totalAlcoholAmount < 7500
-          ? 10
-          : totalAlcoholAmount < 8000
-          ? 9
-          : totalAlcoholAmount < 8500
-          ? 8
-          : totalAlcoholAmount < 9000
-          ? 7
-          : totalAlcoholAmount < 9500
-          ? 6
-          : totalAlcoholAmount < 10000
-          ? 5
-          : totalAlcoholAmount < 10500
-          ? 4
-          : totalAlcoholAmount < 11000
-          ? 3
-          : totalAlcoholAmount < 11500
-          ? 2
-          : totalAlcoholAmount < 12000
-          ? 1
-          : totalAlcoholAmount < 12500
-          ? 0
-          : 24;
-      let Description =
-        sumResult < -20
-          ? '過去に飲み会でトラウマを抱えているタイプの下戸'
-          : sumResult < -19
-          ? '飲み会にいてくれるだけで感謝されるタイプの下戸'
-          : sumResult < -18
-          ? '先輩や上司から好かれるタイプの下戸'
-          : sumResult < -17
-          ? '本当は家でのんびり華金を過ごしたいタイプの下戸'
-          : sumResult < -16
-          ? '酒は飲むより飲まれるタイプの下戸'
-          : sumResult < -15
-          ? '飲んだら顔がすぐに真っ赤になるタイプの下戸'
-          : sumResult < -14
-          ? '飲み会で体調を心配されるタイプの下戸'
-          : sumResult < -13
-          ? '飲まされると顔が赤くなって口数が少なくなるタイプの下戸'
-          : sumResult < -12
-          ? '家でしっぽりと飲む方が好きなタイプの下戸'
-          : sumResult < -11
-          ? '弱いけど呑みたいタイプの下戸'
-          : sumResult < -10
-          ? '酒は弱いが行きつけのバーを持っているタイプの下戸'
-          : sumResult < -9
-          ? '先輩から好かれるタイプの下戸'
-          : sumResult < -8
-          ? '強いお酒を飲んでみたいと密かに思っているタイプの下戸'
-          : sumResult < -7
-          ? '好きな人と飲むとすぐによっちゃうタイプの下戸'
-          : sumResult < -6
-          ? 'お酒が入るといつもの自分と違う一面が出てしまうタイプの下戸'
-          : sumResult < -5
-          ? '上司の前だと酔わないが気を許した仲間の前だとすぐに酔うタイプの下戸'
-          : sumResult < -4
-          ? 'お酒強い？と聞かれた時の返答に困っているタイプの下戸'
-          : sumResult < -3
-          ? '酔った時の対処法を心得ているタイプのやや下戸'
-          : sumResult < -2
-          ? '強くも弱くもないため、お酒飲める人？と聞かれた時の返答に困っているタイプのやや下戸'
-          : sumResult < -1
-          ? '人並みには飲めるよと周りに言うタイプの普通の人'
-          : sumResult < 0
-          ? '度数の高いお酒を飲んだらバタンキューするやや酒豪'
-          : sumResult < 1
-          ? 'まあ飲めるけどそこまでお酒が好きじゃないやや酒豪'
-          : sumResult < 2
-          ? '周囲の酒の空き具合を見て次何飲む？と聞ける酒豪'
-          : sumResult < 3
-          ? '気配り上手で先輩から好かれるタイプの酒豪'
-          : sumResult < 4
-          ? 'お酒よりおつまみが好きなタイプの酒豪'
-          : sumResult < 5
-          ? '気持ち悪くなるまで呑み続けてしまう愉快なタイプの酒豪'
-          : sumResult < 6
-          ? '飲み会の場でテンションが高くなって飲み会終わりに反省するタイプの酒豪'
-          : sumResult < 7
-          ? '潰れた人を介抱する技術を磨いてきたタイプの酒豪'
-          : sumResult < 8
-          ? '異性の前で仕事の話をしてウザがられるタイプの酒豪'
-          : sumResult < 9
-          ? '日本酒は獺祭と豪快しか知らないタイプの酒豪'
-          : sumResult < 10
-          ? '酒の強さを聞かれたらまあ人並みにはと答えるタイプの酒豪'
-          : sumResult < 11
-          ? '酒が強いキャラで界隈に轟かせてるタイプの酒豪'
-          : sumResult < 12
-          ? '九州の血が入っているタイプの酒豪'
-          : sumResult < 13
-          ? '飲み会の席では潰れた人の介抱をする係を任されるタイプの酒豪'
-          : sumResult < 14
-          ? '酒呑として界隈では有名な酒豪。'
-          : sumResult < 15
-          ? '日本酒や焼酎が飲めるためよくおじさんに呑みの誘いを受けるタイプの酒豪'
-          : '超弩級のウルトラ酒呑人。血液が酒でできている。';
-
+      const questionResponce = await this.questions;
+      const yourWeight = this.weight;
+      const yourNomivation = this.nextMotivation;
+      const selected_choices = [];
+      questionResponce.forEach(function (element) {
+        selected_choices.push(element['answer']);
+      });
+      function all() {
+        let updateTast = {};
+        for (let i = 0; i < selected_choices.length; i++) {
+          //keyはindexを指し、caseは場所を指している。
+          //最終的には、answer_1: array_1[1]のようになる
+          let json_key = `selected_choices_${i}`;
+          updateTast[json_key] = selected_choices[i];
+        }
+        // debugger;
+        return updateTast;
+      }
+      const tastResult = all();
       let promise = new Promise((resolve, reject) => {
-        // #1
-        const updateAnalyze = {
-          total_points: sumResult,
-          alcohol_strongness: AlcoholStrongness,
-          next_motivation: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
-          shuchedule: yourShuchedule,
-          description: Description,
-        };
-        console.log("updateAnalyze")
-        console.log(updateAnalyze)
-        resolve(
-          this.createAnalyze(updateAnalyze)
-          // this.clearAnswers()
-        );
+        const tastResult = all();
+        resolve(this.createTastAnswer(tastResult));
+
         reject();
       });
       promise
         .then(() => {
-          // #2
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve((this.showModal = true));
               reject();
-            }, 600);
+            }, 1);
           });
         })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const updateAnalyzeResult = {
+                weight: yourWeight,
+                next_motivation: yourNomivation,
+                user_id: this.user_id,
+              };
+              resolve(this.createAnalyze(updateAnalyzeResult));
+              reject();
+            }, 1);
+          });
+        })
+
         .then(() => {
           // #3
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve(this.$router.push('/result'));
               reject(console.log());
-            }, 3200);
+            }, 1);
           });
         })
         .catch((e) => {
@@ -587,7 +405,8 @@ export default {
       });
     },
     clickScrollNext() {
-      return (this.show = true);
+      this.show = true;
+      this.e6 = 2;
     },
   },
 };

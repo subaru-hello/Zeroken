@@ -30,6 +30,11 @@ Style/AsciiComments:
 Naming/VariableNumber:
   Enabled: :snake_case
 
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/ModuleLength:
+  Max: 120
+
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
@@ -39,7 +44,7 @@ Naming/AccessorMethodName:
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Metrics/MethodLength
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc', 'hash']
-  Max: 30
+  Max: 70
 Metrics/AbcSize:
   # The ABC size is a calculated magnitude, so this number can be a Fixnum or
   # a Float.

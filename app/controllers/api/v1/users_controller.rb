@@ -1,9 +1,18 @@
 module Api
   module V1
     class UsersController < BaseController
+      before_action :set_users, only: %i[show edit update]
       def index
         @users = User.all
         render json: @users
+      end
+
+      def edit
+        render json: @user
+      end
+
+      def show
+        render json: @user
       end
 
       def create
@@ -18,6 +27,15 @@ module Api
         end
       end
 
+      def update
+        if @user.update(params_user)
+          json_string = UserSerializer.new(current_user).serializable_hash
+          render json: json_string
+        else
+          head :bad_request
+        end
+      end
+
       def me
         if current_user
           json_string = UserSerializer.new(current_user).serializable_hash.to_json
@@ -29,8 +47,14 @@ module Api
 
       private
 
+      def set_users
+        @user = User.find(params[:id])
+      end
+
       def params_user
-        params.require(:user).permit(:nickname, :email, :password, :password_confirmation, :avatar)
+        params
+          .require(:user)
+          .permit(:id, :nickname, :email, :password, :password_confirmation, :avatar)
       end
     end
   end

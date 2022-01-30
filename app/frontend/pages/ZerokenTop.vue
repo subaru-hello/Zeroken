@@ -32,9 +32,9 @@
           <v-col>
             <!-- <img :src="imgSrc" class="img" width="150" height="100" /> -->
             <v-spacer />
-            <div v-if="currentUser">
+            <div v-if="currentUser != 'member'">
               <ZerokenButton
-                button-name="酒ケジュールを作成する"
+                button-name="ゲストで診断する"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
@@ -52,7 +52,7 @@
             </div>
             <div v-else>
               <ZerokenButton
-                button-name="ゲストで診断する"
+                button-name="酒ケジュールを作成する"
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
