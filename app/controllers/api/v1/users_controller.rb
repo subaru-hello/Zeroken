@@ -3,8 +3,8 @@ module Api
     class UsersController < BaseController
       before_action :set_users, only: %i[show edit update]
       def index
-        users = User.all
-        render json: users
+        @users = User.all
+        render json: @users
       end
 
       def edit

@@ -353,11 +353,10 @@ export default {
         return updateTast;
       }
       const tastResult = all();
-      console.log(tastResult);
-
       let promise = new Promise((resolve, reject) => {
         const tastResult = all();
         resolve(this.createTastAnswer(tastResult));
+
         reject();
       });
       promise
@@ -392,9 +391,9 @@ export default {
             }, 1);
           });
         })
-        .catch(() => {
+        .catch((e) => {
           // エラーハンドリング
-          console.error('Something wrong!');
+          console.error(e);
         });
       return promise;
     },

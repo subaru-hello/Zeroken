@@ -20,7 +20,6 @@ services:
     image: oilrmutp57/mysql5.7:1.0
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:

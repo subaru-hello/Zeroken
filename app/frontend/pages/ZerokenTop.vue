@@ -10,6 +10,10 @@
         :dialog="isVisibleFirstGreeting"
         @close-dialog="isVisibleFirstGreeting = false"
       />
+      <SorryForError
+        :dialog="isVisibleSorryForError"
+        @close-dialog="isVisibleSorryForError = false"
+      />
 
       <v-row justify="center" align-content="center">
         <v-col class="text-center align-self-center" cols="12">
@@ -141,6 +145,7 @@
 import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
+import SorryForError from '../components/SorryForError';
 import ZerokenButton from '../components/global/ZerokenButton';
 import ZerokenAbout from '../components/top/ZerokenAbout';
 export default {
@@ -148,11 +153,13 @@ export default {
     FirstGreeting,
     ZerokenAbout,
     ZerokenButton,
+    SorryForError
   },
   name: 'ZerokenTop',
   data() {
     return {
       isVisibleFirstGreeting: false,
+      isVisibleSorryForError: false,
       autoplay: true,
       show: false,
       emerge: false,
@@ -185,13 +192,9 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name === 'UserRegister')
-      next((self) => {
-        self.fetchAuthUser().then((authUser) => {
-          if (authUser) return (self.isVisibleFirstGreeting = true);
-        });
-      });
-    else next();
+     next((self) => {
+      return (self.isVisibleSorryForError = true)
+    });
   },
   computed: {
     ...mapGetters('users', ['authUser']),
@@ -212,12 +215,13 @@ export default {
     },
   },
   mounted() {
-    axios.get('/users').then((response) => (this.users = response.data));
     this.show = true;
   },
 
   async created() {
     const a = await this.fetchAuthUser();
+    console.log("a")
+    console.log(a)
     this.currentUser = a.data.attributes.role;
   },
   methods: {
