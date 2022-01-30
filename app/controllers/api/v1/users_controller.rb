@@ -1,18 +1,17 @@
 module Api
   module V1
     class UsersController < BaseController
+      before_action :set_users, only: %i[show edit update]
       def index
         users = User.all
         render json: users
       end
 
       def edit
-        @user = User.find(params[:id])
         render json: @user
       end
 
       def show
-        @user = User.find(params[:id])
         render json: @user
       end
 
@@ -29,8 +28,6 @@ module Api
       end
 
       def update
-        @user = User.find(params[:id])
-
         if @user.update(params_user)
           json_string = UserSerializer.new(current_user).serializable_hash
           render json: json_string
