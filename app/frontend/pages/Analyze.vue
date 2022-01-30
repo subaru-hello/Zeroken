@@ -353,21 +353,11 @@ export default {
         return updateTast;
       }
       const tastResult = all();
-
       let promise = new Promise((resolve, reject) => {
         const tastResult = all();
         resolve(this.createTastAnswer(tastResult));
-        const updateAnalyze = {
-          total_points: sumResult,
-          alcohol_strongness: AlcoholStrongness,
-          next_motivation: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
-          shuchedule: yourShuchedule,
-          description: Description,
-        };
-        resolve(
-          this.createAnalyze(updateAnalyze)
-          // this.clearAnswers()
-        );
+
+        reject();
       });
       promise
         .then(() => {
