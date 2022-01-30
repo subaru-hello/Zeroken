@@ -15,12 +15,12 @@
               <div class="text-center">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">ニックネーム</h3>
-                  <div>{{ authUser.data.attributes.nickname }}</div>
+                  <div>{{ authUserEdit.nickname }}</div>
                 </div>
                 <v-divider />
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">メールアドレス</h3>
-                  <div>{{ authUser.data.attributes.email }}</div>
+                  <div>{{ authUserEdit.email }}</div>
                 </div>
                 <div>
                   <h3 class="text-subtitle-1 font-weight-black">酒の強さ</h3>
@@ -195,7 +195,6 @@ export default {
     ...mapGetters('analyze_result', ['analyze_results']),
 
     userAlcoholStrongness() {
-      console.log(this.alcoholStrongness);
       return this.alcoholStrongness;
     },
 
@@ -226,8 +225,6 @@ export default {
     targetAnalyzeData;
     this.currentAnalyze();
     targetUserData;
-    console.log('targetUserResponse');
-    console.log(targetUserResponse);
   },
   methods: {
     ...mapActions('users', ['updateAuthUser']),
@@ -308,81 +305,54 @@ export default {
     handleShowEditProfile() {
       this.editProfileDialogDisplayed = !this.editProfileDialogDisplayed;
     },
-    updateProfile() {
-      const updateProfile = {
-        nickname: this.authUserEdit['nickname'],
-        email: this.authUserEdit['email'],
-      };
-      let promise = new Promise((resolve, reject) => {
-        resolve(this.updateAuthUser(updateProfile));
-        reject();
-        promise.then((user) => {
-          if (user) {
-            this.handleShowEditProfile();
-            this.fetchSnackbarData({
-              msg: 'プロフィールを更新しました',
-              color: 'success',
-              isShow: true,
-            });
-          } else {
-            this.fetchSnackbarData({
-              msg: 'プロフィールを更新できませんでした',
-              color: 'error',
-              isShow: true,
-            });
-          }
-        });
-      });
-      return promise;
-    },
-    updatePassword() {
-      axios
-        .patch(`profiles/password`, {
-          password: this.password,
-          password_confirmation: this.password_confirmation,
-        })
-        .then(() => {
-          this.handleShowEditPassword();
-          this.fetchSnackbarData({
-            msg: 'パスワードを更新しました',
-            color: 'success',
-            isShow: true,
-          });
-        })
-        .catch((err) => {
-          this.fetchSnackbarData({
-            msg: 'パスワードの更新に失敗しました',
-            color: 'error',
-            isShow: true,
-          });
-          console.log(err);
-        });
-    },
-    // async updateProfiles() {
-    //   const updateData = {
-    //     nickname: this.authUserEdit.nickname,
-    //     email: this.authUserEdit.email,
-    //   };
-    //   const updateUserData = await this.updateAuthUser(updateData)
-    //     .then(() => {
-    //       this.handleShowEditProfile();
-    //       this.fetchSnackbarData({
-    //         msg: 'プロフィールを更新しました',
-    //         color: 'success',
-    //         isShow: true,
-    //       });
 
-    //       this.$router.push({ name: 'UserProfile' });
-    //     })
-    //     .catch((err) => {
-    //       this.fetchSnackbarData({
-    //         msg: 'プロフィールを更新できませんでした',
-    //         color: 'error',
-    //         isShow: true,
-    //       });
-    //       console.log(err);
-    //     });
-    // },
+    async updateProfile() {
+      const updateProfile = {
+        id: this.authUser.data.id,
+        nickname: this.authUserEdit.nickname,
+        email: this.authUserEdit.email,
+      };
+      try {
+        const mutateProfile = await this.updateAuthUser(updateProfile);
+        mutateProfile;
+        this.handleShowEditProfile();
+        this.fetchSnackbarData({
+          msg: 'プロフィールを更新しました',
+          color: 'success',
+          isShow: true,
+        });
+      } catch {
+        this.fetchSnackbarData({
+          msg: 'プロフィールの更新に失敗しました',
+          color: 'error',
+          isShow: true,
+        });
+      }
+    },
+    async updatePassword() {
+      const updatePassword = {
+        id: this.authUser.data.id,
+        password: this.authUserEdit.password,
+        password_confirmation: this.authUserEdit.password_confirmation,
+      };
+
+      try {
+        const updateResponse = await this.updateAuthUser(updatePassword);
+        updateResponse;
+        this.handleShowEditPassword();
+        this.fetchSnackbarData({
+          msg: 'パスワードを更新しました',
+          color: 'success',
+          isShow: true,
+        });
+      } catch {
+        this.fetchSnackbarData({
+          msg: 'パスワードの更新に失敗しました',
+          color: 'error',
+          isShow: true,
+        });
+      }
+    },
     //Todo authUserEditにavatarを追加する
 
     // initAuthUserEdit() {
