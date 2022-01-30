@@ -6,13 +6,14 @@ class Alcohol < ApplicationRecord
   has_one_attached :image
   def self.cal_amount(amount)
     amount_under_3000 = [50, 0, 0, 0]
+    amount_3200 = [1440, 690, 0, 0]
     amount_3500 = [1750, 1750, 0, 0]
-    amount_4000 = [1750, 1750, 0, 0]
+    amount_4000 = [1750, 1440, 1050, 0]
     amount_4500 = [1750, 1750, 1050, 0]
-    amount_5000 = [1750, 2750, 0, 0]
+    amount_5000 = [1750, 1440, 1440, 0]
     amount_5500 = [1750, 1750, 2250, 0]
-    amount_6000 = [1750, 720, 2700, 1050]
-    amount_6500 = [1750, 2750, 720, 1050]
+    amount_6000 = [1750, 690, 2700, 1050]
+    amount_6500 = [1750, 2750, 690, 1050]
     amount_7000 = [1750, 1750, 1750, 1750]
     amount_7500 = [1750, 2700, 2800, 0]
     amount_8000 = [1750, 2700, 2250, 1050]
@@ -20,7 +21,7 @@ class Alcohol < ApplicationRecord
     amount_9000 = [1750, 2250, 2800, 2250]
     amount_9500 = [1800, 2800, 2800, 2250]
     amount_10000 = [1750, 4900, 1750, 1200]
-    amount_10500 = [1750, 2250, 2250, 2450]
+    amount_10500 = [1750, 2250, 2250, 2250]
     amount_11000 = [1750, 4900, 4900, 1200]
     amount_11500 = [1750, 1200, 4900, 3500]
     amount_12000 = [1750, 3500, 1750, 4900]
@@ -28,6 +29,8 @@ class Alcohol < ApplicationRecord
     case amount
     when 0...3000
       amount_under_3000
+    when 3000...3200
+      amount_3200
     when 3000...3500
       amount_3500
     when 3500...4000
@@ -70,7 +73,7 @@ class Alcohol < ApplicationRecord
   end
 
   def self.sum_amount(point)
-    alcohol_array = cal_amount(point)
+    alcohol_array = Alcohol.cal_amount(point)
     alcohol_array.map { |alcohol_amount| Alcohol.where('alcohol_amount= ?', alcohol_amount) }
   end
 end

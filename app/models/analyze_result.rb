@@ -160,17 +160,17 @@ class AnalyzeResult < ApplicationRecord
   end
 
   def self.cal_alcohol_strongness(total_point)
-      case total_point
-      when 3..30
-        4
-      when 0...3
-        3
-      when -3...0
-        2
-      when -30...-3
-        1
-      else
-        0
-      end
+    case total_point
+    when 3..30
+      4
+    when 0...3
+      3
+    when -3...0
+      2
+    when -30...-3
+      1
+    else
+      0
+    end
   end
 end

@@ -10,8 +10,8 @@ Alcohol.seed(
     {
         name: 'ビール(一口)',
         alcohol_percentage: 5.00,
-        capacity_per_glass: 350,
-        alcohol_amount: 1750,
+        capacity_per_glass: 10,
+        alcohol_amount: 50,
         description: '「醸造酒」の一つ。とりあえずビールの風潮で頼んだはいいがビールがそこまで好きではないあなたへのジャストサイズ。',
         image: File.open('db/fixtures/images/jokki_beer.jpg')
     },
@@ -116,6 +116,7 @@ Alcohol.seed(
         name: "ウィスキー(ストレート)",
         alcohol_percentage: 40.00,
         capacity_per_glass: 30,
+        alcohol_amount: 1200,
         description: "「蒸留酒」の一つ。ダンディーな雰囲気が漂う大人の飲み物。ウィスキーがお好きでしょ。",
         image: File.open('db/fixtures/images/big_wiskey.png')
     },
@@ -219,6 +220,7 @@ Alcohol.seed(
         name: "水",
         alcohol_percentage: 0,
         capacity_per_glass: 350,
+        alcohol_amount: 0,
         description: "飲み会の前、最中、最後に活躍するユーティリティプレイヤー。体内の70%を占めている。もはや人間。",
         image: File.open('db/fixtures/images/softdrink.png')
     },
@@ -250,6 +252,7 @@ Alcohol.seed(
         name: "烏龍茶",
         alcohol_percentage: 0,
         capacity_per_glass: 350,
+        alcohol_amount: 0,
         description: "堂々と頼もう。まるでウーロンハイを飲んでいるかのように堂々と。",
         image: File.open('db/fixtures/images/ocha.png')
     },
