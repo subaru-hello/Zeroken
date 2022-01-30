@@ -85,7 +85,7 @@ jobs:
       #   run: |
       #     bundle exec rspec ./spec/requests/api/v1
       #     bundle exec rspec ./spec/models
-  # deploy:
+  # deploy
   #   name: auto deploy to heroku
   #   needs: [prepare, build-test]
   #   runs-on: ubuntu-latest
