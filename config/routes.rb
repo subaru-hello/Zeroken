@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :answers,  only: %i[ create index]
     resources :tast_answers,  only: %i[ create index show]
     resources :descriptions,  only: %i[ create index]
-    resources :alcohol_in_veins,  only: %i[ create index]
+    resources :alcohol_in_veins,  only: %i[ index ]
     post 'guest_login', to: 'guest_login#create'
   get 'validation/unique', to: 'validations#unique'
   end
