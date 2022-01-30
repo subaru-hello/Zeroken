@@ -152,7 +152,7 @@ export default {
     FirstGreeting,
     ZerokenAbout,
     ZerokenButton,
-    SorryForError
+    SorryForError,
   },
   name: 'ZerokenTop',
   data() {
@@ -191,8 +191,8 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-     next((self) => {
-      return (self.isVisibleSorryForError = true)
+    next((self) => {
+      return (self.isVisibleSorryForError = true);
     });
   },
   computed: {
