@@ -62,10 +62,9 @@ const actions = {
     return userResponse.data;
   },
 
-  async updateAuthUser({ commit }, authUser) {
+  async updateAuthUser({ commit }, user) {
     try {
-      const res = await axios.patch('profiles', authUser);
-
+      const res = await axios.patch(`users/${user.id}`, { user: user });
       commit('setAuthUser', res.data);
       return res.data;
     } catch (err) {

@@ -323,11 +323,6 @@ export default {
     ...mapActions('tast_answer', ['createTastAnswer']),
     ...mapActions('analyze_result', ['createAnalyze']),
     ...mapActions('users', ['fetchAuthUser']),
-    // async userAuth(){
-    //   const userResponce = await axios.get('users/me')
-    //   this.user_id = this.authUser.data.id
-
-    // },
     scrollTop() {
       window.scrollTo({
         top: 0,
@@ -362,10 +357,7 @@ export default {
 
       let promise = new Promise((resolve, reject) => {
         const tastResult = all();
-        resolve(
-          this.createTastAnswer(tastResult)
-          // (this.showModal = true)
-        );
+        resolve(this.createTastAnswer(tastResult));
         reject();
       });
       promise
@@ -414,9 +406,8 @@ export default {
       });
     },
     clickScrollNext() {
-       this.show = true;
+      this.show = true;
       this.e6 = 2;
-     
     },
   },
 };
