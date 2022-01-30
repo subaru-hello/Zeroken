@@ -18,12 +18,8 @@ bind 'tcp://localhost:3000'
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 bind 'tcp://0.0.0.0:3000'
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-<<<<<<< HEAD
-port ENV.fetch("PORT") { 3000 }, 'localhost'
-=======
+
 port ENV.fetch("PORT") { 3000 }, '0.0.0.0'
->>>>>>> main
 # bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
 # Specifies the `environment` that Puma will run in.
 #

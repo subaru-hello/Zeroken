@@ -353,14 +353,10 @@ export default {
         return updateTast;
       }
       const tastResult = all();
-      console.log(tastResult);
 
       let promise = new Promise((resolve, reject) => {
-<<<<<<< HEAD
         const tastResult = all();
         resolve(this.createTastAnswer(tastResult));
-=======
-        // #1
         const updateAnalyze = {
           total_points: sumResult,
           alcohol_strongness: AlcoholStrongness,
@@ -368,14 +364,10 @@ export default {
           shuchedule: yourShuchedule,
           description: Description,
         };
-        console.log("updateAnalyze")
-        console.log(updateAnalyze)
         resolve(
           this.createAnalyze(updateAnalyze)
           // this.clearAnswers()
         );
->>>>>>> main
-        reject();
       });
       promise
         .then(() => {
