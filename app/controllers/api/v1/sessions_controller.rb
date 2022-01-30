@@ -1,7 +1,7 @@
 module Api
   module V1
     class SessionsController < BaseController
-      before_action :require_login, only: :destroy
+      before_action :authenticate, except: [:new, :create]
 
       def create
         @user = login(params[:email], params[:password])

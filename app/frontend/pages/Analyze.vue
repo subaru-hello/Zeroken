@@ -356,8 +356,25 @@ export default {
       console.log(tastResult);
 
       let promise = new Promise((resolve, reject) => {
+<<<<<<< HEAD
         const tastResult = all();
         resolve(this.createTastAnswer(tastResult));
+=======
+        // #1
+        const updateAnalyze = {
+          total_points: sumResult,
+          alcohol_strongness: AlcoholStrongness,
+          next_motivation: Nomivation, //flesh: 0, tipsy: 1, heavy_drunk: 2
+          shuchedule: yourShuchedule,
+          description: Description,
+        };
+        console.log("updateAnalyze")
+        console.log(updateAnalyze)
+        resolve(
+          this.createAnalyze(updateAnalyze)
+          // this.clearAnswers()
+        );
+>>>>>>> main
         reject();
       });
       promise
@@ -392,9 +409,9 @@ export default {
             }, 1);
           });
         })
-        .catch(() => {
+        .catch((e) => {
           // エラーハンドリング
-          console.error('Something wrong!');
+          console.error(e);
         });
       return promise;
     },
