@@ -27,11 +27,11 @@ class AnalyzeResult < ApplicationRecord
   end
 
   def self.cal_total_point(user_id)
-    tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][0..12]
+    tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][2..14]
 
     target_array = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
 
-    result = target_array.map { |n| Answer.find(n + 1).point.to_f }
+    result = target_array.map { |n| Answer.find(n).point.to_f }
 
     result.sum
   end

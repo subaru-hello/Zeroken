@@ -233,7 +233,7 @@ export default {
       alcoholInVeinDialog: false,
       nonAlcoholImg: '',
       nextMotivationImg: '',
-      alcohols: {},
+      alcohols: undefined,
       shuchedule: {},
       analyze_description: '',
       users: [],
@@ -373,10 +373,6 @@ export default {
     const analyzeResponses = await axios.get('/analyze_results');
     const targetAnalyze = (this.analyze_results = analyzeResponses.data);
     const recentAnalyzeData = (this.shuchedule = targetAnalyze[targetAnalyze.length - 1]);
-    console.log('targetAnalyze');
-    console.log(this.shuchedule);
-    console.log('targetAnalyze');
-    console.log(recentAnalyzeData);
     const targetStrongness = (this.analyze_strongness = recentAnalyzeData['alcohol_strongness']);
     const targetDescription = (this.analyze_description = recentAnalyzeData['description']);
     targetDescription;
@@ -391,7 +387,6 @@ export default {
     this.currentAnalyze();
     this.changeSrc();
     this.thisAnalyze();
-    this.alcoholDatas();
   },
   methods: {
     ...mapActions('analyze_result', ['fetchAnalyzes']),
@@ -474,10 +469,6 @@ export default {
     thisAnalyze() {
       const analyzeResult = this.analyze_results;
       return analyzeResult;
-    },
-    alcoholDatas(response) {
-      const alcoholData = (this.alcohols = response.data);
-      console.log(alcoholData);
     },
     async changeSrc() {
       const responseAnalyze = await axios.get('/analyze_results');

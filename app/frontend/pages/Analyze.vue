@@ -414,8 +414,9 @@ export default {
       });
     },
     clickScrollNext() {
+       this.show = true;
       this.e6 = 2;
-      this.show = !this.show;
+     
     },
   },
 };
