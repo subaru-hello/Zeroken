@@ -142,7 +142,6 @@
 </template>
 
 <script>
-import axios from '../plugins/axios';
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
 import SorryForError from '../components/SorryForError';
@@ -219,10 +218,8 @@ export default {
   },
 
   async created() {
-    const a = await this.fetchAuthUser();
-    console.log("a")
-    console.log(a)
-    this.currentUser = a.data.attributes.role;
+    const userResponse = await this.fetchAuthUser();
+    this.currentUser = userResponse.data.attributes.role;
   },
   methods: {
     ...mapActions('users', ['fetchAuthUser']),
@@ -234,19 +231,6 @@ export default {
     toOnlyMotivation() {
       this.$router.push({ name: 'SelectNomivation' });
     },
-    //     checkAuthUserRole(){
-    //       console.log("this.authUser")
-    //       console.log(this.authUser)
-    //       const currentUser = this.authUser.data
-    // if((currentUser.attributes.role = 'member') && (currentUser.relationships.analyzes.data = []) ){
-    //   this.loginFunction()
-
-    // }else if( currentUser.attributes.role ==="guest"){
-    //   this.toAnalyze()
-    // }else{
-    //     this.toOnlyMotivation()
-    // }
-    //     },
     clickScroll(e) {
       const targetArea = e.currentTarget.getBoundingClientRect().top + 1500;
       window.scrollTo({

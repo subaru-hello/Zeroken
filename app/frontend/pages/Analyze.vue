@@ -352,7 +352,6 @@ export default {
         // debugger;
         return updateTast;
       }
-      const tastResult = all();
       let promise = new Promise((resolve, reject) => {
         const tastResult = all();
         resolve(this.createTastAnswer(tastResult));
