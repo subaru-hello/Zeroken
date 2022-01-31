@@ -6,7 +6,6 @@ class AnalyzeResult < ApplicationRecord
   enum alcohol_strongness: { weak: 0, weak_normal: 1, normal: 2, normal_strong: 3, strong: 4 }
 
     def self.cal_shuchedule(weight, next_motivation, user_id)
-      binding.pry
       total_point = AnalyzeResult.cal_total_point(user_id)
       description = ExtractDescription.extract_description(total_point)
       alcohol_strongness = AnalyzeResult.cal_alcohol_strongness(total_point)
