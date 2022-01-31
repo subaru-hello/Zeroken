@@ -38,7 +38,7 @@
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
-                @click-response="toAnalyze()"
+                @click-response="loginFunction()"
               >
               </ZerokenButton>
               <!-- <ZerokenButton
@@ -56,7 +56,7 @@
                 class="mb-8 text-center"
                 style="background-color: rgb(222, 184, 135)"
                 x-large
-                @click-response="loginFunction()"
+                @click-response="toAnalyze()"
               >
               </ZerokenButton>
             </div>
