@@ -73,12 +73,10 @@ ActiveRecord::Schema.define(version: 2022_01_28_044557) do
   end
 
   create_table "answers", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "questions_id"
     t.decimal "point", precision: 12, scale: 4
     t.string "choice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["questions_id"], name: "index_answers_on_questions_id"
   end
 
   create_table "api_keys", charset: "utf8mb4", force: :cascade do |t|
@@ -150,7 +148,6 @@ ActiveRecord::Schema.define(version: 2022_01_28_044557) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "analyze_results", "users"
-  add_foreign_key "answers", "questions", column: "questions_id"
   add_foreign_key "api_keys", "users"
   add_foreign_key "favorites", "alcohols", column: "alcohols_id"
   add_foreign_key "favorites", "users", column: "users_id"
