@@ -1,7 +1,7 @@
 module ExtractDescription
   extend ActiveSupport::Concern
-
-  def self.extract_description(total_point)
+class << self
+  def extract_description(total_point)
     description_cal =
       case total_point
       when -30...-15
@@ -20,7 +20,7 @@ module ExtractDescription
     Description.find(description_cal).explanation
   end
 
-  def self.lower_than_minus_fifteen(total_point)
+  def lower_than_minus_fifteen(total_point)
     case total_point
     when -30...-20
       1
@@ -39,7 +39,7 @@ module ExtractDescription
     end
   end
 
-  def self.range_minus_seven_minus_fourteen(total_point)
+  def range_minus_seven_minus_fourteen(total_point)
     case total_point
     when -14...-13
       8
@@ -58,7 +58,7 @@ module ExtractDescription
     end
   end
 
-  def self.range_zero_minus_seven(total_point)
+  def range_zero_minus_seven(total_point)
     case total_point
     when -7...-6
       15
@@ -77,7 +77,7 @@ module ExtractDescription
     end
   end
 
-  def self.range_zero_seven(total_point)
+  def range_zero_seven(total_point)
     case total_point
     when 0...1
       22
@@ -96,7 +96,7 @@ module ExtractDescription
     end
   end
 
-  def self.range_seven_thirteen(total_point)
+  def range_seven_thirteen(total_point)
     case total_point
     when 7...8
       29
@@ -111,7 +111,7 @@ module ExtractDescription
     end
   end
 
-  def self.range_fourteen_thirty(total_point)
+  def range_fourteen_thirty(total_point)
     case total_point
     when 14...15
       34

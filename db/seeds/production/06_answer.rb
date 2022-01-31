@@ -31,7 +31,7 @@ Answer.seed(
    point: -3.89,
    choice: "時々"
 },
-
+{
    point: 0.38,
    choice: "全くない"
 },

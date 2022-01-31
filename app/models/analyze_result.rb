@@ -4,8 +4,8 @@ class AnalyzeResult < ApplicationRecord
   has_many :descriptions, dependent: :destroy
   enum next_motivation: { flesh: 0, tipsy: 1, heavy_drunk: 2 }
   enum alcohol_strongness: { weak: 0, weak_normal: 1, normal: 2, normal_strong: 3, strong: 4 }
-
-  def self.cal_shuchedule(weight, next_motivation, user_id)
+class << self
+  def cal_shuchedule(weight, next_motivation, user_id)
     total_point = AnalyzeResult.cal_total_point(user_id)
     description = ExtractDescription.extract_description(total_point)
     alcohol_strongness = AnalyzeResult.cal_alcohol_strongness(total_point)
@@ -27,7 +27,7 @@ class AnalyzeResult < ApplicationRecord
     }
   end
 
-  def self.cal_total_point(user_id)
+  def cal_total_point(user_id)
     tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][2..14]
 
     target_array = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
@@ -37,7 +37,7 @@ class AnalyzeResult < ApplicationRecord
     result.sum
   end
 
-  def self.cal_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
+  def cal_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
     pair = [alcohol_strongness, next_motivation]
     check_alcohol_in_vein =
       case pair
@@ -78,7 +78,7 @@ class AnalyzeResult < ApplicationRecord
     weight * coefficient * alcohol_in_vein / 100
   end
 
-  def self.cal_alcohol_strongness(total_point)
+  def cal_alcohol_strongness(total_point)
     case total_point
     when 3..30
       4
@@ -92,4 +92,5 @@ class AnalyzeResult < ApplicationRecord
       0
     end
   end
+end
 end
