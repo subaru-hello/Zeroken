@@ -7,7 +7,7 @@ class AnalyzeResult < ApplicationRecord
 
     def self.cal_shuchedule(weight, next_motivation, user_id)
       total_point = AnalyzeResult.cal_total_point(user_id)
-      description = ExtractDescription.extract_description(total_point)
+      description = ExtractDescription.which_extract_description(total_point)
       alcohol_strongness = AnalyzeResult.cal_alcohol_strongness(total_point)
       total_alcohol_amounts =
         AnalyzeResult.cal_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
@@ -30,8 +30,7 @@ class AnalyzeResult < ApplicationRecord
     def self.cal_total_point(user_id)
       tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][2..14]
 
-      target_array = tast_answer_array.map.with_index { |arr, i| (3 * i) + arr }
-
+      target_array = tast_answer_array.map.with_index { |arr, i| 10 * (arr + 3 * i) -5 }
       result = target_array.map { |n| Answer.find(n).point.to_f }
 
       result.sum
@@ -42,35 +41,35 @@ class AnalyzeResult < ApplicationRecord
       check_alcohol_in_vein =
         case pair
         when [4, 0]
-          1
-        when [4, 1]
-          2
-        when [4, 2]
-          3
-        when [3, 0]
-          4
-        when [3, 1]
           5
-        when [3, 2]
-          6
-        when [2, 0]
-          7
-        when [2, 1]
-          8
-        when [2, 2]
-          9
-        when [1, 0]
-          10
-        when [1, 1]
-          11
-        when [1, 2]
-          12
-        when [0, 0]
-          13
-        when [0, 1]
-          14
-        when [0, 2]
+        when [4, 1]
           15
+        when [4, 2]
+          25
+        when [3, 0]
+          35
+        when [3, 1]
+          45
+        when [3, 2]
+          55
+        when [2, 0]
+          65
+        when [2, 1]
+          75
+        when [2, 2]
+          85
+        when [1, 0]
+          95
+        when [1, 1]
+          105
+        when [1, 2]
+          115
+        when [0, 0]
+          125
+        when [0, 1]
+          135
+        when [0, 2]
+          145
         end
       alcohol_in_vein = AlcoholInVein.find(check_alcohol_in_vein).percentage
 
