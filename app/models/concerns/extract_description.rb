@@ -1,5 +1,6 @@
 module ExtractDescription
   extend ActiveSupport::Concern
+
   EXTRACT_DESCRIPTIONS = [
     { total_point_range: -30...-20, cal: 5 },
     { total_point_range: -20...-19, cal: 15 },
