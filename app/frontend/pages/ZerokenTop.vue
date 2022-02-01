@@ -10,9 +10,9 @@
         :dialog="isVisibleFirstGreeting"
         @close-dialog="isVisibleFirstGreeting = false"
       />
-      <SorryForError
-        :dialog="isVisibleSorryForError"
-        @close-dialog="isVisibleSorryForError = false"
+      <Welcome
+        :dialog="isVisibleWelcome"
+        @close-dialog="isVisibleWelcome = false"
       />
 
       <v-row justify="center" align-content="center">
@@ -144,7 +144,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import FirstGreeting from '../components/FirstGreeting';
-import SorryForError from '../components/SorryForError';
+import Welcome from '../components/Welcome';
 import ZerokenButton from '../components/global/ZerokenButton';
 import ZerokenAbout from '../components/top/ZerokenAbout';
 export default {
@@ -152,13 +152,13 @@ export default {
     FirstGreeting,
     ZerokenAbout,
     ZerokenButton,
-    SorryForError,
+    Welcome,
   },
   name: 'ZerokenTop',
   data() {
     return {
       isVisibleFirstGreeting: false,
-      isVisibleSorryForError: false,
+      isVisibleWelcome: false,
       autoplay: true,
       show: false,
       emerge: false,
@@ -192,7 +192,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((self) => {
-      return (self.isVisibleSorryForError = true);
+      return (self.isVisibleWelcome = true);
     });
   },
   computed: {

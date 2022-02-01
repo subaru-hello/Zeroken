@@ -105,14 +105,14 @@
         データを保存する(ログイン必須)<v-icon color="#1da1f2"> mdi-download </v-icon></v-btn
       >
     </v-row>
-    <transition name="modal">
+    <v-dialog   v-if="showRegisterModal" width="650px" @click:outside="closeDialog">
       <UserRegisterForm
         v-bind.sync="user"
         @create-user="registerFunction"
-        v-if="showRegisterModal"
+      
         register-title="ログインしてデータを保存する"
       ></UserRegisterForm>
-    </transition>
+    </v-dialog>
     <v-row justify="center" align-content="center">
       <v-btn
         @click="alcoholInVeinDialog = true"
