@@ -37,9 +37,10 @@ gem 'mini_magick'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 # To accept Cross-Origin Resource Sharing
+gem 'config'
 gem 'rack-cors'
 group :development, :test do
-  gem 'dotenv-rails'
+  gem 'letter_opener_web', '~> 1.0'
   # Code check
   gem 'brakeman', require: false
   gem 'bullet'

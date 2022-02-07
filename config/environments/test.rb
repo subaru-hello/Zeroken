@@ -51,6 +51,8 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
-  # Annotate rendered view with file names.
+  # Annotate rendered vi
+  config.action_mailer.default_url_options = Settings.default_url_options.to_h
+  # endew with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 end

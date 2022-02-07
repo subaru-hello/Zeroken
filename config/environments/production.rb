@@ -100,7 +100,19 @@ Rails.application.configure do
   # timestamps for the last write to the primary. The resolver uses the context
   # class timestamps to determine how long to wait before reading from the
   # replica.
-  #
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: Settings.host }
+
+  ActionMailer::Base.smtp_settings = {
+    user_name: 'apikey',
+    password: Rails.application.credentials.dig(:sendgrid, :api_key),
+    domain: 'yourdomain.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+  config.action_mailer.raise_delivery_errors = true
   # By default Rails will store a last write timestamp in the session. The
   # DatabaseSelector middleware is designed as such you can define your own
   # strategy for connection switching and pass that into the middleware through
