@@ -11,20 +11,29 @@
       </v-col>
     </v-row>
     <v-row justify="center" align-content="center">
-      <!-- <v-col cols="12" sm="5" md="5" lg="5" xl="5">
+      <v-col cols="12" sm="5" md="5" lg="5" xl="5">
         <v-card height="100%">
           <p class="text-h6 pt-8 px-8 text-center font-weight-black">
             SNSアカウントで<br class="br-sp" />ログイン
           </p>
           <v-card-actions class="d-flex flex-column">
             <v-btn class="mb-12" x-large>Twitter</v-btn>
-            <v-btn class="mb-12" x-large>Google</v-btn>
+            <v-btn
+              class="mb-12 font-weight-bold text-capitalize"
+              href="/api/v1/oauth/google"
+              xLarge
+              color="#dd4b39"
+              style="color: white"
+            >
+              <v-icon class="mr-2">mdi-google-plus</v-icon>
+              Googleアカウントで登録
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
       <v-col class="d-flex justify-center align-center" cols="12" sm="2" md="2" lg="2" xl="2">
         <p>または</p>
-      </v-col> -->
+      </v-col>
       <v-col cols="12" sm="5" md="5" lg="5" xl="5">
         <UserLoginForm v-bind.sync="user" @login-user="loginFunction" />
       </v-col>
@@ -71,4 +80,3 @@ export default {
   },
 };
 </script>
-<style scoped></style>

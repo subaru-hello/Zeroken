@@ -1,0 +1,6 @@
+protocol: https
+host: www.zeroken.site
+google:
+  callback_url: https://www.zeroken.site/api/v1/oauth/callback?provider=google
+twitter:
+  callback_url: https://www.zeroken.site/api/v1/oauth/callback?provider=twitter

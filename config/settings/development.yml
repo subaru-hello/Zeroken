@@ -1,0 +1,6 @@
+protocol: http
+host: localhost:3000
+google:
+  callback_url: http://0.0.0.0:3000/api/v1/oauth/callback?provider=google
+twitter:
+  callback_url: http://0.0.0.0:3000/api/v1/oauth/callback?provider=twitter
