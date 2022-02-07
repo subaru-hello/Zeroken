@@ -1,4 +1,6 @@
 https://www.zeroken.site
+UU数 495人
+PV数 9120人
 # ZEROKEN(ゼロケン)
 ### サービス概要
 
