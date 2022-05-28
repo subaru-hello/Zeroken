@@ -17,7 +17,8 @@ services:
   db:
     volumes:
       - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所を作成
-    image: oilrmutp57/mysql5.7:1.0
+    image: mysql/mysql-server:8.0
+    platform: linux/arm64
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_PASSWORD: password
