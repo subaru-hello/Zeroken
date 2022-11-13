@@ -17,22 +17,22 @@ class AnalyzeResult < ApplicationRecord
     {
       user_id: user_id,
       next_motivation: next_motivation,
-      description: description,
+      description: 'お酒はほどほどにしましょうね',
       alcohol_strongness: alcohol_strongness,
       total_alcohol_amounts: total_alcohol_amounts,
-      first_alcohol: shuchedule[0]['id'],
-      second_alcohol: shuchedule[1]['id'],
-      third_alcohol: shuchedule[2]['id'],
-      forth_alcohol: shuchedule[3]['id']
+      first_alcohol: shuchedule[0]['id'] || 7,
+      second_alcohol: shuchedule[1]['id'] || 8,
+      third_alcohol: shuchedule[2]['id'] || 16,
+      forth_alcohol: shuchedule[3]['id'] || 26
     }
   end
 
   def self.cal_total_point(user_id)
     tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][2..14]
 
-    target_array = tast_answer_array.map.with_index { |arr, i| (10 * (arr + (3 * i))) - 5 }
-    result = target_array.map { |n| Answer.find(n).point.to_f }
-
+    #    target_array = tast_answer_array.map.with_index { |arr, i| (10 * (arr + (3 * i))) - 5 }
+    #    result = target_array.map { |n| Answer.find(n).point.to_f }
+    result = tast_answer_array.map { |n| Answer.find(n).point.to_f }
     result.sum
   end
 
@@ -41,35 +41,35 @@ class AnalyzeResult < ApplicationRecord
     check_alcohol_in_vein =
       case pair
       when [4, 0]
-        5
+        1
       when [4, 1]
-        15
+        2
       when [4, 2]
-        25
+        3
       when [3, 0]
-        35
+        4
       when [3, 1]
-        45
+        5
       when [3, 2]
-        55
+        6
       when [2, 0]
-        65
+        7
       when [2, 1]
-        75
+        8
       when [2, 2]
-        85
+        9
       when [1, 0]
-        95
+        10
       when [1, 1]
-        105
+        11
       when [1, 2]
-        115
+        12
       when [0, 0]
-        125
+        13
       when [0, 1]
-        135
+        14
       when [0, 2]
-        145
+        15
       end
     alcohol_in_vein = AlcoholInVein.find(check_alcohol_in_vein).percentage
 
