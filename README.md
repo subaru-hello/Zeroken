@@ -85,7 +85,15 @@ PV数 9120人
 (参考文献: 公益社団法人アルコール健康医学協会)
 
 ### **画面遷移図**
-https://www.figma.com/file/ydWLVuN6KiEXfVYLmAkwmo/Zeroken?node-id=0%3A1
+
+
+
+https://user-images.githubusercontent.com/79771445/201520504-67878fe4-33b4-4399-bf31-e4c15c6c16ee.mov
+
+
+https://user-images.githubusercontent.com/79771445/201520514-5001fa1d-57e3-42f1-9959-c905de60f48d.mov
+
+
 
 ### **ER図**
 https://drive.google.com/file/d/1FECMOPGzu-3zVXrOmgrfh-DN0jGKao-X/view?usp=sharing
