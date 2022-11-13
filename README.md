@@ -86,13 +86,13 @@ PV数 9120人
 
 ### **画面遷移図**
 
-
+- 実際の診断画面
 
 https://user-images.githubusercontent.com/79771445/201520504-67878fe4-33b4-4399-bf31-e4c15c6c16ee.mov
 
+- ローディング中にはジョッキが表示される
 
-https://user-images.githubusercontent.com/79771445/201520514-5001fa1d-57e3-42f1-9959-c905de60f48d.mov
-
+https://user-images.githubusercontent.com/79771445/201524532-3420aa18-2071-4dd7-93f0-e277a9cc7b4c.mov
 
 
 ### **ER図**
