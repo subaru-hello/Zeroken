@@ -10,6 +10,7 @@ import UserLogin from '../pages/UserLogin';
 import Phrases from '../pages/Phrases';
 import Term from '../pages/Term';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
+import LiquorsIndex from '../components/ecosystems/liquors/index';
 Vue.use(Router);
 
 const router = new Router({
@@ -20,6 +21,11 @@ const router = new Router({
       path: '/',
       component: ZerokenTop,
       name: 'ZerokenTop',
+    },
+    {
+      path: '/liquors',
+      component: LiquorsIndex,
+      name: 'LiquorsIndex',
     },
     {
       path: '/term',
