@@ -2,9 +2,23 @@ https://www.zeroken.site
 UU数 495人
 PV数 9120人
 # ZEROKEN(ゼロケン)
-### サービス概要
+## サービス概要
 
 - お酒の強さを診断し、一軒目の飲み会においてお酒を飲む順番（酒ケジュール）を提供してくれるアプリです。不本意なアルハラ（アルコールハラスメント)を無くします。あなたにとっての0軒目。
+### 使用技術
+![image](https://user-images.githubusercontent.com/79771445/201551096-15d4bf40-bdaa-461e-b39b-92c4fa7842bb.png)
+
+## サービス説明
+- 実際の診断画面
+
+https://user-images.githubusercontent.com/79771445/201520504-67878fe4-33b4-4399-bf31-e4c15c6c16ee.mov
+
+- ローディング中にはジョッキが表示される
+
+https://user-images.githubusercontent.com/79771445/201524532-3420aa18-2071-4dd7-93f0-e277a9cc7b4c.mov
+
+- 開発で苦労したポイント
+![image](https://user-images.githubusercontent.com/79771445/201551178-7a41ca0a-26a6-482e-95ae-7e2ffdcb7a80.png)
 
 ### **登場人物**
 
@@ -83,16 +97,6 @@ PV数 9120人
 [https://i.gyazo.com/6c330e2338448ef9a739102308fcb947.png](https://i.gyazo.com/6c330e2338448ef9a739102308fcb947.png)
 
 (参考文献: 公益社団法人アルコール健康医学協会)
-
-### **画面遷移図**
-
-- 実際の診断画面
-
-https://user-images.githubusercontent.com/79771445/201520504-67878fe4-33b4-4399-bf31-e4c15c6c16ee.mov
-
-- ローディング中にはジョッキが表示される
-
-https://user-images.githubusercontent.com/79771445/201524532-3420aa18-2071-4dd7-93f0-e277a9cc7b4c.mov
 
 
 ### **ER図**
