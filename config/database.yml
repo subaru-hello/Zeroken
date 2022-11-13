@@ -1,0 +1,32 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+# 
+# Install the MYSQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+
+default: &default
+  adapter: mysql2
+  pool: 5 
+  timeout: 5000
+  encoding: utf8
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
+  username: <%= ENV['ZEROKEN_DB_USERNAME'] || 'root' %>
+  password: <%= ENV['ZEROKEN_DB_PASSWORD'] || 'password' %>
+  port: 3006
+
+development:
+  <<: *default
+  database: zeroken_development
+
+test:
+  <<: *default
+  database: zeroken_test
+
+production:
+  <<: *default
+  database: zeroken_production
