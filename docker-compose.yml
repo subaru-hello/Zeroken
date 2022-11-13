@@ -1,44 +1,8 @@
 
 version: '3'
 services:
-  # app:
-  #   build:
-  #     context: ./environments/db.env
-  #   env_file:
-  #     - ./environments/db.env
-  #   command: bundle exec puma -C config/puma.rb
-  #   volumes:
-  #     - .:/var/www/Zeroken
-  #     - public-data:/var/www/Zeroken/public
-  #     - tmp-data:/var/www/Zeroken/tmp
-  #     - log-data:/var/www/Zeroken/log
-  #   depends_on:
-  #     - db
-  db:
-    volumes:
-      - ./mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所を作成
-    image: mysql/mysql-server:8.0
-    platform: linux/arm64
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_PASSWORD: password
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - '43306:3306'
-    command: --default-authentication-plugin=mysql_native_password
-  # web:
-  #   build:
-  #     context: ./containers/nginx
-  #   volumes:
-  #     - public-data:/var/www/Zeroken/
-  #     - tmp-data:/var/www/Zeroken/tmp
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - app
   web:
     build: .
-    command: bash -c "bundle exec foreman start"
     volumes:
       - .:/Zeroken
        # 1. exclude volumes
@@ -49,11 +13,31 @@ services:
     ports:
       - "3000:3000"
     environment:
-      API_DOMAIN: "http://0.0.0.0:3000"
+      - MYSQL_HOST=db
+      - MYSQL_PASSWORD=password
+    links:
+      - db
     depends_on:
       - db
     stdin_open: true
     tty: true
+
+  db:
+    image: mysql/mysql-server:5.7
+    restart: always
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: zeroken_development
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        #command: mysqld --innodb_use_native_aio=0
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - '43306:3306'
+    tty: true
+
 volumes:
   mysql-data:
-    driver: local
