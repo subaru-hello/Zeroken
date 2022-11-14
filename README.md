@@ -100,6 +100,4 @@ https://user-images.githubusercontent.com/79771445/201524532-3420aa18-2071-4dd7-
 
 
 ### **ER図**
-
-
-[erd.pdf](https://github.com/subaru-hello/Zeroken/files/10002187/erd.pdf)
+<img width="1512" alt="image" src="https://user-images.githubusercontent.com/79771445/201641744-1e0d5f82-0f93-452b-9e6b-0dd21c39590a.png">
