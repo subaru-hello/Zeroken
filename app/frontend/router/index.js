@@ -11,6 +11,7 @@ import Phrases from '../pages/Phrases';
 import Term from '../pages/Term';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import LiquorsIndex from '../components/ecosystems/liquors/index';
+import Top from '../pages/Top';
 Vue.use(Router);
 
 const router = new Router({
@@ -21,6 +22,11 @@ const router = new Router({
       path: '/',
       component: ZerokenTop,
       name: 'ZerokenTop',
+    },
+    {
+      path: '/top',
+      component: Top,
+      name: 'Top',
     },
     {
       path: '/liquors',
