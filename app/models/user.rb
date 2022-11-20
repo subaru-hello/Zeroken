@@ -4,7 +4,8 @@ class User < ApplicationRecord
   has_many :api_keys, dependent: :destroy
   has_many :analyze_results, dependent: :destroy
   has_many :tast_answers, dependent: :destroy
-  has_many :likes, through: :favorites, source: :alcohol
+
+  #  has_many :likes, through: :favorites, source: :alcohol
   has_one_attached :avatar
   enum role: { guest: 0, member: 1 }
 
