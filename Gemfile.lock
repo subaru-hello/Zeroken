@@ -106,6 +106,7 @@ GEM
       mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
     childprocess (4.1.0)
+    choice (0.2.0)
     code_analyzer (0.5.5)
       sexp_processor
     coderay (1.1.3)
@@ -257,6 +258,11 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
+    rails-erd (1.7.2)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     rails_best_practices (1.23.2)
@@ -325,6 +331,8 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     rubocop-rspec (2.15.0)
       rubocop (~> 1.33)
+    ruby-graphviz (1.2.5)
+      rexml
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
@@ -439,12 +447,14 @@ DEPENDENCIES
   listen (~> 3.3)
   mini_magick
   mysql2 (~> 0.5)
+  net-smtp
   prettier
   pry-byebug
   puma (~> 5.0)
   rack-cors
   rack-mini-profiler (~> 2.0)
   rails (>= 7.0.1)
+  rails-erd
   rails_best_practices
   rspec-rails (~> 4.0.2)
   rubocop (~> 1.10)

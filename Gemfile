@@ -38,6 +38,9 @@ gem 'sentry-rails'
 gem 'sentry-ruby'
 # To accept Cross-Origin Resource Sharing
 gem 'rack-cors'
+# ERD generate
+gem 'net-smtp'
+gem 'rails-erd'
 group :development, :test do
   gem 'dotenv-rails'
   # Code check

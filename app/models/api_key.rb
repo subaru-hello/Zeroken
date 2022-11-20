@@ -1,6 +1,4 @@
 class ApiKey < ApplicationRecord
-  belongs_to :user
-
   DEFAULT_EXPIRES_WEEK = 1.week
   belongs_to :user
 

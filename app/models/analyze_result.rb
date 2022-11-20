@@ -32,7 +32,6 @@ class AnalyzeResult < ApplicationRecord
 
     target_array = tast_answer_array.map.with_index { |arr, i| (10 * (arr + (3 * i))) - 5 }
     result = target_array.map { |n| Answer.find(n).point.to_f }
-
     result.sum
   end
 
@@ -71,6 +70,7 @@ class AnalyzeResult < ApplicationRecord
       when [0, 2]
         145
       end
+
     alcohol_in_vein = AlcoholInVein.find(check_alcohol_in_vein).percentage
 
     coefficient = 833

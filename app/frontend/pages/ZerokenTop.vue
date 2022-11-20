@@ -41,6 +41,8 @@
                 @click-response="loginFunction()"
               >
               </ZerokenButton>
+              <router-link to="/liquors"> お酒一覧 </router-link>
+
               <!-- <ZerokenButton
                 button-name="2回目以降の診断はこちら"
                 class="mb-8 text-center"
