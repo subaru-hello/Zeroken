@@ -51,11 +51,9 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "fmt": "prettier --write app/**/**/*.{js,rb,vue} app/**/*.{js,rb,vue} app/**/**/**/*.{js,rb,vue} ",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "heroku-prebuild": "yarn install --production=false"
   }
 }
