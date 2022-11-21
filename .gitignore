@@ -27,7 +27,8 @@ vendor/bundle
 /config/initializers/sentry.rb
 .env
 Procfile
-
+/config/credential*
+/config/credentials.yml.enc
 /public/packs
 /public/packs-test
 /node_modules
