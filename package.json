@@ -55,5 +55,8 @@
     "fmt": "prettier --write app/**/**/*.{js,rb,vue} app/**/*.{js,rb,vue} app/**/**/**/*.{js,rb,vue} ",
     "dev": "webpack-dev-server",
     "heroku-prebuild": "yarn install --production=false"
-  }
+  },
+  "cacheDirectories": [
+  "./node_modules"
+]
 }
