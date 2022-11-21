@@ -28,6 +28,3 @@ test:
   database: zeroken_test
 
 production:
-  <<: *default
-  database: zeroken_production
-  url: <%= ENV['DATABASE_URL'] %>
