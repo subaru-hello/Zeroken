@@ -364,7 +364,7 @@ export default {
             setTimeout(() => {
               resolve((this.showModal = true));
               reject();
-            }, 1);
+            }, 600);
           });
         })
         .then(() => {
@@ -377,7 +377,7 @@ export default {
               };
               resolve(this.createAnalyze(updateAnalyzeResult));
               reject();
-            }, 1);
+            }, 600);
           });
         })
 
@@ -387,7 +387,7 @@ export default {
             setTimeout(() => {
               resolve(this.$router.push('/result'));
               reject(console.log());
-            }, 1);
+            }, 3000);
           });
         })
         .catch((e) => {
