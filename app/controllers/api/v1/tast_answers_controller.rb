@@ -6,6 +6,11 @@ module Api
         render json: @tast_answers
       end
 
+      def show
+        @tast_answer = TastAnswer.find(params[:id])
+        render json: @tast_answer
+      end
+
       def create
         @tast_answer = current_user.tast_answers.new(params_tast_answers)
 
@@ -14,11 +19,6 @@ module Api
         else
           render json: @tast_answer.errors.full_messages, status: :bad_request
         end
-      end
-
-      def show
-        @tast_answer = TastAnswer.find(params[:id])
-        render json: @tast_answer
       end
 
       private

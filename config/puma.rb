@@ -20,7 +20,6 @@ rackup      DefaultRackup
 port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
 
-# Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # bind "unix:///var/www/Zeroken/tmp/sockets/puma.sock"
 # stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log"
