@@ -28,5 +28,4 @@ test:
   database: zeroken_test
 
 production:
-  <<: *default
   database: zeroken_production
