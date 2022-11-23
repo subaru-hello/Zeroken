@@ -28,3 +28,4 @@ test:
   database: zeroken_test
 
 production:
+  pool: 5
