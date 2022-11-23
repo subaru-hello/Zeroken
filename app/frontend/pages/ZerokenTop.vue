@@ -41,6 +41,7 @@
                 @click-response="loginFunction()"
               >
               </ZerokenButton>
+
               <!-- <ZerokenButton
                 button-name="2回目以降の診断はこちら"
                 class="mb-8 text-center"

@@ -43,8 +43,8 @@ module ExtractDescription
 
   def self.which_extract_description(total_point)
     EXTRACT_DESCRIPTIONS.each do |extract_description|
-       if (extract_description[:total_point_range]).include?(total_point)
-        extracted_description =  extract_description[:cal]
+      if (extract_description[:total_point_range]).include?(total_point)
+        extracted_description = extract_description[:cal]
         return Description.find(extracted_description).explanation
       end
     end
