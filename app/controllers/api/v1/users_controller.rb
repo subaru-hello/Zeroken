@@ -7,11 +7,11 @@ module Api
         render json: @users
       end
 
-      def edit
+      def show
         render json: @user
       end
 
-      def show
+      def edit
         render json: @user
       end
 

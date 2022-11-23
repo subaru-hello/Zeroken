@@ -3,11 +3,6 @@ module Api
     class AnalyzeResultsController < BaseController
       before_action :set_analyze_result, only: %i[show edit update]
 
-      # before_action :authenticate
-      def new
-        AnalyzeResultForm.new
-      end
-
       def index
         @answers = current_user.analyze_results
 
@@ -16,6 +11,11 @@ module Api
 
       def show
         render json: @analyze_result
+      end
+
+      # before_action :authenticate
+      def new
+        AnalyzeResultForm.new
       end
 
       def edit

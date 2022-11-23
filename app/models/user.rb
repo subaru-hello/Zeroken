@@ -10,7 +10,7 @@ class User < ApplicationRecord
   enum role: { guest: 0, member: 1 }
 
   mount_uploader :avatar, AvatarUploader
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i.freeze
   VALID_PASSWORD_FORMAT = /\A\w+\z/i.freeze
 
   validates :password, length: { minimum: 6 }, if: :new_or_changes_password
