@@ -387,7 +387,7 @@ export default {
             setTimeout(() => {
               resolve(this.$router.push('/result'));
               reject(console.log());
-            }, 3200);
+            }, 3000);
           });
         })
         .catch((e) => {

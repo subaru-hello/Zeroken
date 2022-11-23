@@ -7,7 +7,7 @@ class AnalyzeResult < ApplicationRecord
 
   def self.cal_shuchedule(weight, next_motivation, user_id)
     total_point = AnalyzeResult.cal_total_point(user_id)
-    description = ExtractDescription.which_extract_description(total_point)
+    # description = ExtractDescription.which_extract_description(total_point)
     alcohol_strongness = AnalyzeResult.cal_alcohol_strongness(total_point)
     total_alcohol_amounts =
       AnalyzeResult.cal_total_alcohol_amount(weight, alcohol_strongness, next_motivation)
@@ -17,7 +17,8 @@ class AnalyzeResult < ApplicationRecord
     {
       user_id: user_id,
       next_motivation: next_motivation,
-      description: description,
+      # description: description,
+      description: 'ほどほどに',
       alcohol_strongness: alcohol_strongness,
       total_alcohol_amounts: total_alcohol_amounts,
       first_alcohol: shuchedule[0]['id'],
@@ -31,6 +32,7 @@ class AnalyzeResult < ApplicationRecord
     tast_answer_array = TastAnswer.where(user_id: user_id).pluck[0][2..14]
 
     target_array = tast_answer_array.map.with_index { |arr, i| (10 * (arr + (3 * i))) - 5 }
+    # target_array = tast_answer_array.map.with_index { |arr, i| arr + (3 * i) }
     result = target_array.map { |n| Answer.find(n).point.to_f }
     result.sum
   end
