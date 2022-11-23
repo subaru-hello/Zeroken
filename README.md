@@ -1,4 +1,4 @@
-https://www.zeroken.site
+https://zerokenme.herokuapp.com/
 UU数 495人
 PV数 9120人
 # ZEROKEN(ゼロケン)
